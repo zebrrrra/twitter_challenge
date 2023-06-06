@@ -1,0 +1,25 @@
+.Homecontianer {
+    display: flex;
+    justify-content: space-between;
+    min-height: 1200px;
+    padding:0;
+
+}
+.homecolumn {
+    height: 1200px;
+    border-radius: 16px;
+}
+
+.leftColumn {
+    flex: 0 0 20%;
+    background-color: #fff;
+}
+.middleColumn {
+    flex: 0 0 60%;
+    position:  relative;
+    background-color: #fff;
+}
+.rightColumn {
+    flex: 0 0 20%;
+    background-color: #fff; //TODO:顏色不對要換
+}
