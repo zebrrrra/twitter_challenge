@@ -1,25 +1,28 @@
-.Homecontianer {
+@import '../../style/base.scss';
+
+.homeContianer {
     display: flex;
+    flex-direction: row;
     justify-content: space-between;
-    min-height: 1200px;
+    width: 100%;
+    min-height: 100vh;
     padding:0;
 
 }
-.homecolumn {
+.homeColumn {
+    display: flex;
+    flex-direction: row;
     height: 1200px;
     border-radius: 16px;
 }
 
-.leftColumn {
-    flex: 0 0 20%;
+.leftColumn,.rightColumn {
+    flex:1;
     background-color: #fff;
 }
 .middleColumn {
-    flex: 0 0 60%;
+    flex: 2;
     position:  relative;
     background-color: #fff;
 }
-.rightColumn {
-    flex: 0 0 20%;
-    background-color: #fff; //TODO:顏色不對要換
-}
+

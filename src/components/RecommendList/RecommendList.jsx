@@ -6,7 +6,8 @@ import style from './RecommendList.module.scss';
 
     return(
 
-        <div className={style.recommendListContianer}>
+        <div className={style.recommendListContainer}>
+            <h5 className="justify center">推薦跟隨</h5>
         <div className={style.recommendCard}>
         
         <div className={style.avatar}></div>
@@ -40,7 +41,7 @@ avatar={user.avatar}
 name={user.name}
 username={user.username}
 isFollowed= {user.isFollowed}
-onToggleFollow={()=> toggleFollow(user.id)}
+onToggleFollow={()=> toggleFollow(user.id)}?
 />
 ))}
 </div>

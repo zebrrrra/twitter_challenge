@@ -1,22 +1,30 @@
-import style from 'Navbar.module.scss';
+import style from '../Navbars/Navbars.module.scss';
 //import useState from 'react';
 //import { useNavigate } from 'react-router-dom';
 //import NavBarItem from '';
 //import Modal
 //import SVG
-import {ReactComponent as ACLogo} from '../../assets/icon/logo.png';
-import { ReactComponent as HomeIcon } from '../../assets/icon/outlinedhome.png';
+import ACLogo from '../../assets/icon/logo.png';
+import HomeIcon  from '../../assets/icon/outlinedhome.png';
 //import { ReactComponent as HomeIconActive } from '../../assets/icon/home.png';
 //import { ReactComponent as UserIcon } from '../../assets/icon/outlineduser.png';
 
 const Navbars = () => {
     return(
+        <>
         <div className={style.NavbarContainer}>
-        <ACLogo/>
-        <div className={style.NavbarItem}><HomeIcon/>首頁</div>
-
-        </div>
-
+            <div className={style.NavbarLogo}><img src={ACLogo} alt=""/></div>
+            <div className={style.NavbarItem}>
+                <img className={style.NavbarPng} src={HomeIcon} alt="Icon"/>
+                <span>首頁</span>
+            </div>
+            <div className={style.NavbarItem}>
+                <img className={style.NavbarPng} src={HomeIcon} alt="Icon"/>
+                <span>首頁</span>
+            </div>    
+        </div>   
+        </>
+    
     )
 }
 export default Navbars;
