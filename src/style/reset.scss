@@ -132,6 +132,16 @@ table {
   border-spacing: 0;
 }
 
+*,
+::before,
+::after {
+  box-sizing: border-box;
+}
+
+html {
+  box-sizing: border-box;
+}
+
 a,
 a:hover,
 a:focus {
