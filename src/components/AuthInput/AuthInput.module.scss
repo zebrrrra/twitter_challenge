@@ -1,0 +1,51 @@
+@import"../../style/base.scss";
+
+
+.inputGroup {
+  @include box(356, 54);
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: flex-start;
+  align-items: flex-start;
+  padding-left: 10px;
+  border-radius: 2px;
+  border-bottom: 2px solid $default-color;
+  background: $input-background-color;
+
+  &:hover,
+  &:focus {
+    border-bottom: 2px solid $focus-color;
+  }
+}
+
+
+.input {
+  @include fontStyle(16, 400);
+  width: 100%;
+  line-height: 26px;
+  border: none;
+  border-radius: 0px 0px 4px 4px;
+  color: $input-text-color;
+  background: $input-background-color;
+
+  &::placeholder {
+    color: $input-text-color;
+  }
+}
+
+.label {
+  @include fontStyle(14, 400);
+  padding-left: 1px;
+  line-height: 22px;
+  color: $label-color;
+}
+
+.small {
+  @include box(356, 20);
+  @include fontStyle(12, 500);
+  line-height: 20px;
+  letter-spacing: 0px;
+  text-align: right;
+  margin-top: 4px;
+  margin-bottom: 8px;
+}
