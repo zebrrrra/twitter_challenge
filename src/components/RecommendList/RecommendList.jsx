@@ -1,7 +1,7 @@
 import style from './RecommendList.module.scss';
 //import {RecommendItem} from 'src/components/RecommendItem/RecommendItem.jsx';
 //import {AuthContext} from 'react' //TODO: 要確認有沒有寫這個;
-
+import  Avatar  from '../../assets/icon/img.svg'
  const RecommendList = ()=>{
 
     return(
@@ -10,12 +10,18 @@ import style from './RecommendList.module.scss';
             <h5 className="justify center">推薦跟隨</h5>
         <div className={style.recommendCard}>
         
-        <div className={style.avatar}></div>
+        <img className={style.avatar} src={Avatar}alt="Avatar"/>
         <div className={style.name}>pizzahut </div>
         <div className={style.userName}>@pizzahut</div>
         <button className={style.buttonFollowing}>正在跟隨</button>
         </div>
-
+        <div className={style.recommendCard}>
+        
+        <img className={style.avatar} src={Avatar}alt="Avatar"/>
+        <div className={style.name}>pizzahut </div>
+        <div className={style.userName}>@pizzahut</div>
+        <button className={style.buttonFollower}>跟隨</button>
+        </div>
         </div>
 
     )

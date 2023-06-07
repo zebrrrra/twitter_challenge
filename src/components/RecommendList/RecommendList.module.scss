@@ -9,7 +9,7 @@
     /* grayscale/dark-20 */
     
     background: #FAFAFB;
-    border-radius: 16px; 
+    //border-radius: 16px; 
 }
 
 /* card/popular */
@@ -88,6 +88,17 @@ box-sizing: border-box;//直接填滿
     width: 64px;
     /* grayscale/dark-0 */
     background: #FFFFFF;
+font-family: 'Noto Sans TC';
+font-style: normal;
+font-weight: 400;
+font-size: 16px;
+line-height: 24px;
+/* identical to box height, or 150% */
+display: flex;
+align-items: center;
+text-align: center;
+/* color/brand/main */
+color: #FF6600;
     /* color/brand/main */
     border: 1px solid #FF6600;
     border-radius: 50px;
