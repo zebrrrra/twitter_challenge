@@ -1,6 +1,5 @@
 @import"../../style/base.scss";
 
-
 .inputGroup {
   @include box(356, 54);
   display: flex;
@@ -18,6 +17,17 @@
   }
 }
 
+.inputGroupError {
+  @include box(356, 54);
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: flex-start;
+  align-items: flex-start;
+  padding-left: 10px;
+  border-radius: 2px;
+  background: $input-background-color;
+  border-bottom: 2px solid $error-color;
+}
 
 .input {
   @include fontStyle(16, 400);
@@ -25,7 +35,7 @@
   line-height: 26px;
   border: none;
   border-radius: 0px 0px 4px 4px;
-  color: $input-text-color;
+  color: $main-text-color;
   background: $input-background-color;
 
   &::placeholder {
@@ -40,12 +50,32 @@
   color: $label-color;
 }
 
+// 提示小字部分
 .small {
   @include box(356, 20);
-  @include fontStyle(12, 500);
+  position: relative;
   line-height: 20px;
-  letter-spacing: 0px;
-  text-align: right;
   margin-top: 4px;
   margin-bottom: 8px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.hint {
+  @include fontStyle(12, 500);
+  letter-spacing: 0px;
+
+}
+
+.hintLeft,
+.hintRight {
+  position: absolute;
+}
+
+.hintRight {
+  right: 0;
+}
+
+.hintLeft {
+  color: $error-color;
 }
