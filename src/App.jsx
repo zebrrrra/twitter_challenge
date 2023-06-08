@@ -1,19 +1,23 @@
 import "./style/main.scss"
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import HomePage from './pages/HomePage/HomePage'
 import { LoginPage, AdminLoginPage } from "./pages";
 
 function App() {
   return (
     <div className="App">
-      <BrowserRouter>
+      <HomePage />
+      <Router>
         <Routes>
-          <Route path="login" element={<LoginPage />} />
-          <Route path="admin" element={<AdminLoginPage />} />
+          <Route path="/" element={<HomePage />} />
+
+          {/* <Route path ="/login" element={<LoginPage/>/>
+        <Route path ="/profile" element={<ProfilePage/>}/>
+         <Route path ="/setting" element={<SettingPage/>}/>
+          <Route path ="/" element={<HomePage/>}/> */}
           <Route path="*" element={<LoginPage />} />
-
-
         </Routes>
-      </BrowserRouter>
+      </Router>
     </div>
   );
 }

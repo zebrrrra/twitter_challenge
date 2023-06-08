@@ -12,6 +12,9 @@
 .container {
   @extend %container;
   justify-content: center;
+
+  // 將表單改為RWD的設置
+  padding: 0 calc((100% - 356px) / 2);
 }
 
 .form {

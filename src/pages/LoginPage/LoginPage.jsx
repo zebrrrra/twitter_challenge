@@ -3,13 +3,87 @@ import { ReactComponent as Logo } from '../../assets/icons/logo.svg'
 import { Link } from 'react-router-dom'
 import { AuthInput } from '../../components'
 import { useState } from 'react'
+import { login } from '../../apis/auth'
+import Swal from 'sweetalert2'
 
 const LoginPage = () => {
-  const [account, setAccount] = useState('')
+  // email是帳號 後面會改
+  const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const handleClick = () => {
-    if (!account.trim() || !password.trim()) return
-    // wait api data
+
+  // 回傳token 和user包
+  // 不能用解構賦值撰寫，因為await回來的是undefined
+  const handleClick = async (e) => {
+    if (!email.trim() || !password.trim()) return
+    e.preventDefault();
+
+    const data = await login({ email, password })
+    const { token } = data.data
+    if (!data) {
+      Swal.fire({
+        title: '登入失敗',
+        icon: 'error',
+        showConfirmButton: false,
+        timer: 1000,
+        position: 'top',
+      });
+      return
+    }
+
+    localStorage.setItem('token', token)
+    console.log(token)
+    Swal.fire({
+      title: '登入成功',
+      icon: 'success',
+      showConfirmButton: false,
+      timer: 1000,
+      position: 'top',
+    });
+    return
+
+
+    // const { status, data } = await login({ email, password })
+
+    // const { token } = data
+
+    // if (!status === "success") {
+    //   Swal.fire({
+    //     title: '登入失敗',
+    //     icon: 'error',
+    //     showConfirmButton: false,
+    //     timer: 1000,
+    //     position: 'top',
+    //   });
+    // }
+    // localStorage.setItem('token', token)
+    // console.log(data)
+    // if (!status) {
+    //   Swal.fire({
+    //     title: '登入失敗',
+    //     icon: 'error',
+    //     showConfirmButton: false,
+    //     timer: 1000,
+    //     position: 'top',
+    //   });
+    //   return
+    // }
+
+    // localStorage.setItem('token', token)
+    // Swal.fire({
+    //   title: '登入成功',
+    //   icon: 'success',
+    //   showConfirmButton: false,
+    //   timer: 1000,
+    //   position: 'top',
+    // });
+    // return
+
+    // const status=
+    // const { token } = data
+
+    // 
+    // console.log(data)
+    // return
   }
 
   let message = ''
@@ -26,7 +100,7 @@ const LoginPage = () => {
       <Logo className={style.logo} />
       <h3 className={style.title}>登入Alphitter</h3>
       <form className={style.form}>
-        <AuthInput label='帳號' id="account" type="text" placeholder="請輸入帳號" value={account} message={message} onChange={(accountValue) => setAccount(accountValue)} />
+        <AuthInput label='帳號' id="email" type="text" placeholder="請輸入帳號" value={email} message={message} onChange={(emailValue) => setEmail(emailValue)} maxLength={50} />
         <AuthInput label='密碼' id="password" type="password" placeholder="請輸入密碼" value={password} onChange={(passwordValue) => setPassword(passwordValue)} />
         <button className={style.button} type="submit" onClick={handleClick}>登入</button>
       </form >
