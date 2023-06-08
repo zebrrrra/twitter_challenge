@@ -1,7 +1,7 @@
 @import"../../style/base.scss";
 
-.inputGroup {
-  @include box(356, 54);
+.inputGroupDefault {
+  width: 100%;
   display: flex;
   flex-flow: row wrap;
   justify-content: flex-start;
@@ -18,15 +18,11 @@
 }
 
 .inputGroupError {
-  @include box(356, 54);
-  display: flex;
-  flex-flow: row wrap;
-  justify-content: flex-start;
-  align-items: flex-start;
-  padding-left: 10px;
-  border-radius: 2px;
-  background: $input-background-color;
-  border-bottom: 2px solid $error-color;
+  border-color: $error-color;
+
+  &:hover {
+    border-color: $error-color
+  }
 }
 
 .input {
@@ -52,7 +48,8 @@
 
 // 提示小字部分
 .small {
-  @include box(356, 20);
+  width: 100%;
+  height: 20px;
   position: relative;
   line-height: 20px;
   margin-top: 4px;

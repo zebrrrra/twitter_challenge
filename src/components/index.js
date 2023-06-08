@@ -1,2 +1,3 @@
 import AuthInput from "./AuthInput/AuthInput";
-export { AuthInput }
+import UserInfo from "./UserInfo/UserInfo";
+export { AuthInput, UserInfo }

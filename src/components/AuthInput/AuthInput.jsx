@@ -1,18 +1,23 @@
 import style from './AuthInput.module.scss'
-const AuthInput = ({ label, id, type, placeholder, value, maxLength, onChange, message }) => {
+const AuthInput = ({ label, id, type, placeholder, value, maxLength = 50, onChange, height = 54 }) => {
   const isExceeded = value.length > maxLength;
-  let inputStyle = style.inputGroup;
+  let message = ""
+  // 用來切換顯示紅線與否
+  let inputStyle = style.inputGroupDefault;
+
+  const containerStyle = {
+    height: `${height}px`,
+  };
+
   const number = value.length
   let notExisted = true
 
   // 只有名稱顯示字數多少
 
-  // // 與字數限制相關之錯誤邏輯
   if (isExceeded) {
-    inputStyle = style.inputGroupError;
+    inputStyle += ` ${style.inputGroupError}`;
     message = '字數超出上限!'
   }
-
   // // 帳號不存在
   // if (notExisted) {
   //   message = '帳號不存在!'
@@ -21,7 +26,7 @@ const AuthInput = ({ label, id, type, placeholder, value, maxLength, onChange, m
   // }
   return (
     <>
-      <div className={inputStyle}>
+      <div className={inputStyle} style={containerStyle}>
         <label className={style.label} htmlFor={id}>{label}</label>
         <input type={type} className={style.input} id={id} placeholder={placeholder} value={value} onChange={(e) => onChange(e.target.value)} />
       </div>
@@ -30,7 +35,7 @@ const AuthInput = ({ label, id, type, placeholder, value, maxLength, onChange, m
         </span>}
 
         {value && <span className={`${style.hint} ${style.hintRight}`}>
-          {number}/50
+          {number}/{maxLength}
         </span >}
       </small >
     </>

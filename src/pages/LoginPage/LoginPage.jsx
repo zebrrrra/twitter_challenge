@@ -26,7 +26,7 @@ const LoginPage = () => {
       <Logo className={style.logo} />
       <h3 className={style.title}>登入Alphitter</h3>
       <form className={style.form}>
-        <AuthInput label='帳號' id="account" type="text" placeholder="請輸入帳號" value={account} message={message} onChange={(accountValue) => setAccount(accountValue)} />
+        <AuthInput label='帳號' id="account" type="text" placeholder="請輸入帳號" value={account} message={message} onChange={(accountValue) => setAccount(accountValue)} maxLength={50} />
         <AuthInput label='密碼' id="password" type="password" placeholder="請輸入密碼" value={password} onChange={(passwordValue) => setPassword(passwordValue)} />
         <button className={style.button} type="submit" onClick={handleClick}>登入</button>
       </form >
