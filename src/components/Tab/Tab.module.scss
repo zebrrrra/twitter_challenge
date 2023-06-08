@@ -1,0 +1,40 @@
+.tabContainer{
+display: flex;
+flex-direction: row;
+align-items: flex-start;
+height: 53px;
+
+}
+
+.tab{
+    display: flex;
+    width: 130px;
+    height: 52px;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Noto Sans TC';
+font-style: normal;
+font-weight: 700;
+font-size: 15px;
+line-height: 22px;
+text-align: center;
+color:#657786;
+box-sizing: border-box;
+margin-bottom: 16px;
+}
+
+.active{
+    color: #FF6600;
+    border-bottom: 2px solid #FF6600;
+    //border-radius: 100px;
+}
+//點擊color: #FF6600;
+//未點擊color: #657786;
+
+/* 點擊後會在tab下方出現一條線
+width: 130px;
+height: 2px;
+top: 50px;
+
+background: #FF6600;
+border-radius: 100px;*/
