@@ -7,5 +7,4 @@ export const login = async ({ email, password }) => {
   } catch (err) {
     console.error('[Login Failed]:', err)
   }
-
 }

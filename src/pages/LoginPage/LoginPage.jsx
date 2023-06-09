@@ -7,23 +7,17 @@ import { login } from '../../apis/auth'
 import Swal from 'sweetalert2'
 
 const LoginPage = () => {
-  // email是帳號 後面會改
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
 
-  // 回傳token 和user包
-  // 不能用解構賦值撰寫，因為await回來的是undefined
+
   const handleClick = async (e) => {
     if (!email.trim() || !password.trim()) return
     e.preventDefault();
-
-    // return data包＋status
     const data = await login({ email, password })
     const status = data.status
-    const { token } = data.data
-    console.log(data)
-
-    if (status === 'success') {
+    const { token } = data
+    if (status === "success") {
       localStorage.setItem('token', token)
       Swal.fire({
         title: '登入成功',
@@ -34,8 +28,7 @@ const LoginPage = () => {
       });
       return
     }
-
-    if (status === 'error') {
+    if (status === "error") {
       Swal.fire({
         title: '登入失敗',
         icon: 'error',
@@ -43,19 +36,10 @@ const LoginPage = () => {
         timer: 1000,
         position: 'top',
       });
+      console.log(data)
       return
     }
-
   }
-
-  let message = ''
-  // if(account不存在){
-  //   message ='帳號不存在!'
-  // }
-
-  // if(account重複){
-  //   message ='帳號已重複註冊!'
-  // }
 
   return (
     <div className={style.container}>
@@ -77,3 +61,18 @@ const LoginPage = () => {
 
 
 export default LoginPage
+
+
+
+// email是帳號 後面會改
+// 回傳token 和user包，axios拖去
+// const data = await login({ email, password })
+
+let message = ''
+  // if(account不存在){
+  //   message ='帳號不存在!'
+  // }
+
+  // if(account重複){
+  //   message ='帳號已重複註冊!'
+  // }
