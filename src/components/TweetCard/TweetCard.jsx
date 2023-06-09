@@ -26,7 +26,7 @@ const TweetCard = ({ tweet }) => {
     //if(!tweet){
       //  return null;}
     const {
-        User: { name, account } = {},
+        User: { name, account,avatar } = {},
         description,
         repliesCount,
         likesCount,
@@ -38,7 +38,7 @@ const TweetCard = ({ tweet }) => {
             return (
                   <div className={style.tweetCardContainer}>
                     <div className={style.tweetCard}>
-                        <div className={style.avatar}> <Avatar /></div>
+                    <img src={avatar} className={style.avatar} alt="avatar"/>
                         <div className={style.contentContainer}>
                             <div className={style.nameAndUserId}>
                                 <span className={style.name}>{name}</span>
