@@ -1,24 +1,12 @@
-/*import {useEffect, useState } from 'react';
-import {Routes, Route, useParams,Navigate} from 'react-router-dom';
-import { Link } from 'react-router-dom';
-import axios from 'axios';*/
-//import { useState } from 'react';
-//import MainPost from '../MainPost/MainPost';
 import UserInfo from '../UserInfo/UserInfo'
 import Tab from '../Tab/Tab';
-//import TweetList from '../TweetList/TweetList';
-//import TweetCard from '../TweetCard/TweetCard';
 import {useParams} from 'react-router-dom';
-//import ReplyList from '../ReplyList/ReplyList';
-import LikeList from '../LikeList/LikeList';
-
 const Main = () => {
   const { id } = useParams();
   return (
     <>
     <UserInfo userId={id}/>
     <Tab userId={id}/>
-    <LikeList userId={id} />
     </>
   )
 
@@ -26,6 +14,11 @@ const Main = () => {
 
 
 /*
+    <Routes>
+    <Route path="tweets/*" element={<TweetList userId={id}/>} />
+        <Route path="replies/*" element={<ReplyList userId={id}/>} />
+        <Route path="likes/*" element={<LikeList userId={id}/>} />
+    </Routes>
     <Tab onTabChange={setActiveTab} />
     <TweetList activeTab={activeTab} />
     

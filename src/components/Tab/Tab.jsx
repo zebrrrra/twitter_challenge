@@ -14,16 +14,16 @@ const Tab = ({ userId }) => {
         setActiveTab(tabName);
         switch (tabName) {
             case "推文":
-                navigate('/tweets');
+                navigate(`/${userId}/tweets`);
                 break;
             case "回覆":
-                navigate('/replies');
+                navigate(`/${userId}/replies`);
                 break;
             case "喜歡的內容":
-                navigate('/likes');
+                navigate(`/${userId}/likes`);
                 break;
             default:
-                navigate('/tweets');
+                navigate(`/${userId}/tweets`);
                 break;
         }
     };
@@ -51,9 +51,9 @@ const Tab = ({ userId }) => {
                 </div>
             </div>
             <Routes>
-                <Route path="/tweets" element={<TweetList userId={userId} />} />
-                <Route path="/replies" element={<ReplyList userId={userId} />} />
-                <Route path="/likes" element={<LikeList userId={userId} />} />
+                <Route path="tweets" element={<TweetList userId={userId} />} />
+                <Route path="replies" element={<ReplyList userId={userId} />} />
+                <Route path="likes" element={<LikeList userId={userId} />} />
             </Routes>
         </div>
     );

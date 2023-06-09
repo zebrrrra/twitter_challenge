@@ -2,12 +2,14 @@
 import { useEffect, useState } from 'react';
 import LikeCard from '../LikeCard/LikeCard';
 import { getUserLike } from '../../apis/user';
+import { useParams } from 'react-router-dom';
 
 //import style from '';
 //假設有Authcontext(還沒寫)
 
 const LikeList =({userId })=> {
     const [likes, setLikes] =useState([]);
+    const {extraPath} = useParams();
 
     useEffect(()=>{
         const fetchLikes = async () => {
@@ -19,7 +21,7 @@ const LikeList =({userId })=> {
         }
         fetchLikes();
      }, [userId]);
-return likes.map(like => <LikeCard like={like} type="like"/>);
+return likes?likes.map((like,index) => <LikeCard like={like} key={index} type="like"/>): null;
     }
 
 export default LikeList;
