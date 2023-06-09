@@ -40,7 +40,7 @@ const MainTweet = ({ replyNumber = 34, likeNumber = 808, name = 'apple', account
           </div>
         </div>
       </div>
-      {openModal && <ReplyModal open={openModal} onClose={(value) => setOpenModal(value)} />}
+      {openModal && <ReplyModal open={openModal} onClose={(value) => setOpenModal(value)} name={name} account={account} introduction={introduction} /*createdAt={createdAt}*/ />}
     </>
 
 

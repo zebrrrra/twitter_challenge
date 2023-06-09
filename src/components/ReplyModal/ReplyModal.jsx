@@ -1,9 +1,13 @@
 import style from "./ReplyModal.module.scss"
+// avatar會拿掉改成接props
 import avatar from '../../assets/icons/avatar.svg'
 import { ReactComponent as Line } from "../../assets/icons/line.svg"
 
+// 接收來自MainTweet的props
+// createdAt從父傳來後需經過處理
 const ReplyModal = ({
-  onClose, open, name = 'Apple', account = 'apple', introduction = 'Nulla Lorem mollit cupidatat irure. Laborum magna nulla duis ullamco cillum dolor. Voluptate exercitation incididunt aliquip deserunt reprehenderit elit laborum. ', time = 3 }) => {
+  onClose, open, name, account, introduction, createdAt = 3 }) => {
+
   if (!open) return
   return (
     <div className={style.background}>
@@ -24,7 +28,7 @@ const ReplyModal = ({
           </div>
           <div className={style.rightContainer}>
             <div className={style.rightTopContainer}>
-              <h5 className={style.name}>{name}<span>@{account}・{time}小時</span></h5>
+              <h5 className={style.name}>{name}<span>@{account}・{createdAt}小時</span></h5>
               <p className={style.introduction}>{introduction}</p>
               <p className={style.hint}>回覆給<span>@{account}</span></p>
             </div>
