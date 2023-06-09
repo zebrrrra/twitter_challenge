@@ -1,7 +1,8 @@
 import "./style/main.scss"
 import {BrowserRouter as Router, Route, Routes} from 'react-router-dom';
-import { LoginPage, AdminLoginPage, RegisterPage } from "./pages";
-import HomePage from './pages/HomePage/HomePage';
+import {LoginPage, AdminLoginPage, RegisterPage } from "./pages";
+import ProfilePage from './pages/ProfilePage/ProfilePage';
+
 //import FollowPage from "./pages/FollowPage/FollowPage";
 function App() {
   return (
@@ -9,10 +10,10 @@ function App() {
       <Router>
         <Routes>
       <Route path ="/login" element={<LoginPage/>}/>
-      <Route path="/:id/*" element={<HomePage />} />
+      <Route path="/:id/*" element ={<ProfilePage/>}/>
       <Route path="admin" element={<AdminLoginPage />} />
       <Route path="register" element={<RegisterPage />} />
-      <Route path ="*" element={<HomePage/>}/>
+      <Route path ="*" element={<ProfilePage/>}/>
       
 
           {/*<Route path ="/login" element={<LoginPage/>/>
