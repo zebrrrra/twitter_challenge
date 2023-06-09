@@ -1,127 +1,74 @@
 //import {useState, useEffect} from 'react';
 //import axios from 'axios';
-import likeIcon from '../../assets/icon/like_1.svg'; 
+import likeIcon from '../../assets/icon/like_1.svg';
+import isLikeIcon from '../../assets/icon/like.svg';
 import replyIcon from '../../assets/icon/reply_1.svg'
-import  {ReactComponent as Avatar}  from '../../assets/icon/img.svg'
+import { ReactComponent as Avatar } from '../../assets/icon/img.svg'
 import style from './TweetCard.module.scss';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 
 dayjs.extend(relativeTime);
 dayjs.locale('zh-tw');
-//要算時間用-先保留試著用Day.js
 function getTime(createdAt) {
-    const currentTime= dayjs();
-    const createdTime = dayjs (createdAt);
+    const currentTime = dayjs();
+    const createdTime = dayjs(createdAt);
 
-    if (currentTime.diff(createdTime, 'hour') < 24 ){
+    if (currentTime.diff(createdTime, 'hour') < 24) {
         return createdTime.fromNow();//day.js的套件
-    }  else{
-        return createdTime.format ('YYYY/MM/DD');
+    } else {
+        return createdTime.format('YYYY/MM/DD');
     }
 }
 
 
-const TweetCard = ({tweet,type}) =>{
-    if (!tweet) return "";
-    const {name,account,description,repliesCount,likesCount,createdAt,comment}=tweet;
-    let tweetContent="";
-    switch (type)   {
-    case 'tweet':
-        tweetContent=(
-            <>  {/*第一組*/}
-        <div className={style.tweetCard}>
-              <div className={style.avatar}> <Avatar/></div>
-              <div className={style.contentContainer}>
-              <div className={style.nameAndUserId}>
-                  <span className={style.name}>{name}</span>
-                  <span className={style.userIdTime}>@{account}・{getTime(createdAt)}</span>
-              </div>
-          
-          <div className={style.tweet}>
-              {description}
-          </div>
-          <div className={style.countContainer}>
-              <div className={style.count}>
-                  <img src= {replyIcon} alt="reply"/>{repliesCount}</div>
-                  <div className={style.count}>
-                  <img src= {likeIcon} alt="like"/>{likesCount}
-              </div>
-          </div>
-          </div>
-           </div>
-           </>)
-           break;
-         case  'reply':
-            tweetContent=(
-                <>
-                             {/*第二組reply*/}
-             <div className={style.tweetCard}>
-             <div className={style.avatar}> <Avatar/></div>
-                 <div className={style.contentContainer}>
-                 <div className={style.nameAndUserId}>
-                     <span className={style.name}>{name}</span>
-                     <span className={style.userIdTime}>@{account}・{getTime(createdAt)}</span>
-                 </div>
-                 <div className={style.replyContainer}>
-                     <div className={style.reply}>回覆</div>
-                     <div className={style.replyId}>@{account}</div> </div>
-             <div className={style.tweet}>
-                 {comment}
-             </div>
-             
-             </div>
-             </div>
-             {/*第二組結尾*/}
-             </>
-            )
-            break;
-            case 'like':
-                tweetContent=(
-                    <>
-                      {/*第三組*/}
-        <div className={style.tweetCard}>
-        <div className={style.avatar}> <Avatar/></div>
-        <div className={style.contentContainer}>
-        <div className={style.nameAndUserId}>
-            <span className={style.name}>{name}</span>
-            <span className={style.userIdTime}>@{account}・{getTime(createdAt)}</span>
-        </div>
-    <div className={style.tweet}>
-        {description}
-    </div>
-    <div className={style.countContainer}>
-        <div className={style.count}>
-            <img src= {replyIcon} alt="reply"/>{repliesCount}</div>
-            <div className={style.count}>
-            <img src= {likeIcon} alt="like"/>{likesCount}</div>
-    </div>
-    </div>
-     {/*第三組結尾*/}
-     </div>
-     </>
-                );
-                break;
-    default:
-    return null;
+const TweetCard = ({ tweet }) => {
+    //if(!tweet){
+      //  return null;}
+    const {
+        User: { name, account } = {},
+        description,
+        repliesCount,
+        likesCount,
+        createdAt,
+        isCurrentUserLiked,
+    } = tweet;
 
-};
-return (
-    <div className={style.tweetCardContainer}>
-        {tweetContent}
-        </div>
-)
 
-}
+            return (
+                  <div className={style.tweetCardContainer}>
+                    <div className={style.tweetCard}>
+                        <div className={style.avatar}> <Avatar /></div>
+                        <div className={style.contentContainer}>
+                            <div className={style.nameAndUserId}>
+                                <span className={style.name}>{name}</span>
+                                <span className={style.userIdTime}>@{account}・{getTime(createdAt)}</span>
+                            </div>
+
+                            <div className={style.tweet}>
+                                {description}
+                            </div>
+                            <div className={style.countContainer}>
+                                <div className={style.count}>
+                                    <img src={replyIcon} alt="reply" />{repliesCount}</div>
+                                <div className={style.count}>
+                                    <img src={isCurrentUserLiked?isLikeIcon:likeIcon} alt="like" />{likesCount}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+        </div>)
+        };
+
 export default TweetCard;
 
 
 
-/*const TweetCard = () =>{
+//const TweetCard = () =
 
-    return (
-        <div className={style.tweetCardContainer}>
-          {/*第一組
+   // return (
+        //<div className={style.tweetCardContainer}>
+          /*第一組
           <div className={style.tweetCard}>
                 <div className={style.avatar}> <Avatar/></div>
                 <div className={style.contentContainer}>

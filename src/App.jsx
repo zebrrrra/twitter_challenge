@@ -8,12 +8,14 @@ function App() {
     <div className="App">
       <Router>
         <Routes>
-      <Route path ="/" element={<HomePage/>}/>
+      <Route path ="*" element={<HomePage/>}/>
       <Route path ="/login" element={<LoginPage/>}/>
+      <Route path="/:id/tweets" element={<HomePage />} />
+      <Route path="/:id/replies" element={<HomePage />} />
+      <Route path="/:id/likes" element={<HomePage />} />
       <Route path="admin" element={<AdminLoginPage />} />
       <Route path="register" element={<RegisterPage />} />
-
-          <Route path="*" element={<HomePage />} />
+      
 
           {/*<Route path ="/login" element={<LoginPage/>/>
         <Route path ="/profile" element={<ProfilePage/>}/>
