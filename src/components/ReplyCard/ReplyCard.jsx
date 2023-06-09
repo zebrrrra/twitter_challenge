@@ -19,7 +19,7 @@ function getTime(createdAt) {
 
 const ReplyCard = ({reply}) => {
     const {
-        User: { name, account } = {},
+        User: { name, account,avatar } = {},
         comment,
         createdAt,
     } = reply;
@@ -27,7 +27,7 @@ const ReplyCard = ({reply}) => {
     return(
         <div className={style.tweetCardContainer}>
                     <div className={style.tweetCard}>
-                        <div className={style.avatar}> <Avatar /></div>
+                    <img src={avatar} className={style.avatar} alt="avatar"/>
                         <div className={style.contentContainer}>
                             <div className={style.nameAndUserId}>
                                 <span className={style.name}>{name}</span>

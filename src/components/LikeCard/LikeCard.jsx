@@ -5,6 +5,7 @@ import { ReactComponent as Avatar } from '../../assets/icon/img.svg'
 import style from './LikeCard.module.scss';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
+import {useState} from 'react';
 
 dayjs.extend(relativeTime);
 dayjs.locale('zh-tw');
@@ -25,18 +26,24 @@ const LikeCard = ({ like }) => {
 
     const {
         Tweet:{
-        User: {name,account}= {},
+        User: {name,account,avatar}= {},
+
         description,
         repliesCount,
         likesCount,
         createdAt,}={},
         isCurrentUserLiked,
     } = like;
+    //如果圖片不存在或讀不出來使用預設圖片
+    const [imgSrc, setImgSrc] =useState(avatar||Avatar);
+    const handleError =()=>{
+        setImgSrc(Avatar);
+    }
             return (
                 <>
                     <div className={style.tweetCardContainer}>
                     <div className={style.tweetCard}>
-                        <div className={style.avatar}> <Avatar /></div>
+                        <img src={imgSrc} onError={handleError}className={style.avatar} alt="avatar"/>
                         <div className={style.contentContainer}>
                             <div className={style.nameAndUserId}>
                                 <span className={style.name}>{name}</span>
