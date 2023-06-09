@@ -3,7 +3,6 @@ import {BrowserRouter as Router, Route, Routes} from 'react-router-dom';
 import HomePage from './pages/HomePage/HomePage'
 //import FollowPage from "./pages/FollowPage/FollowPage";
 
-// 先用來測試css有沒有正常
 function App() {
   return (
     <div className="App">

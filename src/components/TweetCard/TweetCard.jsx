@@ -34,7 +34,7 @@ const TweetCard = () =>{
             </div>
              {/*第一組結尾*/}
              </div>
-             {/*第二組*/}
+             {/*第二組reply*/}
              <div className={style.tweetCard}>
             <div className={style.avatar}> <Avatar/></div>
                 <div className={style.contentContainer}>
@@ -42,7 +42,9 @@ const TweetCard = () =>{
                     <span className={style.name}>John Doe</span>
                     <span className={style.userIdTime}>@heyjohn・3小時</span>
                 </div>
-            
+                <div className={style.replyContainer}>
+                    <div className={style.reply}>回覆</div>
+                    <div className={style.replyId}>@apple</div> </div>
             <div className={style.tweet}>
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
                 sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, 
@@ -50,13 +52,7 @@ const TweetCard = () =>{
                 irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. 
                 Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
             </div>
-            <div className={style.countContainer}>
-                <div className={style.count}>
-                    <img src= {replyIcon} alt="reply"/>13</div>
-                    <div className={style.count}>
-                    <img src= {likeIcon} alt="like"/>76
-                </div>
-            </div>
+            
             </div>
             </div>
             {/*第二組結尾*/}

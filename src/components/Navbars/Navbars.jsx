@@ -1,4 +1,5 @@
 import style from '../Navbars/Navbars.module.scss';
+import { Link } from 'react-router-dom';
 //import useState from 'react';
 //import { useNavigate } from 'react-router-dom';
 //import NavBarItem from '';
@@ -18,18 +19,24 @@ const Navbars = () => {
         <div className={style.navbarContainer}>
             <div className={style.NavbarLogo}><img src={ACLogo} alt=""/></div>
             <div className={style.NavbarGroup}>
+            <Link to="/">
             <div className={style.NavbarItem}>
                 <img className={style.NavbarPng} src={HomeIcon} alt="Home"/>
                 <span>首頁</span>
             </div>
+            </Link>
+            <Link to="/">
             <div className={style.NavbarItem}>
                 <img className={style.NavbarPng} src={InfoIcon} alt="Icon"/>
                 <span>個人資料</span>
-            </div>    
+            </div>   
+            </Link> 
+            <Link to="/">
             <div className={style.NavbarItem}>
                 <img className={style.NavbarPng} src={SettingIcon} alt="Setting"/>
                 <span>設定</span>
             </div>  
+            </Link> 
             <button className={style.NavbarButton}>推文</button> 
             </div>
         

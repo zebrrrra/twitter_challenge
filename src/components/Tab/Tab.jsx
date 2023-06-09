@@ -2,11 +2,14 @@
 import style from './Tab.module.scss';
 import { useState } from 'react';
 
-const Tab = () =>{
+const Tab = ({onTabChange}) =>{
     const [activeTab, setactiveTab] = useState("推文");
     const handleClick = (tabName) =>
     {
         setactiveTab (tabName);
+        if (onTabChange){
+            onTabChange(tabName);
+        }
     };
     return(
         <div className={style.tabContainer}>

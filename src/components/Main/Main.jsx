@@ -1,23 +1,31 @@
 /*import {useEffect, useState } from 'react';
 import {Routes, Route, useParams,Navigate} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import axios from 'axios';*/
+import { useState } from 'react';
 import MainPost from '../MainPost/MainPost';
-import Tab from '../Tab/Tab';
-import TweetList from '../TweetList/TweetList';
+//import Tab from '../Tab/Tab';
+//import TweetList from '../TweetList/TweetList';
+import TweetCard from '../TweetCard/TweetCard';
 
 const Main = ()=>{
+  //const [activeTab, setActiveTab] = useState("推文");
   return (
     <div>
     <MainPost/>
-    <Tab/>
-    <TweetList/>
+    <TweetCard />
     </div>
   )
 
 }
 
 
-/*const Main = () => {
+/*
+    <Tab onTabChange={setActiveTab} />
+    <TweetList activeTab={activeTab} />
+    
+    
+    const Main = () => {
   const { userId, tab } = useParams();
   const [tweets, setTweets] = useState([]);
   useEffect(() => {

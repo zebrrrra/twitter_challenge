@@ -66,6 +66,22 @@
     line-height: 26px;
     color: #171725;
 }
+.replyContainer{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding-top: 8px;
+    padding-bottom: 8px;
+}
+.reply{
+    font-size: 14px;
+    color:#6C757D;
+    margin-right: 2px;
+}
+.replyId{
+    font-size: 14px;
+    color:#FF6600;
+}
 .countContainer{
     display: flex;
     flex-direction: row;
@@ -79,10 +95,10 @@
     width: 20%;
 
     img{
-        margin-right: 1%;
+        margin-right: 8px;
         width: 16px;
         height: 16px;
-        margin-right: 8px;
+
     }
 
     
