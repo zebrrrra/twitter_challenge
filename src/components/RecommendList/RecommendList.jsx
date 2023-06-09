@@ -11,17 +11,31 @@ import  Avatar  from '../../assets/icon/img.svg'
         <div className={style.recommendCard}>
         
         <img className={style.avatar} src={Avatar}alt="Avatar"/>
+        <div className={style.userInfo}>
         <div className={style.name}>pizzahut </div>
         <div className={style.userName}>@pizzahut</div>
+        </div>
         <button className={style.buttonFollowing}>正在跟隨</button>
         </div>
         <div className={style.recommendCard}>
         
         <img className={style.avatar} src={Avatar}alt="Avatar"/>
+        <div className={style.userInfo}>
         <div className={style.name}>pizzahut </div>
         <div className={style.userName}>@pizzahut</div>
+        </div>
         <button className={style.buttonFollower}>跟隨</button>
         </div>
+        <div className={style.recommendCard}>
+        
+        <img className={style.avatar} src={Avatar}alt="Avatar"/>
+        <div className={style.userInfo}>
+        <div className={style.name}>pizzahut </div>
+        <div className={style.userName}>@pizzahut</div>
+        </div>
+        <button className={style.buttonFollowing}>正在跟隨</button>
+        </div>
+
         </div>
 
     )
