@@ -8,13 +8,13 @@ import MainPost from '../MainPost/MainPost';
 //import TweetList from '../TweetList/TweetList';
 import TweetCard from '../TweetCard/TweetCard';
 
-const Main = ()=>{
+const Main = () => {
   //const [activeTab, setActiveTab] = useState("推文");
   return (
-    <div>
-    <MainPost/>
-    <TweetCard />
-    </div>
+    <>
+      <MainPost />
+      <TweetCard />
+    </>
   )
 
 }
@@ -57,4 +57,4 @@ const Main = ()=>{
 
     </div>)
 };*/
-export default Main ;
+export default Main;

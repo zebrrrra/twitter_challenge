@@ -6,9 +6,10 @@
     justify-content: space-between;
     width: 100%;
     min-height: 100vh;
-    padding:0;
+    padding: 0;
 
 }
+
 .homeColumn {
     display: flex;
     flex-direction: row;
@@ -16,14 +17,20 @@
     //border-radius: 16px;
 }
 
-.leftColumn,.rightColumn {
-    flex:1;
+.leftColumn,
+.rightColumn {
+    flex: 1;
     background-color: #fff;
-    position:relative;
-}
-.middleColumn {
-    flex: 3;
-    position:  relative;
-    background-color: #fff;
+    position: relative;
 }
 
+.leftColumn {
+    margin-right: 24px;
+}
+
+.middleColumn {
+    flex: 3;
+    position: relative;
+    background-color: #fff;
+    padding-right: 25px;
+}
