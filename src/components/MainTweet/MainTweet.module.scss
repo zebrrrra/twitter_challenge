@@ -1,0 +1,104 @@
+@import"../../style/base.scss";
+
+.container {
+  width: 45%;
+  position: relative;
+  padding: 16px 16px 0;
+  outline: auto;
+}
+
+// 還有一條灰線沒有實現
+.tweetContainer {
+  width: 100%;
+  border-bottom: #E6ECF0 1px solid;
+
+  .titleContainer {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+
+    .nameContainer {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      margin-left: 5px;
+
+
+      .name {
+        @include fontStyle(16, 700);
+        line-height: 26px;
+        color: $name-color;
+      }
+
+      .account {
+        @include fontStyle(14, 400);
+        line-height: 22px;
+        color: $secondary-color;
+      }
+    }
+  }
+
+}
+
+.introduction {
+  @include fontStyle(24, 400);
+  text-align: left;
+  line-height: 36px;
+  color: $name-color;
+}
+
+.time {
+  @include fontStyle(14, 500);
+  line-height: 22px;
+  color: $default-color;
+  text-align: left;
+  margin: 8px 0;
+}
+
+.avatarContainer {
+  @include box(50, 50);
+}
+
+
+.dataContainer {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  margin: 16px 0;
+
+  .data {
+    @include fontStyle(19, 700);
+    line-height: 23px;
+    color: $name-color ;
+
+    >span {
+      margin-left: 5px;
+      color: $secondary-color;
+      font-weight: 400;
+    }
+
+    >:nth-child(1) {
+      margin-right: 24px;
+
+    }
+  }
+
+}
+
+.iconContainer {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  margin: 20px 0;
+
+  .icon {
+
+    cursor: pointer;
+
+    >:nth-child(1) {
+      margin-right: 133px;
+
+    }
+  }
+}
