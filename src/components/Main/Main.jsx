@@ -8,13 +8,18 @@ import Tab from '../Tab/Tab';
 //import TweetList from '../TweetList/TweetList';
 import TweetCard from '../TweetCard/TweetCard';
 
-const Main = ()=>{
+const Main = () => {
   //const [activeTab, setActiveTab] = useState("推文");
   return (
     <>
+<<<<<<< HEAD
     <MainPost/>
     <Tab/>
     <TweetCard />
+=======
+      <MainPost />
+      <TweetCard />
+>>>>>>> origin/Mergebranch_Main_Modal_2
     </>
   )
 
@@ -58,4 +63,4 @@ const Main = ()=>{
 
     </div>)
 };*/
-export default Main ;
+export default Main;

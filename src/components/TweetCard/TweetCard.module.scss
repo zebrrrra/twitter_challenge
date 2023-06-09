@@ -1,28 +1,28 @@
-.tweetCardContainer{
+.tweetCardContainer {
     display: flex;
     flex-direction: column;
     padding: 0;
     gap: 16px;
-    width: 639px;
-    height:153px;
     box-sizing: border-box;
 
 }
-.tweetCard{
+
+.tweetCard {
     display: flex;
     flex-direction: row;
     align-items: start;
-    gap:16px;
+    gap: 16px;
     box-sizing: border-box;
 
 }
 
 .avatar {
-   // margin-left: 24px;
+    // margin-left: 24px;
     width: 50px;
     height: 50px;
     border-radius: 50%;
 }
+
 .contentContainer {
     display: flex;
     flex-direction: column;
@@ -30,7 +30,8 @@
     width: calc(100% - 50px);
 
 }
-.nameAndUserId{
+
+.nameAndUserId {
     display: flex;
     flex-direction: row;
     width: 100%;
@@ -38,7 +39,8 @@
 }
 
 .name {
-    font-family: 'Noto Sans TC';;
+    font-family: 'Noto Sans TC';
+    ;
     font-style: normal;
     color: #171725;
     font-weight: 700;
@@ -47,7 +49,7 @@
     margin-right: 8px;
 }
 
-.userIdTime{
+.userIdTime {
     font-weight: 400;
     font-size: 14px;
     line-height: 22px;
@@ -55,7 +57,7 @@
 }
 
 
-.tweet{
+.tweet {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -67,23 +69,27 @@
     line-height: 26px;
     color: #171725;
 }
-.replyContainer{
+
+.replyContainer {
     display: flex;
     flex-direction: row;
     align-items: center;
     padding-top: 8px;
     padding-bottom: 8px;
 }
-.reply{
+
+.reply {
     font-size: 14px;
-    color:#6C757D;
+    color: #6C757D;
     margin-right: 2px;
 }
-.replyId{
+
+.replyId {
     font-size: 14px;
-    color:#FF6600;
+    color: #FF6600;
 }
-.countContainer{
+
+.countContainer {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -95,14 +101,12 @@
     flex-direction: row;
     width: 20%;
 
-    img{
+    img {
         margin-right: 8px;
         width: 16px;
         height: 16px;
 
     }
 
-    
+
 }
-
-
