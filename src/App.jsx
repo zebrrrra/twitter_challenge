@@ -1,15 +1,15 @@
 import "./style/main.scss"
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import HomePage from './pages/HomePage/HomePage'
+// import HomePage from './pages/HomePage/HomePage'
 import { LoginPage, AdminLoginPage } from "./pages";
 
 function App() {
   return (
     <div className="App">
-      <HomePage />
+      {/* <HomePage /> */}
       <Router>
         <Routes>
-          <Route path="/" element={<HomePage />} />
+          <Route path="/" element={<LoginPage />} />
 
           {/* <Route path ="/login" element={<LoginPage/>/>
         <Route path ="/profile" element={<ProfilePage/>}/>

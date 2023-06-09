@@ -17,9 +17,25 @@ const LoginPage = () => {
     if (!email.trim() || !password.trim()) return
     e.preventDefault();
 
+    // return data包＋status
     const data = await login({ email, password })
+    const status = data.status
     const { token } = data.data
-    if (!data) {
+    console.log(data)
+
+    if (status === 'success') {
+      localStorage.setItem('token', token)
+      Swal.fire({
+        title: '登入成功',
+        icon: 'success',
+        showConfirmButton: false,
+        timer: 1000,
+        position: 'top',
+      });
+      return
+    }
+
+    if (status === 'error') {
       Swal.fire({
         title: '登入失敗',
         icon: 'error',
@@ -30,60 +46,6 @@ const LoginPage = () => {
       return
     }
 
-    localStorage.setItem('token', token)
-    console.log(token)
-    Swal.fire({
-      title: '登入成功',
-      icon: 'success',
-      showConfirmButton: false,
-      timer: 1000,
-      position: 'top',
-    });
-    return
-
-
-    // const { status, data } = await login({ email, password })
-
-    // const { token } = data
-
-    // if (!status === "success") {
-    //   Swal.fire({
-    //     title: '登入失敗',
-    //     icon: 'error',
-    //     showConfirmButton: false,
-    //     timer: 1000,
-    //     position: 'top',
-    //   });
-    // }
-    // localStorage.setItem('token', token)
-    // console.log(data)
-    // if (!status) {
-    //   Swal.fire({
-    //     title: '登入失敗',
-    //     icon: 'error',
-    //     showConfirmButton: false,
-    //     timer: 1000,
-    //     position: 'top',
-    //   });
-    //   return
-    // }
-
-    // localStorage.setItem('token', token)
-    // Swal.fire({
-    //   title: '登入成功',
-    //   icon: 'success',
-    //   showConfirmButton: false,
-    //   timer: 1000,
-    //   position: 'top',
-    // });
-    // return
-
-    // const status=
-    // const { token } = data
-
-    // 
-    // console.log(data)
-    // return
   }
 
   let message = ''
