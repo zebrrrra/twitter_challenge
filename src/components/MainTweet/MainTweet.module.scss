@@ -92,13 +92,12 @@
   align-items: center;
   margin: 20px 0;
 
-  .icon {
-
+  svg {
     cursor: pointer;
-
-    >:nth-child(1) {
-      margin-right: 133px;
-
-    }
   }
+
+  svg:nth-child(1) {
+    margin-right: 133px;
+  }
+
 }
