@@ -14,11 +14,11 @@ const ReplyModal = ({
 
         <div className={style.ContentContainer}>
           <div className={style.leftContainer}>
-            <div className={style.avatarContainer}>
+            <div className={`${style.avatarContainer} ${style.top}`}>
               <img src={avatar} alt="avatar" />
             </div>
             <Line className={style.line} />
-            <div className={style.avatarContainer}>
+            <div className={`${style.avatarContainer} ${style.down}`}>
               <img src={avatar} alt="avatar" />
             </div>
           </div>
