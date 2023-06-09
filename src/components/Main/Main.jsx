@@ -1,12 +1,3 @@
-<<<<<<< HEAD
-
-
-export default function Main () {
-  return(  <div>test
-
-</div>)
-};
-=======
 import UserInfo from '../UserInfo/UserInfo'
 import Tab from '../Tab/Tab';
 import {useParams} from 'react-router-dom';
@@ -65,4 +56,3 @@ const Main = () => {
     </div>)
 };*/
 export default Main;
->>>>>>> sendtweet
