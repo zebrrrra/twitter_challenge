@@ -26,7 +26,7 @@ const TweetList =({ activeTab, userId })=>{
                     data = await getUserTweets(userId);
                     break;
             }
-
+            console.log(data);//測試
             if (data) {
                 setTweets(data);
             }

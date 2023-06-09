@@ -1,24 +1,28 @@
-.mainPostContainer{
+// 取消寬度設定
+.mainPostContainer {
     display: flex;
-    flex-direction:  row;
-    width: 634px;
+    flex-direction: row;
     height: 130px;
     margin-bottom: 16px;
 }
-.tweetArea{
+
+
+.tweetArea {
     display: flex;
-    flex-direction:  column;
+    flex-direction: column;
     justify-content: space-between;
     width: calc(100% - 50px);
 }
-.avatar{
+
+.avatar {
     width: 50px;
     height: 50px;
     margin-right: 10px;
     //background: url(.png),
     //#C3C4C4
 }
-.tweetText{
+
+.tweetText {
     border: none;
     height: 100%;
     width: 100%;
@@ -29,10 +33,11 @@
     font-size: 18px;
     line-height: 18px;
     color: #6C757D;
-    margin-bottom:10px;
-    input{
+    margin-bottom: 10px;
+
+    input {
         height: 50px; //調整高度
-        border:none;
+        border: none;
         padding: 0;
 
     }
