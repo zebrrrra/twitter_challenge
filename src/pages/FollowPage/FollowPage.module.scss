@@ -1,36 +1,29 @@
 @import '../../style/base.scss';
 
-.homeContianer {
+.followContianer {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     width: 100%;
     min-height: 100vh;
-    padding: 0;
+    padding:0;
 
 }
-
-.homeColumn {
+.followColumn {
     display: flex;
     flex-direction: row;
     height: 100%;
-    //border-radius: 16px;
+    border-radius: 16px;
 }
 
-.leftColumn,
-.rightColumn {
-    flex: 1;
+.leftColumn,.rightColumn {
+    flex:1;
     background-color: #fff;
-    position: relative;
+    position:relative;
 }
-
-.leftColumn {
-    margin-right: 24px;
-}
-
 .middleColumn {
-    flex: 3;
-    position: relative;
+    flex: 2;
+    position:  relative;
     background-color: #fff;
-    padding-right: 25px;
 }
+

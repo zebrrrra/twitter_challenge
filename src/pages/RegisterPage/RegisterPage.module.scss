@@ -1,0 +1,12 @@
+@use "../LoginPage/LoginPage.module.scss" as *;
+
+.linkGroup {
+  justify-content: center;
+}
+
+.link {
+  &:nth-child(1) {
+    margin-right: 0;
+  }
+
+}
