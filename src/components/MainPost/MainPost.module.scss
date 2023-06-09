@@ -8,7 +8,7 @@
 .tweetArea{
     display: flex;
     flex-direction:  column;
-    justify-content: space-between;
+    justify-content: flex-start;
     width: calc(100% - 50px);
 }
 .avatar{
