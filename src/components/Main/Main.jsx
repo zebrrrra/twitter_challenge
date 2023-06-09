@@ -12,14 +12,9 @@ const Main = () => {
   //const [activeTab, setActiveTab] = useState("推文");
   return (
     <>
-<<<<<<< HEAD
     <MainPost/>
     <Tab/>
     <TweetCard />
-=======
-      <MainPost />
-      <TweetCard />
->>>>>>> origin/Mergebranch_Main_Modal_2
     </>
   )
 
