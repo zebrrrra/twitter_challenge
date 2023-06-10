@@ -1,8 +1,10 @@
 import style from './AuthInput.module.scss'
-const AuthInput = ({ label, id, type, placeholder, value, maxLength = 50, onChange, height = 54, message, isError }) => {
+const AuthInput = ({ label, id, type, placeholder, value, maxLength, onChange, height = 54, message, isError }) => {
 
+  // 50,160字
 
   const isExceeded = value.length > maxLength;
+  const number = value.length
 
   // 用來切換顯示紅線與否
   let inputStyle = style.inputGroupDefault;
@@ -11,14 +13,12 @@ const AuthInput = ({ label, id, type, placeholder, value, maxLength = 50, onChan
     height: `${height}px`,
   };
 
-  const number = value.length
-  let notExisted = true
+  // 過濾是否為名稱表單
+  let isName = label === '名稱'
 
-  // 只有名稱顯示字數多少
-
-  if (isExceeded) {
+  if (isError) {
     inputStyle += ` ${style.inputGroupError}`;
-    message = '字數超出上限!'
+    // message = '字數超出上限!'
   }
   return (
     <>
@@ -31,7 +31,7 @@ const AuthInput = ({ label, id, type, placeholder, value, maxLength = 50, onChan
         </span>}
 
         {value && <span className={`${style.hint} ${style.hintRight}`}>
-          {number}/{maxLength}
+          {number}/{isName && { maxLength }}
         </span >}
       </small >
     </>
