@@ -1,15 +1,32 @@
 import axios from 'axios';
-const authURl = 'https://tranquil-basin-75437.herokuapp.com';
+const baseUrl = 'https://tranquil-basin-75437.herokuapp.com/api';
+
 export const login = async ({ account, password }) => {
   try {
-    const data = await axios.post(`${authURl}/api/users/login`, { account, password })
-    return data
+    const response = await axios.post(`${baseUrl}/users/login`, { account, password })
+    return response
   } catch (err) {
     console.error('[Login Failed]:', err)
     return err
   }
 }
 
+
+export const PutUserProfile = async ({ id, name, avatar, cover, introduction }) => {
+  const token = localStorage.getItem('token')
+  console.log(token)
+  try {
+    const response = await axios.put(`${baseUrl}/users/${id}/profile`, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }, mimeType: 'multipart/form-data'
+    })
+    return response
+  } catch (err) {
+    console.log('error', err)
+    return err
+  }
+}
 
 
 
