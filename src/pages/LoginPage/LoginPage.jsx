@@ -3,23 +3,49 @@ import { ReactComponent as Logo } from '../../assets/icons/logo.svg'
 import { Link } from 'react-router-dom'
 import { AuthInput } from '../../components'
 import { useState } from 'react'
+import { login } from '../../apis/auth'
+import Swal from 'sweetalert2'
 
 const LoginPage = () => {
   const [account, setAccount] = useState('')
   const [password, setPassword] = useState('')
-  const handleClick = () => {
+
+
+  const handleClick = async (e) => {
     if (!account.trim() || !password.trim()) return
-    // wait api data
+    e.preventDefault();
+    console.log(account)
+    console.log(password)
+
+    const data = await login({ account, password })
+    const status = data.status
+    console.log(data)
+    if (status === 200) {
+      // localStorage.setItem('token', token)
+      Swal.fire({
+        title: '登入成功',
+        icon: 'success',
+        showConfirmButton: false,
+        timer: 1000,
+        position: 'top',
+      });
+      return
+    } else {
+      console.log('error')
+      console.log(data.response.status)
+      console.log(data.response.data)
+
+      Swal.fire({
+        title: '登入失敗',
+        icon: 'error',
+        showConfirmButton: false,
+        timer: 1000,
+        position: 'top',
+      });
+      return
+
+    }
   }
-
-  let message = ''
-  // if(account不存在){
-  //   message ='帳號不存在!'
-  // }
-
-  // if(account重複){
-  //   message ='帳號已重複註冊!'
-  // }
 
   return (
     <div className={style.container}>
@@ -41,3 +67,18 @@ const LoginPage = () => {
 
 
 export default LoginPage
+
+
+
+// email是帳號 後面會改
+// 回傳token 和user包，axios拖去
+// const data = await login({ email, password })
+
+let message = ''
+  // if(account不存在){
+  //   message ='帳號不存在!'
+  // }
+
+  // if(account重複){
+  //   message ='帳號已重複註冊!'
+  // }
