@@ -20,7 +20,7 @@ const TweetList =({ userId })=>{
         fetchTweets();
     }, [ userId]); 
 
-    return tweets.map(tweet => <TweetCard tweet={tweet} type="tweet"/>)
+    return tweets.map(tweet => <TweetCard key={tweet.id} tweet={tweet} type="tweet"/>)
 }
 
 export default TweetList;

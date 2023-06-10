@@ -20,7 +20,7 @@ const HomePage = () => {
   //  }
   //})
   return (
-    <div className={style.homeContainer}>
+    <div className={style.profileContainer}>
       <div className={style.homeColumn}>
         <div className={style.leftColumn}>
           <Navbar />

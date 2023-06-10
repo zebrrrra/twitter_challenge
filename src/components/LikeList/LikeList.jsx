@@ -9,7 +9,7 @@ import { useParams } from 'react-router-dom';
 
 const LikeList =({userId })=> {
     const [likes, setLikes] =useState([]);
-    const {extraPath} = useParams();
+
 
     useEffect(()=>{
         const fetchLikes = async () => {
@@ -21,7 +21,7 @@ const LikeList =({userId })=> {
         }
         fetchLikes();
      }, [userId]);
-return likes?likes.map((like,index) => <LikeCard like={like} key={index} type="like"/>): null;
+return likes?likes.map((like,index) => <LikeCard like={like} key={like.id} type="like"/>): null;
     }
 
 export default LikeList;
