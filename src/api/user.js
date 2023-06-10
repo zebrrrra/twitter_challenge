@@ -3,17 +3,25 @@ import axios from "axios"
 const baseUrl = 'https://tranquil-basin-75437.herokuapp.com/api';
 
 export const PutUserProfile = async ({ id, name, avatar, cover, introduction }) => {
-  const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTA0LCJlbWFpbCI6ImFhQGFhLmNvbSIsIm5hbWUiOiJhYSIsImF2YXRhciI6bnVsbCwiaW50cm9kdWN0aW9uIjpudWxsLCJyb2xlIjoidXNlciIsImFjY291bnQiOiJhYSIsImNvdmVyIjpudWxsLCJjcmVhdGVkQXQiOiIyMDIzLTA2LTA5VDIyOjU4OjUyLjAwMFoiLCJ1cGRhdGVkQXQiOiIyMDIzLTA2LTA5VDIyOjU4OjUyLjAwMFoiLCJpYXQiOjE2ODYzNTE3MjMsImV4cCI6MTY4ODk0MzcyM30.3s7QPLvH9CrpuohvEwEGmfkBapqf_ECov5hOz5jv4bo'
+  const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTU0LCJlbWFpbCI6InZ2dkBleGFtcGxlLmNvbSIsIm5hbWUiOiJ2dnYiLCJhdmF0YXIiOm51bGwsImludHJvZHVjdGlvbiI6bnVsbCwicm9sZSI6InVzZXIiLCJhY2NvdW50IjoidnZ2IiwiY292ZXIiOm51bGwsImNyZWF0ZWRBdCI6IjIwMjMtMDYtMTBUMDY6NTE6NTcuMDAwWiIsInVwZGF0ZWRBdCI6IjIwMjMtMDYtMTBUMDY6NTE6NTcuMDAwWiIsImlhdCI6MTY4NjM3OTk0NSwiZXhwIjoxNjg4OTcxOTQ1fQ.Fj81MQ2jhW5BgRRBm2werjIDkMw2nrHj1OIH9QLpEZY'
   try {
     const data = await axios.put(`${baseUrl}/users/${id}/profile`, {
       headers: {
         Authorization: `Bearer ${token}`
-      }
+      }, mimeType: 'multipart/form-data'
     })
     return data
-
   } catch (err) {
     console.log('error', err)
     return err
   }
 }
+// axios({
+//   method: 'POST',
+//   url: 'https://api.imgur.com/3/image',
+//   data: formData,
+//   headers: {
+//     Authorization: "Client-ID " + {{ apiKey }} //放置你剛剛申請的Client-ID
+//    },
+//   mimeType: 'multipart/form-data'
+//    })

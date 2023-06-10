@@ -8,30 +8,42 @@ import { ReactComponent as Fork } from "../../assets/icons/Vector.svg"
 import { PutUserProfile } from "../../api/user"
 
 const EditModal = ({ open, onClose, onChange }) => {
-
-  const [selectedImage, setSelectedImage] = useState(null);
-
-
-
+  //  name, introduction, avatar, cover
 
   //接api的資料
   const [cover, setCover] = useState(editCover)
   const [avatar, setAvatar] = useState(editAvatar)
 
-  const [description, setDescription] = useState('')
+  const [name, setName] = useState('')
+  const [introduction, setIntroduction] = useState('')
+
   const handleAvatarUpload = (e) => {
+    // 取得使用者上傳的圖
     const data = e.target.files[0];
     if (!data) return;
     const formData = new FormData();
     formData.append('avatar', data)
-    console.log(formData.get('avatar'))
-
+    // console.log(formData.get('avatar'))
+    setAvatar(formData)
   }
+
   const handleCoverUpload = (e) => {
     const data = e.target.files[0];
     if (!data) return;
+    const formData = new FormData();
+    formData.append('cover', data)
+    setCover(formData)
 
   }
+
+  // 儲存後發送api
+  const handleProfileSave = async ({ cover, avatar, name, introduction }) => {
+    let id = 154
+    const payload = await PutUserProfile({ id, cover, avatar, name, introduction })
+    console.log(payload)
+    onClose(false)
+  }
+
 
   if (!open) return;
   return (
@@ -42,38 +54,38 @@ const EditModal = ({ open, onClose, onChange }) => {
             <button onClick={() => onClose(false)}> X </button>
             <h5 className="title">編輯個人資料</h5>
           </div>
-          <button className={style.saveButton} onClick={() => onClose(false)}> 儲存 </button>
+          <button className={style.saveButton} onClick={handleProfileSave}> 儲存 </button>
         </header>
-        <form className={style.uploadFormContainer} action="/api/users/:id/profile" method="POST" encType="multipart/form-data">
+        {/* <form className={style.uploadFormContainer} action="/api/users/:id/profile" method="POST" encType="multipart/form-data"> */}
 
-          <label htmlFor="coverUpload" className={style.bgContainer}>
-            <img src={cover} alt="cover" />
-            <Upload className={style.upload} />
-            <Fork className={style.fork} />
-          </label>
-          <input type="file"
-            id="coverUpload"
-            style={{ display: 'none' }}
-            accept="image/*"
-            onChange={handleCoverUpload} />
+        <label htmlFor="coverUpload" className={style.bgContainer}>
+          <img src={cover} alt="cover" />
+          <Upload className={style.upload} />
+          <Fork className={style.fork} />
+        </label>
+        <input type="file"
+          id="coverUpload"
+          style={{ display: 'none' }}
+          accept="image/*"
+          onChange={handleCoverUpload} />
 
-          <label htmlFor="Avatarupload" className={style.avatarContainer}>
-            <img src={avatar} alt="avatar" />
-            <Upload className={style.upload} />
-          </label>
-          <input type="file"
-            id="Avatarupload"
-            style={{ display: 'none' }}
-            accept="image/*"
-            onChange={handleAvatarUpload} />
+        <label htmlFor="Avatarupload" className={style.avatarContainer}>
+          <img src={avatar} alt="avatar" />
+          <Upload className={style.upload} />
+        </label>
+        <input type="file"
+          id="Avatarupload"
+          style={{ display: 'none' }}
+          accept="image/*"
+          onChange={handleAvatarUpload} />
 
-        </form>
+        {/* </form> */}
 
 
         <div className={style.inputContainer}>
-          <AuthInput value={56} label="名稱" id="username" type="text" placeholder="請輸入使用者名稱" maxLength={50} onChange={(nameValue) => onChange(nameValue)} message />
+          <AuthInput value={name} label="名稱" id="username" type="text" placeholder="請輸入使用者名稱" maxLength={50} onChange={(nameValue) => setName(nameValue)} message />
 
-          <AuthInput value={description} label="自我介紹" id="description" type="text" placeholder="請輸入自我介紹" maxLength={160} onChange={(descriptionValue) => setDescription(descriptionValue)} message height={147} />
+          <AuthInput value={introduction} label="自我介紹" id="introduction" type="text" placeholder="請輸入自我介紹" maxLength={160} onChange={(introductionValue) => setIntroduction(introductionValue)} message height={147} />
         </div>
       </div>
     </div>
