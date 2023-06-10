@@ -1,0 +1,57 @@
+@import '../../style/base.scss';
+
+.homeContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+  min-height: 100vh;
+  padding: 0;
+
+}
+
+
+.homeColumn {
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+  //border-radius: 16px;
+}
+
+.leftColumn,
+.rightColumn {
+  flex: 1;
+  background-color: #fff;
+  position: relative;
+}
+
+.leftColumn {
+  margin-right: 24px;
+}
+
+.middleColumn {
+  flex: 3;
+  position: relative;
+  background-color: #fff;
+  padding-right: 25px;
+}
+
+
+// 新增
+.form {
+  width: 45vw;
+  display: grid;
+}
+
+.button {
+  margin: 16px;
+  @include box(64, 40);
+  @include fontStyle(16, 400);
+  align-self: flex-end;
+  text-align: center;
+  background: $brand-color;
+  border-radius: 50px;
+  line-height: 24px;
+  color: $background-color;
+  justify-self: end;
+}

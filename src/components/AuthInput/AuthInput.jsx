@@ -1,5 +1,5 @@
 import style from './AuthInput.module.scss'
-const AuthInput = ({ label, id, type, placeholder, value, maxLength = 50, onChange, height = 54 }) => {
+const AuthInput = ({ label, id, type, placeholder, value = 5, maxLength = 50, onChange, height = 54 }) => {
   const isExceeded = value.length > maxLength;
   let message = ""
   // 用來切換顯示紅線與否
