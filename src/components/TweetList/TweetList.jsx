@@ -3,9 +3,6 @@ import { useEffect, useState } from 'react';
 import TweetCard from '../TweetCard/TweetCard';
 import { getUserTweets } from '../../apis/user';
 
-//import style from '';
-//假設有Authcontext(還沒寫)
-
 const TweetList =({ userId })=>{
     const [tweets, setTweets] = useState([]);
 
@@ -18,7 +15,7 @@ const TweetList =({ userId })=>{
             }
         }
         fetchTweets();
-    }, [ userId]); 
+    },[userId]); 
 
     return tweets.map(tweet => <TweetCard key={tweet.id} tweet={tweet} type="tweet"/>)
 }

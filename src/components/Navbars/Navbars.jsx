@@ -54,7 +54,7 @@ const Navbars = () => {
             </div>
         {openModal && <TweetModal open ={openModal} onClose= {()=>setOpenModal(false)}/>}
         </div>   
-        <div className={style.logout}><img className={style.NavbarPng}src={LogoutIcon} onClick ={handleLogout} alt="logout"/>登出</div>    
+        <div className={style.logout}onClick ={handleLogout}><img className={style.NavbarPng}src={LogoutIcon}  alt="logout"/>登出</div>    
         </>
     
     )

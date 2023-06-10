@@ -6,19 +6,32 @@ import Navbar from '../../components/Navbars/Navbars';
 import Header from '../../components/Headers/Headers';
 import Main from '../../components/Main/Main';
 import style from './ProfilePage.module.scss'
+import AuthContext from '../../context/AuthContext'
+import { useNavigate } from 'react-router-dom';
+import { useEffect,useContext } from 'react';
+//import { useParmas } from 'react-router-dom';
 
-
-const HomePage = () => {
+const ProfilePage = () => {
+  //const {userId } = useParams();
   /*不確定Router*/
   //const { isAuthenticated } =useAuth ();
   //const navigate = useNavigate ();
   //useEffect (()=>{
   // if (isAuthenticated){
-  //    navigate ('/LoginPage');
+  //    navigate ('/login');
   //  } else {
-  //    navigate('/HomePage');
+  //    navigate('/');
   //  }
   //})
+
+  const { isAuthenticated,user } =useContext(AuthContext);
+  const navigate =useNavigate();
+  useEffect(()=>{
+    if (!isAuthenticated){
+      navigate ('/login');
+    }
+    },[navigate,isAuthenticated])
+
   return (
     <div className={style.profileContainer}>
       <div className={style.homeColumn}>
@@ -37,4 +50,4 @@ const HomePage = () => {
   )
 }
 
-export default HomePage;
+export default ProfilePage;

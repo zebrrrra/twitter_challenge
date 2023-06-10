@@ -1,7 +1,7 @@
 import style from './HomePage.module.scss'
 //import AllTweets from '../../components/AllTweets/AllTweets';
 import {Navbars, Header,MainPost,AllTweets,RecommendList} from '../../components';
-import {AuthContext} from '../../context/AuthContext'
+import AuthContext from '../../context/AuthContext'
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useContext } from 'react';
