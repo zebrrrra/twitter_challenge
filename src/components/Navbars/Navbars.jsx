@@ -1,5 +1,5 @@
 import style from '../Navbars/Navbars.module.scss';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 //import Modal
 import TweetModal from '../TweetModal/TweetModal';
@@ -14,12 +14,17 @@ import LogoutIcon from '../../assets/icon/logout_1.svg'
 
 const Navbars = () => {
     const [openModal, setOpenModal] =useState (false);
+    const navigate = useNavigate();
     //const handleLogoChange =()=>{
 
 
     //}
     const handlebuttonClick =()=>{
         setOpenModal (true)
+    }
+    const handleLogout=()=>{
+        localStorage.removeItem('token');
+        navigate('/login');
     }
 
     return(
@@ -49,7 +54,7 @@ const Navbars = () => {
             </div>
         {openModal && <TweetModal open ={openModal} onClose= {()=>setOpenModal(false)}/>}
         </div>   
-        <div className={style.logout}><img className={style.NavbarPng}src={LogoutIcon} alt="logout"/>登出</div>    
+        <div className={style.logout}><img className={style.NavbarPng}src={LogoutIcon} onClick ={handleLogout} alt="logout"/>登出</div>    
         </>
     
     )
@@ -63,8 +68,8 @@ export default Navbars;
 /*先全部註解確認版面後再跑
 //已登入的使用者
 const checkIfLoggedIn=()=>{
-const authToken = localStorage.getItem('authToken');
-return authToken !== null;    
+const token = localStorage.getItem('token');
+return token !== null;    
 }
 
 //登出頁面
