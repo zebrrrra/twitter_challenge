@@ -7,18 +7,21 @@ import { login } from '../../apis/auth'
 import Swal from 'sweetalert2'
 
 const LoginPage = () => {
-  const [email, setEmail] = useState('')
+  const [account, setAccount] = useState('')
   const [password, setPassword] = useState('')
 
 
   const handleClick = async (e) => {
-    if (!email.trim() || !password.trim()) return
+    if (!account.trim() || !password.trim()) return
     e.preventDefault();
-    const data = await login({ email, password })
+    console.log(account)
+    console.log(password)
+
+    const data = await login({ account, password })
     const status = data.status
-    const { token } = data
-    if (status === "success") {
-      localStorage.setItem('token', token)
+    console.log(data)
+    if (status === 200) {
+      // localStorage.setItem('token', token)
       Swal.fire({
         title: '登入成功',
         icon: 'success',
@@ -27,8 +30,11 @@ const LoginPage = () => {
         position: 'top',
       });
       return
-    }
-    if (status === "error") {
+    } else {
+      console.log('error')
+      console.log(data.response.status)
+      console.log(data.response.data)
+
       Swal.fire({
         title: '登入失敗',
         icon: 'error',
@@ -36,8 +42,8 @@ const LoginPage = () => {
         timer: 1000,
         position: 'top',
       });
-      console.log(data)
       return
+
     }
   }
 
@@ -46,7 +52,7 @@ const LoginPage = () => {
       <Logo className={style.logo} />
       <h3 className={style.title}>登入Alphitter</h3>
       <form className={style.form}>
-        <AuthInput label='帳號' id="email" type="text" placeholder="請輸入帳號" value={email} message={message} onChange={(emailValue) => setEmail(emailValue)} maxLength={50} />
+        <AuthInput label='帳號' id="account" type="text" placeholder="請輸入帳號" value={account} message={message} onChange={(accountValue) => setAccount(accountValue)} maxLength={50} />
         <AuthInput label='密碼' id="password" type="password" placeholder="請輸入密碼" value={password} onChange={(passwordValue) => setPassword(passwordValue)} />
         <button className={style.button} type="submit" onClick={handleClick}>登入</button>
       </form >
