@@ -7,10 +7,26 @@ import { AuthInput } from '../../components'
 const RegisterPage = () => {
   const [account, setAccount] = useState('')
   const [password, setPassword] = useState('')
-  const [username, setUsername] = useState('')
+  const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [confirmWord, setConfirmWord] = useState('')
-  let message = ''
+  const [error, setError] = useState(false)
+  const [message, setMessage] = useState('')
+
+
+  const handleNameInput = (nameValue) => {
+    setName(nameValue)
+
+    if (name.value > 50) {
+      setError(true)
+    }
+  }
+
+
+
+
+
+
 
   return (
     <div className={style.container}>
@@ -19,7 +35,7 @@ const RegisterPage = () => {
       <form className={style.form}>
         <AuthInput label='帳號' id="account" type="text" placeholder="請輸入帳號" value={account} message={message} onChange={(accountValue) => setAccount(accountValue)} />
 
-        <AuthInput label='名稱' id="username" type="text" placeholder="請輸入使用者名稱" value={username} message={message} maxLength={50} onChange={(nameValue) => setUsername(nameValue)} />
+        <AuthInput label='名稱' id="name" type="text" placeholder="請輸入使用者名稱" value={name} message={message} maxLength={50} onChange={handleNameInput} />
 
         <AuthInput label='Email' id="email" type="email" placeholder="請輸入Email" value={email} message={message} onChange={(emailValue) => setEmail(emailValue)} />
 

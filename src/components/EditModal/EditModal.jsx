@@ -40,8 +40,12 @@ const EditModal = ({ open, onClose, onChange }) => {
 
   // 儲存後發送api
   const handleProfileSave = async ({ cover, avatar, name, introduction }) => {
+
+
     let id = 134
+
     const payload = await PutUserProfile({ id, cover, avatar, name, introduction })
+
     console.log(payload)
     onClose(false)
   }

@@ -12,22 +12,26 @@ export const login = async ({ account, password }) => {
 }
 
 
+
 export const PutUserProfile = async ({ id, name, avatar, cover, introduction }) => {
   const token = localStorage.getItem('token')
   console.log(token)
   try {
-    const response = await axios.put(`${baseUrl}/users/${id}/profile`, {
+
+    const formData = new FormData();
+
+    const response = await axios.put(`${baseUrl}/users/${id}/profile`, formData, {
       headers: {
-        Authorization: `Bearer ${token}`
-      }, mimeType: 'multipart/form-data'
-    })
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'multipart/form-data',
+      },
+    });
     return response
   } catch (err) {
     console.log('error', err)
     return err
   }
 }
-
 
 
 

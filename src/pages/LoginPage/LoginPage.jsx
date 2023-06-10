@@ -9,13 +9,15 @@ import Swal from 'sweetalert2'
 const LoginPage = () => {
   const [account, setAccount] = useState('')
   const [password, setPassword] = useState('')
+  const [message, setMessage] = useState('')
   const navigate = useNavigate()
-  let message = ''
+
 
   // error在其他使用到authinput的元件也會使用到，可以掛共用
-  const [error, setError] = useState(true)
+  const [error, setError] = useState(false)
 
   const handleClick = async (e) => {
+    e.preventDefault();
     if (!account.trim() || !password.trim()) {
       Swal.fire({
         title: '請先登入帳號',
@@ -26,7 +28,6 @@ const LoginPage = () => {
       });
       return
     }
-    e.preventDefault();
     const data = await login({ account, password })
     const status = data.status
 
@@ -43,12 +44,11 @@ const LoginPage = () => {
         timer: 2000,
         position: 'top',
       });
+      setError(false)
       navigate('/profile')
       return
     } else {
-
-      message = '帳號不存在!'
-
+      setMessage("帳號不存在!")
       Swal.fire({
         title: '登入失敗',
         icon: 'error',
@@ -67,7 +67,7 @@ const LoginPage = () => {
       <Logo className={style.logo} />
       <h3 className={style.title}>登入Alphitter</h3>
       <form className={style.form}>
-        <AuthInput label='帳號' id="account" type="text" placeholder="請輸入帳號" value={account} onChange={(accountValue) => setAccount(accountValue)} maxLength={50} isError={error} />
+        <AuthInput label='帳號' id="account" type="text" placeholder="請輸入帳號" value={account} onChange={(accountValue) => setAccount(accountValue)} maxLength={50} isError={error} message={message} />
 
         <AuthInput label='密碼' id="password" type="password" placeholder="請輸入密碼" value={password} onChange={(passwordValue) => setPassword(passwordValue)} isError={error} />
         <button className={style.button} type="submit" onClick={handleClick}>登入</button>
@@ -83,18 +83,3 @@ const LoginPage = () => {
 
 
 export default LoginPage
-
-
-
-// email是帳號 後面會改
-// 回傳token 和user包，axios拖去
-// const data = await login({ email, password })
-
-let message = ''
-  // if(account不存在){
-  //   message ='帳號不存在!'
-  // }
-
-  // if(account重複){
-  //   message ='帳號已重複註冊!'
-  // }
