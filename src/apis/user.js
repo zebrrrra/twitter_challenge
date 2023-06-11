@@ -4,14 +4,15 @@ const baseUrl = 'https://tranquil-basin-75437.herokuapp.com/api';
 export const login = async ({ account, password }) => {
   try {
     const response = await axios.post(`${baseUrl}/users/login`, { account, password })
-    return response
+    if (response.status === 200) {
+      return { success: true, data: response.data }
+    }
   } catch (err) {
     console.error('[Login Failed]:', err)
-    return err
+    // 硬寫message，等後端修好
+    return { success: false, message: '帳號不存在!' }
   }
 }
-
-
 
 export const PutUserProfile = async ({ id, name, avatar, cover, introduction }) => {
   const token = localStorage.getItem('token')

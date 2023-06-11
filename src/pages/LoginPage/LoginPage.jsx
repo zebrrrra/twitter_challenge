@@ -28,12 +28,12 @@ const LoginPage = () => {
       });
       return
     }
-    const data = await login({ account, password })
-    const status = data.status
-
-    if (status === 200) {
+    const { data, success, message } = await login({ account, password })
+    console.log(message)
+    if (success) {
       // token得待在成功條件裡
-      const token = data.data.data.token
+      const token = data.data.token
+      console.log(token)
 
       localStorage.setItem('token', token)
 
@@ -47,8 +47,8 @@ const LoginPage = () => {
       setError(false)
       navigate('/profile')
       return
+
     } else {
-      setMessage("帳號不存在!")
       Swal.fire({
         title: '登入失敗',
         icon: 'error',
@@ -56,9 +56,9 @@ const LoginPage = () => {
         timer: 1000,
         position: 'top',
       });
+      setMessage(message)
       setError(true)
       return
-
     }
   }
 
