@@ -3,7 +3,7 @@ import axios from 'axios';
 const baseUrl = 'https://tranquil-basin-75437.herokuapp.com/api';
 
 export const PutUserSetting = async ({ id }) => {
-  const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTA0LCJlbWFpbCI6ImFhQGFhLmNvbSIsIm5hbWUiOiJhYSIsImF2YXRhciI6bnVsbCwiaW50cm9kdWN0aW9uIjpudWxsLCJyb2xlIjoidXNlciIsImFjY291bnQiOiJhYSIsImNvdmVyIjpudWxsLCJjcmVhdGVkQXQiOiIyMDIzLTA2LTA5VDIyOjU4OjUyLjAwMFoiLCJ1cGRhdGVkQXQiOiIyMDIzLTA2LTA5VDIyOjU4OjUyLjAwMFoiLCJpYXQiOjE2ODYzNTE3MjMsImV4cCI6MTY4ODk0MzcyM30.3s7QPLvH9CrpuohvEwEGmfkBapqf_ECov5hOz5jv4bo'
+  const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTM0LCJlbWFpbCI6Im9vQG9vLmNvbSIsIm5hbWUiOiJvbyIsImF2YXRhciI6Imh0dHBzOi8vaS5pbWd1ci5jb20vUGlKMEhYdy5wbmciLCJpbnRyb2R1Y3Rpb24iOm51bGwsInJvbGUiOiJ1c2VyIiwiYWNjb3VudCI6Im9vIiwiY292ZXIiOiJodHRwczovL2kuaW1ndXIuY29tL0VubDd0SjEuanBnIiwiY3JlYXRlZEF0IjoiMjAyMy0wNi0xMFQxMToxMDo1My4wMDBaIiwidXBkYXRlZEF0IjoiMjAyMy0wNi0xMFQxMToxMDo1My4wMDBaIiwiaWF0IjoxNjg2Mzk1NDY3LCJleHAiOjE2ODg5ODc0Njd9.UYAiXysMxvWXswvfbb55hEcTeS0CueRCYaSOdKlS9lw'
   try {
     const response = await axios.put(`${baseUrl}/users/${id}`, {
       headers: {
@@ -18,6 +18,5 @@ export const PutUserSetting = async ({ id }) => {
     return { success: false, errInfo: err.response.data.message }
   }
 }
-
 
 
