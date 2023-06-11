@@ -24,7 +24,7 @@ const ProfilePage = () => {
   //  }
   //})
 
-  const { isAuthenticated,user } =useContext(AuthContext);
+  const { isAuthenticated } =useContext(AuthContext);
   const navigate =useNavigate();
   useEffect(()=>{
     if (!isAuthenticated){
