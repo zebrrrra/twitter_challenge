@@ -5,6 +5,7 @@ import { useAuth } from '../../context/AuthContext';
 const Main = () => {
   const { id } = useParams();
   const {user} = useAuth();
+
    return (
     <>
     <UserInfo userId={id}/>
