@@ -4,7 +4,7 @@ import Navbar from '../../components/Navbars/Navbars';
 import Header from '../../components/Headers/Headers';
 import Main from '../../components/Main/Main';
 import style from './ProfilePage.module.scss'
-import AuthContext from '../../context/AuthContext'
+import {useAuth} from '../../context/AuthContext'
 import { useNavigate } from 'react-router-dom';
 import { useEffect,useContext } from 'react';
 
@@ -21,7 +21,7 @@ const ProfilePage = () => {
   //  }
   //})
 
-  const { isAuthenticated } =useContext(AuthContext);
+  const { isAuthenticated } =useAuth();
   const navigate =useNavigate();
   useEffect(()=>{
     if (!isAuthenticated){

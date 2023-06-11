@@ -9,16 +9,16 @@ const Header = ({currentSection, setCurrentSection, otherUser, otherUserTweetCou
     //const {userData, userTweetCount} = useAuthContext();
 
     const handleClickSection = () => {
-        setCurrentSection('mainPage');
+        setCurrentSection('HomePage');
     }
 
     let headerContext="";
 
     switch (currentSection) {
-        case 'homePage':
+        case 'HomePage':
             headerContext = '首頁';  
             break;
-        case 'replyPage':
+        case 'ProgilePage':
             headerContext =
                 <>
                     <img src={LeftIcon} alt="left" onClick={handleClickSection} />

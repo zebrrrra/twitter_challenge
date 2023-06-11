@@ -1,13 +1,14 @@
 import style from './HomePage.module.scss'
 //import AllTweets from '../../components/AllTweets/AllTweets';
 import {Navbars, Header,MainPost,AllTweets,RecommendList} from '../../components';
-import AuthContext from '../../context/AuthContext'
+import {useAuth} from '../../context/AuthContext'
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useContext } from 'react';
+//import { useContext } from 'react';
 
 const HomePage = () => {
-  const { isAuthenticated } =useContext(AuthContext);
+  const { isAuthenticated,user} = useAuth();
+  console.log(user); //測試
   const navigate =useNavigate();
   useEffect(()=>{
     if (!isAuthenticated){
@@ -23,7 +24,7 @@ const HomePage = () => {
         </div>
         <div className={style.middleColumn}>
           <Header />
-          <MainPost />
+          <MainPost user={user} />
           <AllTweets/>
         </div>
         <div className={style.rightColumn}>

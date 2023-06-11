@@ -42,6 +42,8 @@ export const AuthProvider = ({ children }) => {
                 user: payload && {
                     id: payload.id,
                     name: payload.name,
+                    avatar: payload.avatar,
+                    cover: payload.cover,
                 },
                 /*register: async (data) => {
                     const { success, token } = await register(
