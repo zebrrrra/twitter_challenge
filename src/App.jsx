@@ -2,7 +2,7 @@ import "./style/main.scss"
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 // import HomePage from './pages/HomePage/HomePage'
 // import { LoginPage, AdminLoginPage, RegisterPage } from "./pages";
-import { RegisterPage, LoginPage } from "./pages";
+import { RegisterPage, LoginPage, SettingPage } from "./pages";
 import { UserInfo } from "./components";
 
 function App() {

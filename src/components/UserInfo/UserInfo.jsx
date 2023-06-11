@@ -35,7 +35,7 @@ const UserInfo = ({ img = background }) => {
           <Link to="" className={style.link}>31個<span>跟隨者</span></Link>
         </div>
       </div>
-      {openModal && <EditModal open={openModal} onClose={() => setOpenModal(false)} />}
+      {openModal && <EditModal open={openModal} onClose={(value) => setOpenModal(value)} />}
     </div >
 
   )
