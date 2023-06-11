@@ -1,6 +1,6 @@
 import avatar from '../../assets/Photo.png'
 import style from './MainPost.module.scss';
-import { useState} from 'react';
+import { useState } from 'react';
 import { postTweets } from '../../apis/tweet';
 import { async } from 'q';
 

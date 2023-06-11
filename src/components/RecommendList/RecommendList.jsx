@@ -1,13 +1,13 @@
 import style from './RecommendList.module.scss';
 import RecommendItem from '../RecommendItem/RecommendItem';
 import {useState, useEffect} from 'react'; 
-import {getTopFollowers} from '../../apis/user'
-//import {AuthContext} from 'react' //TODO: 要確認有沒有寫這個;
-import  Avatar  from '../../assets/icon/img.svg'
+import {getTopFollowers} from '../../apis/user';
+//import {useAuth} from '../../context/AuthContext';
 import { async } from 'q';
 
  const RecommendList = ()=>{
     const [users, setUsers] = useState([]);
+    //const {isAuthenticated, login, logout, payload } = useAuth();
 
     useEffect(()=>{
         const fetchTopFollowers = async () => {
