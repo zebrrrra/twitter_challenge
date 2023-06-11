@@ -14,6 +14,23 @@ export const login = async ({ account, password }) => {
   }
 }
 
+export const register = async ({ account, name, password, email, checkPassword }) => {
+  try {
+    const response = await axios.post(`${baseUrl}/users`, { account, name, password, email, checkPassword })
+    // 先測試抓後端status
+    if (response.data.status === 'success') {
+      return { success: true, data: response.data }
+    } else {
+      return { success: false, errinfo: response.data.message };
+    }
+  } catch (err) {
+    console.error('[Register Failed]:', err)
+    return {
+      success: false, errinfo: err.message
+    }
+  }
+}
+
 export const PutUserProfile = async ({ id, name, avatar, cover, introduction }) => {
   const token = localStorage.getItem('token')
   console.log(token)
@@ -75,3 +92,11 @@ export const PutUserProfile = async ({ id, name, avatar, cover, introduction }) 
 // }
 
 // LoginPage()
+
+
+// 抓200
+    //   if (response.status === 200) {
+    //     return { success: true, data: response.data }
+    //   } else {
+    //     return { success: false, errinfo: response.data.message }
+    //   }

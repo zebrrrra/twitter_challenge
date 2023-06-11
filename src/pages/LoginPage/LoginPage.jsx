@@ -16,7 +16,7 @@ const LoginPage = () => {
   // error在其他使用到authinput的元件也會使用到，可以掛共用
   const [error, setError] = useState(false)
 
-  const handleClick = async (e) => {
+  const handleLoginClick = async (e) => {
     e.preventDefault();
     if (!account.trim() || !password.trim()) {
       Swal.fire({
@@ -70,7 +70,7 @@ const LoginPage = () => {
         <AuthInput label='帳號' id="account" type="text" placeholder="請輸入帳號" value={account} onChange={(accountValue) => setAccount(accountValue)} maxLength={50} isError={error} message={message} />
 
         <AuthInput label='密碼' id="password" type="password" placeholder="請輸入密碼" value={password} onChange={(passwordValue) => setPassword(passwordValue)} isError={error} />
-        <button className={style.button} type="submit" onClick={handleClick}>登入</button>
+        <button className={style.button} type="submit" onClick={handleLoginClick}>登入</button>
       </form >
       <div className={style.linkGroup}>
         <Link to='/register' className={style.link}>註冊</Link>

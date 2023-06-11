@@ -4,7 +4,6 @@ import style from './AuthInput.module.scss'
 const AuthInput = ({ label, id, type, placeholder, value, maxLength, onChange, height = 54, message, isError }) => {
 
 
-  // const isExceeded = value.length > maxLength;
   const number = value.length
 
   // 用來切換顯示紅線與否
@@ -17,7 +16,7 @@ const AuthInput = ({ label, id, type, placeholder, value, maxLength, onChange, h
     height: `${height}px`,
   };
 
-
+  // 只有這兩種輸入框需要顯示數字
   let showNumber = label === '名稱' || label === '自我介紹'
 
   return (
