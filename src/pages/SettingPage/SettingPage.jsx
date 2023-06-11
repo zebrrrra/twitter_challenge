@@ -16,8 +16,6 @@ const SettingPage = () => {
   const [checkPassword, setCheckPassword] = useState('')
   let message = ''
 
-
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     const id = 104
