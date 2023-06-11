@@ -1,6 +1,4 @@
-//import { useAuth } from '';
-//import { useEffect } from 'react;
-//import { useNavigate } from 'react-router-dom';
+
 import RecommendList from '../../components/RecommendList/RecommendList';
 import Navbar from '../../components/Navbars/Navbars';
 import Header from '../../components/Headers/Headers';
@@ -9,7 +7,6 @@ import style from './ProfilePage.module.scss'
 import AuthContext from '../../context/AuthContext'
 import { useNavigate } from 'react-router-dom';
 import { useEffect,useContext } from 'react';
-//import { useParmas } from 'react-router-dom';
 
 const ProfilePage = () => {
   //const {userId } = useParams();
@@ -30,8 +27,8 @@ const ProfilePage = () => {
     if (!isAuthenticated){
       navigate ('/login');
     }
-    },[navigate,isAuthenticated])
-
+    }
+    ,[navigate,isAuthenticated])
   return (
     <div className={style.profileContainer}>
       <div className={style.homeColumn}>
