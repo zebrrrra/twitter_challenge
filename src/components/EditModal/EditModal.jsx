@@ -42,7 +42,7 @@ const EditModal = ({ open, onClose, onChange }) => {
   const handleProfileSave = async ({ cover, avatar, name, introduction }) => {
 
 
-    let id = 134
+    let id = 174
 
     const payload = await PutUserProfile({ id, cover, avatar, name, introduction })
 

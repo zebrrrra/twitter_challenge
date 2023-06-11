@@ -44,7 +44,7 @@ export const adminLogin = async ({ account, password }) => {
       }
     }
   } catch (err) {
-    console.log('login fail', err.response.data)
+    console.log('login fail', err)
     return { success: false, errInfo: err.response.data.message }
   }
 }
@@ -55,24 +55,29 @@ export const adminLogin = async ({ account, password }) => {
 
 
 export const putUserSetting = async ({ id }) => {
-  const token = localStorage.getItem('token')
-  console.log(token)
   try {
-    const response = await axios.put(`${baseUrl}/users/${id}`, {
-      headers: {
-        Authorization: `Bearer ${token}`
+    const token = localStorage.getItem('token')
+    console.log(token)
+
+    const response = await axios.put(`${baseUrl}/users/${id}`, {},
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        },
       }
-    })
+    )
     if (response.data.status === 'success') {
+      console.log('成功')
       return { success: true, message: response.data.message }
     }
 
   } catch (err) {
-    console.log('error', err.response.data)
+    console.log('失敗')
+    console.log(err.response.data)
     return { success: false, errInfo: err.response.data.message }
   }
 }
-
 
 
 export const PutUserProfile = async ({ id, name, avatar, cover, introduction }) => {
