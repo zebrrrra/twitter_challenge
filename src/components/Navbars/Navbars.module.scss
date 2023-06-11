@@ -1,5 +1,5 @@
 @import '../../style/base.scss';
-@import'../../pages/HomePage/HomePage.module.scss';
+//@import'../../pages/HomePage/HomePage.module.scss';
 
 /* Left column */
 
@@ -75,7 +75,6 @@
 .logout {
   display: flex;
   align-items: center;
-  position: relative;
   height: 58px;
   font-family: 'Noto Sans TC';
   font-style: normal;

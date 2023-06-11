@@ -1,8 +1,10 @@
 import AuthInput from "./AuthInput/AuthInput";
 import UserInfo from "./UserInfo/UserInfo";
-import MainTweet from "./MainTweet/MainTweet";
-import ReplyModal from "./ReplyModal/ReplyModal";
-import TweetModal from "./TweetModal/TweetModal"
+import TweetModal from './TweetModal/TweetModal';
+import Header from './Headers/Headers';
 import Navbars from "./Navbars/Navbars";
-import Header from "./Headers/Headers";
-export { AuthInput, UserInfo, MainTweet, ReplyModal, TweetModal, Navbars, Header }
+import MainPost from "./MainPost/MainPost";
+import AllTweets from "./AllTweets/AllTweets";
+import RecommendList from "./RecommendList/RecommendList";
+
+export { AuthInput, UserInfo, TweetModal, Header, Navbars, MainPost, AllTweets, RecommendList }
