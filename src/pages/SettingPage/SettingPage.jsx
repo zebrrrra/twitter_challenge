@@ -6,7 +6,7 @@ import Navbar from '../../components/Navbars/Navbars';
 import Header from '../../components/Headers/Headers';
 import { AuthInput } from '../../components';
 import style from './SettingPage.module.scss'
-import { PutUserSetting } from '../../api/user';
+import { putUserSetting } from '../../apis/user';
 import Swal from 'sweetalert2';
 
 const SettingPage = () => {
@@ -31,8 +31,9 @@ const SettingPage = () => {
       });
       return
     }
-    const { success, message, errInfo } = await PutUserSetting({ id });
+    const { success, message, errInfo } = await putUserSetting({ id });
     if (success) {
+
       Swal.fire({
         title: message,
         icon: 'success',
@@ -43,7 +44,9 @@ const SettingPage = () => {
       setError(false)
       return
     } else {
+
       console.log(errInfo)
+
       Swal.fire({
         title: errInfo,
         icon: 'error',

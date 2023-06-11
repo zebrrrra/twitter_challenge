@@ -29,6 +29,28 @@ export const register = async ({ account, name, password, email, checkPassword }
   }
 }
 
+
+export const putUserSetting = async ({ id }) => {
+  const token = localStorage.getItem('token')
+  console.log(token)
+  try {
+    const response = await axios.put(`${baseUrl}/users/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    })
+    if (response.data.status === 'success') {
+      return { success: true, message: response.data.message }
+    }
+
+  } catch (err) {
+    console.log('error', err.response.data)
+    return { success: false, errInfo: err.response.data.message }
+  }
+}
+
+
+
 export const PutUserProfile = async ({ id, name, avatar, cover, introduction }) => {
   const token = localStorage.getItem('token')
   console.log(token)

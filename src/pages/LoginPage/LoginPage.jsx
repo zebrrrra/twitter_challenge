@@ -45,7 +45,7 @@ const LoginPage = () => {
         position: 'top',
       });
       setError(false)
-      navigate('/profile')
+      navigate('/setting')
       return
 
     } else {
