@@ -16,7 +16,7 @@ const LoginPage = () => {
   // error在其他使用到authinput的元件也會使用到，可以掛共用
   const [error, setError] = useState(false)
 
-  const handleLoginClick = async (e) => {
+  const handleLoginSubmit = async (e) => {
     e.preventDefault();
     if (!account.trim() || !password.trim()) {
       Swal.fire({
@@ -28,13 +28,11 @@ const LoginPage = () => {
       });
       return
     }
-    const { data, success, message } = await login({ account, password })
-    console.log(message)
-    if (success) {
-      // token得待在成功條件裡
+    const { data, success, isUser, errInfo } = await login({ account, password })
+
+    if (success && isUser) {
       const token = data.data.token
       console.log(token)
-
       localStorage.setItem('token', token)
 
       Swal.fire({
@@ -56,7 +54,7 @@ const LoginPage = () => {
         timer: 1000,
         position: 'top',
       });
-      setMessage(message)
+      setMessage(errInfo)
       setError(true)
       return
     }
@@ -66,11 +64,11 @@ const LoginPage = () => {
     <div className={style.container}>
       <Logo className={style.logo} />
       <h3 className={style.title}>登入Alphitter</h3>
-      <form className={style.form}>
+      <form className={style.form} onSubmit={handleLoginSubmit}>
         <AuthInput label='帳號' id="account" type="text" placeholder="請輸入帳號" value={account} onChange={(accountValue) => setAccount(accountValue)} maxLength={50} isError={error} message={message} />
 
         <AuthInput label='密碼' id="password" type="password" placeholder="請輸入密碼" value={password} onChange={(passwordValue) => setPassword(passwordValue)} isError={error} />
-        <button className={style.button} type="submit" onClick={handleLoginClick}>登入</button>
+        <button className={style.button} type="submit" >登入</button>
       </form >
       <div className={style.linkGroup}>
         <Link to='/register' className={style.link}>註冊</Link>

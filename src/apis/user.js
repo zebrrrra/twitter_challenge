@@ -5,14 +5,17 @@ export const login = async ({ account, password }) => {
   try {
     const response = await axios.post(`${baseUrl}/users/login`, { account, password })
     if (response.status === 200) {
-      return { success: true, data: response.data }
+      const { user } = response.data.data
+
+      return { success: true, data: response.data, isUser: user.role === 'user' }
     }
   } catch (err) {
     console.error('[Login Failed]:', err)
-    // 硬寫message，等後端修好
-    return { success: false, message: '帳號不存在!' }
+    console.log(err.response)
+    return { success: false, errInfo: err.response.data.message }
   }
 }
+
 
 export const register = async ({ account, name, password, email, checkPassword }) => {
   try {
@@ -28,6 +31,27 @@ export const register = async ({ account, name, password, email, checkPassword }
     }
   }
 }
+
+export const adminLogin = async ({ account, password }) => {
+
+  try {
+    const response = await axios.post(`${baseUrl}/admin/login`, { account, password })
+    if (response.data.status === 'success') {
+      const { user } = response.data
+
+      return {
+        success: true, data: response.data, isAdmin: user.role = 'admin'
+      }
+    }
+  } catch (err) {
+    console.log('login fail', err.response.data)
+    return { success: false, errInfo: err.response.data.message }
+  }
+}
+
+
+
+
 
 
 export const putUserSetting = async ({ id }) => {

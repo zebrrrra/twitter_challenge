@@ -1,8 +1,8 @@
 import "./style/main.scss"
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 // import HomePage from './pages/HomePage/HomePage'
-// import { LoginPage, AdminLoginPage, RegisterPage } from "./pages";
-import { RegisterPage, LoginPage, SettingPage } from "./pages";
+import { LoginPage, AdminLoginPage } from "./pages";
+import { RegisterPage, SettingPage } from "./pages";
 import { UserInfo } from "./components";
 
 function App() {
@@ -12,6 +12,8 @@ function App() {
       <Router>
         <Routes>
           <Route path="/login" element={<LoginPage />} />
+          <Route path="/admin" element={<AdminLoginPage />} />
+
           <Route path="/register" element={<RegisterPage />} />
 
           <Route path="/profile" element={<UserInfo />} />
