@@ -17,16 +17,14 @@ export const login = async ({ account, password }) => {
 export const register = async ({ account, name, password, email, checkPassword }) => {
   try {
     const response = await axios.post(`${baseUrl}/users`, { account, name, password, email, checkPassword })
-    // 先測試抓後端status
+
     if (response.data.status === 'success') {
-      return { success: true, data: response.data }
-    } else {
-      return { success: false, errinfo: response.data.message };
+      return { success: true, message: response.data.message }
     }
   } catch (err) {
-    console.error('[Register Failed]:', err)
+    console.log('err.response.data', err.response.data)
     return {
-      success: false, errinfo: err.message
+      success: false, errInfo: err.response.data.message
     }
   }
 }
@@ -50,53 +48,3 @@ export const PutUserProfile = async ({ id, name, avatar, cover, introduction }) 
     return err
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// const login = async ({ account, password }) => {
-//   try {
-//     const data = await axios.post(`${authURL}/api/users/login`, { account, password })
-//     return data
-//   } catch (err) {
-//     console.log('return with error')
-//     return err
-//   }
-// }
-
-// const LoginPage = async () => {
-//   const account = 'user1'
-//   const password = '12345678'
-
-//   const data = await login({ account, password })
-
-//   if (data.status === 200) {
-//     console.log('success')
-//     console.log(data.status)
-//     console.log(data)
-//   } else {
-//     console.log('error')
-//     console.log(data.response.status)
-//     console.log(data.response.data)
-//   }
-// }
-
-// LoginPage()
-
-
-// 抓200
-    //   if (response.status === 200) {
-    //     return { success: true, data: response.data }
-    //   } else {
-    //     return { success: false, errinfo: response.data.message }
-    //   }
