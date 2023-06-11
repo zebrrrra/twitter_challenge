@@ -80,7 +80,7 @@ export const putUserSetting = async ({ id }) => {
 }
 
 
-export const PutUserProfile = async ({ id, name, avatar, cover, introduction }) => {
+export const putUserProfile = async ({ id, name, avatar, cover, introduction }) => {
   const token = localStorage.getItem('token')
   console.log(token)
   try {
@@ -99,3 +99,18 @@ export const PutUserProfile = async ({ id, name, avatar, cover, introduction }) 
     return err
   }
 }
+
+
+export const getUsers = async (id) => {
+  const token = localStorage.getItem('token');
+  try {
+    const response = await axios.get(`${baseUrl}/users/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Error:cannot get user', error);
+  }
+};

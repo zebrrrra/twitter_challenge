@@ -27,13 +27,13 @@ const AdminLoginPage = () => {
       return
     }
 
-    const { success, isAdmin, errInfo } = await adminLogin({ account, password })
+    const { success, isAdmin, errInfo, data } = await adminLogin({ account, password })
 
     if (success && isAdmin) {
-      // const token = data.data.token
-      // console.log(token)
-      // console.log(data)
-      // localStorage.setItem('token', token)
+      const token = data.data.token
+      console.log(token)
+      console.log(data)
+      localStorage.setItem('token', token)
       Swal.fire({
         title: '登入成功',
         icon: 'success',

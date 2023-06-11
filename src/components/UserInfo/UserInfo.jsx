@@ -4,15 +4,18 @@ import avatar from '../../assets/icons/avatar.svg'
 import { Link } from "react-router-dom"
 import EditModal from "../EditModal/EditModal"
 import { useState } from "react"
-
+import { getUsers } from "../../apis/user"
 
 const UserInfo = ({ img = background }) => {
   const [openModal, setOpenModal] = useState(false);
-  // const [name, setName] = useState('')
+  // 使用個變數作為判斷是否為別人 點擊頭
 
-
-  const handleClick = () => {
+  const handleClick = async () => {
     setOpenModal(true)
+    // id透過jwt解析token獲得
+
+    // 發送api載入自己的資料
+    // const payload = await getUsers(id)
   }
   return (
     <div className={style.container}>

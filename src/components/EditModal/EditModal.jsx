@@ -5,7 +5,7 @@ import editAvatar from '../../assets/icons/editAvatar.svg'
 import editCover from "../../assets/icons/editCover.svg"
 import { ReactComponent as Upload } from "../../assets/icons/camera.svg"
 import { ReactComponent as Fork } from "../../assets/icons/Vector.svg"
-import { PutUserProfile } from "../../apis/user"
+import { putUserProfile } from "../../apis/user"
 
 const EditModal = ({ open, onClose, onChange }) => {
   //  name, introduction, avatar, cover
@@ -24,7 +24,6 @@ const EditModal = ({ open, onClose, onChange }) => {
     const formData = new FormData();
     formData.append('avatar', data)
 
-    // console.log(token)
     // console.log(formData.get('avatar'))
     setAvatar(formData)
   }
@@ -44,7 +43,7 @@ const EditModal = ({ open, onClose, onChange }) => {
 
     let id = 174
 
-    const payload = await PutUserProfile({ id, cover, avatar, name, introduction })
+    const payload = await putUserProfile({ id, cover, avatar, name, introduction })
 
     console.log(payload)
     onClose(false)
