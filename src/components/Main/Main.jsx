@@ -4,12 +4,12 @@ import {useParams} from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 const Main = () => {
   const { id } = useParams();
-  const {user} = useAuth();
+  //const {user} = useAuth();
 
    return (
     <>
     <UserInfo userId={id}/>
-    <Tab userId={user && user.id}/>
+    <Tab userId={id}/>
     </>
   )
 

@@ -2,9 +2,11 @@
 import { useEffect, useState } from 'react';
 import TweetCard from '../TweetCard/TweetCard';
 import { getUserTweets } from '../../apis/user';
+import useLike from '../../hooks/LikeHook';
 
 const TweetList =({ userId })=>{
     const [tweets, setTweets] = useState([]);
+    const {likeTweets: updateLikes,handleLike,handleUnLike} =useLike({dataItems:tweets});
 
     useEffect(()=>{
         const fetchTweets = async () => {
@@ -17,7 +19,13 @@ const TweetList =({ userId })=>{
         fetchTweets();
     },[userId]); 
 
-    return tweets.map(tweet => <TweetCard key={tweet.id} tweet={tweet} type="tweet"/>)
+    return updateLikes?updateLikes.map((tweet,index) => 
+    <TweetCard 
+    key={tweet.id} 
+    tweet={tweet}
+    onLike={()=>handleLike(tweet.id)}
+    onUnLike={()=>handleUnLike(tweet.id)} 
+    type="tweet"/>):null;
 }
 
 export default TweetList;

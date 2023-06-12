@@ -2,14 +2,13 @@
 import { useEffect, useState } from 'react';
 import LikeCard from '../LikeCard/LikeCard';
 import { getUserLike } from '../../apis/user';
-import { useParams } from 'react-router-dom';
-
+import useLike from '../../hooks/LikeHook';
 //import style from '';
 //假設有Authcontext(還沒寫)
 
 const LikeList =({userId })=> {
-    const [likes, setLikes] =useState([]);
-
+    const [likes,setLikes] = useState([]);
+    const {likeTweets: updateLikes,handleLike,handleUnLike} =useLike({dataItems:likes});
 
     useEffect(()=>{
         const fetchLikes = async () => {
@@ -20,8 +19,16 @@ const LikeList =({userId })=> {
             }
         }
         fetchLikes();
-     }, [userId]);
-return likes?likes.map((like,index) => <LikeCard like={like} key={like.id} type="like"/>): null;
+     }, [userId] );
+     
+     console.log('likeTweets', updateLikes);
+return updateLikes?updateLikes.map((like,index) => 
+<LikeCard 
+like={like}
+ key={like.id}
+ onLike={()=>handleLike(like.Tweet.id)}
+ onUnLike={()=>handleUnLike(like.Tweet.id)} 
+ type="like"/>): null;
     }
 
 export default LikeList;

@@ -1,13 +1,12 @@
 import style from './Headers.module.scss';
-//import { useAuthContext } from ''; // 判斷登入的
+
 //import { Link } from 'react-router-dom';
 import LeftIcon from '../../assets/icon/back.svg';
 //文字變動:首頁 & username &推文 &'帳戶設定
 //TODO: 要確認變動值的內容
 
-const Header = ({currentSection, setCurrentSection, otherUser, otherUserTweetCount}) => {
-    //const {userData, userTweetCount} = useAuthContext();
-
+const Header = ({user,currentSection, setCurrentSection, otherUser, otherUserTweetCount}) => {
+   
     const handleClickSection = () => {
         setCurrentSection('HomePage');
     }

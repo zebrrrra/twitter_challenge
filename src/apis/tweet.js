@@ -36,5 +36,21 @@ export const getAllTweets = async () => {
       }
     };
 //GET /api/tweets/:tweetId 取得一筆推文
+
+export const getATweet = async (tweetId) => {
+  
+  const token = localStorage.getItem('token');
+    try {
+      const response = await axios.get(`${baseUrl}/tweets/${tweetId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+      return response.data;
+    } catch (error) {
+      console.error('Error:cannot get a tweet', error);
+    }
+  };
+
 //POST /api/tweets/:tweetId/replies 使用者在推文中新增一條回覆
 //GET /api/tweets/:tweetId/replies 瀏覽推文下所有回覆

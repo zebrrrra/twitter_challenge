@@ -1,6 +1,6 @@
 //import { useParams,Link } from 'react-router-dom'; 
 import style from './Tab.module.scss';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import {Routes,Route, useNavigate} from 'react-router-dom';
 import TweetList from '../TweetList/TweetList';
 import LikeList from '../LikeList/LikeList';
@@ -27,9 +27,6 @@ const Tab = ({ userId }) => {
                 break;
         }
     };
-    useEffect(() => {
-        navigate(`/${userId}/tweets`);
-    }, [navigate, userId]);
 
     return (
         <div>
@@ -54,7 +51,7 @@ const Tab = ({ userId }) => {
                 </div>
             </div>
             <Routes>
-                <Route path="tweets" element={<TweetList userId={userId} />} index />
+                <Route path="tweets" element={<TweetList userId={userId} />} />
                 <Route path="replies" element={<ReplyList userId={userId} />} />
                 <Route path="likes" element={<LikeList userId={userId} />} />
             </Routes>

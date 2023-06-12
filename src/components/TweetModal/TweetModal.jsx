@@ -7,7 +7,7 @@ import avatar from '../../assets/icons/avatar.svg'
 
 
 const TweetModal = ({open,onClose}) => {
-const [tweetText, setTweetText] =useState('有什麼新鮮事?');//要填預設值
+const [tweetText, setTweetText] =useState('');//要填預設值
 const handleSubmit =async () =>{
   const data = await postTweets(tweetText);
   console.log (data);//測試用
@@ -25,7 +25,11 @@ const handleSubmit =async () =>{
           <div className={`${style.avatarContainer} ${style.down}`}>
             <img src={avatar} alt="avatar" />
           </div>
-          <textarea style={{ resize: 'none', width: '88%' }} value={tweetText} onChange={(e)=>setTweetText(e.target.value)}> </textarea>
+          <textarea 
+          style={{ resize: 'none', width: '88%' }} 
+          value={tweetText} 
+          onChange={(e)=>setTweetText(e.target.value)}
+          placeholder="有什麼新鮮事?"> </textarea>
           <button className={style.button} onClick={handleSubmit}>推文</button>
         </div>
       </div>
