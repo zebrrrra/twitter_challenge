@@ -54,6 +54,7 @@ const Tab = ({ userId }) => {
                 <Route path="tweets" element={<TweetList userId={userId} />} />
                 <Route path="replies" element={<ReplyList userId={userId} />} />
                 <Route path="likes" element={<LikeList userId={userId} />} />
+                <Route path="*" element={<TweetList userId={userId} />} /> 
             </Routes>
         </div>
     );

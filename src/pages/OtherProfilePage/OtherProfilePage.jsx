@@ -3,20 +3,14 @@ import RecommendList from '../../components/RecommendList/RecommendList';
 import Navbar from '../../components/Navbars/Navbars';
 import Header from '../../components/Headers/Headers';
 import Main from '../../components/Main/Main';
-import style from './ProfilePage.module.scss'
+import style from './OtherProfilePage.module.scss'
 import {useAuth} from '../../context/AuthContext'
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
+import { ReplyMain } from '../../components';
 
-const ProfilePage = () => {
-  const { user, isAuthenticated } =useAuth();
-  const navigate =useNavigate();
-  useEffect(()=>{
-    if (!isAuthenticated){
-      navigate ('/login');
-    }
-    }
-    ,[navigate,isAuthenticated])
+const OtherProfilePage = ({id}) => {
+
     
   return (
     <div className={style.profileContainer}>
@@ -26,7 +20,7 @@ const ProfilePage = () => {
         </div>
         <div className={style.middleColumn}>
           <Header />
-          <Main userId={ user&& user.id} />
+          <Main userId={id}/>
         </div>
         <div className={style.rightColumn}>
           <RecommendList />
@@ -36,4 +30,4 @@ const ProfilePage = () => {
   )
 }
 
-export default ProfilePage;
+export default OtherProfilePage;

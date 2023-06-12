@@ -1,5 +1,5 @@
-import likeIcon from '../../assets/icon/like_1.svg';
-import isLikeIcon from '../../assets/icon/like.svg';
+import {ReactComponent as LikeIcon} from '../../assets/icon/like_1.svg';
+import {ReactComponent as IsLikeIcon} from '../../assets/icon/like.svg';
 import replyIcon from '../../assets/icon/reply_1.svg'
 //import { ReactComponent as Avatar } from '../../assets/icon/img.svg'
 import style from './LikeCard.module.scss';
@@ -46,35 +46,36 @@ const LikeCard = ({ like,onLike,onUnLike }) => {
 
     //如果圖片不存在或讀不出來使用預設圖片
 
-            return (
-                <>
-                    <div className={style.tweetCardContainer}>
-                    <div className={style.tweetCard}>
-                        <img src={avatar} className={style.avatar} alt="avatar"/>
-                        <div className={style.contentContainer}>
-                            <div className={style.nameAndUserId}>
-                                <span className={style.name}>{name}</span>
-                                <span className={style.userIdTime}>@{account}・{getTime(createdAt)}</span>
-                            </div>
-                            <div className={style.tweet}>
-                                {description}
-                            </div>
-                            <div className={style.countContainer}>
-                                <div className={style.count}>
-                                    <img src={replyIcon} alt="reply" />{repliesCount}</div>
-                                <div className={style.count}>
-                                    <img 
-                                    src={isCurrentUserLiked? isLikeIcon:likeIcon} 
-                                    onClick={handleButtonClick}
-                                    className={isCurrentUserLiked?style.isLikeIcon:style.likeIcon}
-                                    alt="like" />{likesCount}</div>
-                            </div>
-                        </div>
+    return (
+        <>
+            <div className={style.tweetCardContainer}>
+            <div className={style.tweetCard}>
+                <img src={avatar} className={style.avatar} alt="avatar"/>
+                <div className={style.contentContainer}>
+                    <div className={style.nameAndUserId}>
+                        <span className={style.name}>{name}</span>
+                        <span className={style.userIdTime}>@{account}・{getTime(createdAt)}</span>
+                    </div>
+                    <div className={style.tweet}>
+                        {description}
+                    </div>
+                    <div className={style.countContainer}>
+                        <div className={style.count}>
+                            <img src={replyIcon} alt="reply" />{repliesCount}</div>
+                        <div className={style.count}>
+                           {isCurrentUserLiked? 
+                                <IsLikeIcon className={style.isLikeIcon} onClick={handleButtonClick}/>
+                                :
+                                <LikeIcon className={style.likeIcon} onClick={handleButtonClick} />
+                            }
+                            {likesCount}</div>
+                    </div>
+                </div>
 
-                    </div>
-                    </div>
-                </>
-            );
+            </div>
+            </div>
+        </>
+    );
  
     }
 

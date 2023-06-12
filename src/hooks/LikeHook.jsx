@@ -3,7 +3,7 @@ import {postLike, postUnLike} from '../apis/like';
 import { getATweet } from '../apis/tweet';
 
 
-const useLike = ({dataItems})=> {
+const useLike = ({dataItems, currentUserId})=> {
   const [likeTweets, setLikeTweets] = useState(dataItems);
 
   useEffect (()=>{
@@ -21,25 +21,30 @@ const useLike = ({dataItems})=> {
 
   const handleLike = async (id) => {
     const response = await postLike(id);
-    if (response && response.status === 'success') {
-      const updatedTweet = await getATweet(id);
-      if(updatedTweet){
-        setLikeTweets((currentItems) => currentItems.map((item) => 
-        // Check if the 'Tweet' property exists
-        item.Tweet
-          ? item.Tweet.id === id 
-            ? { ...item, Tweet: updatedTweet, isCurrentUserLiked: true }
-            : item
-          : item.id === id
-            ? { ...item, ...updatedTweet, isCurrentUserLiked: true }
-            : item
-      ));
+    if (id!== currentUserId){
+      if (response && response.status === 'success') {
+        const updatedTweet = await getATweet(id);
+        if(updatedTweet){
+          setLikeTweets((currentItems) => currentItems.map((item) => 
+
+          item.Tweet
+            ? item.Tweet.id === id 
+              ? { ...item, Tweet: updatedTweet, isCurrentUserLiked: true }
+              : item
+            : item.id === id
+              ? { ...item, ...updatedTweet, isCurrentUserLiked: true }
+              : item
+        ));
+      }
     }
-  }
-};
+    }
+  
+  
+}
   
   const handleUnLike = async (id) => {
     const response = await postUnLike(id);
+    if (id!== currentUserId){
     if (response && response.status === 'success') {
       const updatedTweet = await getATweet(id);
       if(updatedTweet){
@@ -54,6 +59,7 @@ const useLike = ({dataItems})=> {
         ));
       }
     }
+  }
   };
   console.log('likeTweetsat', likeTweets);
   return {

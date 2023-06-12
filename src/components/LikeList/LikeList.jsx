@@ -3,12 +3,18 @@ import { useEffect, useState } from 'react';
 import LikeCard from '../LikeCard/LikeCard';
 import { getUserLike } from '../../apis/user';
 import useLike from '../../hooks/LikeHook';
+import { useAuth } from '../../context/AuthContext';
 //import style from '';
 //假設有Authcontext(還沒寫)
 
 const LikeList =({userId })=> {
+    const {user} =useAuth();
+    const currentUserId = user?.id;
     const [likes,setLikes] = useState([]);
-    const {likeTweets: updateLikes,handleLike,handleUnLike} =useLike({dataItems:likes});
+    const {likeTweets: updateLikes,handleLike,handleUnLike} =useLike({
+        dataItems:likes,
+        currentUserId: currentUserId,    
+    });
 
     useEffect(()=>{
         const fetchLikes = async () => {

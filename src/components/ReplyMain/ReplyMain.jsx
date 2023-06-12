@@ -8,7 +8,7 @@ import {getATweet} from '../../apis/tweet';
 const ReplyMain = () => {
   const { id } = useParams();
   const [tweet, setTweet] = useState([]);
-  const {likeTweets: handleLike,handleUnLike} =useLike({dataItems:tweet?[tweet]:[]});
+  const {likeTweets, handleLike,handleUnLike} =useLike({dataItems:tweet?[tweet]:[]});
 
   useEffect(()=>{
       const fetchTweets = async () => {
@@ -20,6 +20,14 @@ const ReplyMain = () => {
       }
       fetchTweets();
   },[id]); 
+
+  useEffect(() => {
+    if (likeTweets.length > 0) {
+      setTweet(likeTweets[0]);
+    }
+  }, [likeTweets]);
+
+
    return (
     <>
     {tweet && <OpenTweet

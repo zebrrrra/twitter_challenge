@@ -10,14 +10,14 @@ import { useEffect } from 'react';
 
 const ReplyPage = () => {
   
-  const { isAuthenticated } =useAuth();
-  const navigate =useNavigate();
-  useEffect(()=>{
-    if (!isAuthenticated){
-      navigate ('/login');
-    }
-    }
-    ,[navigate,isAuthenticated])
+ // const { isAuthenticated } =useAuth();
+ // const navigate =useNavigate();
+ // useEffect(()=>{
+   // if (!isAuthenticated){
+   //   navigate ('/login');
+   // }
+   // }
+   // ,[navigate,isAuthenticated])
     
   return (
     <div className={style.replyContainer}>
