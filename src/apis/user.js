@@ -3,16 +3,17 @@ const baseUrl = 'https://tranquil-basin-75437.herokuapp.com/api';
 
 export const login = async ({ account, password }) => {
   try {
-    const response = await axios.post(`${baseUrl}/users/login`, { account, password })
-    if (response.status === 200) {
-      const { user } = response.data.data
+    const { data } = await axios.post(`${baseUrl}/users/login`, { account, password })
+    return data
+    // if (response.status === 200) {
+    //   const { user } = response.data.data
 
-      return { success: true, data: response.data, isUser: user.role === 'user' }
-    }
+    //   return { success: true, data: response.data, isUser: user.role === 'user' }
+    // }
   } catch (err) {
     console.error('[Login Failed]:', err)
     console.log(err.response)
-    return { success: false, errInfo: err.response.data.message }
+    return { status: false, errInfo: err.response.data.message }
   }
 }
 

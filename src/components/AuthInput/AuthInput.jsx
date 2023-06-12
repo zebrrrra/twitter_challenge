@@ -1,7 +1,6 @@
 import style from './AuthInput.module.scss'
 const AuthInput = ({ label, id, type, placeholder, value, maxLength = 50, onChange, height = 54, message, isError }) => {
-  const isExceeded = value.length > maxLength;
-  let message = ""
+  const number = value.length
   // 用來切換顯示紅線與否
   let inputStyle = style.inputGroupDefault;
 
