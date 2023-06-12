@@ -1,7 +1,7 @@
 //import { async } from 'q';
 import { createContext, useState } from 'react';
 // import {login}  from '../apis/auth';
-import { login } from '../apis/user';
+import { login, adminLogin } from '../apis/user';
 import * as jwt from 'jsonwebtoken';
 import { useLocation } from 'react-router-dom';
 import { useContext, useEffect } from 'react';
@@ -12,8 +12,8 @@ const defaultAuthContext = {
     register: null,
     login: null,
     logout: null,
-    error: false,
-    message: ''
+    responseError: false,
+    errorInfo: ''
 };
 
 const AuthContext = createContext(defaultAuthContext);
@@ -22,10 +22,9 @@ export const AuthProvider = ({ children }) => {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [payload, setPayload] = useState(null);
 
-    // 表單錯誤小字message、error狀態
-    const [error, setError] = useState(false)
-    const [message, setMessage] = useState('')
-
+    // 表單錯誤小字errorInfo、responseError狀態
+    const [responseError, setResponseError] = useState(false)
+    const [errorInfo, setErrorInfo] = useState('')
     const { pathname } = useLocation();
     useEffect(() => {
         const checkTokenIsValid = async () => {
@@ -51,7 +50,7 @@ export const AuthProvider = ({ children }) => {
                 user: payload && {
                     id: payload.id,
                     name: payload.name,
-                }, error, message,
+                }, responseError, errorInfo, setResponseError,
                 /*register: async (data) => {
                     const { success, token } = await register(
                         account: data.account,
@@ -85,11 +84,11 @@ export const AuthProvider = ({ children }) => {
                         console.log(payload)//在登入成功時，payload為null，因此使用useEffect()
                         setIsAuthenticated(true);
                         localStorage.setItem('token', token);
-                        setError(false)
+                        setResponseError(false)
                     } else {
-                        const errInfo = result.errInfo
-                        setError(true)
-                        setMessage(errInfo)
+                        const errorInfo = result.errInfo
+                        setResponseError(true)
+                        setErrorInfo(errorInfo)
                         setPayload(null);
                         setIsAuthenticated(false);
 
@@ -101,7 +100,32 @@ export const AuthProvider = ({ children }) => {
                     localStorage.removeItem('token');
                     setPayload(null);
                     setIsAuthenticated(false);
-                },
+                }, adminLogin: async (data) => {
+                    const result = await adminLogin(
+                        {
+                            account: data.account,
+                            password: data.password,
+                        }
+                    );
+                    console.log(result)
+                    if (result.status === 'success') {
+                        const { token } = result.data;
+                        const tempPayload = jwt.decode(token);
+                        setPayload(tempPayload);
+                        console.log(payload)//在登入成功時，payload為null，因此使用useEffect()
+                        setIsAuthenticated(true);
+                        localStorage.setItem('token', token);
+                        setResponseError(false)
+                    } else {
+                        const errorInfo = result.errInfo
+                        setResponseError(true)
+                        setErrorInfo(errorInfo)
+                        setPayload(null);
+                        setIsAuthenticated(false);
+
+                    }
+                    return result.status === 'success';
+                }
             }}
         >
             {children}
@@ -110,34 +134,3 @@ export const AuthProvider = ({ children }) => {
 };
 
 export default AuthContext;
-// { id: 194, email: 'za@za.com', name: 'za', avatar: 'https://i.imgur.com/PiJ0HXw.png', introduction: null, … }
-// account
-// :
-// "za"
-// avatar
-// :
-// "https://i.imgur.com/PiJ0HXw.png"
-// cover
-// :
-// "https://i.imgur.com/Enl7tJ1.jpg"
-// createdAt
-// :
-// "2023-06-11T23:07:44.000Z"
-// email
-// :
-// "za@za.com"
-// id
-// :
-// 194
-// introduction
-// :
-// null
-// name
-// :
-// "za"
-// role
-// :
-// "user"
-// updatedAt
-// :
-// "2023-06-11T23:07:44.000Z"

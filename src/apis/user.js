@@ -5,11 +5,6 @@ export const login = async ({ account, password }) => {
   try {
     const { data } = await axios.post(`${baseUrl}/users/login`, { account, password })
     return data
-    // if (response.status === 200) {
-    //   const { user } = response.data.data
-
-    //   return { success: true, data: response.data, isUser: user.role === 'user' }
-    // }
   } catch (err) {
     console.error('[Login Failed]:', err)
     console.log(err.response)
@@ -33,19 +28,18 @@ export const register = async ({ account, name, password, email, checkPassword }
   }
 }
 
+
 export const adminLogin = async ({ account, password }) => {
 
   try {
-    const response = await axios.post(`${baseUrl}/admin/login`, { account, password })
-    if (response.data.status === 'success') {
-      const { user } = response.data
+    const { data } = await axios.post(`${baseUrl}/admin/login`, { account, password })
 
-      return {
-        success: true, data: response.data, isAdmin: user.role = 'admin'
-      }
-    }
+    return data
+    // 若要加上身份篩選data.data.user.role取得字串搭配{data}
+
   } catch (err) {
-    console.log('login fail', err)
+    console.log('error message:', err.response.data.message)
+    console.log('error status:', err.response.status)
     return { success: false, errInfo: err.response.data.message }
   }
 }

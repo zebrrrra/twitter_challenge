@@ -10,7 +10,8 @@ import { useEffect } from 'react';
 const LoginPage = () => {
   const [account, setAccount] = useState('')
   const [password, setPassword] = useState('')
-  const { login, isAuthenticated, user, error, message } = useAuth();
+
+  const { login, isAuthenticated, user, responseError, errorInfo, setResponseError } = useAuth();
   const navigate = useNavigate()
 
   const handleLoginSubmit = async (e) => {
@@ -26,6 +27,7 @@ const LoginPage = () => {
       return
     }
     const success = await login({ account, password });
+
     if (success) {
       Swal.fire({
         title: '登入成功',
@@ -34,6 +36,7 @@ const LoginPage = () => {
         timer: 2000,
         position: 'top',
       });
+      setResponseError(false)
       navigate('/') //wait to solve 
       return
     }
@@ -45,6 +48,7 @@ const LoginPage = () => {
       timer: 1000,
       position: 'top',
     });
+    setResponseError(true)
     return
   }
   useEffect(() => {
@@ -53,6 +57,9 @@ const LoginPage = () => {
     }
   }, [navigate, isAuthenticated, user]);
 
+  const authInputCollection = [
+    { label: '帳號', id: 'account', type: 'text', placeholder: '請輸入帳號', value: account, onChange: (accountValue) => setAccount(accountValue) },
+    { label: '密碼', id: 'password', type: 'password', placeholder: '請輸入密碼', value: password, onChange: (passwordValue) => setPassword(passwordValue) }]
 
 
   return (
@@ -60,9 +67,20 @@ const LoginPage = () => {
       <Logo className={style.logo} />
       <h3 className={style.title}>登入Alphitter</h3>
       <form className={style.form} onSubmit={handleLoginSubmit}>
-        <AuthInput label='帳號' id="account" type="text" placeholder="請輸入帳號" value={account} onChange={(accountValue) => setAccount(accountValue)} maxLength={50} isError={error} message={message} />
-
-        <AuthInput label='密碼' id="password" type="password" placeholder="請輸入密碼" value={password} onChange={(passwordValue) => setPassword(passwordValue)} isError={error} />
+        {authInputCollection.map(({ label, id, type, placeholder, value, maxLength, onChange }) => (
+          <AuthInput
+            key={id}
+            label={label}
+            id={id}
+            type={type}
+            placeholder={placeholder}
+            value={value}
+            maxLength={maxLength}
+            onChange={onChange}
+            responseError={responseError}
+            errorInfo={errorInfo}
+          />
+        ))}
         <button className={style.button} type="submit" >登入</button>
       </form >
       <div className={style.linkGroup}>
