@@ -13,16 +13,15 @@ function App() {
       <Route path ="/login" element={<LoginPage/>}/>
       <Route path="/admin" element={<AdminLoginPage />} />
       <Route path="register" element={<RegisterPage />} />
-      <Route path="/:id/*" element ={<ProfilePage/>}/>
+      <Route path="/me" element ={<ProfilePage/>}/>
+      
       <Route path="/:id/tweets/:tweetId" element ={<ReplyPage/>}/>
       <Route path ="/*" element={<HomePage/>}/>
       
           {/*
+          <Route path="/user/:id" component={UserProfilePage} />
          <Route path ="/setting" element={<SettingPage/>}/>
-                   <Route path="login" element={<LoginPage />} />
-          <Route path="admin" element={<AdminLoginPage />} />
-          <Route path="register" element={<RegisterPage />} />
-                <Route path="*" element={<LoginPage />} />*/}
+                   */}
         </Routes>
         </AuthProvider>
       </Router>

@@ -9,8 +9,7 @@ import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 
 const ProfilePage = () => {
-  
-  const { isAuthenticated } =useAuth();
+  const { user, isAuthenticated } =useAuth();
   const navigate =useNavigate();
   useEffect(()=>{
     if (!isAuthenticated){
@@ -27,7 +26,7 @@ const ProfilePage = () => {
         </div>
         <div className={style.middleColumn}>
           <Header />
-          <Main />
+          <Main userId={user.id} />
         </div>
         <div className={style.rightColumn}>
           <RecommendList />
