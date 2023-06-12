@@ -13,6 +13,11 @@ const LoginPage = () => {
 
   const { login, isAuthenticated, user, responseError, errorInfo, setResponseError } = useAuth();
   const navigate = useNavigate()
+  const authInputCollection = [
+    { label: '帳號', id: 'account', type: 'text', placeholder: '請輸入帳號', value: account, onChange: (accountValue) => setAccount(accountValue) },
+    { label: '密碼', id: 'password', type: 'password', placeholder: '請輸入密碼', value: password, onChange: (passwordValue) => setPassword(passwordValue) }]
+
+
 
   const handleLoginSubmit = async (e) => {
     e.preventDefault();
@@ -26,6 +31,7 @@ const LoginPage = () => {
       });
       return
     }
+
     const success = await login({ account, password });
 
     if (success) {
@@ -40,6 +46,9 @@ const LoginPage = () => {
       navigate('/') //wait to solve 
       return
     }
+
+
+
 
     Swal.fire({
       title: '登入失敗',
@@ -57,11 +66,14 @@ const LoginPage = () => {
     }
   }, [navigate, isAuthenticated, user]);
 
-  const authInputCollection = [
-    { label: '帳號', id: 'account', type: 'text', placeholder: '請輸入帳號', value: account, onChange: (accountValue) => setAccount(accountValue) },
-    { label: '密碼', id: 'password', type: 'password', placeholder: '請輸入密碼', value: password, onChange: (passwordValue) => setPassword(passwordValue) }]
+
+  // 無法密碼欄不顯示使用者不存在 這個寫法不對
+  if (errorInfo === '使用者不存在！' && authInputCollection[1].label === '密碼') {
+    setResponseError(false)
+  }
 
 
+  // authInputCollection[1].label
   return (
     <div className={style.container}>
       <Logo className={style.logo} />

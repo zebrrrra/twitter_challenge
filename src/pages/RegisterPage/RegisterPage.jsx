@@ -16,9 +16,6 @@ const RegisterPage = () => {
   const [responseError, setResponseError] = useState(false)
   const [errorInfo, setErrorInfo] = useState('')
 
-
-
-
   const handleRegisterSubmit = async (e) => {
     e.preventDefault();
     if (!account.trim() || !password.trim() || !name.trim() || !checkPassword.trim() || !email.trim()) {
@@ -31,6 +28,8 @@ const RegisterPage = () => {
       });
       return
     }
+
+
     const { success, message, errInfo } = await register({ account, name, password, email, checkPassword })
 
     if (success) {
@@ -46,6 +45,8 @@ const RegisterPage = () => {
       return
     } else {
       console.log(errInfo)
+
+
       setResponseError(true)
       setErrorInfo(errInfo)
       return
@@ -53,8 +54,8 @@ const RegisterPage = () => {
   }
 
   const authInputCollection = [
-    { label: '帳號', id: 'account', type: 'text', placeholder: '請輸入帳號', value: account, onChange: (accountValue) => setAccount(accountValue) },
-    { label: '名稱', id: 'name', type: 'text', placeholder: '請輸入使用者名稱', value: name, maxLength: 50, onChange: (nameValue) => setName(nameValue) },
+    { label: '帳號', id: '帳號', type: 'text', placeholder: '請輸入帳號', value: account, onChange: (accountValue) => setAccount(accountValue) },
+    { label: '名稱', id: '名稱', type: 'text', placeholder: '請輸入使用者名稱', value: name, maxLength: 50, onChange: (nameValue) => setName(nameValue) },
     { label: 'Email', id: 'email', type: 'email', placeholder: '請輸入Email', value: email, onChange: (emailValue) => setEmail(emailValue) },
     { label: '密碼', id: 'password', type: 'password', placeholder: '請輸入密碼', value: password, onChange: (passwordValue) => setPassword(passwordValue) },
     { label: '密碼確認', id: 'checkPassword', type: 'password', placeholder: '請再次輸入密碼', value: checkPassword, onChange: (checkPasswordValue) => setCheckPassword(checkPasswordValue) },

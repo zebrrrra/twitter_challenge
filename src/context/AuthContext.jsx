@@ -76,7 +76,7 @@ export const AuthProvider = ({ children }) => {
                         }
                     );
                     //result格式＝{success: false, errInfo: '信箱或是密碼錯誤！'}
-
+                    console.log()
                     if (result.status === 'success') {
                         const { token } = result.data;
                         const tempPayload = jwt.decode(token);
@@ -87,6 +87,7 @@ export const AuthProvider = ({ children }) => {
                         setResponseError(false)
                     } else {
                         const errorInfo = result.errInfo
+
                         setResponseError(true)
                         setErrorInfo(errorInfo)
                         setPayload(null);
