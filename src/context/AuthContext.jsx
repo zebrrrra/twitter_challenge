@@ -42,7 +42,6 @@ export const AuthProvider = ({ children }) => {
         checkTokenIsValid();
     }, [pathname]);
 
-
     return (
         <AuthContext.Provider
             value={{
@@ -50,7 +49,7 @@ export const AuthProvider = ({ children }) => {
                 user: payload && {
                     id: payload.id,
                     name: payload.name,
-                }, responseError, errorInfo, setResponseError,
+                }, responseError, errorInfo, setResponseError, setErrorInfo
                 /*register: async (data) => {
                     const { success, token } = await register(
                         account: data.account,
@@ -68,7 +67,7 @@ export const AuthProvider = ({ children }) => {
                     }
                     return success;
                 },*/
-                login: async (data) => {
+                , login: async (data) => {
                     const result = await login(
                         {
                             account: data.account,
@@ -76,7 +75,6 @@ export const AuthProvider = ({ children }) => {
                         }
                     );
                     //result格式＝{success: false, errInfo: '信箱或是密碼錯誤！'}
-                    console.log()
                     if (result.status === 'success') {
                         const { token } = result.data;
                         const tempPayload = jwt.decode(token);
@@ -87,9 +85,11 @@ export const AuthProvider = ({ children }) => {
                         setResponseError(false)
                     } else {
                         const errorInfo = result.errInfo
+                        console.log(errorInfo)
 
                         setResponseError(true)
                         setErrorInfo(errorInfo)
+
                         setPayload(null);
                         setIsAuthenticated(false);
 

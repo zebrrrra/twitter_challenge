@@ -11,11 +11,12 @@ const LoginPage = () => {
   const [account, setAccount] = useState('')
   const [password, setPassword] = useState('')
 
-  const { login, isAuthenticated, user, responseError, errorInfo, setResponseError } = useAuth();
+  const { login, isAuthenticated, user, responseError, errorInfo } = useAuth();
+
   const navigate = useNavigate()
   const authInputCollection = [
-    { label: '帳號', id: 'account', type: 'text', placeholder: '請輸入帳號', value: account, onChange: (accountValue) => setAccount(accountValue) },
-    { label: '密碼', id: 'password', type: 'password', placeholder: '請輸入密碼', value: password, onChange: (passwordValue) => setPassword(passwordValue) }]
+    { label: '帳號', id: '帳號', type: 'text', placeholder: '請輸入帳號', value: account, onChange: (accountValue) => setAccount(accountValue) },
+    { label: '密碼', id: '密碼', type: 'password', placeholder: '請輸入密碼', value: password, onChange: (passwordValue) => setPassword(passwordValue) }]
 
 
 
@@ -42,23 +43,35 @@ const LoginPage = () => {
         timer: 2000,
         position: 'top',
       });
-      setResponseError(false)
+      // setResponseError(false)
+      console.log(responseError)
       navigate('/') //wait to solve 
       return
     }
 
+    if (!success) {
+      console.log(responseError)
+      console.log(errorInfo)//沒有值
+      Swal.fire({
+        title: '使用者不存在',
+        icon: 'error',
+        showConfirmButton: false,
+        timer: 2000,
+        position: 'top',
+      });
+    }
 
 
 
-    Swal.fire({
-      title: '登入失敗',
-      icon: 'error',
-      showConfirmButton: false,
-      timer: 1000,
-      position: 'top',
-    });
-    setResponseError(true)
-    return
+    // Swal.fire({
+    //   title: '登入失敗',
+    //   icon: 'error',
+    //   showConfirmButton: false,
+    //   timer: 1000,
+    //   position: 'top',
+    // });
+    // setResponseError(true)
+    // return
   }
   useEffect(() => {
     if (isAuthenticated) {
@@ -67,13 +80,6 @@ const LoginPage = () => {
   }, [navigate, isAuthenticated, user]);
 
 
-  // 無法密碼欄不顯示使用者不存在 這個寫法不對
-  if (errorInfo === '使用者不存在！' && authInputCollection[1].label === '密碼') {
-    setResponseError(false)
-  }
-
-
-  // authInputCollection[1].label
   return (
     <div className={style.container}>
       <Logo className={style.logo} />

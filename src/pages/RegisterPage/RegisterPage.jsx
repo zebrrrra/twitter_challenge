@@ -36,7 +36,7 @@ const RegisterPage = () => {
       });
       return
     }
-    // 發api {true,成功資訊,錯誤資訊 }
+    // 發api { true, 成功資訊, 錯誤資訊 }
     const { success, message, errorInfo } = await register({ account, name, password, email, checkPassword })
 
     if (success) {
@@ -51,6 +51,7 @@ const RegisterPage = () => {
       return
     }
     console.log(success)
+
     if (!success) {
       console.log(errorInfo)
       Swal.fire({
@@ -86,8 +87,6 @@ const RegisterPage = () => {
             onChange={onChange}
             responseError={responseError}
             errorInfo={errorInfo}
-            password={password}
-            checkPassword={checkPassword}
           />
         ))}
         <button className={style.button} type="submit" >註冊</button>
