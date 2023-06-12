@@ -1,0 +1,89 @@
+.recommendListContainer {
+  position: relative;
+  width: 100%;
+  height: 60%;
+  top: 16px;
+  /* grayscale/dark-20 */
+  background: #FAFAFB;
+}
+
+/* card/popular */
+.recommendCard {
+  display: flex;
+  align-items: flex-start;
+  margin-left: 25px;
+  height: 82px;
+  box-sizing: border-box;
+}
+
+.avatar {
+  width: 50px;
+  height: 50px;
+  margin-right: 16px;
+}
+
+.userInfo {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  flex-grow: 1;
+}
+
+.name,
+.userName {
+  font-family: "Noto Sans TC";
+  font-style: normal;
+}
+
+.name {
+  width: auto;
+  height: 26px;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 26px;
+  color: #171725;
+}
+
+.userName {
+  width: auto;
+  height: 22px;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 22px;
+  color: #92929D;
+}
+
+.buttonFollowing,
+.buttonFollower {
+  align-items: center;
+  text-align: center;
+  height: 40px;
+  margin-left: 16px;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  border-radius: 50px;
+  font-family: "Noto Sans TC", sans-serif;
+  font-style: normal;
+  top: calc(50% - 20px);
+  margin-right: 16px;
+}
+
+.buttonFollowing {
+  display: flex;
+  width: 80px;
+  font-style: normal;
+  color: #FFFFFF;
+  flex: none;
+  background: #FF6600;
+}
+
+.buttonFollower {
+  width: 64px;
+  /* grayscale/dark-0 */
+  background: #FFFFFF;
+  /* color/brand/main */
+  color: #FF6600;
+  /* color/brand/main */
+  border: 1px solid #FF6600;
+}/*# sourceMappingURL=RecommendList.module.css.map */

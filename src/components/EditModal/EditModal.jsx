@@ -10,12 +10,22 @@ import { putUserProfile } from "../../apis/user"
 const EditModal = ({ open, onClose, onChange }) => {
   //  name, introduction, avatar, cover
 
+
+  // /users/: id / profile 修改資料以後資料庫變成undefined
+  // 這個問題已經解決，主要問題是以下：
+  // - handleAvatarUpload / handleCoverUpload 不需要改成 new FormData
+  //   - const handleProfileSave = async() 這裡面不需要放參數
+  // - 確認 user.js / EditModal.jsx 裡面 PutUserProfile 參數的順序，原本是有順序問題
+  // 程式碼修改已經寫在會議記錄裡面，要改 user.js / EditModel.jsx 兩隻檔案
+
+
   //接api的資料
   const [cover, setCover] = useState(editCover)
   const [avatar, setAvatar] = useState(editAvatar)
 
   const [name, setName] = useState('')
   const [introduction, setIntroduction] = useState('')
+
 
   const handleAvatarUpload = (e) => {
     // 取得使用者上傳的圖

@@ -23,7 +23,7 @@ export const register = async ({ account, name, password, email, checkPassword }
   } catch (err) {
     console.log('err.response.data', err.response.data)
     return {
-      success: false, errInfo: err.response.data.message
+      success: false, errorInfo: err.response.data.message
     }
   }
 }

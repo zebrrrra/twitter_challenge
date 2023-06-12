@@ -16,6 +16,14 @@ const RegisterPage = () => {
   const [responseError, setResponseError] = useState(false)
   const [errorInfo, setErrorInfo] = useState('')
 
+  const authInputCollection = [
+    { label: '帳號', id: 'account', type: 'text', placeholder: '請輸入帳號', value: account, onChange: (accountValue) => setAccount(accountValue) },
+    { label: '名稱', id: '名稱', type: 'text', placeholder: '請輸入使用者名稱', value: name, maxLength: 50, onChange: (nameValue) => setName(nameValue) },
+    { label: 'Email', id: 'email', type: 'email', placeholder: '請輸入Email', value: email, onChange: (emailValue) => setEmail(emailValue) },
+    { label: '密碼', id: '密碼', type: 'password', placeholder: '請輸入密碼', value: password, onChange: (passwordValue) => setPassword(passwordValue) },
+    { label: '密碼確認', id: '密碼確認', type: 'password', placeholder: '請再次輸入密碼', value: checkPassword, onChange: (checkPasswordValue) => setCheckPassword(checkPasswordValue) },
+  ];
+
   const handleRegisterSubmit = async (e) => {
     e.preventDefault();
     if (!account.trim() || !password.trim() || !name.trim() || !checkPassword.trim() || !email.trim()) {
@@ -28,12 +36,10 @@ const RegisterPage = () => {
       });
       return
     }
-
-
-    const { success, message, errInfo } = await register({ account, name, password, email, checkPassword })
+    // 發api {true,成功資訊,錯誤資訊 }
+    const { success, message, errorInfo } = await register({ account, name, password, email, checkPassword })
 
     if (success) {
-      console.log('ok')
       Swal.fire({
         title: message,
         icon: 'success',
@@ -43,23 +49,25 @@ const RegisterPage = () => {
       });
       setResponseError(false)
       return
-    } else {
-      console.log(errInfo)
+    }
+    console.log(success)
+    if (!success) {
+      console.log(errorInfo)
+      Swal.fire({
+        title: errorInfo,
+        icon: 'error',
+        showConfirmButton: false,
+        timer: 2000,
+        position: 'top',
+      });
 
-
+      // 傳遞錯誤到子件
       setResponseError(true)
-      setErrorInfo(errInfo)
+      setErrorInfo(errorInfo)
       return
     }
   }
 
-  const authInputCollection = [
-    { label: '帳號', id: '帳號', type: 'text', placeholder: '請輸入帳號', value: account, onChange: (accountValue) => setAccount(accountValue) },
-    { label: '名稱', id: '名稱', type: 'text', placeholder: '請輸入使用者名稱', value: name, maxLength: 50, onChange: (nameValue) => setName(nameValue) },
-    { label: 'Email', id: 'email', type: 'email', placeholder: '請輸入Email', value: email, onChange: (emailValue) => setEmail(emailValue) },
-    { label: '密碼', id: 'password', type: 'password', placeholder: '請輸入密碼', value: password, onChange: (passwordValue) => setPassword(passwordValue) },
-    { label: '密碼確認', id: 'checkPassword', type: 'password', placeholder: '請再次輸入密碼', value: checkPassword, onChange: (checkPasswordValue) => setCheckPassword(checkPasswordValue) },
-  ];
 
   return (
     <div className={style.container}>
@@ -78,6 +86,8 @@ const RegisterPage = () => {
             onChange={onChange}
             responseError={responseError}
             errorInfo={errorInfo}
+            password={password}
+            checkPassword={checkPassword}
           />
         ))}
         <button className={style.button} type="submit" >註冊</button>
