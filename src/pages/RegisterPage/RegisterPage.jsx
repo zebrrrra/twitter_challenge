@@ -39,21 +39,20 @@ const RegisterPage = () => {
     }
     // 發api { true, 成功資訊, 錯誤資訊 }
     const data = await register({ account, name, password, email, checkPassword })
-    console.log(data)
-    // if (success) {
-    //   Swal.fire({
-    //     title: message,
-    //     icon: 'success',
-    //     showConfirmButton: false,
-    //     timer: 2000,
-    //     position: 'top',
-    //   });
-    //   // setResponseError(false)
-    //   return
-    // }
-    // console.log(success)
-    // console.log(message)
-    // console.log(errorInfo)
+    if (success) {
+      Swal.fire({
+        title: message,
+        icon: 'success',
+        showConfirmButton: false,
+        timer: 2000,
+        position: 'top',
+      });
+      // setResponseError(false)
+      return
+    }
+    console.log(success)
+    console.log(message)
+    console.log(errorInfo)
 
 
     // if (!success) {
