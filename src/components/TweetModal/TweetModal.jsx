@@ -1,0 +1,36 @@
+import style from "./TweetModal.module.scss"
+import { useState } from 'react';
+import { postTweets } from "../../apis/tweet";
+
+// avatar會拿掉改成接props
+import avatar from '../../assets/icons/avatar.svg'
+
+
+const TweetModal = ({ open, onClose }) => {
+  const [tweetText, setTweetText] = useState('有什麼新鮮事?');//要填預設值
+  const handleSubmit = async () => {
+    const data = await postTweets(tweetText);
+    console.log(data);//測試用
+    setTweetText('');//傳完回到空值
+  }
+
+  return open ? (
+    <div className={style.background}>
+      <div className={style.container}>
+        <div className={style.buttonContainer}>
+          <button className={style.saveButton} onClick={() => onClose(false)}> X </button>
+        </div>
+        {/* 底下layout 未完成 */}
+        <div className={style.ContentContainer}>
+          <div className={`${style.avatarContainer} ${style.down}`}>
+            <img src={avatar} alt="avatar" />
+          </div>
+          <textarea style={{ resize: 'none', width: '88%' }} value={tweetText} onChange={(e) => setTweetText(e.target.value)}> </textarea>
+          <button className={style.button} onClick={handleSubmit}>推文</button>
+        </div>
+      </div>
+    </div>
+  ) : null;
+}
+export default TweetModal
+// { resize: 'none', width: '528px', height: '300px' }

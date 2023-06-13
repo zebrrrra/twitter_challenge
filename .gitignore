@@ -21,3 +21,10 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+src/components/ReplyList/ReplyList.module.scss
+src/components/TweetCard/TweetCard備用
+
+src/components/EditModal/demo.jsx
+
+src/apis/data.js
