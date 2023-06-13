@@ -1,22 +1,25 @@
 //import { useParams,Link } from 'react-router-dom'; 
 import style from './Tab.module.scss';
 import { useState, useEffect} from 'react';
-import {Routes,Route, useLocation} from 'react-router-dom';
-import FollowList from '../FollowList/FollowList';
+import {Routes,Route, useNavigate, useLocation} from 'react-router-dom';
+import FollowingList from '../FollowingList/FollowingLIst';
+//import FollowerList from '../LikeList/LikeList';
+//import ReplyList from '../ReplyList/ReplyList';
+import FollowersList from '../FollowersList/FollowersList';
 
 
-
-const FollowTab = ({ userId }) => {
-    const [activeTab, setActiveTab] = useState("追隨者");
+const Tab = ({ userId }) => {
+    const navigate = useNavigate();
+    const [activeTab, setActiveTab] = useState("正在追隨");
     const location = useLocation();
 
     useEffect(() => {
         const currentPath = location.pathname.split('/').pop();
         switch (currentPath) {
-            case 'followings':
+            case 'followers':
                 setActiveTab('追隨者');
                 break;
-            case 'followers':
+            case 'followings':
                 setActiveTab('正在追隨');
                 break;
             default:
@@ -28,14 +31,14 @@ const FollowTab = ({ userId }) => {
     const handleClick = (tabName) => {
         setActiveTab(tabName);
         switch (tabName) {
-            case 'followings':
-                setActiveTab('追隨者');
+            case "追隨者":
+                navigate(`/${userId}/followers`);
                 break;
-            case 'followers':
-                setActiveTab('正在追隨');
+            case "正在追隨":
+                navigate(`/${userId}/followings`);
                 break;
             default:
-                setActiveTab('追隨者');
+                navigate(`/${userId}/followers`);
                 break;
         }
     };
@@ -55,16 +58,16 @@ const FollowTab = ({ userId }) => {
                 >
                     正在追隨
                 </div>
-
+                  
             </div>
             <Routes>
-                <Route path="followers" element={<FollowList userId={userId} listType="followers"/>} />
-                <Route path="followings" element={<FollowList userId={userId} listType="following"/>} />
-                <Route path="*" element={<FollowList userId={userId} listType="followers"/>} /> 
+                <Route path="followings" element={<FollowingList userId={userId} />} />
+                <Route path="followers" element={<FollowersList userId={userId} />} />
+                <Route path="*" element={<FollowingList userId={userId} />} /> 
             </Routes>
         </div>
     );
 }
 
-export default FollowTab;
+export default Tab;
 

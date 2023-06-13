@@ -1,8 +1,8 @@
-/*import FollowCard from "../FollowCard/FollowCard";
+import FollowCard from "../FollowCard/FollowCard";
 import { postFollowShips,deleteFollowShips } from "../../apis/followship";
 import { getUserFollowings } from "../../apis/user";
-import { useEffect,useState,useContext } from "react";
-import { FollowContext } from "../../context/FollowContext";
+import { useEffect,useState } from "react";
+
 
 const FollowingList = ({userId})=>{
 
@@ -50,4 +50,4 @@ const FollowingList = ({userId})=>{
     )
     };
 
-export default FollowingList;*/
+export default FollowingList;

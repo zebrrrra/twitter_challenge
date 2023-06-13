@@ -3,7 +3,8 @@ import { getUsers, getUserFollowings, getUserFollowers } from'../apis/user';
 import { postFollowShips,deleteFollowShips } from '../apis/followship';
 
 
-export const UserContext = createContext();
+export const id =''
+export const UserContext = createContext(id);
 
 export const useUser= ()=> useContext(UserContext);
 
@@ -24,7 +25,9 @@ export const UserProvider = (props) => { //抽出來傳遞props
 
     const fetchFollowers = async (id) => {
         const data = await getUserFollowers(id);
+        if(data){
         setFollowers(data);
+        }
     };
 
     const followUser = async (id) => {
