@@ -44,7 +44,7 @@ const Navbars = () => {
               <span>個人資料</span>
             </div>
           </Link>
-          <Link to="/">
+          <Link to="/setting">
             <div className={style.NavbarItem}>
               <img className={style.NavbarPng} src={SettingIcon} alt="Setting" />
               <span>設定</span>

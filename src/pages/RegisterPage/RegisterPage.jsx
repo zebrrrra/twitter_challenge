@@ -1,10 +1,10 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import style from './RegisterPage.module.scss'
 import { ReactComponent as Logo } from '../../assets/icons/logo.svg'
 import { Link } from 'react-router-dom'
 import { AuthInput } from '../../components'
 import Swal from 'sweetalert2'
-import { register } from '../../apis/user'
+// import { register } from '../../apis/user'
 import { useAuth } from '../../context/AuthContext'
 const RegisterPage = () => {
   const [account, setAccount] = useState('')
@@ -15,7 +15,7 @@ const RegisterPage = () => {
   // const [responseError, setResponseError] = useState(false)
   // const [errorInfo, setErrorInfo] = useState('')
   // 改用context
-  const { register, isAuthenticated, user, responseError, errorInfo } = useAuth()
+  const { register, isAuthenticated, user, responseError, errorInfo, setResponseError } = useAuth()
 
   const authInputCollection = [
     { label: '帳號', id: 'account', type: 'text', placeholder: '請輸入帳號', value: account, onChange: (accountValue) => setAccount(accountValue) },
@@ -37,9 +37,11 @@ const RegisterPage = () => {
       });
       return
     }
-    // 發api { true, 成功資訊, 錯誤資訊 }
-    const data = await register({ account, name, password, email, checkPassword })
+    // // 發api { true, 成功資訊, 錯誤資訊 }
+    const success = await register({ account, name, password, email, checkPassword })
+
     if (success) {
+      const message = '登入成功'
       Swal.fire({
         title: message,
         icon: 'success',
@@ -47,31 +49,24 @@ const RegisterPage = () => {
         timer: 2000,
         position: 'top',
       });
-      // setResponseError(false)
+      setResponseError(false)
       return
     }
-    console.log(success)
-    console.log(message)
-    console.log(errorInfo)
 
+    if (!success) {
 
-    // if (!success) {
-    //   console.log(errorInfo)
-    //   Swal.fire({
-    //     title: errorInfo,
-    //     icon: 'error',
-    //     showConfirmButton: false,
-    //     timer: 2000,
-    //     position: 'top',
-    //   });
+      Swal.fire({
+        title: errorInfo,
+        icon: 'error',
+        showConfirmButton: false,
+        timer: 2000,
+        position: 'top',
+      });
+      setResponseError(true)
 
-    //   // 傳遞錯誤到子件
-    //   // setResponseError(true)
-    //   // setErrorInfo(errorInfo)
-    //   return
-    // }
+      return
+    }
   }
-
 
   return (
     <div className={style.container}>
@@ -100,6 +95,4 @@ const RegisterPage = () => {
     </div>
   )
 }
-
-
 export default RegisterPage

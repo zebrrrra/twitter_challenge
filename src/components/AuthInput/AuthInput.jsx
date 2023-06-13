@@ -16,8 +16,9 @@ const AuthInput = ({ label, id, type, placeholder, value, maxLength, onChange, h
   let DisplayError = responseError && errorInfo.includes(id);
   let AccountError = errorInfo && errorInfo.includes('使用者不存在') && id === '帳號';
 
-  // console.log(AccountError)
-  const number = value.length
+  console.log(DisplayError)
+  console.log(AccountError)
+  const number = (value || '').length
   const containerStyle = {
     height: `${height}px`,
   };
