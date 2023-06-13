@@ -9,14 +9,14 @@ const AuthInput = ({ label, id, type, placeholder, value, maxLength, onChange, h
   const [error, setError] = useState(false)
   const [message, setMessage] = useState('')
   const { responseError, errorInfo } = useAuth()
-  console.log(responseError)//true
-  console.log(errorInfo)//使用者不存在
+  // console.log(responseError)
+  // console.log(errorInfo)
 
   // 檢測後端錯誤以及是否為錯誤對應欄位
   let DisplayError = responseError && errorInfo.includes(id);
   let AccountError = errorInfo && errorInfo.includes('使用者不存在') && id === '帳號';
 
-  console.log(AccountError)//false??
+  // console.log(AccountError)
   const number = value.length
   const containerStyle = {
     height: `${height}px`,
@@ -28,7 +28,7 @@ const AuthInput = ({ label, id, type, placeholder, value, maxLength, onChange, h
   if (AccountError || DisplayError || error) {
     inputStyle += ` ${style.inputGroupError}`;
   }
-  console.log(DisplayError)
+  // console.log(DisplayError)
 
   // 只有這兩種輸入框需要顯示數字
   let showNumber = label === '名稱' || label === '自我介紹'

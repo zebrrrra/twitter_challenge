@@ -12,14 +12,31 @@ export const login = async ({ account, password }) => {
   }
 }
 
+// api接本地的寫法
+// export const register = async ({ account, name, password, email, checkPassword }) => {
+//   try {
+//     const response = await axios.post(`${baseUrl}/users`, { account, name, password, email, checkPassword })
 
+//     if (response.data.status === 'success') {
+//       return { success: true, message: response.data.message }
+//     }
+//   } catch (err) {
+//     console.log('err.response.data', err.response.data)
+//     return {
+//       success: false, errorInfo: err.response.data.message
+//     }
+//   }
+// }
+
+// 放公共
 export const register = async ({ account, name, password, email, checkPassword }) => {
   try {
-    const response = await axios.post(`${baseUrl}/users`, { account, name, password, email, checkPassword })
-
-    if (response.data.status === 'success') {
-      return { success: true, message: response.data.message }
-    }
+    const { data } = await axios.post(`${baseUrl}/users`, { account, name, password, email, checkPassword })
+    console.log(data)
+    return data
+    // if (response.data.status === 'success') {
+    //   return { success: true, message: response.data.message }
+    // }
   } catch (err) {
     console.log('err.response.data', err.response.data)
     return {

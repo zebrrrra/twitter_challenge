@@ -45,7 +45,7 @@ const LoginPage = () => {
       });
       // setResponseError(false)
       console.log(responseError)
-      navigate('/') //wait to solve 
+      navigate('/')
       return
     }
 

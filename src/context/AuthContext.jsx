@@ -5,6 +5,7 @@ import { login, adminLogin } from '../apis/user';
 import * as jwt from 'jsonwebtoken';
 import { useLocation } from 'react-router-dom';
 import { useContext, useEffect } from 'react';
+import { register } from '../apis/user';
 
 const defaultAuthContext = {
     isAuthenticated: false,
@@ -50,23 +51,42 @@ export const AuthProvider = ({ children }) => {
                     id: payload.id,
                     name: payload.name,
                 }, responseError, errorInfo, setResponseError, setErrorInfo
-                /*register: async (data) => {
-                    const { success, token } = await register(
+                , register: async (data) => {
+                    const result = await register({
                         account: data.account,
-                        email: data.email,
+                        name: data.name,
                         password: data.password,
-                    );
-                    const tempPayload = jwt.decode(token);
-                    if (tempPayload) {
-                        setPayload(tempPayload);
-                        setIsAuthenticated(true);
-                        localStorage.setItem('token', token);
+                        email: data.email,
+                        checkPassword: data.checkPassword
+
+                    });
+                    console.log(result)//{success: false, errorInfo: '密碼不相同!'}
+
+                    if (result.success) {
+
+                        console.log(result.message)
+                        setResponseError(false)
+                        return result
                     } else {
-                        setPayload(null);
-                        setIsAuthenticated(false);
+                        console.log(result.errorInfo)
+                        setResponseError(true)
+
                     }
-                    return success;
-                },*/
+
+
+
+                    // const tempPayload = jwt.decode(token);
+                    // if (tempPayload) {
+                    //     setPayload(tempPayload);
+                    //     setIsAuthenticated(true);
+                    //     localStorage.setItem('token', token);
+                    // } else {
+                    //     setPayload(null);
+                    //     setIsAuthenticated(false);
+                    // }
+                    // console.log(success)
+                    // return success
+                }
                 , login: async (data) => {
                     const result = await login(
                         {
