@@ -1,34 +1,35 @@
-import style from "./UserInfo.module.scss"
+import style from "./AdminUserCard.module.scss"
 import background from '../../assets/icons/background.svg'
 import avatar from '../../assets/icons/avatar.svg'
 import { Link } from "react-router-dom"
-import EditModal from "../EditModal/EditModal"
+
 import { useState } from "react"
 import { getUsers } from "../../apis/user"
-import { useParams } from "react-router-dom"
-import { useEffect } from "react"
 import { useAuth } from "../../context/AuthContext"
 
 
 const UserInfo = ({ img = background, useId }) => {
-  const [openModal, setOpenModal] = useState(false);
+ 
   // 使用個變數作為判斷是否為別人 
-  const { user, payload, setPayload } = useAuth()
+ // const { user, payload, setPayload } = useAuth()
 
 
-  const handleOpenClick = async () => {
-    setOpenModal(true)
+  //const handleOpenClick = async () => {
+    //setOpenModal(true)
 
     // 發送api載入自己的資料
-    const id = user.id
-    console.log(id)
-    const userData = await getUsers(id)
-    console.log(userData)
-    setPayload(userData)
-  }
+    //const id = user.id
+    //console.log(id)
+    //const userData = await getUsers(id)
+    //console.log(userData)
+    //setPayload(userData)
+  //}
   // useEffect(() => {
   //   console.log('params id:', userId); // params id: 123
   // }, []);
+
+
+  
   return (
     <div className={style.container}>
       <div className={style.bgContainer}>
@@ -38,7 +39,6 @@ const UserInfo = ({ img = background, useId }) => {
         <img src={avatar} alt="avatar" />
       </div>
       <div className={style.buttonContainer}>
-        <button className={style.button} type="button" onClick={handleOpenClick}>編輯個人資料</button>
       </div>
       <div className={style.textContainer}>
         <h5 className={style.name}>"qq"</h5>
@@ -49,7 +49,6 @@ const UserInfo = ({ img = background, useId }) => {
           <Link to="" className={style.link}>31個<span>跟隨者</span></Link>
         </div>
       </div>
-      {openModal && <EditModal payload={payload} open={openModal} onClose={(value) => setOpenModal(value)} />}
     </div >
 
   )

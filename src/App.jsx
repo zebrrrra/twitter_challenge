@@ -8,7 +8,8 @@ import { useAuth } from './context/AuthContext';
 //import { AuthProvider } from "./context/AuthContext";
 //import FollowPage from "./pages/FollowPage/FollowPage";
 import ReplyPage from "./pages/ReplyPage/ReplyPage";
-
+import AdminAllTweets from "./components/AdminAllTweet/AdminAllTweet";
+import AdminUserPage from './pages/AdminUserPage/AdminUserPage';
 
 function App() {
   return (
@@ -19,6 +20,8 @@ function App() {
           <Routes>
             <Route path="/login" element={<LoginPage />} />
             <Route path="/admin" element={<AdminLoginPage />} />
+          
+            <Route path="/testuser" element={<AdminUserPage />}/>
             <Route path="register" element={<RegisterPage />} />
             <Route path="/:id/*" element={<HandleProfilePage />} />
             <Route path="/tweets/:tweetId" element= {<ReplyPage />}/>
@@ -56,4 +59,6 @@ export default App;
                    <Route path="login" element={<LoginPage />} />
           <Route path="admin" element={<AdminLoginPage />} />
           <Route path="register" element={<RegisterPage />} />
-                <Route path="*" element={<LoginPage />} />*/}
+                <Route path="*" element={<LoginPage />} />
+              
+              <Route path="/admin/tweets" element={<AdminAllTweets />} />*/}

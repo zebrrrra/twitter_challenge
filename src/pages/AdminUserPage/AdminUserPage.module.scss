@@ -1,0 +1,32 @@
+@import '../../style/base.scss';
+
+.homeContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+    min-height: 100vh;
+    padding: 0;
+
+}
+
+.homeColumn {
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+    //border-radius: 16px;
+}
+
+.leftColumn {
+    flex: 1;
+    background-color: #fff;
+    position: relative;
+    margin-right: 24px;
+}
+
+.middleColumn {
+    flex: 3;
+    position: relative;
+    background-color: #fff;
+    padding-right: 25px;
+}
