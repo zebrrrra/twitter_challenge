@@ -10,7 +10,7 @@ import FollowersList from '../FollowersList/FollowersList';
 import { getUserFollowings,getUserFollowers } from "../../apis/user";
 
 
-const FollowTab = ({ userId }) => {
+const FollowTab = ({ userId,updateTag }) => {
     const navigate = useNavigate();
     const [activeTab, setActiveTab] = useState("正在追隨");
     const location = useLocation();
@@ -24,6 +24,8 @@ const FollowTab = ({ userId }) => {
           const followingData = await getUserFollowings(userId);
           const followerData = await getUserFollowers(userId);
       
+            
+
           if (followingData) {
             setFollowingUsers(followingData.map(user => ({
               ...user.Following,
@@ -40,7 +42,7 @@ const FollowTab = ({ userId }) => {
         }
       
         fetchFollowersAndFollowings();
-      }, [userId]);
+      }, [userId, updateTag]);
       
     useEffect(() => {
         const currentPath = location.pathname.split('/').pop();

@@ -3,20 +3,22 @@ import style from './FollowCard.module.scss';
 
 
 const FollowCard = ({user,onFollow,onUnfollow}) => {
-
+    console.log('FollowCard user:', user);
 
 const buttonClass = user.isCurrentUserFollowed ?style.buttonFollowing: style.buttonFollower;
 const buttonText = user.isCurrentUserFollowed? "正在跟隨":"跟隨";
 
 
 const handleButtonClick=()=>{
+    console.log(' click isCurrentUserFollowed is:', user.isCurrentUserFollowed);
     if (user.isCurrentUserFollowed){
         onUnfollow(user.id);
     } else{
         onFollow(user.id);
     }
     console.log('user is:', user);
-console.log('isCurrentUserFollowed is:', user.isCurrentUserFollowed);
+console.log('After isCurrentUserFollowed is:', user.isCurrentUserFollowed);
+
 };
     return (
         <div className={style.followCardContainer}>
