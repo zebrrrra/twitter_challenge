@@ -1,14 +1,35 @@
 //import { useParams,Link } from 'react-router-dom'; 
 import style from './Tab.module.scss';
-import { useState } from 'react';
-import {Routes,Route, useNavigate} from 'react-router-dom';
+import { useState, useEffect} from 'react';
+import {Routes,Route, useNavigate, useLocation} from 'react-router-dom';
 import TweetList from '../TweetList/TweetList';
 import LikeList from '../LikeList/LikeList';
 import ReplyList from '../ReplyList/ReplyList';
 
+
+
 const Tab = ({ userId }) => {
     const navigate = useNavigate();
     const [activeTab, setActiveTab] = useState("推文");
+    const location = useLocation();
+
+    useEffect(() => {
+        const currentPath = location.pathname.split('/').pop();
+        switch (currentPath) {
+            case 'tweets':
+                setActiveTab('推文');
+                break;
+            case 'replies':
+                setActiveTab('回覆');
+                break;
+            case 'likes':
+                setActiveTab('喜歡的內容');
+                break;
+            default:
+                setActiveTab('推文');
+                break;
+        }
+    }, [location.pathname]);  
     
     const handleClick = (tabName) => {
         setActiveTab(tabName);

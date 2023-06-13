@@ -100,7 +100,36 @@ export const getUserLike = async (id) => {
     }
   };
 //GET /api/users/:id/followings 看見某使用者所有跟隨中的人
+
+export const getUserFollowings= async (id)=>{
+  const token = localStorage.getItem ('token');
+  try {
+    const response = await axios.get (`${baseUrl}/users/${id}/followings`,{
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
+    return response.data;
+  } catch (error){
+    console.error ('Error: cannnot get user followings',error);
+  }
+};
 //GET /api/users/:id/followers 看見某使用者的所有跟隨者
+export const getUserFollowers =async (id) =>{
+  const token= localStorage.getItem('token');
+  try{
+    const response = await axios.get (`${baseUrl}/users/${id}/followers`,{
+      headers:{
+        Authorization: `Bearer ${token}`
+      }
+    });
+    return response.data;
+
+  }catch(error){
+    console.log('Error: cannnot get user followers',error)
+  }
+};
+
 //PUT /api/users/:id 編輯自己setting頁的資料 ( name, introduction, account, eamil, password )
 //PUT /api/users/:id/profile 編輯自己Profile頁的資料 ( name, introduction, avatar, cover )
 //GET /api/users/topFollowers 回傳 10 位最多followers的user

@@ -9,5 +9,6 @@ import RecommendList from "./RecommendList/RecommendList";
 import ReplyMain from "./ReplyMain/ReplyMain";
 import OpenTweet from "./OpenTweet/OpenTweet";
 import ReplyList from "./ReplyList/ReplyList";
+import FollowList from "./FollowList/FollowList";
 
-export { AuthInput, UserInfo,TweetModal, Header,Navbars,MainPost,AllTweets,RecommendList,ReplyMain,OpenTweet,ReplyList }
+export { AuthInput, UserInfo,TweetModal, Header,Navbars,MainPost,AllTweets,RecommendList,ReplyMain,OpenTweet,ReplyList,FollowList }
