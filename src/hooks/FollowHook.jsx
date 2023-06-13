@@ -1,8 +1,7 @@
 import { useState } from "react";
-import { getUsers, postFollowShips, deleteFollowShips } from "../../apis/user";
-
-const useFollow = () => {
-  const [users, setUsers] = useState([]);
+import { getUsers } from "../apis/user";
+import { postFollowShips, deleteFollowShips } from "../apis/followship";
+const useFollow = (users, setUsers) => {
 
   const handleFollow = async (id) => {
     const response = await postFollowShips(id);

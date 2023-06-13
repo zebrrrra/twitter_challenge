@@ -15,6 +15,8 @@ const handleButtonClick=()=>{
     } else{
         onFollow(user.id);
     }
+    console.log('user is:', user);
+console.log('isCurrentUserFollowed is:', user.isCurrentUserFollowed);
 };
     return (
         <div className={style.followCardContainer}>
@@ -27,6 +29,8 @@ const handleButtonClick=()=>{
 
         </div>
         </div> 
+    
     )
+    
 }
 export default FollowCard;
