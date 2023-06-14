@@ -4,8 +4,29 @@ import { deleteAdminUserTweets } from '../../apis/admin';
 import AdminTweetCard from '../AdminTweetCard/AdminTweetCard';
 
 
+
+
+
 const AdminAllTweets =({ userId })=>{
     const [allUserTweets, setAllUserTweets] = useState([]);
+
+
+
+    const handleOnDelete = async (id) => {
+        try {
+            const response = await deleteAdminUserTweets(id);
+            if (response && response.status === 'success') {
+                setAllUserTweets(allUserTweets => allUserTweets.filter((tweet) => tweet.id !== id));
+            } else {
+                return null;
+            }
+        } catch (error) {
+            console.error("error while deleting tweet: ", error);
+            return null;
+        }
+    };
+        
+    
 
     useEffect(()=>{
         const fetchTweets = async () => {
@@ -22,7 +43,11 @@ const AdminAllTweets =({ userId })=>{
     if(!allUsertweet.User){
         return null;
     }
-    return<AdminTweetCard key={allUsertweet.id} tweet={allUsertweet} type="alltweet"/>});
-}
+    return<AdminTweetCard 
+    key={allUsertweet.id} 
+    tweet={allUsertweet} 
+    handleOnDelete={handleOnDelete} 
+    type="alltweet"/>})}
+;
 
 export default AdminAllTweets;

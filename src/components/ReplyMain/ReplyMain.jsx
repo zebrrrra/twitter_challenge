@@ -34,7 +34,7 @@ const ReplyMain = () => {
      tweet={tweet}
      onLike={()=>handleLike(id)}
      onUnLike={()=>handleUnLike(id)}/>}
-    <ReplyList tweetId={id}/>
+    
     </>
   )
 
