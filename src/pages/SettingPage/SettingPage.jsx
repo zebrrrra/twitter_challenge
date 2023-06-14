@@ -20,8 +20,8 @@ const SettingPage = () => {
   const { putUserSetting, isAuthenticated, user, responseError, errorInfo, setErrorInfo, setResponseError } = useAuth()
 
   const authInputCollection = [
-    { label: '帳號', id: '帳號', type: 'text', placeholder: '請輸入帳號', value: account, onChange: (accountValue) => setAccount(accountValue) },
-    { label: '名稱', id: '名稱', type: 'text', placeholder: '請輸入使用者名稱', value: name, maxLength: 50, onChange: (nameValue) => setName(nameValue) },
+    { label: '帳號', id: 'account', type: 'text', placeholder: '請輸入帳號', value: account, onChange: (accountValue) => setAccount(accountValue) },
+    { label: '名稱', id: 'name', type: 'text', placeholder: '請輸入使用者名稱', value: name, maxLength: 50, onChange: (nameValue) => setName(nameValue) },
     { label: 'Email', id: 'email', type: 'email', placeholder: '請輸入Email', value: email, onChange: (emailValue) => setEmail(emailValue) },
     { label: '密碼', id: '密碼', type: 'password', placeholder: '請輸入密碼', value: password, onChange: (passwordValue) => setPassword(passwordValue) },
     { label: '密碼確認', id: '密碼確認', type: 'password', placeholder: '請再次輸入密碼', value: checkPassword, onChange: (checkPasswordValue) => setCheckPassword(checkPasswordValue) },
@@ -57,29 +57,29 @@ const SettingPage = () => {
     if (success) {
 
       Swal.fire({
-        title: '成功編輯帳號資訊',
+        title: '編輯成功',
         icon: 'success',
         showConfirmButton: false,
         timer: 2000,
         position: 'top',
       });
-      setResponseError(false)
+      // setAccount('');
+      // setName('');
+      // setEmail('');
+      // setPassword('');
+      // setCheckPassword('');
       return
     }
 
     if (!success) {
 
       Swal.fire({
-        title: errorInfo,
+        title: '編輯失敗',
         icon: 'error',
         showConfirmButton: false,
         timer: 2000,
         position: 'top',
       });
-      // setError(true)
-      // setMessage(errInfo)
-      setResponseError(true)
-      setErrorInfo(errorInfo)
       return
     }
     // console.log(errorInfo)//空的

@@ -41,7 +41,7 @@ const RegisterPage = () => {
     const success = await register({ account, name, password, email, checkPassword })
 
     if (success) {
-      const message = '登入成功'
+      const message = '註冊成功'
       Swal.fire({
         title: message,
         icon: 'success',
@@ -56,7 +56,7 @@ const RegisterPage = () => {
     if (!success) {
 
       Swal.fire({
-        title: errorInfo,
+        title: '註冊失敗',
         icon: 'error',
         showConfirmButton: false,
         timer: 2000,

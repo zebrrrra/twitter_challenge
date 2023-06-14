@@ -131,12 +131,14 @@ export const AuthProvider = ({ children }) => {
                     setResponseError(false)
                 } else {
                     const errorInfo = result.errInfo
+                    console.log(errorInfo)
                     setResponseError(true)
                     setErrorInfo(errorInfo)
                     setPayload(null);
                     setIsAuthenticated(false);
 
                 }
+                console.log(errorInfo)
                 return result.status === 'success';
 
             }, putUserSetting: async (data) => {

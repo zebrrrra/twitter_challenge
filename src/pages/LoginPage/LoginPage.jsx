@@ -11,11 +11,11 @@ const LoginPage = () => {
   const [account, setAccount] = useState('')
   const [password, setPassword] = useState('')
 
-  const { login, isAuthenticated, user, responseError, errorInfo } = useAuth();
+  const { login, isAuthenticated, user, responseError, errorInfo, setResponseError } = useAuth();
 
   const navigate = useNavigate()
   const authInputCollection = [
-    { label: '帳號', id: '帳號', type: 'text', placeholder: '請輸入帳號', value: account, onChange: (accountValue) => setAccount(accountValue) },
+    { label: '帳號', id: 'account', type: 'text', placeholder: '請輸入帳號', value: account, onChange: (accountValue) => setAccount(accountValue) },
     { label: '密碼', id: '密碼', type: 'password', placeholder: '請輸入密碼', value: password, onChange: (passwordValue) => setPassword(passwordValue) }]
 
 
@@ -49,30 +49,28 @@ const LoginPage = () => {
       return
     }
 
+    console.log(errorInfo)//沒有值
     if (!success) {
       console.log(responseError)
-      console.log(errorInfo)//沒有值
       Swal.fire({
-        title: '使用者不存在',
+        title: '登入失敗',
         icon: 'error',
         showConfirmButton: false,
         timer: 2000,
         position: 'top',
       });
     }
-
-
-
-    // Swal.fire({
-    //   title: '登入失敗',
-    //   icon: 'error',
-    //   showConfirmButton: false,
-    //   timer: 1000,
-    //   position: 'top',
-    // });
-    // setResponseError(true)
-    // return
+    return
   }
+  // Swal.fire({
+  //   title: '登入失敗',
+  //   icon: 'error',
+  //   showConfirmButton: false,
+  //   timer: 1000,
+  //   position: 'top',
+  // });
+  // setResponseError(true)
+  // return
   useEffect(() => {
     if (isAuthenticated) {
       navigate(`/${user?.id}/`);
