@@ -1,14 +1,15 @@
-import UserInfo from '../UserInfo/UserInfo'
+// import UserInfo from '../UserInfo/UserInfo'
 import Tab from '../Tab/Tab';
 import { useParams } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
+import OtherUserInfo from '../OtherUserInfo/OtherUserInfo';
 const Main = ({ currentId }) => {
   // const { id } = useParams();
   // const { user } = useAuth();
   console.log(currentId)
   return (
     <>
-      <UserInfo currentId={currentId} />
+      <OtherUserInfo currentId={currentId} />
       <Tab userId={currentId} />
       {/* <UserInfo userId={id} />
       <Tab userId={user && user.id} /> */}
