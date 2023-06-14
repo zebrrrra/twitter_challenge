@@ -3,11 +3,11 @@ const baseUrl ='https://tranquil-basin-75437.herokuapp.com/api';
 
 //POST /api/admin/login 管理者登入
 //GET /api/admin/users 管理者可以看見所有的使用者 (包括 admin)
-export const getUsers = async (id) => {
-  //const token ='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTQsImVtYWlsIjoidXNlcjFAZXhhbXBsZS5jb20iLCJuYW1lIjoidXNlcjEiLCJhdmF0YXIiOiJodHRwczovL2kucHJhdmF0YXIuY2MvMzAwP2ltZz03MiIsImludHJvZHVjdGlvbiI6InByYWVzZW50aXVtIHF1byBlbmltIGRvbG9yaWJ1cyBoaWMiLCJyb2xlIjoidXNlciIsImFjY291bnQiOiJ1c2VyMSIsImNvdmVyIjoiaHR0cHM6Ly9sb3JlbWZsaWNrci5jb20vNjQwLzQ4MC9jaXR5P2xvY2s9MzYiLCJjcmVhdGVkQXQiOiIyMDIzLTA2LTA5VDA3OjE2OjMzLjAwMFoiLCJ1cGRhdGVkQXQiOiIyMDIzLTA2LTA5VDA3OjE2OjMzLjAwMFoiLCJpYXQiOjE2ODYzMTQyNzMsImV4cCI6MTY4ODkwNjI3M30.NLl7ruyc2FBqWpnPv_Ixu_SMnA9lVS5QDyQdexrma70'
-  const token = localStorage.getItem('token');
+export const getAdminUsers = async (id) => {
+const token ='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwiZW1haWwiOiJyb290QGV4YW1wbGUuY29tIiwibmFtZSI6InJvb3QiLCJhdmF0YXIiOiJodHRwczovL2kucHJhdmF0YXIuY2MvMzAwP2ltZz01NCIsImludHJvZHVjdGlvbiI6ImxhYm9yaW9zYW0gY29uc2VxdWF0dXIgb3B0aW8gYXNwZXJuYXR1ciBuZWNlc3NpdGF0aWJ1cyIsInJvbGUiOiJhZG1pbiIsImFjY291bnQiOiJyb290IiwiY292ZXIiOiJodHRwczovL3BpY3N1bS5waG90b3MvaWQvNzUvNjQwLzQ4MCIsImNyZWF0ZWRBdCI6IjIwMjMtMDYtMTRUMDE6MzE6MTQuMDAwWiIsInVwZGF0ZWRBdCI6IjIwMjMtMDYtMTRUMDE6MzE6MTQuMDAwWiIsImlhdCI6MTY4Njc1Nzg4MiwiZXhwIjoxNjg5MzQ5ODgyfQ.ha911_tfpRAaL3FS7CcjMucDbLz84_03pgX7s0ehNb4'
+  //const token = localStorage.getItem('token');
     try {
-      const response = await axios.get(`${baseUrl}/admin/users/`, {
+      const response = await axios.get(`${baseUrl}/admin/usersdata`, {
         headers: {
           Authorization: `Bearer ${token}`
         }

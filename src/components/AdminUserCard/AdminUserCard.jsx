@@ -2,48 +2,56 @@ import style from "./AdminUserCard.module.scss"
 import background from '../../assets/icons/background.svg'
 import avatar from '../../assets/icons/avatar.svg'
 import { Link } from "react-router-dom"
-import { ReactComponent as PostIcon } from '../../assets/icon/post.svg'
+import { ReactComponent as PostIcon } from '../../assets/icon/post.svg';
+import { ReactComponent as LikeIcon } from '../../assets/icon/like_1.svg'
 
 
-const UserInfo = ({ img = background, useId }) => {
+
+const AdminUserCard = ({ user }) => {
  
-  // 使用個變數作為判斷是否為別人 
- // const { user, payload, setPayload } = useAuth()
+  const {
+    name,
+    account,
+    cover,
+    avatar,
+    followersCount,
+    followingsCount,
+    tweetsCount,
+    receivedLikesCount,
+  } =user;
+  const formatCount =(count)=>{
+    if (count < 1000){
+     return count;
+    } else{
+     return (count/ 1000).toFixed(1)+"k";//toFixed的意思是會留一個小數位
+    }
+     
+   }
+   
 
-
-  //const handleOpenClick = async () => {
-    //setOpenModal(true)
-
-    // 發送api載入自己的資料
-    //const id = user.id
-    //console.log(id)
-    //const userData = await getUsers(id)
-    //console.log(userData)
-    //setPayload(userData)
-  //}
-  // useEffect(() => {
-  //   console.log('params id:', userId); // params id: 123
-  // }, []);
-
-
-  
   return (
+   
     <div className={style.container}>
       <div className={style.bgContainer}>
-        <img src={img} alt="background" />
+        <img src={cover} alt="background" />
       </div>
       <div className={style.avatarContainer}>
         <img src={avatar} alt="avatar" />
+        
       </div>
       <div className={style.buttonContainer}>
       </div>
       <div className={style.textContainer}>
-        <h5 className={style.name}>"qq"</h5>
-        <span className={style.account}>@"sss"</span>
-        <p>"qq"</p>
-        <div className={style.linkGroup}>
-          <Link to="" className={style.link}>321個<span>跟隨中</span></Link>
-          <Link to="" className={style.link}>31個<span>跟隨者</span></Link>
+        <h5 className={style.name}>{name}</h5>
+        <span className={style.account}>@{account}</span>
+        <p></p>
+        <div className={style.iconContainer}>
+        <div className={style.icon}><PostIcon/></div> <p>{formatCount(tweetsCount)}</p>
+        <div className={style.icon}><LikeIcon/></div> <p>{formatCount(receivedLikesCount)}</p>
+        </div>
+        <div className={style.followGroup}>
+          <div className={style.follow}>{followersCount}<p>跟隨中</p></div>
+          <div className={style.follow}>{followingsCount}<p>跟隨者</p></div>
         </div>
       </div>
     </div >
@@ -51,4 +59,4 @@ const UserInfo = ({ img = background, useId }) => {
   )
 }
 
-export default UserInfo
+export default AdminUserCard;

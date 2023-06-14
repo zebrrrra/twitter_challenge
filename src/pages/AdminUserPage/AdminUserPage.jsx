@@ -5,7 +5,9 @@ import AdminNavbars from '../../components/Navbars/AdminNavbar';
 //import {useAuth} from '../../context/AuthContext'
 //import { useEffect } from 'react';
 //import { useNavigate } from 'react-router-dom';
-import AdminUserCard from '../../components/AdminUserCard/AdminUserCard';
+import {useAuth} from '../../context/AuthContext'
+import AdminUserList from '../../components/AdminUserList/AdminUserList';
+
 
 const AdminUserPage = () => {
   //const { isAuthenticated,user} = useAuth();
@@ -17,18 +19,20 @@ const AdminUserPage = () => {
    // }
    // },[navigate,isAuthenticated])
 
+   const {user} = useAuth();
+
   return (
     <div className={style.homeContainer}>
-      <div className={style.homeColumn}>
+
         <div className={style.leftColumn}>
           <AdminNavbars />
         </div>
         <div className={style.middleColumn}>
           <Header />
-            <AdminUserCard/>
+            <AdminUserList user={user&&user.id}/>
         </div>
       </div>
-    </div>
+
   )
 }
 

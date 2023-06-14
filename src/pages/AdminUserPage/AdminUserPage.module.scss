@@ -25,8 +25,8 @@
 }
 
 .middleColumn {
-    flex: 3;
+    flex: 4;
     position: relative;
     background-color: #fff;
-    padding-right: 25px;
+    box-sizing: border-box;
 }
