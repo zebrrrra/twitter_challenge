@@ -1,18 +1,23 @@
-//import { useAuth } from '';
-//import { useEffect } from 'react;
-//import { useNavigate } from 'react-router-dom';
 import RecommendList from '../../components/RecommendList/RecommendList';
 import Navbar from '../../components/Navbars/Navbars';
 import Header from '../../components/Headers/Headers';
 import Main from '../../components/Main/Main';
 import style from './ProfilePage.module.scss'
-import AuthContext from '../../context/AuthContext'
+// import AuthContext from '../../context/AuthContext'
 import { useNavigate } from 'react-router-dom';
-import { useEffect,useContext } from 'react';
-//import { useParmas } from 'react-router-dom';
+import { useEffect } from 'react';
+import { useAuth } from '../../context/AuthContext';
+import { useParmas } from 'react-router-dom';
 
 const ProfilePage = () => {
-  //const {userId } = useParams();
+  const { isAuthenticated, user } = useAuth()
+  const navigate = useNavigate();
+  // const{}=useParmas()
+  console.log(user)
+  console.log(user.id)//可以取得
+  console.log(user.name)
+  console.log(user.avatar)
+  const currentId = user.id
   /*不確定Router*/
   //const { isAuthenticated } =useAuth ();
   //const navigate = useNavigate ();
@@ -24,13 +29,12 @@ const ProfilePage = () => {
   //  }
   //})
 
-  const { isAuthenticated,user } =useContext(AuthContext);
-  const navigate =useNavigate();
-  useEffect(()=>{
-    if (!isAuthenticated){
-      navigate ('/login');
+  // const { isAuthenticated,user } =useContext(AuthContext);
+  useEffect(() => {
+    if (!isAuthenticated) {
+      navigate('/login');
     }
-    },[navigate,isAuthenticated])
+  }, [navigate, isAuthenticated])
 
   return (
     <div className={style.profileContainer}>
@@ -40,7 +44,7 @@ const ProfilePage = () => {
         </div>
         <div className={style.middleColumn}>
           <Header />
-          <Main />
+          <Main currentId={currentId} />
         </div>
         <div className={style.rightColumn}>
           <RecommendList />

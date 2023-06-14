@@ -62,36 +62,6 @@ export const adminLogin = async ({ account, password }) => {
 }
 
 
-
-
-
-
-// export const putUserSetting = async ({ id }) => {
-//   try {
-//     const token = localStorage.getItem('token')
-//     console.log(token)
-
-//     const response = await axios.put(`${baseUrl}/users/${id}`, {},
-//       {
-//         headers: {
-//           Authorization: `Bearer ${token}`,
-//           'Content-Type': 'application/json'
-//         },
-//       }
-//     )
-//     if (response.data.status === 'success') {
-//       console.log('成功')
-//       return { success: true, message: response.data.message }
-//     }
-
-//   } catch (err) {
-//     console.log('失敗')
-//     console.log(err.response.data)
-//     return { success: false, errInfo: err.response.data.message }
-//   }
-// }
-
-
 export const putUserSetting = async ({ id, account, name, email, password, checkPassword }) => {
   try {
     console.log('account:', account)
@@ -113,17 +83,16 @@ export const putUserSetting = async ({ id, account, name, email, password, check
     console.log(response)
     if (response.data.status === 'success') {
       console.log('成功')
-      return response
+      return { success: true, message: response.data.message }
 
-      // return { success: true, message: response.data.message }
     }
 
   } catch (err) {
     console.log('失敗')
     console.log(err.response.data)
     console.log(err.response)
-    return err.response
-    // return { success: false, errorInfo: err.response.data.message }
+    // return err.response
+    return { success: false, errInfo: err.response.data.message }
   }
 }
 
@@ -134,6 +103,11 @@ export const putUserProfile = async ({ id, name, avatar, cover, introduction }) 
   try {
 
     const formData = new FormData();
+    // 加入資料進去 formData
+    formData.append('name', name);
+    formData.append('avatar', avatar);
+    formData.append('cover', cover);
+    formData.append('introduction', introduction);
 
     const response = await axios.put(`${baseUrl}/users/${id}/profile`, formData, {
       headers: {
@@ -141,13 +115,12 @@ export const putUserProfile = async ({ id, name, avatar, cover, introduction }) 
         'Content-Type': 'multipart/form-data',
       },
     });
-    return response
+    return { success: true, message: response.data.message }
   } catch (err) {
     console.log('error', err)
-    return err
+    return { success: false, message: err.response.data.message }
   }
 }
-
 
 export const getUsers = async (id) => {
   const token = localStorage.getItem('token');

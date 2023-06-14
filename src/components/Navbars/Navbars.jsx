@@ -38,7 +38,7 @@ const Navbars = () => {
               <span>首頁</span>
             </div>
           </Link>
-          <Link to="/">
+          <Link to="/profile">
             <div className={style.NavbarItem}>
               <img className={style.NavbarPng} src={InfoIcon} alt="Icon" />
               <span>個人資料</span>

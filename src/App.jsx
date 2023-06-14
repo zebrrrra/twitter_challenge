@@ -53,8 +53,12 @@ function App() {
             <Routes>
               <Route path="/login" element={<LoginPage />} />
               <Route path="/admin" element={<AdminLoginPage />} />
-              <Route path="/setting" element={<SettingPage />} />
               <Route path="register" element={<RegisterPage />} />
+              <Route path="/setting" element={<SettingPage />} />
+              {/* <Route path="/profile" element={<ProfilePage />} /> */}
+              <Route path="/:id/*" element={<HandleProfilePage />} />
+
+
               <Route path="/*" element={<HomePage />} />
 
               {/* <Route path="/:id/*" element={<ProfilePage />} /> */}
@@ -77,17 +81,23 @@ function App() {
   );
 
 }
+const HandleProfilePage = () => {
+  const { id } = useParams();
+  const { isAuthenticated, user } = useAuth();
+  if (isAuthenticated && user && id === String(user.id)) {
+    return (<ProfilePage />)
+  } else {
+    return (<OtherProfilePage id={id} />)
+  }
+
+}
 // const HandleProfilePage = () => {
 //   const { id } = useParams();
 //   const { isAuthenticated, user } = useAuth();
 //   const matchFollowers = useMatch("/:id/followers");
 //   const matchFollowings = useMatch("/:id/followings")
 
-//   if (isAuthenticated && user && id === String(user.id)) {
-//     return (<ProfilePage />)
-//   } else {
-//     return (<OtherProfilePage id={id} />)
-//   }
+
 
 //   return (<ProfilePage />)
 // };
@@ -104,3 +114,24 @@ export default App;
     // } else {
     //   return <OtherProfilePage id={id} />
     // }
+
+
+
+// const HandleProfilePage = () => {
+//   const { id } = useParams();
+//   const { isAuthenticated, user } = useAuth();
+//   const matchFollowers = useMatch("/:id/followers");
+//   const matchFollowings = useMatch("/:id/followings")
+
+//   if (isAuthenticated && user) {
+//     if (matchFollowers || matchFollowings) {
+//       return (<FollowPage />)
+//     } else if (id === String(user.id)) {
+//       return <ProfilePage />;
+//     } else {
+//       return <OtherProfilePage id={id} />;
+//     }
+//   } else {
+//     return <LoginPage />;
+//   }
+// };

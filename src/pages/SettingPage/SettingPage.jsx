@@ -33,7 +33,6 @@ const SettingPage = () => {
 
 
 
-    // const id = 14
     if (!account.trim() || !password.trim() || !name.trim() || !checkPassword.trim() || !email.trim()) {
       Swal.fire({
         title: '內容不可為空白',
