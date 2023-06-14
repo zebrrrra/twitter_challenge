@@ -3,7 +3,21 @@ const baseUrl ='https://tranquil-basin-75437.herokuapp.com/api';
 
 //POST /api/admin/login 管理者登入
 //GET /api/admin/users 管理者可以看見所有的使用者 (包括 admin)
-
+//GET /api/admin/tweets 管理者可以看見所有推文
+export const getAdminAllTweets = async () => {
+  
+  const token = localStorage.getItem('token');
+    try {
+      const response = await axios.get(`admin/tweets`, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+      return response.data;
+    } catch (error) {
+      console.error('Error:cannot get admin all tweets', error);
+    }
+  };
 
 
 //DELETE /api/admin/tweets/:id 管理者可以刪除使用者的推文

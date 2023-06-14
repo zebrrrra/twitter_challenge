@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
-import TweetCard from '../TweetCard/TweetCard';
-import { getAllTweets } from '../../apis/tweet';
+import { getAdminAllTweets } from '../../apis/admin';
 import { deleteAdminUserTweets } from '../../apis/admin';
+import AdminTweetCard from '../AdminTweetCard/AdminTweetCard';
 
 
 const AdminAllTweets =({ userId })=>{
@@ -9,7 +9,7 @@ const AdminAllTweets =({ userId })=>{
 
     useEffect(()=>{
         const fetchTweets = async () => {
-            const data = await getAllTweets();
+            const data = await getAdminAllTweets();
             console.log(data); //測試
             if (data) {
                 setAllUserTweets(data);
@@ -22,7 +22,7 @@ const AdminAllTweets =({ userId })=>{
     if(!allUsertweet.User){
         return null;
     }
-    return<TweetCard key={allUsertweet.id} tweet={allUsertweet} type="alltweet"/>});
+    return<AdminTweetCard key={allUsertweet.id} tweet={allUsertweet} type="alltweet"/>});
 }
 
 export default AdminAllTweets;
