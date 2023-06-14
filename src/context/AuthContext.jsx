@@ -8,6 +8,7 @@ import { useContext,useEffect } from 'react';
 const defaultAuthContext ={ 
     isAuthenticated: false,
     user:null,
+    role:null,
     register: null,
     login: null,
     logout: null,
@@ -41,6 +42,7 @@ export const AuthProvider = ({ children }) => {
                 isAuthenticated,
                 user: payload && {
                     id: payload.id,
+                    role: payload.role,
                     name: payload.name,
                     avatar: payload.avatar,
                     cover: payload.cover,

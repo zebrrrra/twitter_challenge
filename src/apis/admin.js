@@ -6,9 +6,10 @@ const baseUrl ='https://tranquil-basin-75437.herokuapp.com/api';
 //GET /api/admin/tweets 管理者可以看見所有推文
 export const getAdminAllTweets = async () => {
   
-  const token = localStorage.getItem('token');
+  //const token = localStorage.getItem('token');
+  const token ="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwiZW1haWwiOiJyb290QGV4YW1wbGUuY29tIiwibmFtZSI6InJvb3QiLCJhdmF0YXIiOiJodHRwczovL2kucHJhdmF0YXIuY2MvMzAwP2ltZz05IiwiaW50cm9kdWN0aW9uIjoibW9sZXN0aWFlIHZvbHVwdGF0ZW0gcXVpZGVtIHZlbCBsYWJvcnVtIiwicm9sZSI6ImFkbWluIiwiYWNjb3VudCI6InJvb3QiLCJjb3ZlciI6Imh0dHBzOi8vcGljc3VtLnBob3Rvcy9pZC85OS82NDAvNDgwIiwiY3JlYXRlZEF0IjoiMjAyMy0wNi0xM1QxNTowNjowNS4wMDBaIiwidXBkYXRlZEF0IjoiMjAyMy0wNi0xM1QxNTowNjowNS4wMDBaIiwiaWF0IjoxNjg2NjcwNTI0LCJleHAiOjE2ODkyNjI1MjR9.msbUeNSLRLhAnFnnbijxwjgbFZnW5pAYu6xyu9jrYZs"
     try {
-      const response = await axios.get(`admin/tweets`, {
+      const response = await axios.get(`${baseUrl}/admin/tweets`, {
         headers: {
           Authorization: `Bearer ${token}`
         }

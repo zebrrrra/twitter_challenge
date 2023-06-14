@@ -1,4 +1,4 @@
-import style from './HomePage.module.scss'
+import style from './AdminHomePage.module.scss'
 import {Header} from '../../components';
 import AdminNavbars from '../../components/Navbars/AdminNavbar';
 import AdminAllTweet from '../../components/AdminAllTweet/AdminAllTweet';

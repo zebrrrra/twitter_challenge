@@ -1,6 +1,7 @@
 import style from './AdminTweetCard.module.scss'
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
+import { ReactComponent as CloseIcon } from '../../assets/icons/close.svg'
 
 dayjs.extend(relativeTime);
 dayjs.locale('zh-tw');
@@ -15,6 +16,9 @@ function getTime(createdAt) {
     }
 }
 
+const handleClick =()=>{
+    
+}
 
 const AdminTweetCard = ({ tweet }) => {
 
@@ -37,13 +41,13 @@ const AdminTweetCard = ({ tweet }) => {
                             <span className={style.userIdTime}>@{account}・{getTime(createdAt)}</span>
                         </div>
                         <div className={style.tweet}>
-                            {description}
+                            {description} 
                         </div>
-                        <div className={style.countContainer}>
-                        x
-                        </div>
+        
                     </div>
-
+                    <div className={style.closeIcon}>
+                    <CloseIcon/>
+                    </div>
                 </div>
                 </div>
             </>
