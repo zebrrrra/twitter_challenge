@@ -2,10 +2,7 @@ import style from "./AdminUserCard.module.scss"
 import background from '../../assets/icons/background.svg'
 import avatar from '../../assets/icons/avatar.svg'
 import { Link } from "react-router-dom"
-
-import { useState } from "react"
-import { getUsers } from "../../apis/user"
-import { useAuth } from "../../context/AuthContext"
+import { ReactComponent as PostIcon } from '../../assets/icon/post.svg'
 
 
 const UserInfo = ({ img = background, useId }) => {

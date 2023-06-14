@@ -1,12 +1,7 @@
 @import"../../style/base.scss";
 
-.container {
-  width: 45%;
-  padding:0;
-  margin:0;
-  position: relative;
-  
-  
+.container{
+  border-radius: 10px;
 }
 
 .bgContainer {
@@ -20,14 +15,13 @@
 
 .avatarContainer {
   @include box(140, 140);
-  top: 90px;
-  left:20px;
   position: absolute;
   justify-content: center;
   align-items: center;
   object-fit: cover;
-  border: 1px solid $background-color;
   border-radius: 50%;
+  bottom: 55.41%;
+
 }
 
 .buttonContainer {
