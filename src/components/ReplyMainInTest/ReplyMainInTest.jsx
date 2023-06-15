@@ -6,7 +6,7 @@ import { useAuth } from '../../context/AuthContext';
 import MainTweet from '../MainTweet/MainTweet';
 import { getATweet } from '../../apis/tweet';
 import { useEffect, useState } from 'react';
-
+import MainReply from '../MainReply/MainReply';
 const ReplyMainInTest = () => {
   // const { tweetId } = useParams
   // const { user } = useAuth();
@@ -48,7 +48,7 @@ const ReplyMainInTest = () => {
   return (
     <>
       <MainTweet User={User} detailTweet={detailTweet} tweetId={tweetId} />
-      <Tab />
+      <MainReply USer={User} tweetId={tweetId}/>
       {/* <OtherUserInfo currentId={currentId} />
       <Tab userId={currentId} /> */}
       {/* <UserInfo userId={id} />

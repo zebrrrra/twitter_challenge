@@ -16,9 +16,10 @@ function getTime(createdAt) {
     }
 }
 
-const ReplyCard = ({reply}) => {
+const MainReplyCard = ({reply}) => {
     const {
         User: { name, account,avatar } = {},
+        TweetId,
         comment,
         createdAt,
     } = reply;
@@ -48,4 +49,4 @@ const ReplyCard = ({reply}) => {
     
 
 }
-export default ReplyCard;
+export default MainReplyCard;

@@ -4,7 +4,6 @@ import { ReactComponent as Reply } from "../../assets/icons/outlinedreply.svg"
 import ReplyModal from "../ReplyModal/ReplyModal"
 import { useState } from "react"
 
-
 const MainTweet = ({ User, detailTweet, tweetId }) => {
   const [openModal, setOpenModal] = useState(false)
 
@@ -30,7 +29,7 @@ const MainTweet = ({ User, detailTweet, tweetId }) => {
             </div>
           </div>
           <p className={style.introduction}>{description}</p>
-          <p className={style.time}>{createdAt}</p>
+          <p className={style.time}>{createdAt}</p>a
         </div>
         <div className={style.dataContainer}>
           <div className={style.data}>{repliesCount}<span>回覆</span></div>
@@ -46,7 +45,8 @@ const MainTweet = ({ User, detailTweet, tweetId }) => {
         </div>
       </div>
       {openModal && <ReplyModal open={openModal} onClose={(value) => setOpenModal(value)} User={User} detailTweet={detailTweet} tweetId={tweetId} />}
-    </>
+   </>
+
   )
 }
 export default MainTweet
