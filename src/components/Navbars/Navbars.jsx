@@ -1,7 +1,6 @@
 import style from '../Navbars/Navbars.module.scss';
-import { Link, useNavigate,useLocation } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import { getUsers } from "../../apis/user"
 //import Modal
 import TweetModal from '../TweetModal/TweetModal';
 import EditModal from "../EditModal/EditModal"
@@ -15,6 +14,7 @@ import isHomeIcon from '../../assets/icons/isHome.svg'
 import isSettingIcon from '../../assets/icons/isSetting.svg'
 import isInfoIcon from '../../assets/icons/isProfile.svg'
 import { useAuth } from '../../context/AuthContext';
+
 
 const Navbars = () => {
   const [openModal, setOpenModal] = useState(false);
@@ -35,7 +35,7 @@ const Navbars = () => {
     localStorage.removeItem('token');
     navigate('/login');
   }
-  
+
 
   const handleTabClick = (tabName) => {
     setActiveTab(tabName);
@@ -48,11 +48,11 @@ const Navbars = () => {
         <div className={style.NavbarLogo}><img src={ACLogo} alt="" /></div>
         <div className={style.NavbarGroup}>
           <Link to="/main">
-          <div 
-            className={`${style.NavbarItem} ${location.pathname === '/main' ? style.active : ''}`}
-            onClick={() => handleTabClick('main')}>
-              <img className={style.NavbarPng} 
-              src={isIconClicked === '/main' ? isHomeIcon : HomeIcon} alt="Home" />
+            <div
+              className={`${style.NavbarItem} ${location.pathname === '/main' ? style.active : ''}`}
+              onClick={() => handleTabClick('main')}>
+              <img className={style.NavbarPng}
+                src={isIconClicked === '/main' ? isHomeIcon : HomeIcon} alt="Home" />
               <span>首頁</span>
             </div>
           </Link>
@@ -61,19 +61,19 @@ const Navbars = () => {
               className={`${style.NavbarItem} ${location.pathname === '/profile' ? style.active : ''}`}
               onClick={() => handleTabClick('profile')}
             >
-              <img className={style.NavbarPng}  
-              src={isIconClicked === '/profile' ? isInfoIcon : InfoIcon} alt="Icon" />
+              <img className={style.NavbarPng}
+                src={isIconClicked === '/profile' ? isInfoIcon : InfoIcon} alt="Icon" />
               <span>個人資料</span>
             </div>
           </Link>
           <Link to="/setting">
-          <div
+            <div
               className={`${style.NavbarItem} ${location.pathname === '/setting' ? style.active : ''}`}
               onClick={() => handleTabClick('setting')}
             >
               <img className={style.NavbarPng}
-               src={isIconClicked === '/setting' ? isSettingIcon : SettingIcon} 
-               alt="Setting" />
+                src={isIconClicked === '/setting' ? isSettingIcon : SettingIcon}
+                alt="Setting" />
               <span>設定</span>
             </div>
           </Link>

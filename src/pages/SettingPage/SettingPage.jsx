@@ -1,5 +1,5 @@
 //settingPage.jsx
-import { useEffect } from 'react'
+import { Component, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import Navbar from '../../components/Navbars/Navbars';
@@ -8,7 +8,8 @@ import { AuthInput } from '../../components';
 import style from './SettingPage.module.scss'
 import Swal from 'sweetalert2';
 import { useAuth } from '../../context/AuthContext';
-
+import { getUsers } from '../../apis/user';
+import { useLocation } from 'react-router-dom';
 
 const SettingPage = () => {
   const [account, setAccount] = useState('')
@@ -16,19 +17,19 @@ const SettingPage = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [checkPassword, setCheckPassword] = useState('')
+  const [responseError, setResponseError] = useState(false)
+  const [errorInfo, setErrorInfo] = useState('')
   const navigate = useNavigate();
+  const { pathname } = useLocation();
 
-  // const [errorInfo, setErrorInfo] = useState('')
 
-  const { putUserSetting, isAuthenticated, user, responseError, errorInfo, setErrorInfo, setResponseError } = useAuth()
 
-  const authInputCollection = [
-    { label: '帳號', id: '帳號', type: 'text', placeholder: '請輸入帳號', value: account, onChange: (accountValue) => setAccount(accountValue) },
-    { label: '名稱', id: 'name', type: 'text', placeholder: '請輸入使用者名稱', value: name, maxLength: 50, onChange: (nameValue) => setName(nameValue) },
-    { label: 'Email', id: 'email', type: 'email', placeholder: '請輸入Email', value: email, onChange: (emailValue) => setEmail(emailValue) },
-    { label: '密碼', id: '密碼', type: 'password', placeholder: '請輸入密碼', value: password, onChange: (passwordValue) => setPassword(passwordValue) },
-    { label: '密碼確認', id: '密碼確認', type: 'password', placeholder: '請再次輸入密碼', value: checkPassword, onChange: (checkPasswordValue) => setCheckPassword(checkPasswordValue) },
-  ];
+  const { putUserSetting, isAuthenticated, user } = useAuth()
+  // console.log(user)
+  const currentUserId = user && user.id
+  console.log(currentUserId)
+
+
   const handleSubmit = async (e) => {
     const id = user.id
     console.log(id)
@@ -46,7 +47,7 @@ const SettingPage = () => {
       });
       return
     }
-    const success = await putUserSetting({
+    const { success, message } = await putUserSetting({
       id,
       account,
       name,
@@ -64,6 +65,7 @@ const SettingPage = () => {
         timer: 2000,
         position: 'top',
       });
+      setResponseError(false)
       return
     }
 
@@ -76,10 +78,24 @@ const SettingPage = () => {
         timer: 2000,
         position: 'top',
       });
+      setResponseError(true)
+      setErrorInfo(message)
       return
     }
     // console.log(errorInfo)//空的
   }
+  useEffect(() => {
+    const fetchCurrentUserData = async () => {
+      const data = await getUsers(currentUserId)
+      if (data) {
+        const { account, email, name } = data
+        setAccount(account)
+        setName(name)
+        setEmail(email)
+      }
+    }
+    fetchCurrentUserData()
+  }, [currentUserId])
   // useEffect(() => {
   //   if (isAuthenticated) {
   //     navigate('/login');
@@ -87,6 +103,13 @@ const SettingPage = () => {
   //     navigate('/:id/*');
   //   }
   // })
+  const authInputCollection = [
+    { label: '帳號', id: '帳號', type: 'text', placeholder: '請輸入帳號', value: account, onChange: (accountValue) => setAccount(accountValue) },
+    { label: '名稱', id: 'name', type: 'text', placeholder: '請輸入使用者名稱', value: name, maxLength: 50, onChange: (nameValue) => setName(nameValue) },
+    { label: 'Email', id: 'email', type: 'email', placeholder: '請輸入Email', value: email, onChange: (emailValue) => setEmail(emailValue) },
+    { label: '密碼', id: '密碼', type: 'password', placeholder: '請輸入密碼', value: password, onChange: (passwordValue) => setPassword(passwordValue) },
+    { label: '密碼確認', id: '密碼確認', type: 'password', placeholder: '請再次輸入密碼', value: checkPassword, onChange: (checkPasswordValue) => setCheckPassword(checkPasswordValue) },
+  ];
 
   return (
     <div className={style.homeContainer}>

@@ -23,10 +23,6 @@ export const AuthProvider = ({ children }) => {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [payload, setPayload] = useState(null);
 
-    // 表單錯誤小字errorInfo、responseError狀態
-    const [responseError, setResponseError] = useState(false)
-    // 有非同步問題待刪除
-    const [errorInfo, setErrorInfo] = useState('')
     const { pathname } = useLocation();
     useEffect(() => {
         const checkTokenIsValid = async () => {
@@ -52,8 +48,11 @@ export const AuthProvider = ({ children }) => {
                 name: payload.name,
                 role: payload.role,
                 avatar: payload.avatar,
-                account: payload.account
-            }, responseError, errorInfo, setResponseError, setErrorInfo
+                account: payload.account,
+                introduction: payload.introduction,
+                email: payload.email,
+                cover: payload.cover
+            }
             , register: async (data) => {
                 const result = await register({
                     account: data.account,
@@ -63,21 +62,13 @@ export const AuthProvider = ({ children }) => {
                     checkPassword: data.checkPassword
 
                 });
-                console.log(result)//{success: false, errorInfo: '密碼不相同!'}
-
+                console.log(result)
                 if (result.status === 'success') {
-
                     console.log(result.message)
-                    setResponseError(false)
-                    // return result
+                    return { success: true, message: result.message }
                 } else {
-                    console.log(result.errorInfo)
-                    setResponseError(true)
-                    setErrorInfo(result.errorInfo)
-                    // return result.errorInfo
+                    return { success: false, message: result.message }
                 }
-                return result.status === 'success'
-
             }
             , login: async (data) => {
                 const result = await login(
@@ -94,20 +85,16 @@ export const AuthProvider = ({ children }) => {
                     console.log(payload)//在登入成功時，payload為null，因此使用useEffect()
                     setIsAuthenticated(true);
                     localStorage.setItem('token', token);
-                    setResponseError(false)
+                    return {
+                        success: true, message: result.message
+                    }
                 } else {
-                    const errorInfo = result.errInfo
-                    console.log(errorInfo)
-
-                    setResponseError(true)
-                    setErrorInfo(errorInfo)
-
                     setPayload(null);
                     setIsAuthenticated(false);
-
+                    return {
+                        success: false, message: result.message
+                    }
                 }
-                return result.status === 'success';
-
             },
             logout: () => {
                 localStorage.removeItem('token');
@@ -127,21 +114,19 @@ export const AuthProvider = ({ children }) => {
                     const { token } = result.data;
                     const tempPayload = jwt.decode(token);
                     setPayload(tempPayload);
-                    console.log(payload)//在登入成功時，payload為null，因此使用useEffect()
+                    console.log(payload)
                     setIsAuthenticated(true);
                     localStorage.setItem('token', token);
-                    setResponseError(false)
+                    return {
+                        success: true, message: result.message
+                    }
                 } else {
-                    const errorInfo = result.errInfo
-                    console.log(errorInfo)
-                    setResponseError(true)
-                    setErrorInfo(errorInfo)
                     setPayload(null);
                     setIsAuthenticated(false);
-
+                    return {
+                        success: false, message: result.message
+                    }
                 }
-                console.log(errorInfo)
-                return result.status === 'success';
 
             }, putUserSetting: async (data) => {
                 const result = await putUserSetting({
@@ -153,25 +138,17 @@ export const AuthProvider = ({ children }) => {
                     checkPassword: data.checkPassword
 
                 });
-                console.log(result)//當錯時=err.response，
-                if (result.data.status === 'success') {
-
-                    console.log(result.data.message)
-                    setResponseError(false)
-                    // return result
+                console.log(result)
+                if (result.status === 'success') {
+                    return { success: true, message: result.message }
                 } else {
-                    console.log(result.data.message)
-
-                    setResponseError(true)
-                    setErrorInfo(result.data.message)
-                    // return result.errorInfo
+                    return { success: false, message: result.message }
                 }
-                return result.data.status === 'success'
             }
 
         }}>
             {children}
-        </AuthContext.Provider>
+        </AuthContext.Provider >
     )
 };
 

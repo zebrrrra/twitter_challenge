@@ -79,20 +79,17 @@ export const putUserSetting = async ({ id, account, name, email, password, check
         },
       }
     )
-
     console.log(response)
     if (response.data.status === 'success') {
       console.log('成功')
-      return { success: true, message: response.data.message }
-
+      return response.data
     }
-
   } catch (err) {
     console.log('失敗')
     console.log(err.response.data)
     console.log(err.response)
     // return err.response
-    return { success: false, errInfo: err.response.data.message }
+    return err.response.data
   }
 }
 
@@ -142,7 +139,7 @@ export const getUsers = async (id) => {
 
 //GET /api/users/:id/tweets 看見某使用者發過的推文
 export const getUserTweets = async (id) => {
- 
+
   const token = localStorage.getItem('token');
   try {
     const response = await axios.get(`${baseUrl}/users/${id}/tweets`, {
@@ -189,32 +186,32 @@ export const getUserLike = async (id) => {
 };
 //GET /api/users/:id/followings 看見某使用者所有跟隨中的人
 
-export const getUserFollowings= async (id)=>{
-  const token = localStorage.getItem ('token');
+export const getUserFollowings = async (id) => {
+  const token = localStorage.getItem('token');
   try {
-    const response = await axios.get (`${baseUrl}/users/${id}/followings`,{
+    const response = await axios.get(`${baseUrl}/users/${id}/followings`, {
       headers: {
         Authorization: `Bearer ${token}`
       }
     });
     return response.data;
-  } catch (error){
-    console.error ('Error: cannnot get user followings',error);
+  } catch (error) {
+    console.error('Error: cannnot get user followings', error);
   }
 };
 //GET /api/users/:id/followers 看見某使用者的所有跟隨者
-export const getUserFollowers =async (id) =>{
-  const token= localStorage.getItem('token');
-  try{
-    const response = await axios.get (`${baseUrl}/users/${id}/followers`,{
-      headers:{
+export const getUserFollowers = async (id) => {
+  const token = localStorage.getItem('token');
+  try {
+    const response = await axios.get(`${baseUrl}/users/${id}/followers`, {
+      headers: {
         Authorization: `Bearer ${token}`
       }
     });
     return response.data;
 
-  }catch(error){
-    console.log('Error: cannnot get user followers',error)
+  } catch (error) {
+    console.log('Error: cannnot get user followers', error)
   }
 };
 
