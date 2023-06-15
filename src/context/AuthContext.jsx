@@ -51,6 +51,7 @@ export const AuthProvider = ({ children }) => {
                 id: payload.id,
                 name: payload.name,
                 avatar: payload.avatar,
+                account: payload.account
             }, responseError, errorInfo, setResponseError, setErrorInfo
             , register: async (data) => {
                 const result = await register({

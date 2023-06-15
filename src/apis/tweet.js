@@ -34,9 +34,40 @@ export const getAllTweets = async () => {
     console.error('Error:cannot get all tweets', error);
   }
 };
-//GET /api/tweets/:tweetId 取得一筆推文
+
 //POST /api/tweets/:tweetId/replies 使用者在推文中新增一條回覆
+export const postATweetReply = async ({ tweetId, comment }) => {
+
+  const token = localStorage.getItem('token');
+  try {
+    const response = await axios.post(`${baseUrl}/tweets/${tweetId}/replies`, { comment }, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
+    return { success: true, message: response.data.message }
+  } catch (error) {
+    console.error('Error:cannot get a tweet', error);
+    return { success: false, message: error.response.data.message }
+  }
+};
 //GET /api/tweets/:tweetId/replies 瀏覽推文下所有回覆
+export const getATweetReply = async (tweetId) => {
+
+  const token = localStorage.getItem('token');
+  try {
+    const response = await axios.get(`${baseUrl}/tweets/${tweetId}/replies`, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Error:cannot get a tweet', error);
+  }
+};
+
+//GET /api/tweets/:tweetId 取得一筆推文
 export const getATweet = async (tweetId) => {
 
   const token = localStorage.getItem('token');

@@ -58,6 +58,7 @@ function App() {
               {/* <Route path="/profile" element={<ProfilePage />} /> */}
               <Route path="/:id/*" element={<HandleProfilePage />} />
 
+              <Route path="/tweets/:tweetId" element={<ReplyPage />} />
 
               <Route path="/*" element={<HomePage />} />
 
@@ -68,7 +69,6 @@ function App() {
               <Route path="/setting" element={<SettingPage />} />
 
               <Route path="/:id/*" element={<HandleProfilePage />} />
-              <Route path="/tweets/:tweetId" element={<ReplyPage />} />
               <Route path="/*" element={<HomePage />} /> */}
 
 
