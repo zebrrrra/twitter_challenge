@@ -1,33 +1,89 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import style from './AdminLoginPage.module.scss'
 import { ReactComponent as Logo } from '../../assets/icons/logo.svg'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { AuthInput } from '../../components'
-
+import { useAuth } from '../../context/AuthContext'
+import Swal from 'sweetalert2'
 const AdminLoginPage = () => {
   const [account, setAccount] = useState('')
   const [password, setPassword] = useState('')
-  let message = ''
-  const handleClick = () => {
-    if (!account.trim() || !password.trim()) return
-    // wait api data
+  const { adminLogin, isAuthenticated, user, responseError, errorInfo, setResponseError } = useAuth();
+
+
+  const navigate = useNavigate()
+  const handleAdminLogin = async (e) => {
+    e.preventDefault();
+
+    if (!account.trim() || !password.trim()) {
+      Swal.fire({
+        title: '請先登入帳號',
+        icon: 'error',
+        showConfirmButton: false,
+        timer: 2000,
+        position: 'top',
+      });
+      return
+    }
+
+    const success = await adminLogin({ account, password })
+
+    if (success) {
+      Swal.fire({
+        title: '登入成功',
+        icon: 'success',
+        showConfirmButton: false,
+        timer: 2000,
+        position: 'top',
+      });
+      setResponseError(false)
+      navigate('/profile')
+      return
+    } else {
+
+      Swal.fire({
+        title: '登入失敗',
+        icon: 'error',
+        showConfirmButton: false,
+        timer: 2000,
+        position: 'top',
+      });
+      setResponseError(true)
+
+      return
+    }
+
   }
 
-  // if(account不存在){
-  //   message ='帳號不存在!'
-  // }
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate(`/${user?.id}/`);
+    }
+  }, [navigate, isAuthenticated, user]);
 
-  // if(account重複){
-  //   message ='帳號已重複註冊!'
-  // }
+  const authInputCollection = [
+    { label: '帳號', id: 'account', type: 'text', placeholder: '請輸入帳號', value: account, onChange: (accountValue) => setAccount(accountValue) },
+    { label: '密碼', id: 'password', type: 'password', placeholder: '請輸入密碼', value: password, onChange: (passwordValue) => setPassword(passwordValue) }]
   return (
     <div className={style.container}>
       <Logo className={style.logo} />
       <h3 className={style.title}>後台登入</h3>
-      <form className={style.form}>
-        <AuthInput label='帳號' id="account" type="text" placeholder="請輸入帳號" value={account} message={message} onChange={(accountValue) => setAccount(accountValue)} />
-        <AuthInput label='密碼' id="password" type="password" placeholder="請輸入密碼" value={password} onChange={(passwordValue) => setPassword(passwordValue)} />
-        <button className={style.button} type="submit" onClick={handleClick}>登入</button>
+      <form className={style.form} onSubmit={handleAdminLogin}>
+        {authInputCollection.map(({ label, id, type, placeholder, value, maxLength, onChange }) => (
+          <AuthInput
+            key={id}
+            label={label}
+            id={id}
+            type={type}
+            placeholder={placeholder}
+            value={value}
+            maxLength={maxLength}
+            onChange={onChange}
+            responseError={responseError}
+            errorInfo={errorInfo}
+          />
+        ))}
+        <button className={style.button} type="submit" >登入</button>
       </form >
       <div className={style.linkGroup}>
         <Link to='/login' className={style.link}>前台登入</Link>

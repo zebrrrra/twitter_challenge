@@ -5,13 +5,17 @@ import { Link } from "react-router-dom"
 import EditModal from "../EditModal/EditModal"
 import { useState } from "react"
 import { getUsers } from "../../apis/user"
+<<<<<<< HEAD
 import { useParams } from "react-router-dom"
 import { useEffect } from "react"
 import { useAuth } from "../../context/AuthContext"
 
+=======
+>>>>>>> main
 
 const UserInfo = ({ img = background, useId }) => {
   const [openModal, setOpenModal] = useState(false);
+<<<<<<< HEAD
   // 使用個變數作為判斷是否為別人 
   const { user, payload, setPayload } = useAuth()
 
@@ -25,6 +29,16 @@ const UserInfo = ({ img = background, useId }) => {
     const userData = await getUsers(id)
     console.log(userData)
     setPayload(userData)
+=======
+  // 使用個變數作為判斷是否為別人 點擊頭
+
+  const handleClick = async () => {
+    setOpenModal(true)
+    // id透過jwt解析token獲得
+
+    // 發送api載入自己的資料
+    // const payload = await getUsers(id)
+>>>>>>> main
   }
   // useEffect(() => {
   //   console.log('params id:', userId); // params id: 123
@@ -49,7 +63,11 @@ const UserInfo = ({ img = background, useId }) => {
           <Link to="" className={style.link}>31個<span>跟隨者</span></Link>
         </div>
       </div>
+<<<<<<< HEAD
       {openModal && <EditModal payload={payload} open={openModal} onClose={(value) => setOpenModal(value)} />}
+=======
+      {openModal && <EditModal open={openModal} onClose={(value) => setOpenModal(value)} />}
+>>>>>>> main
     </div >
 
   )

@@ -26,18 +26,3 @@ const ReplyList = ({ userId,tweetId }) => {
     }, [userId,tweetId]);
 
     return replies.map(reply => <ReplyCard key={reply.id} reply={reply} type="reply" />);
-}
-
-export default ReplyList;
-
-/*const TweetList =({tweetsContext})=>{
-
-    return (
-        <div className="tweetList">
-            {tweetsContext.sort((a,b)=> b.timeStamp- a.timeStamp).map((tweet)=>(
-                <TweetCard key={tweet.id} tweet={tweet}/>
-            ))}
-        </div>
-    );
-};
-export default TweetList;*/

@@ -11,4 +11,8 @@ import OpenTweet from "./OpenTweet/OpenTweet";
 import ReplyList from "./ReplyList/ReplyList";
 import FollowList from "./FollowList/FollowList";
 
+<<<<<<< HEAD
 export { AuthInput, UserInfo,TweetModal, Header,Navbars,MainPost,AllTweets,RecommendList,ReplyMain,OpenTweet,ReplyList,FollowList }
+=======
+export { AuthInput, UserInfo, TweetModal, Header, Navbars, MainPost, AllTweets, RecommendList }
+>>>>>>> main

@@ -31,6 +31,20 @@ function App() {
 
           </Routes>
           </UserProvider>
+          <Routes>
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/admin" element={<AdminLoginPage />} />
+            <Route path="register" element={<RegisterPage />} />
+            <Route path="/:id/*" element={<ProfilePage />} />
+            <Route path="/*" element={<HomePage />} />
+
+            {/*
+         <Route path ="/setting" element={<SettingPage/>}/>
+                   <Route path="login" element={<LoginPage />} />
+          <Route path="admin" element={<AdminLoginPage />} />
+          <Route path="register" element={<RegisterPage />} />
+                <Route path="*" element={<LoginPage />} />*/}
+          </Routes>
         </AuthProvider>
       </Router>
 
