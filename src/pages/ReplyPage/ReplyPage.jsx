@@ -2,7 +2,6 @@
 import RecommendList from '../../components/RecommendList/RecommendList';
 import Navbar from '../../components/Navbars/Navbars';
 import Header from '../../components/Headers/Headers';
-// import ReplyMain from '../../components/ReplyMain/ReplyMain';
 import { ReplyMainInTest } from '../../components';
 import style from './ReplyPage.module.scss'
 import { useAuth } from '../../context/AuthContext'
@@ -30,7 +29,6 @@ const ReplyPage = () => {
         <div className={style.middleColumn}>
           <Header />
           <ReplyMainInTest />
-          {/* <ReplyMain /> */}
         </div>
         <div className={style.rightColumn}>
           <RecommendList />

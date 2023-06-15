@@ -29,7 +29,7 @@ const MainTweet = ({ User, detailTweet, tweetId }) => {
             </div>
           </div>
           <p className={style.introduction}>{description}</p>
-          <p className={style.time}>{createdAt}</p>a
+          <p className={style.time}>{createdAt}</p>
         </div>
         <div className={style.dataContainer}>
           <div className={style.data}>{repliesCount}<span>回覆</span></div>
@@ -45,7 +45,7 @@ const MainTweet = ({ User, detailTweet, tweetId }) => {
         </div>
       </div>
       {openModal && <ReplyModal open={openModal} onClose={(value) => setOpenModal(value)} User={User} detailTweet={detailTweet} tweetId={tweetId} />}
-   </>
+    </>
 
   )
 }

@@ -16,37 +16,37 @@ function getTime(createdAt) {
     }
 }
 
-const MainReplyCard = ({reply}) => {
+const MainReplyCard = ({ reply }) => {
     const {
-        User: { name, account,avatar } = {},
+        User: { name, account, avatar } = {},
         TweetId,
         comment,
         createdAt,
     } = reply;
 
-    return(
+    return (
         <div className={style.tweetCardContainer}>
-                    <div className={style.tweetCard}>
-                    <img src={avatar} className={style.avatar} alt="avatar"/>
-                        <div className={style.contentContainer}>
-                            <div className={style.nameAndUserId}>
-                                <span className={style.name}>{name}</span>
-                                <span className={style.userIdTime}>@{account}・{getTime(createdAt)}</span>
-                            </div>
-                            <div className={style.replyContainer}>
-                                <div className={style.reply}>回覆</div>
-                                <div className={style.replyId}>@{account}</div> </div>
-                            <div className={style.tweet}>
-                                {comment}
-                            </div>
-
-                        </div>
+            <div className={style.tweetCard}>
+                <img src={avatar} className={style.avatar} alt="avatar" />
+                <div className={style.contentContainer}>
+                    <div className={style.nameAndUserId}>
+                        <span className={style.name}>{name}</span>
+                        <span className={style.userIdTime}>@{account}・{getTime(createdAt)}</span>
                     </div>
+                    <div className={style.replyContainer}>
+                        <div className={style.reply}>回覆</div>
+                        <div className={style.replyId}>@{account}</div> </div>
+                    <div className={style.tweet}>
+                        {comment}
                     </div>
 
-            )
+                </div>
+            </div>
+        </div>
 
-    
+    )
+
+
 
 }
 export default MainReplyCard;
