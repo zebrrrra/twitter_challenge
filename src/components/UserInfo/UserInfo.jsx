@@ -3,17 +3,11 @@ import { Link } from "react-router-dom"
 import EditModal from "../EditModal/EditModal"
 import { useState, useEffect } from "react"
 import { getUsers } from "../../apis/user"
-
-
-const UserInfo = ({ img = background, useId }) => {
-  const [openModal, setOpenModal] = useState(false);
-
 import { useAuth } from "../../context/AuthContext"
 
 const UserInfo = ({ currentId }) => {
   const [openModal, setOpenModal] = useState(false);
   const [currentData, setCurrentData] = useState(null)
-
   // 使用個變數作為判斷是否為別人 點擊頭
   // const { user } = useAuth()
   console.log(currentId)
@@ -23,11 +17,6 @@ const UserInfo = ({ currentId }) => {
     setOpenModal(true)
 
     // 發送api載入自己的資料
-
-  }
-  // useEffect(() => {
-  //   console.log('params id:', userId); // params id: 123
-  // }, []);
     const userData = await getUsers(currentId)
     console.log(userData)//有抓到
     setCurrentData(userData)
@@ -55,7 +44,6 @@ const UserInfo = ({ currentId }) => {
         <button className={style.button} type="button" onClick={handleOpenClick}>編輯個人資料</button>
       </div>
       <div className={style.textContainer}>
-
         <h5 className={style.name}>{name}</h5>
         <span className={style.account}>{account}</span>
         <p>{introduction}</p>
@@ -65,7 +53,6 @@ const UserInfo = ({ currentId }) => {
         </div>
       </div>
       {openModal && <EditModal open={openModal} onClose={(value) => setOpenModal(value)} currentId={currentId} userData={currentData} />}
-
     </div >
 
   )

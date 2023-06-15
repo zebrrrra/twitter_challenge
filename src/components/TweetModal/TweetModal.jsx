@@ -6,7 +6,6 @@ import { postTweets } from "../../apis/tweet";
 import avatar from '../../assets/icons/avatar.svg'
 
 
-<<<<<<< HEAD
 const TweetModal = ({open,onClose}) => {
 const [tweetText, setTweetText] =useState('');//要填預設值
 const handleSubmit =async () =>{
@@ -14,15 +13,6 @@ const handleSubmit =async () =>{
   console.log (data);//測試用
   setTweetText('');//傳完回到空值
 }
-=======
-const TweetModal = ({ open, onClose }) => {
-  const [tweetText, setTweetText] = useState('有什麼新鮮事?');//要填預設值
-  const handleSubmit = async () => {
-    const data = await postTweets(tweetText);
-    console.log(data);//測試用
-    setTweetText('');//傳完回到空值
-  }
->>>>>>> main
 
   return open ? (
     <div className={style.background}>
@@ -35,21 +25,16 @@ const TweetModal = ({ open, onClose }) => {
           <div className={`${style.avatarContainer} ${style.down}`}>
             <img src={avatar} alt="avatar" />
           </div>
-<<<<<<< HEAD
           <textarea 
           style={{ resize: 'none', width: '88%' }} 
           value={tweetText} 
           onChange={(e)=>setTweetText(e.target.value)}
           placeholder="有什麼新鮮事?"> </textarea>
-=======
-          <textarea style={{ resize: 'none', width: '88%' }} value={tweetText} onChange={(e) => setTweetText(e.target.value)}> </textarea>
->>>>>>> main
           <button className={style.button} onClick={handleSubmit}>推文</button>
         </div>
       </div>
     </div>
   ):null;
-  ) : null;
 }
 export default TweetModal
 // { resize: 'none', width: '528px', height: '300px' }

@@ -237,34 +237,7 @@ export const getTopFollowers = async () => {
   }
 };
 
-export const getUserFollowings = async (id) => {
-  const token = localStorage.getItem('token');
-  try {
-    const response = await axios.get(`${baseUrl}/users/${id}/followings`, {
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
-    });
-    return response.data;
-  } catch (error) {
-    console.error('Error: cannnot get user followings', error);
-  }
-};
 
-export const getUserFollowers = async (id) => {
-  const token = localStorage.getItem('token');
-  try {
-    const response = await axios.get(`${baseUrl}/users/${id}/followers`, {
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
-    });
-    return response.data;
-
-  } catch (error) {
-    console.log('Error: cannnot get user followers', error)
-  }
-};
 
 
 //先寫來測試

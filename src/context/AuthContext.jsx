@@ -9,7 +9,6 @@ import { register, putUserSetting } from '../apis/user';
 
 const defaultAuthContext = {
     isAuthenticated: false,
-
     user: null,
     register: null,
     login: null,
@@ -46,23 +45,6 @@ export const AuthProvider = ({ children }) => {
     }, [pathname]);
 
     return (
-
-        <AuthContext.Provider
-            value={{
-                isAuthenticated,
-                user: payload && {
-                    id: payload.id,
-                    role: payload.role,
-                    name: payload.name,
-                    avatar: payload.avatar,
-                    cover: payload.cover,
-                },
-                register: async (data) => {
-                    const { success, token } = await register(
-                }, responseError, errorInfo, setResponseError, setErrorInfo
-                , register: async (data) => {
-                    const result = await register({
-
         <AuthContext.Provider value={{
             isAuthenticated,
             user: payload && {
@@ -99,7 +81,6 @@ export const AuthProvider = ({ children }) => {
             , login: async (data) => {
                 const result = await login(
                     {
-
                         account: data.account,
                         password: data.password,
                     }
@@ -207,4 +188,3 @@ export default AuthContext;
                     // }
                     // console.log(success)
                     // return success
-

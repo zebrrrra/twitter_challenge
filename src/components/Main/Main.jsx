@@ -1,4 +1,5 @@
 import Tab from '../Tab/Tab';
+import UserInfo from '../UserInfo/UserInfo'
 const Main = ({userId}) => {
   //const { id } = useParams();
   //const {user} = useAuth();
