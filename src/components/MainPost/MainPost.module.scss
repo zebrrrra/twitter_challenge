@@ -35,8 +35,10 @@
     line-height: 18px;
     color: #6C757D;
     margin-bottom: 10px;
+    resize: none;
+    overflow: hidden;
 
-    input {
+    textarea {
         height: 50px; //調整高度
         border: none;
         padding: 0;
