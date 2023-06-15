@@ -1,9 +1,9 @@
 //import {useState, useEffect} from 'react';
 //import axios from 'axios';
-import likeIcon from '../../assets/icon/like_1.svg';
-import isLikeIcon from '../../assets/icon/like.svg';
+import {ReactComponent as LikeIcon} from '../../assets/icon/like_1.svg';
+import {ReactComponent as IsLikeIcon} from '../../assets/icon/like.svg';
 import replyIcon from '../../assets/icon/reply_1.svg'
-import { ReactComponent as Avatar } from '../../assets/icon/img.svg'
+//mport { ReactComponent as Avatar } from '../../assets/icon/img.svg'
 import style from './TweetCard.module.scss';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
@@ -22,11 +22,18 @@ function getTime(createdAt) {
 }
 
 
-const TweetCard = ({ tweet }) => {
-    //if(!tweet){
-      //  return null;}
+const TweetCard = ({ tweet,onLike,onUnLike }) => {
+
+    const handleButtonClick =  () =>{
+        console.log('like:',onLike, 'unlike:', onUnLike,'isCurrentUserLiked:', tweet.isCurrentUserLiked);
+        if (tweet.isCurrentUserLiked){
+         onUnLike (tweet.id);
+        } else{
+            onLike (tweet.id);
+        }
+    };
     const {
-        User: { name, account,avatar } = {},
+        User: {name,account,avatar}= {},
         description,
         repliesCount,
         likesCount,
@@ -35,30 +42,38 @@ const TweetCard = ({ tweet }) => {
     } = tweet;
 
 
-            return (
-                  <div className={style.tweetCardContainer}>
-                    <div className={style.tweetCard}>
+        return (
+            <>
+                <div className={style.tweetCardContainer}>
+                <div className={style.tweetCard}>
                     <img src={avatar} className={style.avatar} alt="avatar"/>
-                        <div className={style.contentContainer}>
-                            <div className={style.nameAndUserId}>
-                                <span className={style.name}>{name}</span>
-                                <span className={style.userIdTime}>@{account}・{getTime(createdAt)}</span>
-                            </div>
-
-                            <div className={style.tweet}>
-                                {description}
-                            </div>
-                            <div className={style.countContainer}>
-                                <div className={style.count}>
-                                    <img src={replyIcon} alt="reply" />{repliesCount}</div>
-                                <div className={style.count}>
-                                    <img src={isCurrentUserLiked?isLikeIcon:likeIcon} alt="like" />{likesCount}
-                                </div>
-                            </div>
+                    <div className={style.contentContainer}>
+                        <div className={style.nameAndUserId}>
+                            <span className={style.name}>{name}</span>
+                            <span className={style.userIdTime}>@{account}・{getTime(createdAt)}</span>
+                        </div>
+                        <div className={style.tweet}>
+                            {description}
+                        </div>
+                        <div className={style.countContainer}>
+                            <div className={style.count}>
+                                <img src={replyIcon} alt="reply" />{repliesCount}</div>
+                            <div className={style.count}>
+                               {isCurrentUserLiked? 
+                                    <IsLikeIcon className={style.isLikeIcon} onClick={handleButtonClick}/>
+                                    :
+                                    <LikeIcon className={style.likeIcon} onClick={handleButtonClick} />
+                                }
+                                {likesCount}</div>
                         </div>
                     </div>
-        </div>)
-        };
+
+                </div>
+                </div>
+            </>
+        );
+
+}
 
 export default TweetCard;
 

@@ -3,11 +3,11 @@ import Navbar from '../../components/Navbars/Navbars';
 import Header from '../../components/Headers/Headers';
 import Main from '../../components/Main/Main';
 import style from './ProfilePage.module.scss'
-// import AuthContext from '../../context/AuthContext'
+import {useAuth} from '../../context/AuthContext'
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
-import { useAuth } from '../../context/AuthContext';
 import { useParmas } from 'react-router-dom';
+
 
 const ProfilePage = () => {
   const { isAuthenticated, user } = useAuth()
@@ -18,23 +18,8 @@ const ProfilePage = () => {
   console.log(user.name)
   console.log(user.avatar)
   const currentId = user.id
-  /*不確定Router*/
-  //const { isAuthenticated } =useAuth ();
-  //const navigate = useNavigate ();
-  //useEffect (()=>{
-  // if (isAuthenticated){
-  //    navigate ('/login');
-  //  } else {
-  //    navigate('/');
-  //  }
-  //})
 
   // const { isAuthenticated,user } =useContext(AuthContext);
-  useEffect(() => {
-    if (!isAuthenticated) {
-      navigate('/login');
-    }
-  }, [navigate, isAuthenticated])
 
   return (
     <div className={style.profileContainer}>
@@ -44,7 +29,7 @@ const ProfilePage = () => {
         </div>
         <div className={style.middleColumn}>
           <Header />
-          <Main currentId={currentId} />
+          <Main userId={ user&& user.id} />
         </div>
         <div className={style.rightColumn}>
           <RecommendList />

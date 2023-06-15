@@ -1,6 +1,6 @@
 @import '../../style/base.scss';
 
-.followContainer {
+.homeContainer {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -17,19 +17,16 @@
     //border-radius: 16px;
 }
 
-.leftColumn,
-.rightColumn {
+.leftColumn {
     flex: 1;
     background-color: #fff;
     position: relative;
-}
-
-.leftColumn {
     margin-right: 24px;
 }
 
+
 .middleColumn {
-    flex: 3;
+    flex: 4;
     position: relative;
     background-color: #fff;
     padding-right: 25px;

@@ -1,27 +1,70 @@
-import avatar from '../../assets/Photo.png'
 import style from './MainPost.module.scss';
 import { useState } from 'react';
 import { postTweets } from '../../apis/tweet';
 import { async } from 'q';
-
-const MainPost= () => {
+import Swal from 'sweetalert2';
+const MainPost= ( {user} ) => {
     const [tweetText, setTweetText] =useState ('');
+    const [message, setMessage] = useState('')
 
 
-    const handleSubmit =async () => {
-        const data = await postTweets(tweetText);
-        console.log(data);//測試
-        setTweetText('');//傳完回到空值
-        window.location.reload();//直接刷新頁面
-    }
 
+    const handleSubmit = async () => {
+        if (!tweetText.trim()) {
+          Swal.fire({
+            title: '內容不可空白',
+            icon: 'error',
+            showConfirmButton: false,
+            timer: 2000,
+            position: 'top',
+          });
+          setMessage('內容不可空白')
+          return
+        }
+        if (tweetText.length > 140) {
+          Swal.fire({
+            title: '內容超出上限',
+            icon: 'error',
+            showConfirmButton: false,
+            timer: 2000,
+            position: 'top',
+          });
+          setMessage('內容不可超過140字')
+          return
+        }
     
+        const { success } = await postTweets(tweetText)
+        console.log(success)
+        if (success) {
+          Swal.fire({
+            title: '內容成功提交',
+            icon: 'success',
+            showConfirmButton: false,
+            timer: 3000,
+            position: 'top',
+          });
+          return
+        }
+        setTweetText('');
+        window.location.reload();//直接刷新頁面
+      }
+    
+
+    //const handleSubmit =async () => {
+      //  const data = await postTweets(tweetText);
+        //console.log(data);//測試
+        //setTweetText('');//傳完回到空值
+        //window.location.reload();//直接刷新頁面
+    //}
+    if(!user){
+        return null;//可以改成加載loading
+    }
     return(
         <div className={style.mainPostContainer}>
-            <img className ={style.avatar} src = {avatar} alt="avatar"/>
+            <img className={style.avatar} src= {user.avatar} alt="avatar"/>
             <div className={style.tweetArea}>
             <div className={style.tweetText}>
-                <input className={style.tweetText} 
+                <textarea className={style.tweetText} 
                 type="text" 
                 placeholder="有什麼新鮮事？" 
                 required
@@ -35,6 +78,6 @@ const MainPost= () => {
 
     )
 
-}
+    }
 
 export default MainPost;

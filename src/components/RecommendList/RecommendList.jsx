@@ -2,12 +2,26 @@ import style from './RecommendList.module.scss';
 import RecommendItem from '../RecommendItem/RecommendItem';
 import {useState, useEffect} from 'react'; 
 import {getTopFollowers} from '../../apis/user';
+import {postFollowShips, deleteFollowShips } from '../../apis/followship';
 //import {useAuth} from '../../context/AuthContext';
 import { async } from 'q';
 
  const RecommendList = ()=>{
     const [users, setUsers] = useState([]);
-    //const {isAuthenticated, login, logout, payload } = useAuth();
+
+    const handleFollow = async (id) =>{
+      const response = await postFollowShips(id);
+      if (response && response.status ==='success'){
+        setUsers (users.map(user=>user.id ===id?{...user, isCurrentUserFollowed:true}:user));
+    }
+  };
+  const handleunFollow = async (id) =>{
+    const response = await deleteFollowShips(id);
+    console.log(id) //測試
+    if (response && response.status ==='success'){
+      setUsers (users.map(user=>user.id ===id?{...user, isCurrentUserFollowed:false}:user));
+  }
+};
 
     useEffect(()=>{
         const fetchTopFollowers = async () => {
@@ -24,7 +38,11 @@ import { async } from 'q';
     <div className={style.recommendListContainer}>
       <h5 className="justify center">推薦跟隨</h5>
       {users.map(user => (
-        <RecommendItem key={user.id} user={user} />
+        <RecommendItem 
+        key={user.id} 
+        user={user}
+        onFollow={handleFollow}
+        onUnfollow={handleunFollow} />
       ))}
     </div>
   )
