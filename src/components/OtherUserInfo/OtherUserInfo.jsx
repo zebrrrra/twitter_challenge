@@ -1,26 +1,27 @@
-import style from "./UserInfo.module.scss"
+// import style from "./UserInfo.module.scss"
+import style from "./OtherUserInfo.module.scss"
 import { Link } from "react-router-dom"
 import EditModal from "../EditModal/EditModal"
 import { useState, useEffect } from "react"
 import { getUsers } from "../../apis/user"
 import { useAuth } from "../../context/AuthContext"
+import { ReactComponent as BellOpen } from "../../assets/icon/btn_notfi打開.svg"
+import { ReactComponent as BellClose } from "../../assets/icon/btn_notfi關閉.svg"
+import email from "../../assets/icon/email.svg"
 
-const UserInfo = ({ currentId }) => {
+const OtherUserInfo = ({ currentId, user }) => {
   const [openModal, setOpenModal] = useState(false);
   const [currentData, setCurrentData] = useState(null)
-  // 使用個變數作為判斷是否為別人 點擊頭
+  const [isToggle, setIsToggle] = useState(false)
+  // const buttonClass = user.isCurrentUserFollowed ? style.buttonFollowing : style.buttonFollower;
+  // const buttonText = user.isCurrentUserFollowed ? "正在跟隨" : "跟隨";
+  const { account, avatar, cover, name, introduction, followersCount, followingsCount } = currentData || {}
+
   // const { user } = useAuth()
   console.log(currentId)
 
-  // 點按鈕的
-  const handleOpenClick = async () => {
-    setOpenModal(true)
+  const handleFollow = () => { }
 
-    // 發送api載入自己的資料
-    const userData = await getUsers(currentId)
-    console.log(userData)//有抓到
-    setCurrentData(userData)
-  }
 
   useEffect(() => {
     const fetchData = async () => {
@@ -30,7 +31,6 @@ const UserInfo = ({ currentId }) => {
     fetchData();
   }, [currentId, openModal]);
 
-  const { account, avatar, cover, name, introduction, followersCount, followingsCount } = currentData || {}
 
   return (
     <div className={style.container}>
@@ -41,7 +41,12 @@ const UserInfo = ({ currentId }) => {
         <img src={avatar} alt="avatar" />
       </div>
       <div className={style.buttonContainer}>
-        <button className={style.button} type="button" onClick={handleOpenClick}>編輯個人資料</button>
+        <div className={style.emailContainer}>
+          <img src={email} alt="email" />
+        </div>
+        {isToggle ? <BellOpen onClick={() => setIsToggle(!isToggle)} /> : <BellClose onClick={() => setIsToggle(!isToggle)} />}
+        {/* <button className={bellClass} type="button" onClick={() => setIsToggle(!isToggle)}></button> */}
+        <button className={style.buttonFollowing} type="button" onClick={handleFollow}>{"正在跟隨"}</button>
       </div>
       <div className={style.textContainer}>
         <h5 className={style.name}>{name}</h5>
@@ -59,4 +64,4 @@ const UserInfo = ({ currentId }) => {
 
 }
 
-export default UserInfo
+export default OtherUserInfo

@@ -32,7 +32,7 @@ export const login = async ({ account, password }) => {
 export const register = async ({ account, name, password, email, checkPassword }) => {
   try {
     const { data } = await axios.post(`${baseUrl}/users`, { account, name, password, email, checkPassword })
-    console.log(data)
+    // console.log(data)
     return data
     // if (response.data.status === 'success') {
     //   return { success: true, message: response.data.message }
@@ -40,7 +40,7 @@ export const register = async ({ account, name, password, email, checkPassword }
   } catch (err) {
     console.log('err.response.data', err.response.data)
     return {
-      success: false, errorInfo: err.response.data.message
+      status: false, errorInfo: err.response.data.message
     }
   }
 }
@@ -62,16 +62,16 @@ export const adminLogin = async ({ account, password }) => {
 }
 
 
-
-
-
-
-export const putUserSetting = async ({ id }) => {
+export const putUserSetting = async ({ id, account, name, email, password, checkPassword }) => {
   try {
-    const token = localStorage.getItem('token')
-    console.log(token)
+    console.log('account:', account)
+    console.log('name:', name)
+    console.log('email:', email)
+    console.log('password:', password)
+    console.log('checkPassword:', checkPassword)
 
-    const response = await axios.put(`${baseUrl}/users/${id}`, {},
+    const token = localStorage.getItem('token')
+    const response = await axios.put(`${baseUrl}/users/${id}`, { account, name, email, password, checkPassword },
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -79,14 +79,19 @@ export const putUserSetting = async ({ id }) => {
         },
       }
     )
+
+    console.log(response)
     if (response.data.status === 'success') {
       console.log('成功')
       return { success: true, message: response.data.message }
+
     }
 
   } catch (err) {
     console.log('失敗')
     console.log(err.response.data)
+    console.log(err.response)
+    // return err.response
     return { success: false, errInfo: err.response.data.message }
   }
 }
@@ -98,6 +103,11 @@ export const putUserProfile = async ({ id, name, avatar, cover, introduction }) 
   try {
 
     const formData = new FormData();
+    // 加入資料進去 formData
+    formData.append('name', name);
+    formData.append('avatar', avatar);
+    formData.append('cover', cover);
+    formData.append('introduction', introduction);
 
     const response = await axios.put(`${baseUrl}/users/${id}/profile`, formData, {
       headers: {
@@ -105,13 +115,12 @@ export const putUserProfile = async ({ id, name, avatar, cover, introduction }) 
         'Content-Type': 'multipart/form-data',
       },
     });
-    return response
+    return { success: true, message: response.data.message }
   } catch (err) {
     console.log('error', err)
-    return err
+    return { success: false, message: err.response.data.message }
   }
 }
-
 
 export const getUsers = async (id) => {
   const token = localStorage.getItem('token');
@@ -196,6 +205,35 @@ export const getTopFollowers = async () => {
     return response.data;
   } catch (error) {
     console.error('Error:cannot get top followers', error);
+  }
+};
+
+export const getUserFollowings = async (id) => {
+  const token = localStorage.getItem('token');
+  try {
+    const response = await axios.get(`${baseUrl}/users/${id}/followings`, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Error: cannnot get user followings', error);
+  }
+};
+
+export const getUserFollowers = async (id) => {
+  const token = localStorage.getItem('token');
+  try {
+    const response = await axios.get(`${baseUrl}/users/${id}/followers`, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
+    return response.data;
+
+  } catch (error) {
+    console.log('Error: cannnot get user followers', error)
   }
 };
 

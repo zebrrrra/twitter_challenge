@@ -114,22 +114,35 @@
       display: flex;
       flex-direction: column;
 
-      >button {
-        margin: 16px;
-        @include box(64, 40);
-        @include fontStyle(16, 400);
-        align-self: flex-end;
-        text-align: center;
-        background: $brand-color;
-        border-radius: 50px;
-        line-height: 24px;
-        color: $background-color;
-      }
+
     }
   }
 
 }
 
+.ReplyButtonContainer {
+  width: 100%;
+  text-align: right;
+
+  // display: flex;
+  >button {
+    margin: 16px;
+    @include box(64, 40);
+    @include fontStyle(16, 400);
+    align-self: flex-end;
+    text-align: center;
+    background: $brand-color;
+    border-radius: 50px;
+    line-height: 24px;
+    color: $background-color;
+  }
+
+  >small {
+    vertical-align: text-bottom;
+    color: $error-color;
+  }
+
+}
 
 
 

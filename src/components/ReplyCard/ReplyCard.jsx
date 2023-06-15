@@ -1,4 +1,3 @@
-import { ReactComponent as Avatar } from '../../assets/icon/img.svg'
 import style from './ReplyCard.module.scss';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
