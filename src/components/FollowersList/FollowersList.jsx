@@ -1,9 +1,29 @@
 import FollowCard from "../FollowCard/FollowCard";
 import useFollow from "../../hooks/FollowHook";
+import { useEffect,useState } from "react";
+import { getUserFollowers } from "../../apis/user";
 
-const FollowersList = ({users, setUsers})=>{
+const FollowersList = ({userId})=>{
+const [users, setUsers] = useState([]);
 const {handleFollow,handleUnFollow}=useFollow(users,setUsers);
+console.log('Rendering FollowerList with users:', users);
 
+
+useEffect(()=>{
+    const fetchFollowers= async ()=>{
+        const userData = await getUserFollowers(userId);
+        console.log(userData);//測試
+        console.log(users);
+        if (userData){
+            setUsers(userData.map(user=>({
+                ...user.Follower,
+                isCurrentUserFollowed: user.Follower.isCurrentUserFollowed === 'true'
+            })
+            ));
+        }
+    }
+    fetchFollowers();
+},[userId]);
 
 
     return (

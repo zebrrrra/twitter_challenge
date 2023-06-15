@@ -9,7 +9,7 @@ const ProtectedRouter =({children})=>{
         return <Navigate to="/login" replace/>;
     } else if (user.role !=="admin"){
         //如果用戶不是admin,導到首頁
-        return <Navigate to="/" replace/>;
+        return <Navigate to="/login" replace/>;
     } else {
         return children;
     }

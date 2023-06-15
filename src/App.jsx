@@ -3,13 +3,9 @@ import { BrowserRouter as Router, Route, Routes, useParams, useMatch } from 'rea
 import { HomePage, ProfilePage, LoginPage, AdminLoginPage, RegisterPage,FollowPage, SettingPage } from "./pages";
 import  OtherProfilePage  from './pages/OtherProfilePage/OtherProfilePage';
 import { AuthProvider } from "./context/AuthContext";
-import { UserProvider } from "./context/UserContext";
 import { useAuth } from './context/AuthContext';
 import ProtectedRouter from './components/AdminProtectedRouter';
-//import { AuthProvider } from "./context/AuthContext";
-//import FollowPage from "./pages/FollowPage/FollowPage";
 import ReplyPage from "./pages/ReplyPage/ReplyPage";
-import AdminAllTweets from "./components/AdminAllTweet/AdminAllTweet";
 import AdminUserPage from './pages/AdminUserPage/AdminUserPage';
 import AdminHomePage from "./pages/AdminHomePage/AdminHomePage";
 
@@ -22,15 +18,16 @@ function App() {
         <AuthProvider>
           <Routes>
             <Route path="/login" element={<LoginPage />} />
-            <Route path="/admin" element={<AdminLoginPage />} />
             <Route path="/main" element={<HomePage />} />
-            <Route path="/admin/list" element={<AdminHomePage />}/>
+            <Route path="/admin" element={<AdminLoginPage />} />
+            <Route path="/admin/list" element={<ProtectedRouter><AdminHomePage /></ProtectedRouter>}/>
+            <Route path="/admin/user" element={<ProtectedRouter><AdminUserPage /></ProtectedRouter>}/>
             <Route path="/setting" element= {<SettingPage />}/>
-            <Route path="/testuser" element={<AdminUserPage />}/>
             <Route path="register" element={<RegisterPage />} />
-            <Route path="/:id/*" element={<HandleProfilePage />} />
             <Route path="/tweets/:tweetId" element= {<ReplyPage />}/>
-
+            <Route path="/:id/*" element={<HandleProfilePage />} />
+            <Route path="/:id/follow/*" element={<HandleProfilePage />} />
+            <Route path ="*" element={<HomePage/>} />
           </Routes>
 
         </AuthProvider>

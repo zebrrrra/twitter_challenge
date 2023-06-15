@@ -34,8 +34,6 @@ const Navbars = ({userId}) => {
     setOpenModal(true)
   }
 
-
-
   useEffect(() => {
     const fetchData = async () => {
       const userData = await getUsers(userId);

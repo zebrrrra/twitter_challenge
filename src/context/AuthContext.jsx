@@ -50,6 +50,7 @@ export const AuthProvider = ({ children }) => {
             user: payload && {
                 id: payload.id,
                 name: payload.name,
+                role: payload.role,
                 avatar: payload.avatar,
                 account: payload.account
             }, responseError, errorInfo, setResponseError, setErrorInfo

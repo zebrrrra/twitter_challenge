@@ -57,7 +57,7 @@ const AdminLoginPage = () => {
 
   useEffect(() => {
     if (isAuthenticated) {
-      navigate(`/${user?.id}/`);
+      navigate("/admin/list");
     }
   }, [navigate, isAuthenticated, user]);
 

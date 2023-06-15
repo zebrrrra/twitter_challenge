@@ -50,8 +50,8 @@ const UserInfo = ({ userId }) => {
         <span className={style.account}>{account}</span>
         <p>{introduction}</p>
         <div className={style.linkGroup}>
-          <Link to="" className={style.link}>{followingsCount}個<span>正在追隨</span></Link>
-          <Link to="" className={style.link}>{followersCount}個<span>跟隨者</span></Link>
+          <Link to="followings" className={style.link}>{followingsCount}個<span>正在追隨</span></Link>
+          <Link to="followers" className={style.link}>{followersCount}個<span>跟隨者</span></Link>
         </div>
       </div>
       {openModal && <EditModal open={openModal} onClose={(value) => setOpenModal(value)} userId={userId} userData={currentData} />}
