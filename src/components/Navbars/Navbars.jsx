@@ -14,42 +14,19 @@ import LogoutIcon from '../../assets/icons/logout.svg'
 import { useAuth } from '../../context/AuthContext';
 
 const Navbars = () => {
-  const navigate = useNavigate();
   const [openModal, setOpenModal] = useState(false);
-  const [currentData, setCurrentData] = useState(null)
-  // 使用個變數作為判斷是否為別人 點擊頭
-  const { user } = useAuth()
-  const CurrentUserId = user ? user.id : ''
-  console.log(CurrentUserId)
-  // console.log(userId)
+  const navigate = useNavigate();
+  //const handleLogoChange =()=>{
 
-  // 點按鈕的
-  const handleOpenClick = async () => {
-    setOpenModal(true)
 
-    // 發送api載入自己的資料
-    const userData = await getUsers(CurrentUserId)
-    console.log(userData)//有抓到
-    setCurrentData(userData)
-  }
-  //推文按鈕
+  //}
   const handlebuttonClick = () => {
     setOpenModal(true)
   }
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const userData = await getUsers(CurrentUserId);
-      setCurrentData(userData);
-    };
-    fetchData();
-  }, [CurrentUserId, openModal]);
-
   const handleLogout = () => {
     localStorage.removeItem('token');
     navigate('/login');
   }
-  const { account, avatar, cover, name, introduction, followersCount, followingsCount } = currentData || {}
 
   return (
     <>
@@ -62,12 +39,12 @@ const Navbars = () => {
               <span>首頁</span>
             </div>
           </Link>
-
-          <div className={style.NavbarItem} onClick={handleOpenClick} >
-            <img className={style.NavbarPng} src={InfoIcon} alt="Icon" />
-            <span>個人資料</span>
-          </div>
-
+          <Link to="/profile">
+            <div className={style.NavbarItem}>
+              <img className={style.NavbarPng} src={InfoIcon} alt="Icon" />
+              <span>個人資料</span>
+            </div>
+          </Link>
           <Link to="/setting">
             <div className={style.NavbarItem}>
               <img className={style.NavbarPng} src={SettingIcon} alt="Setting" />
@@ -79,10 +56,7 @@ const Navbars = () => {
         {openModal && <TweetModal open={openModal} onClose={() => setOpenModal(false)} />}
       </div>
       <div className={style.logout} onClick={handleLogout}><img className={style.NavbarPng} src={LogoutIcon} alt="logout" />登出</div>
-      {openModal && <EditModal open={openModal} onClose={(value) => setOpenModal(value)} userId={CurrentUserId} userData={currentData} />}
-
     </>
-
 
   )
 }

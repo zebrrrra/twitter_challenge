@@ -27,6 +27,7 @@ function App() {
             <Route path="/tweets/:tweetId" element= {<ReplyPage />}/>
             <Route path="/:id/*" element={<HandleProfilePage />} />
             <Route path="/:id/follow/*" element={<HandleProfilePage />} />
+            <Route path="profile" element ={<ProfilePage/>} />
             <Route path ="*" element={<HomePage/>} />
           </Routes>
 
