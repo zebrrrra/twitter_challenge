@@ -20,7 +20,7 @@ const FollowPage = ()=>{
         <div className={style.followContainer}>
         <div className={style.homeColumn}>
           <div className={style.leftColumn}>
-            <Navbars/>
+            <Navbars userId={user && user.id}/>
             </div>
             <div className={style.middleColumn}>
             <FollowTab userId={user && user.id}/>

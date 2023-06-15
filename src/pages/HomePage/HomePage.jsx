@@ -20,7 +20,7 @@ const HomePage = () => {
     <div className={style.homeContainer}>
       <div className={style.homeColumn}>
         <div className={style.leftColumn}>
-          <Navbars />
+          <Navbars userId={ user&& user.id}/>
         </div>
         <div className={style.middleColumn}>
           <Header />
