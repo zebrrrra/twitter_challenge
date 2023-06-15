@@ -1,11 +1,10 @@
 import {ReactComponent as LikeIcon} from '../../assets/icon/like_1.svg';
 import {ReactComponent as IsLikeIcon} from '../../assets/icon/like.svg';
 import replyIcon from '../../assets/icon/reply_1.svg'
-//import { ReactComponent as Avatar } from '../../assets/icon/img.svg'
 import style from './LikeCard.module.scss';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
-//import {useState} from 'react';
+import { useNavigate } from 'react-router-dom';
 
 dayjs.extend(relativeTime);
 dayjs.locale('zh-tw');
@@ -24,6 +23,10 @@ function getTime(createdAt) {
 
 
 const LikeCard = ({ like,onLike,onUnLike }) => {
+    const navigate = useNavigate();
+    const handleAvatarClick = (userId) => {
+        navigate(`/${userId}`);
+      };
 
     const handleButtonClick =  () =>{
         console.log('like:',onLike, 'unlike:', onUnLike,'isCurrentUserLiked:', like.isCurrentUserLiked);
@@ -50,7 +53,7 @@ const LikeCard = ({ like,onLike,onUnLike }) => {
         <>
             <div className={style.tweetCardContainer}>
             <div className={style.tweetCard}>
-                <img src={avatar} className={style.avatar} alt="avatar"/>
+            <img src={avatar} className={style.avatar} onClick={() => handleAvatarClick(like.Tweet.User.id)}alt="avatar"/>
                 <div className={style.contentContainer}>
                     <div className={style.nameAndUserId}>
                         <span className={style.name}>{name}</span>

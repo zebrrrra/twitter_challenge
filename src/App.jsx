@@ -1,6 +1,6 @@
 import "./style/main.scss"
 import { BrowserRouter as Router, Route, Routes, useParams, useMatch } from 'react-router-dom';
-import { HomePage, ProfilePage, LoginPage, AdminLoginPage, RegisterPage,FollowPage } from "./pages";
+import { HomePage, ProfilePage, LoginPage, AdminLoginPage, RegisterPage,FollowPage, SettingPage } from "./pages";
 import  OtherProfilePage  from './pages/OtherProfilePage/OtherProfilePage';
 import { AuthProvider } from "./context/AuthContext";
 import { UserProvider } from "./context/UserContext";
@@ -23,12 +23,13 @@ function App() {
           <Routes>
             <Route path="/login" element={<LoginPage />} />
             <Route path="/admin" element={<AdminLoginPage />} />
+            <Route path="/main" element={<HomePage />} />
             <Route path="/admin/list" element={<AdminHomePage />}/>
+            <Route path="/setting" element= {<SettingPage />}/>
             <Route path="/testuser" element={<AdminUserPage />}/>
             <Route path="register" element={<RegisterPage />} />
             <Route path="/:id/*" element={<HandleProfilePage />} />
             <Route path="/tweets/:tweetId" element= {<ReplyPage />}/>
-            <Route path="/*" element={<HomePage />} />
 
           </Routes>
 

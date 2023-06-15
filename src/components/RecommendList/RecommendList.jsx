@@ -13,6 +13,8 @@ import { async } from 'q';
       const response = await postFollowShips(id);
       if (response && response.status ==='success'){
         setUsers (users.map(user=>user.id ===id?{...user, isCurrentUserFollowed:true}:user));
+    
+    console.log('handlefollow isCurrentUserFollowed:',id)
     }
   };
   const handleunFollow = async (id) =>{
@@ -20,7 +22,8 @@ import { async } from 'q';
     console.log(id) //測試
     if (response && response.status ==='success'){
       setUsers (users.map(user=>user.id ===id?{...user, isCurrentUserFollowed:false}:user));
-  }
+      console.log('Unfollow isCurrentUserFollowed:',id)
+    }
 };
 
     useEffect(()=>{

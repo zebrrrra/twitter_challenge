@@ -1,18 +1,58 @@
 import style from "./TweetModal.module.scss"
 import { useState } from 'react';
 import { postTweets } from "../../apis/tweet";
-
+import { useAuth } from "../../context/AuthContext"
+import Swal from 'sweetalert2';
 // avatar會拿掉改成接props
 import avatar from '../../assets/icons/avatar.svg'
 
 
-const TweetModal = ({open,onClose}) => {
-const [tweetText, setTweetText] =useState('');//要填預設值
-const handleSubmit =async () =>{
-  const data = await postTweets(tweetText);
-  console.log (data);//測試用
-  setTweetText('');//傳完回到空值
-}
+const TweetModal = ({open,onClose,User}) => {
+
+  const [tweetText, setTweetText] =useState('');//要填預設值
+    const [message, setMessage] = useState('')
+    const {user} =useAuth();
+
+
+    const handleSubmit = async () => {
+        if (!tweetText.trim()) {
+          Swal.fire({
+            title: '內容不可空白',
+            icon: 'error',
+            showConfirmButton: false,
+            timer: 2000,
+            position: 'top',
+          });
+          setMessage('內容不可空白')
+          return
+        }
+        if (tweetText.length > 140) {
+          Swal.fire({
+            title: '內容超出上限',
+            icon: 'error',
+            showConfirmButton: false,
+            timer: 2000,
+            position: 'top',
+          });
+          setMessage('內容不可超過140字')
+          return
+        }
+    
+        const { success } = await postTweets(tweetText)
+        console.log(success)
+        if (success) {
+          Swal.fire({
+            title: '內容成功提交',
+            icon: 'success',
+            showConfirmButton: false,
+            timer: 3000,
+            position: 'top',
+          });
+          return
+        }
+        setTweetText('');
+        window.location.reload();//直接刷新頁面
+      }
 
   return open ? (
     <div className={style.background}>
@@ -23,7 +63,7 @@ const handleSubmit =async () =>{
         {/* 底下layout 未完成 */}
         <div className={style.ContentContainer}>
           <div className={`${style.avatarContainer} ${style.down}`}>
-            <img src={avatar} alt="avatar" />
+            <img src={user.avatar} className={style.avatar} alt="avatar" />
           </div>
           <textarea 
           style={{ resize: 'none', width: '88%' }} 

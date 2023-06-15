@@ -1,3 +1,5 @@
+//ReplyMainInTest.jsx
+
 // import UserInfo from '../UserInfo/UserInfo'
 import Tab from '../Tab/Tab';
 import { useParams } from 'react-router-dom';
@@ -102,4 +104,3 @@ export default ReplyMainInTest;
 
     </div>)
 };*/
-

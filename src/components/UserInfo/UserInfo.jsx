@@ -1,3 +1,5 @@
+//UserInfo.jsx
+
 import style from "./UserInfo.module.scss"
 import { Link } from "react-router-dom"
 import EditModal from "../EditModal/EditModal"
@@ -5,30 +7,30 @@ import { useState, useEffect } from "react"
 import { getUsers } from "../../apis/user"
 import { useAuth } from "../../context/AuthContext"
 
-const UserInfo = ({ currentId }) => {
+const UserInfo = ({ userId }) => {
   const [openModal, setOpenModal] = useState(false);
   const [currentData, setCurrentData] = useState(null)
   // 使用個變數作為判斷是否為別人 點擊頭
   // const { user } = useAuth()
-  console.log(currentId)
+  console.log(userId)
 
   // 點按鈕的
   const handleOpenClick = async () => {
     setOpenModal(true)
 
     // 發送api載入自己的資料
-    const userData = await getUsers(currentId)
+    const userData = await getUsers(userId)
     console.log(userData)//有抓到
     setCurrentData(userData)
   }
 
   useEffect(() => {
     const fetchData = async () => {
-      const userData = await getUsers(currentId);
+      const userData = await getUsers(userId);
       setCurrentData(userData);
     };
     fetchData();
-  }, [currentId, openModal]);
+  }, [userId, openModal]);
 
   const { account, avatar, cover, name, introduction, followersCount, followingsCount } = currentData || {}
 
@@ -52,7 +54,7 @@ const UserInfo = ({ currentId }) => {
           <Link to="" className={style.link}>{followersCount}個<span>跟隨者</span></Link>
         </div>
       </div>
-      {openModal && <EditModal open={openModal} onClose={(value) => setOpenModal(value)} currentId={currentId} userData={currentData} />}
+      {openModal && <EditModal open={openModal} onClose={(value) => setOpenModal(value)} userId={userId} userData={currentData} />}
     </div >
 
   )

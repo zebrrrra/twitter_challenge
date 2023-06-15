@@ -45,7 +45,7 @@ const LoginPage = () => {
       });
       // setResponseError(false)
       console.log(responseError)
-      navigate('/')
+      navigate('/main')
       return
     }
 

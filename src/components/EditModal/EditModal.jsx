@@ -1,3 +1,5 @@
+//EdiitModal.jsx
+
 import { useState } from "react"
 import style from "../EditModal/EditModal.module.scss"
 import AuthInput from "../AuthInput/AuthInput"
@@ -8,12 +10,12 @@ import { ReactComponent as Fork } from "../../assets/icons/Vector.svg"
 import { putUserProfile } from "../../apis/user"
 import { useAuth } from "../../context/AuthContext"
 import Swal from "sweetalert2"
-const EditModal = ({ open, onClose, currentId, userData }) => {
+const EditModal = ({ open, onClose, userId, userData }) => {
   const { user } = useAuth()
 
   const { avatar, cover, name, introduction } = userData
   console.log(userData)//can get
-  console.log(currentId)//can get
+  console.log(userId)//can get
   console.log(user.id)//can get
 
   const [editName, setEditName] = useState(name);
@@ -59,7 +61,7 @@ const EditModal = ({ open, onClose, currentId, userData }) => {
       return
     }
 
-    const { success, message } = await putUserProfile({ id: currentId, name: editName, avatar: editAvatar, cover: editCover, introduction: editIntroduction })
+    const { success, message } = await putUserProfile({ id: userId, name: editName, avatar: editAvatar, cover: editCover, introduction: editIntroduction })
     if (success) {
       console.log('成功')
       Swal.fire({

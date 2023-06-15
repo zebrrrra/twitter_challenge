@@ -1,3 +1,4 @@
+//settingPage.jsx
 import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
@@ -15,12 +16,14 @@ const SettingPage = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [checkPassword, setCheckPassword] = useState('')
+  const navigate = useNavigate();
+
   // const [errorInfo, setErrorInfo] = useState('')
 
   const { putUserSetting, isAuthenticated, user, responseError, errorInfo, setErrorInfo, setResponseError } = useAuth()
 
   const authInputCollection = [
-    { label: '帳號', id: 'account', type: 'text', placeholder: '請輸入帳號', value: account, onChange: (accountValue) => setAccount(accountValue) },
+    { label: '帳號', id: '帳號', type: 'text', placeholder: '請輸入帳號', value: account, onChange: (accountValue) => setAccount(accountValue) },
     { label: '名稱', id: 'name', type: 'text', placeholder: '請輸入使用者名稱', value: name, maxLength: 50, onChange: (nameValue) => setName(nameValue) },
     { label: 'Email', id: 'email', type: 'email', placeholder: '請輸入Email', value: email, onChange: (emailValue) => setEmail(emailValue) },
     { label: '密碼', id: '密碼', type: 'password', placeholder: '請輸入密碼', value: password, onChange: (passwordValue) => setPassword(passwordValue) },
@@ -52,7 +55,6 @@ const SettingPage = () => {
       checkPassword
 
     });
-    console.log(success)
     if (success) {
 
       Swal.fire({
@@ -62,11 +64,6 @@ const SettingPage = () => {
         timer: 2000,
         position: 'top',
       });
-      // setAccount('');
-      // setName('');
-      // setEmail('');
-      // setPassword('');
-      // setCheckPassword('');
       return
     }
 
@@ -83,10 +80,6 @@ const SettingPage = () => {
     }
     // console.log(errorInfo)//空的
   }
-  console.log(errorInfo)
-  console.log(responseError)
-  // const { isAuthenticated } = useAuth();
-  // const navigate = useNavigate();
   // useEffect(() => {
   //   if (isAuthenticated) {
   //     navigate('/login');

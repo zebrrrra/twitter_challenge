@@ -76,6 +76,9 @@ h5 {
   border: 1px solid #FFFFFF;
   border-radius: 50%;
 }
+.avatar{
+  border-radius: 50%;
+}
 
 textarea {
   width: 100%;
@@ -96,4 +99,6 @@ textarea {
   border-radius: 50px;
   line-height: 24px;
   color: #FFFFFF;
+
+  
 }/*# sourceMappingURL=TweetModal.module.css.map */

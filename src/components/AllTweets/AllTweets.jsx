@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
 import TweetCard from '../TweetCard/TweetCard';
 import { getAllTweets } from '../../apis/tweet';
+import useLike from '../../hooks/LikeHook';
 
-//import style from '';
-//假設有Authcontext(還沒寫)
 
 const AllTweets =({ userId })=>{
     const [allTweets, setAllTweets] = useState([]);
+    const {likeTweets: updateLikes,handleLike,handleUnLike} =useLike({dataItems:allTweets});
 
     useEffect(()=>{
         const fetchTweets = async () => {
@@ -19,11 +19,15 @@ const AllTweets =({ userId })=>{
         fetchTweets();
     }, [ userId]); 
 
-    return allTweets.map(alltweet => {
-    if(!alltweet.User){
-        return null;
-    }
-    return<TweetCard key={alltweet.id} tweet={alltweet} type="alltweet"/>});
+    return updateLikes?updateLikes.map(alltweet => {
+        if(!alltweet.User){
+            return null;
+        }
+    return<TweetCard key={alltweet.id}
+     tweet={alltweet} 
+     onLike={()=>handleLike(alltweet.id)}
+    onUnLike={()=>handleUnLike(alltweet.id)} 
+     type="alltweet"/>}):null;
 }
 
 export default AllTweets;

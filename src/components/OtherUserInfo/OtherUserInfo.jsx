@@ -1,3 +1,4 @@
+//OtherUserInfo.jsx
 // import style from "./UserInfo.module.scss"
 import style from "./OtherUserInfo.module.scss"
 import { Link } from "react-router-dom"

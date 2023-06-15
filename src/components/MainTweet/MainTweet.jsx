@@ -1,3 +1,4 @@
+//MainTweet.jsx
 import style from "./MainTweet.module.scss"
 import { ReactComponent as Like } from "../../assets/icons/outlinedlike.svg"
 import { ReactComponent as Reply } from "../../assets/icons/outlinedreply.svg"
