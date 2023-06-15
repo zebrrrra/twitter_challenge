@@ -25,7 +25,7 @@ const ProfilePage = () => {
     <div className={style.profileContainer}>
       <div className={style.homeColumn}>
         <div className={style.leftColumn}>
-          <Navbar userId={ user&& user.id}/>
+          <Navbar />
         </div>
         <div className={style.middleColumn}>
           <Header />

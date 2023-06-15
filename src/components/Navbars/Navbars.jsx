@@ -1,5 +1,5 @@
 import style from '../Navbars/Navbars.module.scss';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate,useLocation } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { getUsers } from "../../apis/user"
 //import Modal
@@ -11,21 +11,35 @@ import HomeIcon from '../../assets/icons/homeLine.svg';
 import InfoIcon from '../../assets/icons/userLine.svg';
 import SettingIcon from '../../assets/icons/cogLine.svg'
 import LogoutIcon from '../../assets/icons/logout.svg'
+import isHomeIcon from '../../assets/icons/isHome.svg'
+import isSettingIcon from '../../assets/icons/isSetting.svg'
+import isInfoIcon from '../../assets/icons/isProfile.svg'
 import { useAuth } from '../../context/AuthContext';
 
 const Navbars = () => {
   const [openModal, setOpenModal] = useState(false);
+  const [activeTab, setActiveTab] = useState('');
+  const [isIconClicked, setIconClicked] = useState(false);
+
   const navigate = useNavigate();
-  //const handleLogoChange =()=>{
+  const location = useLocation();
 
+  useEffect(() => {
+    setIconClicked(location.pathname);
+  }, [location]);
 
-  //}
   const handlebuttonClick = () => {
     setOpenModal(true)
   }
   const handleLogout = () => {
     localStorage.removeItem('token');
     navigate('/login');
+  }
+  
+
+  const handleTabClick = (tabName) => {
+    setActiveTab(tabName);
+    setIconClicked(true);
   }
 
   return (
@@ -34,20 +48,32 @@ const Navbars = () => {
         <div className={style.NavbarLogo}><img src={ACLogo} alt="" /></div>
         <div className={style.NavbarGroup}>
           <Link to="/main">
-            <div className={style.NavbarItem}>
-              <img className={style.NavbarPng} src={HomeIcon} alt="Home" />
+          <div 
+            className={`${style.NavbarItem} ${location.pathname === '/main' ? style.active : ''}`}
+            onClick={() => handleTabClick('main')}>
+              <img className={style.NavbarPng} 
+              src={isIconClicked === '/main' ? isHomeIcon : HomeIcon} alt="Home" />
               <span>首頁</span>
             </div>
           </Link>
           <Link to="/profile">
-            <div className={style.NavbarItem}>
-              <img className={style.NavbarPng} src={InfoIcon} alt="Icon" />
+            <div
+              className={`${style.NavbarItem} ${location.pathname === '/profile' ? style.active : ''}`}
+              onClick={() => handleTabClick('profile')}
+            >
+              <img className={style.NavbarPng}  
+              src={isIconClicked === '/profile' ? isInfoIcon : InfoIcon} alt="Icon" />
               <span>個人資料</span>
             </div>
           </Link>
           <Link to="/setting">
-            <div className={style.NavbarItem}>
-              <img className={style.NavbarPng} src={SettingIcon} alt="Setting" />
+          <div
+              className={`${style.NavbarItem} ${location.pathname === '/setting' ? style.active : ''}`}
+              onClick={() => handleTabClick('setting')}
+            >
+              <img className={style.NavbarPng}
+               src={isIconClicked === '/setting' ? isSettingIcon : SettingIcon} 
+               alt="Setting" />
               <span>設定</span>
             </div>
           </Link>
@@ -65,53 +91,3 @@ export default Navbars;
 
 
 
-
-/*先全部註解確認版面後再跑
-//已登入的使用者
-const checkIfLoggedIn=()=>{
-const token = localStorage.getItem('token');
-return token !== null;    
-}
-
-//登出頁面
-const handleLogout=(e)=>{
-    preventDefault(e);
-    localStorage.removeItem('authToken');
-    Navigate('/LoginPage');
-
-};
-
-//Navbar
-const Navbar ()=>{
-    //function
-    const navigate=useNavigate();
-    const [isLoggedIn,setIsLoggedIn]= useState(false);
-    return(
-       <nav className={styles.NavbarContainer}>
-       <ACLogo/>
-       <div className={styles.NavBarItem}>
-        <NavBarItem
-        path='/'
-        text="首頁"
-        icon=HomeIcon={isActive}
-        />
-        <NavBarItem
-        path='/'
-        text="個人資料"
-        icon=
-        />
-        <NavBarItem
-        path='/'
-        text="設定"
-        icon=
-        />
-        </div>
-        <button className={styles.button}>推文</button>
-        </nav>
-        /*{isLoggedIn? (<div className={styles.logout} onClick={handleLogout}>登出
-        </div>) :(
-            <div className={styles.logout}>登入</div>
-        )
-   
-    )
-}*/
