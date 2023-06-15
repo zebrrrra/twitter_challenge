@@ -36,11 +36,10 @@ const AdminLoginPage = () => {
         timer: 2000,
         position: 'top',
       });
-      setResponseError(false)
-      navigate('/profile')
+      // navigate('/profile')
+      console.log('ok')
       return
     } else {
-
       Swal.fire({
         title: '登入失敗',
         icon: 'error',
@@ -48,12 +47,13 @@ const AdminLoginPage = () => {
         timer: 2000,
         position: 'top',
       });
-      setResponseError(true)
-
+      console.log('not')
       return
     }
-
   }
+  console.log(errorInfo)
+  console.log(responseError)
+
 
   useEffect(() => {
     if (isAuthenticated) {
@@ -63,7 +63,7 @@ const AdminLoginPage = () => {
 
   const authInputCollection = [
     { label: '帳號', id: 'account', type: 'text', placeholder: '請輸入帳號', value: account, onChange: (accountValue) => setAccount(accountValue) },
-    { label: '密碼', id: 'password', type: 'password', placeholder: '請輸入密碼', value: password, onChange: (passwordValue) => setPassword(passwordValue) }]
+    { label: '密碼', id: '密碼', type: 'password', placeholder: '請輸入密碼', value: password, onChange: (passwordValue) => setPassword(passwordValue) }]
   return (
     <div className={style.container}>
       <Logo className={style.logo} />

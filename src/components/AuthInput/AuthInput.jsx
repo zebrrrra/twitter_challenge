@@ -2,22 +2,23 @@ import { useEffect, useState } from 'react';
 import style from './AuthInput.module.scss'
 import { useAuth } from '../../context/AuthContext';
 
-const AuthInput = ({ label, id, type, placeholder, value, maxLength, onChange, height = 54, }) => {
+const AuthInput = ({ label, id, type, placeholder, value, maxLength, onChange, height = 54, responseError, errorInfo }) => {
   // const { setError } = useAuth()
   // responseError為後端回傳狀態，errorInfo後端錯誤資訊
   //這兩個變數為監控onChange 
   const [error, setError] = useState(false)
   const [message, setMessage] = useState('')
-  const { responseError, errorInfo } = useAuth()
-  // console.log(responseError)
-  // console.log(errorInfo)
+  console.log(responseError)
+  console.log(errorInfo)
 
   // 檢測後端錯誤以及是否為錯誤對應欄位
   let DisplayError = responseError && errorInfo.includes(id);
-  let AccountError = errorInfo && errorInfo.includes('使用者不存在') && id === '帳號';
+  let AccountError = errorInfo && errorInfo.includes('不存在') && id === 'account';
 
-  // console.log(AccountError)
-  const number = value.length
+
+  console.log(DisplayError)//當錯時，都是false
+  console.log(AccountError)//當錯時，true/false
+  const number = (value || '').length
   const containerStyle = {
     height: `${height}px`,
   };

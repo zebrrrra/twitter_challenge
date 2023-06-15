@@ -36,6 +36,15 @@
   padding-right: 25px;
 }
 
+.navbarContainer {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  height: 100vh;
+  //justify-content: space-between;
+  background: #FFFFFF;
+
+}
 
 // 新增
 .form {

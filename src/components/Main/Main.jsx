@@ -1,4 +1,3 @@
-import UserInfo from '../UserInfo/UserInfo'
 import Tab from '../Tab/Tab';
 const Main = ({userId}) => {
   //const { id } = useParams();
@@ -8,6 +7,7 @@ const Main = ({userId}) => {
     <>
     <UserInfo userId={userId}/>
     <Tab userId={userId}/>
+
     </>
   )
 

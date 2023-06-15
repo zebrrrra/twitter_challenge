@@ -10,9 +10,9 @@ import ReplyMain from "./ReplyMain/ReplyMain";
 import OpenTweet from "./OpenTweet/OpenTweet";
 import ReplyList from "./ReplyList/ReplyList";
 import FollowList from "./FollowList/FollowList";
+import OtherUserInfo from "./OtherUserInfo/OtherUserInfo";
+import MainTweet from "./MainTweet/MainTweet.module.css"
+import ReplyMainInTest from "./ReplyMainInTest/ReplyMainInTest";
 
-<<<<<<< HEAD
-export { AuthInput, UserInfo,TweetModal, Header,Navbars,MainPost,AllTweets,RecommendList,ReplyMain,OpenTweet,ReplyList,FollowList }
-=======
-export { AuthInput, UserInfo, TweetModal, Header, Navbars, MainPost, AllTweets, RecommendList }
->>>>>>> main
+export { AuthInput, UserInfo, TweetModal, Header, Navbars, MainPost, AllTweets, RecommendList, OtherUserInfo, MainTweet, ReplyMainInTest }
+

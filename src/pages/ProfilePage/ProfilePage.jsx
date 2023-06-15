@@ -1,4 +1,3 @@
-
 import RecommendList from '../../components/RecommendList/RecommendList';
 import Navbar from '../../components/Navbars/Navbars';
 import Header from '../../components/Headers/Headers';
@@ -7,17 +6,21 @@ import style from './ProfilePage.module.scss'
 import {useAuth} from '../../context/AuthContext'
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
+import { useParmas } from 'react-router-dom';
+
 
 const ProfilePage = () => {
-  const { user, isAuthenticated } =useAuth();
-  const navigate =useNavigate();
-  useEffect(()=>{
-    if (!isAuthenticated){
-      navigate ('/login');
-    }
-    }
-    ,[navigate,isAuthenticated])
-    
+  const { isAuthenticated, user } = useAuth()
+  const navigate = useNavigate();
+  // const{}=useParmas()
+  console.log(user)
+  console.log(user.id)//可以取得
+  console.log(user.name)
+  console.log(user.avatar)
+  const currentId = user.id
+
+  // const { isAuthenticated,user } =useContext(AuthContext);
+
   return (
     <div className={style.profileContainer}>
       <div className={style.homeColumn}>

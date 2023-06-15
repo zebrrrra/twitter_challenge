@@ -1,14 +1,65 @@
 import style from "./ReplyModal.module.scss"
-// avatar會拿掉改成接props
-import avatar from '../../assets/icons/avatar.svg'
 import { ReactComponent as Line } from "../../assets/icons/line.svg"
+import { useAuth } from "../../context/AuthContext"
+import { useState } from "react"
+import Swal from "sweetalert2"
+import { postATweetReply } from "../../apis/tweet"
 
-// 接收來自MainTweet的props
-// createdAt從父傳來後需經過處理
+
+// 需要getuser，關掉modal後拉api，更新底下回覆list
+
 const ReplyModal = ({
-  onClose, open, name, account, introduction, createdAt = 3 }) => {
+  onClose, open, User, detailTweet, tweetId }) => {
+  const [comment, setComment] = useState('')
+  const [message, setMessage] = useState('')
+  const { user } = useAuth()
 
   if (!open) return
+  const { account, avatar, name } = User || {}
+  const { description, createdAt } = detailTweet || {}
+  // console.log(User)
+  // console.log(user)//登入使用者
+  const isError = !comment.trim() || comment.length > 140
+
+  const handleReplyClick = async () => {
+    if (!comment.trim()) {
+      Swal.fire({
+        title: '內容不可空白',
+        icon: 'error',
+        showConfirmButton: false,
+        timer: 2000,
+        position: 'top',
+      });
+      setMessage('內容不可空白')
+      return
+    }
+    if (comment.length > 140) {
+      Swal.fire({
+        title: '內容超出上限',
+        icon: 'error',
+        showConfirmButton: false,
+        timer: 2000,
+        position: 'top',
+      });
+      setMessage('內容不可超過140字')
+      return
+    }
+
+    const { success } = await postATweetReply({ tweetId, comment })
+    console.log(success)
+    if (success) {
+      Swal.fire({
+        title: '內容成功提交',
+        icon: 'success',
+        showConfirmButton: false,
+        timer: 3000,
+        position: 'top',
+      });
+      onClose(false)
+      return
+    }
+  }
+
   return (
     <div className={style.background}>
       <div className={style.container}>
@@ -19,24 +70,27 @@ const ReplyModal = ({
         <div className={style.ContentContainer}>
           <div className={style.leftContainer}>
             <div className={`${style.avatarContainer} ${style.top}`}>
-              <img src={avatar} alt="avatar" />
+              <img src={avatar} alt="推文者avatar" />
             </div>
             <Line className={style.line} />
             <div className={`${style.avatarContainer} ${style.down}`}>
-              <img src={avatar} alt="avatar" />
+              <img src={user.avatar} alt="回覆者avatar" />
             </div>
           </div>
           <div className={style.rightContainer}>
             <div className={style.rightTopContainer}>
               <h5 className={style.name}>{name}<span>@{account}・{createdAt}小時</span></h5>
-              <p className={style.introduction}>{introduction}</p>
-              <p className={style.hint}>回覆給<span>@{account}</span></p>
+              <p className={style.introduction}>{description}</p>
+              <p className={style.hint}>回覆給<span>@{user.account}</span></p>
             </div>
             <div className={style.rightBottomContainer}>
               <div className={style.tweetText}>
-                <input className={style.tweetText} type="text" placeholder="推你的回覆" required />
+                <input className={style.tweetText} type="text" placeholder="推你的回覆" required onChange={(e) => setComment(e.target.value)} />
               </div>
-              <button>回覆</button>
+              <div className={style.ReplyButtonContainer}>
+                {isError && <small>{message}</small>}
+                <button onClick={handleReplyClick}>回覆</button>
+              </div>
             </div>
           </div>
         </div>
@@ -44,4 +98,5 @@ const ReplyModal = ({
     </div>
   )
 }
+
 export default ReplyModal

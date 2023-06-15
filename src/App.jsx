@@ -14,11 +14,12 @@ import AdminUserPage from './pages/AdminUserPage/AdminUserPage';
 import AdminHomePage from "./pages/AdminHomePage/AdminHomePage";
 
 function App() {
+
+  // 為了做調試將/改成setting
   return (
     <div className="App">
       <Router>
         <AuthProvider>
-          <UserProvider>
           <Routes>
             <Route path="/login" element={<LoginPage />} />
             <Route path="/admin" element={<AdminLoginPage />} />
@@ -30,21 +31,7 @@ function App() {
             <Route path="/*" element={<HomePage />} />
 
           </Routes>
-          </UserProvider>
-          <Routes>
-            <Route path="/login" element={<LoginPage />} />
-            <Route path="/admin" element={<AdminLoginPage />} />
-            <Route path="register" element={<RegisterPage />} />
-            <Route path="/:id/*" element={<ProfilePage />} />
-            <Route path="/*" element={<HomePage />} />
 
-            {/*
-         <Route path ="/setting" element={<SettingPage/>}/>
-                   <Route path="login" element={<LoginPage />} />
-          <Route path="admin" element={<AdminLoginPage />} />
-          <Route path="register" element={<RegisterPage />} />
-                <Route path="*" element={<LoginPage />} />*/}
-          </Routes>
         </AuthProvider>
       </Router>
 
@@ -75,11 +62,3 @@ if (isAuthenticated && user) {
 
 export default App;
 
-{/*
-         <Route path ="/setting" element={<SettingPage/>}/>
-                   <Route path="login" element={<LoginPage />} />
-          <Route path="admin" element={<AdminLoginPage />} />
-          <Route path="register" element={<RegisterPage />} />
-                <Route path="*" element={<LoginPage />} />
-              
-              <Route path="/admin/tweets" element={<AdminAllTweets />} />*/}
