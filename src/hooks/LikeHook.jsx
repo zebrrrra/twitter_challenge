@@ -5,8 +5,7 @@ import { getATweet } from '../apis/tweet';
 
 const useLike = ({dataItems, currentUserId})=> {
   const [likeTweets, setLikeTweets] = useState(dataItems);
-  const [likedTweetIds, setLikedTweetIds] = useState([]);
- 
+
   useEffect (()=>{
     setLikeTweets(dataItems);
   },[dataItems]);
@@ -22,37 +21,47 @@ const useLike = ({dataItems, currentUserId})=> {
 
   const handleLike = async (id) => {
     const response = await postLike(id);
-    if (response && response.status === 'success') {
-      setTimeout(async () => {
+    if (id!== currentUserId){
+      if (response && response.status === 'success') {
         const updatedTweet = await getATweet(id);
         if(updatedTweet){
           setLikeTweets((currentItems) => currentItems.map((item) => 
-            item.Tweet.id === id 
+
+          item.Tweet
+            ? item.Tweet.id === id 
               ? { ...item, Tweet: updatedTweet, isCurrentUserLiked: true }
               : item
-          ));
-          setLikedTweetIds((currentIds) => [...currentIds, id]);
-        }
-      }, 500); // delay for 500ms
+            : item.id === id
+              ? { ...item, ...updatedTweet, isCurrentUserLiked: true }
+              : item
+        ));
+      }
     }
-  }
+    }
+  
+  
+}
   
   const handleUnLike = async (id) => {
     const response = await postUnLike(id);
+    if (id!== currentUserId){
     if (response && response.status === 'success') {
-      setTimeout(async () => {
-        const updatedTweet = await getATweet(id);
-        if(updatedTweet){
-          setLikeTweets((currentItems) => currentItems.map((item) => 
-            item.Tweet.id === id 
-              ? { ...item, Tweet: updatedTweet, isCurrentUserLiked: false }
-              : item
-          ));
-          setLikedTweetIds((currentIds) => currentIds.filter((tweetId) => tweetId !== id));
-        }
-      }, 500); // delay for 500ms
+      const updatedTweet = await getATweet(id);
+      if(updatedTweet){
+        setLikeTweets((currentItems) => currentItems.map((item) => 
+        item.Tweet
+        ? item.Tweet.id === id 
+          ? { ...item, Tweet: updatedTweet, isCurrentUserLiked: false }
+          : item
+          : item.id === id
+          ? { ...item, Tweet: updatedTweet, isCurrentUserLiked: false }
+          : item
+        ));
+      }
     }
   }
+  };
+  console.log('likeTweetsat', likeTweets);
   return {
     likeTweets,
     handleLike,

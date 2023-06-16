@@ -10,14 +10,14 @@ import FollowersList from '../FollowersList/FollowersList';
 import { getUserFollowings,getUserFollowers } from "../../apis/user";
 
 
-const FollowTab = ({ userId,updateTag }) => {
+const FollowTab = ({ userId,updateTag,setUpdateTag }) => {
     const navigate = useNavigate();
     const [activeTab, setActiveTab] = useState("正在追隨");
     const location = useLocation();
     const [users, setUsers] = useState([]);
     const [followingUsers, setFollowingUsers] = useState([]);
     const [followerUsers, setFollowerUsers] = useState([]);
-
+    
 
     useEffect(() => {
         const fetchFollowersAndFollowings = async () => {
@@ -91,9 +91,17 @@ const FollowTab = ({ userId,updateTag }) => {
                 </div>
                   
             </div>
-            <Routes>
-                <Route path="followings" element={<FollowingList userId={userId} users={followingUsers}setUsers={setFollowingUsers} />} />
-                <Route path="followers" element={<FollowersList userId={userId} users={followerUsers}setUsers={setFollowerUsers}/>} />
+            <Routes key={updateTag}>
+                <Route path="followings" element={<FollowingList userId={userId} 
+                users={followingUsers}
+                setUsers={setFollowingUsers} 
+                updateTag={updateTag} 
+                setUpdateTag={setUpdateTag} />} />
+                <Route path="followers" element={<FollowersList userId={userId} 
+                users={followerUsers}
+                setUsers={setFollowerUsers}
+                 updateTag={updateTag}
+                  setUpdateTag={setUpdateTag}/>} />
                 <Route path="*" element={<FollowingList userId={userId} setUsers={setUsers}/>} /> 
             </Routes>
         </div>

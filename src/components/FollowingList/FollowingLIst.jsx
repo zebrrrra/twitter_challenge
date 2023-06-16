@@ -4,9 +4,9 @@ import { useEffect,useState } from "react";
 import { getUserFollowings } from "../../apis/user";
 
 
-const FollowingList = ({userId,loginUserId})=>{
+const FollowingList = ({userId,loginUserId,setUpdateTag})=>{
     const [users, setUsers] = useState([]);
-    const {handleFollow, handleUnFollow} = useFollow(loginUserId,setUsers);
+    const {handleFollow, handleUnFollow,updateTag} = useFollow(loginUserId,setUsers);
     console.log('Rendering FollowingList with users:', users);
 
     useEffect(()=>{
@@ -23,7 +23,7 @@ const FollowingList = ({userId,loginUserId})=>{
             }
         }
         fetchFollowings();
-    },[userId]);
+    },[userId,updateTag]);
 
     return (
         <>

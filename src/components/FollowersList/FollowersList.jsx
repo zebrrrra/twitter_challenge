@@ -3,9 +3,9 @@ import useFollow from "../../hooks/FollowHook";
 import { useEffect,useState } from "react";
 import { getUserFollowers } from "../../apis/user";
 
-const FollowersList = ({userId,loginUserId})=>{
+const FollowersList = ({userId,loginUserId })=>{
 const [users, setUsers] = useState([]);
-const {handleFollow,handleUnFollow}=useFollow(loginUserId,setUsers);
+const {handleFollow,handleUnFollow,updateTag,setUpdateTag}=useFollow(loginUserId,setUsers);
 console.log('Rendering FollowerList with users:', users);
 
 
@@ -23,7 +23,7 @@ useEffect(()=>{
         }
     }
     fetchFollowers();
-},[userId]);
+},[userId,updateTag]);
 
 
     return (
@@ -34,7 +34,8 @@ useEffect(()=>{
     user={user}
     loginUserId={loginUserId}
     onFollow={handleFollow}
-    onUnfollow={handleUnFollow}/>
+    onUnfollow={handleUnFollow} 
+    setUpdateTag={setUpdateTag}/>
     
      ))}
      </>

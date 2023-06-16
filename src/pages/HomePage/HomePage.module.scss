@@ -19,13 +19,20 @@
 
 .leftColumn,
 .rightColumn {
-  flex: 1;
   background-color: #fff;
-  position: relative;
+  position: sticky; /* 改為 sticky */
+  top: 0; /* 固定在頂部 */
+  height: 100vh; /* 使用 viewport 高度 */
 }
 
 .leftColumn {
   margin-right: 24px;
+  flex:0 0 200px;
+}
+
+.rightColumn {
+  margin-right: 24px;
+  flex:0 0 200px;
 }
 
 .middleColumn {
@@ -33,4 +40,5 @@
   position: relative;
   background-color: #fff;
   padding-right: 25px;
+  overflow-y: auto;
 }

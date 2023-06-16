@@ -3,7 +3,7 @@
 .homeContainer {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: space-around;
     width: 100%;
     min-height: 100vh;
     padding: 0;
@@ -18,11 +18,16 @@
 }
 
 .leftColumn {
-    flex: 1;
+    flex:0 0 200px;
     background-color: #fff;
     position: relative;
     margin-right: 24px;
-}
+    background-color: #fff;
+    position: sticky; /* 改為 sticky */
+    top: 0; /* 固定在頂部 */
+    height: 100vh; /* 使用 viewport 高度 */
+  }
+
 
 .middleColumn {
     flex: 4;
@@ -30,3 +35,6 @@
     background-color: #fff;
     box-sizing: border-box;
 }
+
+
+
