@@ -3,9 +3,9 @@ import useFollow from "../../hooks/FollowHook";
 import { useEffect,useState } from "react";
 import { getUserFollowers } from "../../apis/user";
 
-const FollowersList = ({userId})=>{
+const FollowersList = ({userId,loginUserId})=>{
 const [users, setUsers] = useState([]);
-const {handleFollow,handleUnFollow}=useFollow(users,setUsers);
+const {handleFollow,handleUnFollow}=useFollow(loginUserId,setUsers);
 console.log('Rendering FollowerList with users:', users);
 
 
@@ -32,6 +32,7 @@ useEffect(()=>{
     <FollowCard
     key ={user.id}
     user={user}
+    loginUserId={loginUserId}
     onFollow={handleFollow}
     onUnfollow={handleUnFollow}/>
     

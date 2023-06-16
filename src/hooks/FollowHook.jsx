@@ -1,7 +1,7 @@
 import { useState,useEffect } from "react";
 import { getUsers } from "../apis/user";
 import { postFollowShips, deleteFollowShips } from "../apis/followship";
-const useFollow = (users, setUsers) => {
+const useFollow = (loginUserId, setUsers) => {
 const [updateFlag, setUpdateFlag] = useState(false);
 
 
@@ -28,7 +28,7 @@ const handleFollow = async (id) => {
       );
     }
   };
-  return { users, handleFollow, handleUnFollow, updateFlag };
+  return { loginUserId, handleFollow, handleUnFollow, updateFlag };
 };
 
 export default useFollow;

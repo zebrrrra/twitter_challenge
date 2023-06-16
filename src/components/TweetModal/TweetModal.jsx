@@ -63,7 +63,7 @@ const TweetModal = ({open,onClose,User}) => {
         {/* 底下layout 未完成 */}
         <div className={style.ContentContainer}>
           <div className={`${style.avatarContainer} ${style.down}`}>
-            <img src={user.avatar} className={style.avatar} alt="avatar" />
+            <img src={user.avatar}  alt="avatar" />
           </div>
           <textarea 
           style={{ resize: 'none', width: '88%' }} 
