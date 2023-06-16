@@ -11,26 +11,34 @@
 }
 
 .homeColumn {
-    display: flex;
-    flex-direction: row;
-    height: 100%;
-    //border-radius: 16px;
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+  //border-radius: 16px;
 }
 
 .leftColumn,
 .rightColumn {
-    flex: 1;
-    background-color: #fff;
-    position: relative;
+  background-color: #fff;
+  position: sticky; /* 改為 sticky */
+  top: 0; /* 固定在頂部 */
+  height: 100vh; /* 使用 viewport 高度 */
 }
 
 .leftColumn {
-    margin-right: 24px;
+  margin-right: 24px;
+  flex:0 0 200px;
+}
+
+.rightColumn {
+  margin-right: 24px;
+  flex:0 0 200px;
 }
 
 .middleColumn {
-    flex: 3;
-    position: relative;
-    background-color: #fff;
-    padding-right: 25px;
+  flex: 3;
+  position: relative;
+  background-color: #fff;
+  padding-right: 25px;
+  overflow-y: auto;
 }

@@ -1,4 +1,5 @@
-import {Navbars, RecommendList} from '../../components';
+import {Navbars} from '../../components';
+import FollowRecommendList from '../../components/FollowRecommendList/FollowRecommendList';
 import FollowTab from '../../components/Tab/FollowTab';
 import Headers from '../../components/Headers/Headers';
 import {useAuth} from '../../context/AuthContext';
@@ -14,7 +15,7 @@ const FollowPage = ()=>{
     console.log(user); //測試
     const navigate =useNavigate();
     const [profileUser,setProfileUser] =useState(null);
-
+    const [updateTag, setUpdateTag] = useState(false); // 新增 updateTag 
 
     useEffect(()=>{
       if (!isAuthenticated){
@@ -26,11 +27,10 @@ const FollowPage = ()=>{
         setProfileUser(userData);
       };
       fetchUser();
-    }, [navigate, isAuthenticated, id]);
+    }, [navigate, isAuthenticated, id, updateTag]);
 
     //整個頁面的follow方法
     
-
     return(
         <div className={style.followContainer}>
         <div className={style.homeColumn}>
@@ -39,10 +39,10 @@ const FollowPage = ()=>{
             </div>
             <div className={style.middleColumn}>
               <Headers userId={profileUser && profileUser.id}/>
-            <FollowTab userId={id} loginUserId={user && user.id}/>
+            <FollowTab userId={id} loginUserId={user && user.id} updateTag={updateTag}  setUpdateTag={setUpdateTag}/>
             </div>
         <div className={style.rightColumn}>
-            <RecommendList/>
+            <FollowRecommendList updateTag={updateTag}  setUpdateTag={setUpdateTag}/>
             </div>
       </div>
     </div>
