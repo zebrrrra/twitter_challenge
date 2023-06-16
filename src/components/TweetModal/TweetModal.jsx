@@ -49,11 +49,13 @@ const TweetModal = ({open,onClose,User}) => {
             timer: 3000,
             position: 'top',
           });
+          onClose(false)
           return
         }
         setTweetText('');
-        navigate ('/AC_twitter_frontend/profile');
-        //window.location.reload();//直接刷新頁面
+        navigate ('/');
+        window.location.reload();//直接刷新頁面
+     
       }
 
   return open ? (

@@ -47,8 +47,8 @@ const MainPost= ( {user} ) => {
           return
         }
         setTweetText('');
-        navigate (`/AC_twitter_frontend/main`);
-        //window.location.reload();//直接刷新頁面
+        navigate ('/');
+        window.location.reload();//直接刷新頁面
         
         
       }

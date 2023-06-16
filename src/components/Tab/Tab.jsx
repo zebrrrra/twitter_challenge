@@ -35,16 +35,16 @@ const Tab = ({ userId }) => {
         setActiveTab(tabName);
         switch (tabName) {
             case "推文":
-                navigate(`/AC_twitter_frontend/${userId}/tweets`);
+                navigate(`tweets`);
                 break;
             case "回覆":
-                navigate(`/AC_twitter_frontend/:id/${userId}/replies`);
+                navigate(`replies`);
                 break;
             case "喜歡的內容":
-                navigate(`/AC_twitter_frontend/:id/${userId}/likes`);
+                navigate(`likes`);
                 break;
             default:
-                navigate(`/AC_twitter_frontend/:id/${userId}/tweets`);
+                navigate(`tweets`);
                 break;
         }
     };
