@@ -9,48 +9,67 @@ import MainTweet from '../MainTweet/MainTweet';
 import { getATweet } from '../../apis/tweet';
 import { useEffect, useState } from 'react';
 import MainReply from '../MainReply/MainReply';
-const ReplyMainInTest = () => {
-  // const { tweetId } = useParams
-  // const { user } = useAuth();
 
+const ReplyMainInTest = () => {
+  const { tweetId } = useParams()
+  const [tweet, setTweet] = useState(null)
+  console.log(tweetId)//有值
+
+  // const { user } = useAuth();
+  // console.log(tweetId)
   // 主推文需要的資料
-  const [detailTweet, setDetailTweet] = useState(null)
+  // const [detailTweet, setDetailTweet] = useState(null)
   // 回覆列表
   const [replies, setReplies] = useState(null)
 
   // User包
   const [User, setUser] = useState(null)
 
-  // tweetId應從上方傳來， 但為了測試先設成本地變數
-  const [tweetId, setTweetId] = useState(null)
-
+  // const {
+  //   User: { name, account, avatar } = {},
+  //   description,
+  //   repliesCount,
+  //   likesCount,
+  //   createdAt,
+  //   isCurrentUserLiked,
+  // } = tweet;
 
   // 載入時取得一推文
   useEffect(() => {
     const fetchATweet = async () => {
-      const data = await getATweet(24);
-      console.log(data); //測試
+      const data = await getATweet(tweetId);
       if (data) {
-        const { description, createdAt, likesCount, repliesCount, id } = data
-        const mainContent = { description, createdAt, likesCount, repliesCount }
-        setDetailTweet(mainContent)
+        console.log(data); //測試
+        const {
+          description,
+          repliesCount,
+          likesCount,
+          createdAt,
+        } = data;
+        const tweet = {
+          description,
+          repliesCount,
+          likesCount,
+          createdAt,
+        }
+        setTweet(tweet)
         setReplies(data.Replies)
         setUser(data.User)
-        setTweetId(id)
+        // setTweetId(id)
       }
     }
     fetchATweet();
-  }, [])//當推文id改變時重新拉一次
+  }, [tweetId])//當推文id改變時重新拉一次
 
 
   console.log(User)//推文的主人
-  console.log(detailTweet)
+  // console.log(detailTweet)
   console.log(replies)
 
   return (
     <>
-      <MainTweet User={User} detailTweet={detailTweet} tweetId={tweetId} />
-      <MainReply USer={User} tweetId={tweetId}/>
+      <MainTweet User={User} tweetId={tweetId} tweet={tweet} />
+      <MainReply USer={User} tweetId={tweetId} />
       {/* <OtherUserInfo currentId={currentId} />
       <Tab userId={currentId} /> */}
       {/* <UserInfo userId={id} />
