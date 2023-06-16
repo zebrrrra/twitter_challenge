@@ -4,7 +4,7 @@ import { ReactComponent as Logo } from '../../assets/icons/logo.svg'
 import { Link } from 'react-router-dom'
 import { AuthInput } from '../../components'
 import Swal from 'sweetalert2'
-// import { register } from '../../apis/user'
+import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../../context/AuthContext'
 const RegisterPage = () => {
   const [account, setAccount] = useState('')
@@ -12,13 +12,13 @@ const RegisterPage = () => {
   const [password, setPassword] = useState('')
   const [email, setEmail] = useState('')
   const [checkPassword, setCheckPassword] = useState('')
-  // const [responseError, setResponseError] = useState(false)
-  // const [errorInfo, setErrorInfo] = useState('')
+  const [responseError, setResponseError] = useState(false)
+  const [errorInfo, setErrorInfo] = useState('')
   // 改用context
-  const { register, isAuthenticated, user, responseError, errorInfo, setResponseError } = useAuth()
-
+  const { register, isAuthenticated, user } = useAuth()
+  const navigate = useNavigate()
   const authInputCollection = [
-    { label: '帳號', id: 'account', type: 'text', placeholder: '請輸入帳號', value: account, onChange: (accountValue) => setAccount(accountValue) },
+    { label: '帳號', id: '帳號', type: 'text', placeholder: '請輸入帳號', value: account, onChange: (accountValue) => setAccount(accountValue) },
     { label: '名稱', id: '名稱', type: 'text', placeholder: '請輸入使用者名稱', value: name, maxLength: 50, onChange: (nameValue) => setName(nameValue) },
     { label: 'Email', id: 'email', type: 'email', placeholder: '請輸入Email', value: email, onChange: (emailValue) => setEmail(emailValue) },
     { label: '密碼', id: '密碼', type: 'password', placeholder: '請輸入密碼', value: password, onChange: (passwordValue) => setPassword(passwordValue) },
@@ -38,7 +38,7 @@ const RegisterPage = () => {
       return
     }
     // // 發api { true, 成功資訊, 錯誤資訊 }
-    const success = await register({ account, name, password, email, checkPassword })
+    const { success, message } = await register({ account, name, password, email, checkPassword })
 
     if (success) {
       const message = '註冊成功'
@@ -50,6 +50,7 @@ const RegisterPage = () => {
         position: 'top',
       });
       setResponseError(false)
+      navigate('/login')
       return
     }
 
@@ -63,6 +64,7 @@ const RegisterPage = () => {
         position: 'top',
       });
       setResponseError(true)
+      setErrorInfo(message)
 
       return
     }

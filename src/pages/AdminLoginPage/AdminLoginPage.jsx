@@ -8,7 +8,9 @@ import Swal from 'sweetalert2'
 const AdminLoginPage = () => {
   const [account, setAccount] = useState('')
   const [password, setPassword] = useState('')
-  const { adminLogin, isAuthenticated, user, responseError, errorInfo, setResponseError } = useAuth();
+  const [responseError, setResponseError] = useState(true)
+  const [errorInfo, setErrorInfo] = useState('')
+  const { adminLogin, isAuthenticated, user } = useAuth();
 
 
   const navigate = useNavigate()
@@ -26,7 +28,7 @@ const AdminLoginPage = () => {
       return
     }
 
-    const success = await adminLogin({ account, password })
+    const { success, message } = await adminLogin({ account, password })
 
     if (success) {
       Swal.fire({
@@ -36,8 +38,7 @@ const AdminLoginPage = () => {
         timer: 2000,
         position: 'top',
       });
-      // navigate('/profile')
-      console.log('ok')
+      setResponseError(false)
       return
     } else {
       Swal.fire({
@@ -47,12 +48,11 @@ const AdminLoginPage = () => {
         timer: 2000,
         position: 'top',
       });
-      console.log('not')
+      setResponseError(true)
+      setErrorInfo(message)
       return
     }
   }
-  console.log(errorInfo)
-  console.log(responseError)
 
 
   useEffect(() => {
@@ -62,7 +62,7 @@ const AdminLoginPage = () => {
   }, [navigate, isAuthenticated, user]);
 
   const authInputCollection = [
-    { label: '帳號', id: 'account', type: 'text', placeholder: '請輸入帳號', value: account, onChange: (accountValue) => setAccount(accountValue) },
+    { label: '帳號', id: '帳號', type: 'text', placeholder: '請輸入帳號', value: account, onChange: (accountValue) => setAccount(accountValue) },
     { label: '密碼', id: '密碼', type: 'password', placeholder: '請輸入密碼', value: password, onChange: (passwordValue) => setPassword(passwordValue) }]
   return (
     <div className={style.container}>

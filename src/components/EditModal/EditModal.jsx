@@ -1,10 +1,8 @@
-//EdiitModal.jsx
-
 import { useState } from "react"
 import style from "../EditModal/EditModal.module.scss"
 import AuthInput from "../AuthInput/AuthInput"
-import editAvatar from '../../assets/icons/editAvatar.svg'
-import editCover from "../../assets/icons/editCover.svg"
+// import testAvatar from '../../assets/icons/editAvatar.svg'
+// import testCover from "../../assets/icons/editCover.svg"
 import { ReactComponent as Upload } from "../../assets/icons/camera.svg"
 import { ReactComponent as Fork } from "../../assets/icons/Vector.svg"
 import { putUserProfile } from "../../apis/user"
@@ -14,29 +12,51 @@ const EditModal = ({ open, onClose, userId, userData }) => {
   const { user } = useAuth()
 
   const { avatar, cover, name, introduction } = userData
-  console.log(userData)//can get
-  console.log(userId)//can get
-  console.log(user.id)//can get
+  console.log(userData)
+  console.log(userId)
+  console.log(user.id)
 
   const [editName, setEditName] = useState(name);
   const [editAvatar, setEditAvatar] = useState(avatar);
   const [editCover, setEditCover] = useState(cover);
   const [editIntroduction, setEditIntroduction] = useState(introduction);
 
+  // 給預覽用
+  const [preViewAvatar, setPreViewAvatar] = useState('');
+  const [preViewCover, setPreViewCover] = useState('');
 
+
+
+  // 預覽
   const handleAvatarUpload = (e) => {
     // 取得使用者上傳的圖
     const data = e.target.files[0];
     if (!data) return;
     setEditAvatar(data)
+    const reader = new FileReader();
+
+    reader.onload = (e) => {
+      setPreViewAvatar(e.target.result);
+    };
+    reader.readAsDataURL(data);
   }
 
+
+  // 預覽
   const handleCoverUpload = (e) => {
     const data = e.target.files[0];
     if (!data) return;
     setEditCover(data)
+    const reader = new FileReader();
+
+    reader.onload = (e) => {
+      setPreViewCover(e.target.result);
+    };
+
+    reader.readAsDataURL(data);
 
   }
+
 
   // 儲存後發送api
   const handleProfileSave = async ({ cover, avatar, name, introduction }) => {
@@ -71,6 +91,7 @@ const EditModal = ({ open, onClose, userId, userData }) => {
         timer: 2000,
         position: 'top',
       });
+      onClose(false)
       return
     }
 
@@ -86,7 +107,6 @@ const EditModal = ({ open, onClose, userId, userData }) => {
     }
     console.log(message)
 
-    onClose(false)
 
   }
 
@@ -105,7 +125,11 @@ const EditModal = ({ open, onClose, userId, userData }) => {
         {/* <form className={style.uploadFormContainer} action="/api/users/:id/profile" method="POST" encType="multipart/form-data"> */}
 
         <label htmlFor="coverUpload" className={style.bgContainer}>
-          <img src={editCover} alt="cover" />
+          {preViewCover ? (
+            <img src={preViewCover} alt="Preview" />
+          ) : (
+            <img src={editCover} alt="cover" />
+          )}
           <Upload className={style.upload} />
           <Fork className={style.fork} />
         </label>
@@ -113,25 +137,30 @@ const EditModal = ({ open, onClose, userId, userData }) => {
           id="coverUpload"
           style={{ display: 'none' }}
           accept="image/*"
-          onChange={handleCoverUpload} />
+          onChange={handleCoverUpload}
+        />
 
         <label htmlFor="Avatarupload" className={style.avatarContainer}>
-          <img src={editAvatar} alt="avatar" />
+          {preViewAvatar ? (
+            <img src={preViewAvatar} alt="Preview" className={style.avatar} />
+          ) : (
+            <img src={editAvatar} alt="avatar" className={style.avatar} />
+          )}
           <Upload className={style.upload} />
         </label>
         <input type="file"
           id="Avatarupload"
           style={{ display: 'none' }}
           accept="image/*"
-          onChange={handleAvatarUpload} />
+          onChange={handleAvatarUpload}
+        />
 
         {/* </form> */}
-
 
         <div className={style.inputContainer}>
           <AuthInput value={editName} label="名稱" id="username" type="text" placeholder="請輸入使用者名稱" maxLength={50} onChange={(nameValue) => setEditName(nameValue)} />
 
-          <AuthInput value={editIntroduction} label="自我介紹" id="introduction" type="text" placeholder="請輸入自我介紹" maxLength={160} onChange={(introductionValue) => setEditIntroduction(introductionValue)} height={147} />
+          <AuthInput value={editIntroduction} label="自我介紹" id="introduction" type="text" placeholder="請輸入自我介紹" maxLength={160} height={147} onChange={(introductionValue) => setEditIntroduction(introductionValue)} />
         </div>
       </div>
     </div>

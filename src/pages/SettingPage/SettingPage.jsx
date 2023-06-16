@@ -66,7 +66,8 @@ const SettingPage = () => {
         position: 'top',
       });
       setResponseError(false)
-      navigate(`/${currentUserId}/*`)
+      navigate(`/profile`)
+
       return
     }
 

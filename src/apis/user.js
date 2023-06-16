@@ -3,61 +3,47 @@ const baseUrl = 'https://tranquil-basin-75437.herokuapp.com/api';
 
 export const login = async ({ account, password }) => {
   try {
-    const { data } = await axios.post(`${baseUrl}/users/login`, { account, password })
-    return data
+    const response = await axios.post(`${baseUrl}/users/login`, { account, password })
+    return response.data
   } catch (err) {
     console.error('[Login Failed]:', err)
     console.log(err.response)
-    return { status: false, errInfo: err.response.data.message }
+    console.log(err.response.data)
+    return err.response.data
   }
 }
 
-// api接本地的寫法
-// export const register = async ({ account, name, password, email, checkPassword }) => {
-//   try {
-//     const response = await axios.post(`${baseUrl}/users`, { account, name, password, email, checkPassword })
-
-//     if (response.data.status === 'success') {
-//       return { success: true, message: response.data.message }
-//     }
-//   } catch (err) {
-//     console.log('err.response.data', err.response.data)
-//     return {
-//       success: false, errorInfo: err.response.data.message
-//     }
-//   }
-// }
 
 // 放公共
 export const register = async ({ account, name, password, email, checkPassword }) => {
   try {
-    const { data } = await axios.post(`${baseUrl}/users`, { account, name, password, email, checkPassword })
+    const response = await axios.post(`${baseUrl}/users`, { account, name, password, email, checkPassword })
     // console.log(data)
-    return data
+    return response.data
     // if (response.data.status === 'success') {
     //   return { success: true, message: response.data.message }
     // }
   } catch (err) {
     console.log('err.response.data', err.response.data)
-    return {
-      status: false, errorInfo: err.response.data.message
-    }
+    return err.response.data
   }
 }
-
+// return {
+//   status: false, errorInfo: err.response.data.message
+// }
 
 export const adminLogin = async ({ account, password }) => {
 
   try {
-    const { data } = await axios.post(`${baseUrl}/admin/login`, { account, password })
+    const response = await axios.post(`${baseUrl}/admin/login`, { account, password })
 
-    return data
+    return response.data
     // 若要加上身份篩選data.data.user.role取得字串搭配{data}
 
   } catch (err) {
     console.log('error message:', err.response.data.message)
     console.log('error status:', err.response.status)
-    return { success: false, errInfo: err.response.data.message }
+    return err.response.data
   }
 }
 
@@ -130,6 +116,7 @@ export const getUsers = async (id) => {
     return response.data;
   } catch (error) {
     console.error('Error:cannot get user', error);
+    return error.response.data
   }
 };
 

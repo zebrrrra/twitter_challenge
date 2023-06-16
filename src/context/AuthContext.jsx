@@ -77,12 +77,11 @@ export const AuthProvider = ({ children }) => {
                         password: data.password,
                     }
                 );
-                //result格式＝{success: false, errInfo: '信箱或是密碼錯誤！'}
                 if (result.status === 'success') {
                     const { token } = result.data;
                     const tempPayload = jwt.decode(token);
                     setPayload(tempPayload);
-                    console.log(payload)//在登入成功時，payload為null，因此使用useEffect()
+                    console.log(payload)
                     setIsAuthenticated(true);
                     localStorage.setItem('token', token);
                     return {

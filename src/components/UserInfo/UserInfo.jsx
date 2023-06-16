@@ -1,5 +1,6 @@
 //UserInfo.jsx
-
+import avatar from "../../assets/icons/editAvatar.svg"
+import cover from "../../assets/icons/background.svg"
 import style from "./UserInfo.module.scss"
 import { Link } from "react-router-dom"
 import EditModal from "../EditModal/EditModal"
@@ -7,12 +8,23 @@ import { useState, useEffect } from "react"
 import { getUsers } from "../../apis/user"
 import { useAuth } from "../../context/AuthContext"
 
-const UserInfo = ({ userId }) => {
+const UserInfo = () => {
   const [openModal, setOpenModal] = useState(false);
   const [currentData, setCurrentData] = useState(null)
-  // 使用個變數作為判斷是否為別人 點擊頭
-  // const { user } = useAuth()
-  console.log(userId)
+  const [userId, setUserId] = useState(null);
+  const { user } = useAuth()
+  // const { account, avatar, cover, name, introduction, followersCount, followingsCount } = currentData || {}
+
+  const account = currentData && currentData.account
+  const avatar = currentData && currentData.avatar
+  const cover = currentData && currentData.cover
+  const name = currentData && currentData.name
+  const introduction = currentData && currentData.introduction
+  const followersCount = currentData && currentData.followersCount
+  const followingsCount = currentData && currentData.followingsCount
+
+
+
 
   // 點按鈕的
   const handleOpenClick = async () => {
@@ -24,15 +36,27 @@ const UserInfo = ({ userId }) => {
     setCurrentData(userData)
   }
 
+  // useEffect(() => {
+  //   if (user) {
+  //     setUserId(user.id);
+  //   }
+  // }, [user]);
+
+  // const userId = user?.id;
+
   useEffect(() => {
     const fetchData = async () => {
-      const userData = await getUsers(userId);
-      setCurrentData(userData);
+      if (user) {
+        const userData = await getUsers(user?.id);
+        console.log(userData)
+        setCurrentData(userData);
+        setUserId(user?.id)
+      }
     };
     fetchData();
-  }, [userId, openModal]);
+  }, [userId, user, openModal]);
 
-  const { account, avatar, cover, name, introduction, followersCount, followingsCount } = currentData || {}
+
 
   return (
     <div className={style.container}>

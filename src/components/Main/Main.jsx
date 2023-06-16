@@ -1,13 +1,13 @@
 import Tab from '../Tab/Tab';
 import UserInfo from '../UserInfo/UserInfo'
-const Main = ({userId}) => {
+const Main = ({ userId }) => {
   //const { id } = useParams();
   //const {user} = useAuth();
 
-   return (
+  return (
     <>
-    <UserInfo userId={userId}/>
-    <Tab userId={userId}/>
+      <UserInfo />
+      <Tab userId={userId} />
 
     </>
   )

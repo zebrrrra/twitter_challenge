@@ -10,12 +10,13 @@ import { useEffect } from 'react';
 const LoginPage = () => {
   const [account, setAccount] = useState('')
   const [password, setPassword] = useState('')
-
-  const { login, isAuthenticated, user, responseError, errorInfo, setResponseError } = useAuth();
-
+  const [responseError, setResponseError] = useState(true)
+  const [errorInfo, setErrorInfo] = useState('')
+  const { login, isAuthenticated, user } = useAuth();
   const navigate = useNavigate()
+
   const authInputCollection = [
-    { label: '帳號', id: 'account', type: 'text', placeholder: '請輸入帳號', value: account, onChange: (accountValue) => setAccount(accountValue) },
+    { label: '帳號', id: '帳號', type: 'text', placeholder: '請輸入帳號', value: account, onChange: (accountValue) => setAccount(accountValue) },
     { label: '密碼', id: '密碼', type: 'password', placeholder: '請輸入密碼', value: password, onChange: (passwordValue) => setPassword(passwordValue) }]
 
 
@@ -33,7 +34,9 @@ const LoginPage = () => {
       return
     }
 
-    const success = await login({ account, password });
+    const { success, message } = await login({ account, password });
+    console.log(success)
+    console.log(message)
 
     if (success) {
       Swal.fire({
@@ -43,8 +46,7 @@ const LoginPage = () => {
         timer: 2000,
         position: 'top',
       });
-      // setResponseError(false)
-      console.log(responseError)
+      setResponseError(false)
       navigate('/main')
       return
     }
@@ -59,6 +61,8 @@ const LoginPage = () => {
         timer: 2000,
         position: 'top',
       });
+      setResponseError(true)
+      setErrorInfo(message)
     }
     return
   }
