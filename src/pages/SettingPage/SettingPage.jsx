@@ -66,6 +66,7 @@ const SettingPage = () => {
         position: 'top',
       });
       setResponseError(false)
+      navigate(`/${currentUserId}/*`)
       return
     }
 
@@ -96,6 +97,7 @@ const SettingPage = () => {
     }
     fetchCurrentUserData()
   }, [currentUserId])
+
   // useEffect(() => {
   //   if (isAuthenticated) {
   //     navigate('/login');
