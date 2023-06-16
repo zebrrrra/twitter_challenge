@@ -1,55 +1,73 @@
 import style from './Headers.module.scss';
+import { useLocation } from 'react-router-dom';
+import LeftIcon from '../../assets/icons/back.svg';
+import { useNavigate } from 'react-router';
+import { useEffect, useState } from 'react';
+import { getUserTweets } from '../../apis/user';
 
-//import { Link } from 'react-router-dom';
-import LeftIcon from '../../assets/icon/back.svg';
-//文字變動:首頁 & username &推文 &'帳戶設定
-//TODO: 要確認變動值的內容
+const Header = ({userId, setCurrentSection}) => {
+    const [tweetCount, setTweetCount] = useState(0);
+    const [name, setName] = useState('');
+    const navigate= useNavigate();
+    const location = useLocation();
 
-const Header = ({user,currentSection, setCurrentSection, otherUser, otherUserTweetCount}) => {
-   
     const handleClickSection = () => {
-        setCurrentSection('HomePage');
+        navigate(-1);
     }
+
+    useEffect(() => {
+        const fetchUserTweets = async () => {
+            const userTweets = await getUserTweets(userId);
+            setTweetCount(userTweets.length);
+            if (userTweets.length > 0 && userTweets[0].User) {
+                setName(userTweets[0].User.name);
+            } else {
+                console.error('No tweets found');
+            }
+        };
+        fetchUserTweets();
+    }, [userId]);
 
     let headerContext="";
+    const path = location.pathname;
 
-    switch (currentSection) {
-        case 'HomePage':
-            headerContext = '首頁';  
-            break;
-        case 'ProgilePage':
-            headerContext =
-                <>
-                    <img src={LeftIcon} alt="left" onClick={handleClickSection} />
-                    推文
-                </>;
-            break;
-        case 'otherUserPage':
-            headerContext =
-                <>
-                    <img src={LeftIcon} alt="left" onClick={handleClickSection} />
-                    <span>{otherUser}</span>
-                    <div>{otherUserTweetCount} 推文</div>
-                </>;
-            break;
-        case 'settingPage':
-            headerContext = '帳戶設定';
-            break;
-        default:
-            headerContext = '首頁';
+    if (path === '/main') {
+        headerContext = 
+        <div className={style.Header}>首頁</div>
+
+    }else if (path.match(new RegExp(`/profile|/${userId}/followers|/${userId}/followings|/${userId}/(tweets|likes|replies)$|/${userId}`))) {
+        headerContext = 
+        <><div className={style.imgContainer}>
+            <img src={LeftIcon} alt="left" onClick={handleClickSection} /></div>
+            <div className={style.contentContainer}>
+            <span className={style.name}>{name}</span>
+            <div className={style.tweetCount}>{tweetCount} 推文</div></div>
+        </>;
+    } else if (path.includes('/otherProfile')) {
+        headerContext = 
+        <><div className={style.imgContainer}>
+        <img src={LeftIcon} alt="left" onClick={handleClickSection} /></div>
+        <div className={style.contentContainer}>
+        <span className={style.name}>{name}</span>
+        <div className={style.tweetCount}>{tweetCount} 推文</div></div>
+    </>;
+    } else if (path.includes('/setting')) {
+        headerContext = 
+        <div className={style.Header}>帳戶設定</div>
+    } 
+    else if (path.includes(`/tweets/:tweetId`)){
+        headerContext =
+        <div className={style.Header}>推文</div>
+    }
+    else {
+        headerContext = '';
     }
 
-    return(
+    return (
         <div className={style.HeaderContainer}>
             {headerContext}
         </div>
-    )
+    );
 }
 
 export default Header;
-
-
-
-
-
-

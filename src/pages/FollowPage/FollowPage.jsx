@@ -1,5 +1,6 @@
 import {Navbars, RecommendList} from '../../components';
 import FollowTab from '../../components/Tab/FollowTab';
+import Headers from '../../components/Headers/Headers';
 import {useAuth} from '../../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
@@ -23,6 +24,7 @@ const FollowPage = ()=>{
             <Navbars userId={user && user.id}/>
             </div>
             <div className={style.middleColumn}>
+              <Headers userId={user&& user.id}/>
             <FollowTab userId={user && user.id}/>
             </div>
         <div className={style.rightColumn}>

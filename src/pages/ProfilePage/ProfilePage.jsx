@@ -10,7 +10,7 @@ import { useParmas } from 'react-router-dom';
 
 
 const ProfilePage = () => {
-  const { isAuthenticated, user } = useAuth()
+  const {  user } = useAuth()
   const navigate = useNavigate();
   // const{}=useParmas()
   console.log(user)
@@ -28,7 +28,7 @@ const ProfilePage = () => {
           <Navbar />
         </div>
         <div className={style.middleColumn}>
-          <Header />
+          <Header userId={user.id}/>
           <Main userId={ user&& user.id} />
         </div>
         <div className={style.rightColumn}>
