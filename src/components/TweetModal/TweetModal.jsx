@@ -5,6 +5,7 @@ import { useAuth } from "../../context/AuthContext"
 import Swal from 'sweetalert2';
 // avatar會拿掉改成接props
 import avatar from '../../assets/icons/avatar.svg'
+import { useNavigate } from "react-router-dom";
 
 
 const TweetModal = ({open,onClose,User}) => {
@@ -12,7 +13,7 @@ const TweetModal = ({open,onClose,User}) => {
   const [tweetText, setTweetText] =useState('');//要填預設值
     const [message, setMessage] = useState('')
     const {user} =useAuth();
-
+    const navigate = useNavigate();
 
     const handleSubmit = async () => {
         if (!tweetText.trim()) {
@@ -51,7 +52,8 @@ const TweetModal = ({open,onClose,User}) => {
           return
         }
         setTweetText('');
-        window.location.reload();//直接刷新頁面
+        navigate ('/AC_twitter_frontend/profile');
+        //window.location.reload();//直接刷新頁面
       }
 
   return open ? (

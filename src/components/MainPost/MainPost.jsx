@@ -3,10 +3,11 @@ import { useState } from 'react';
 import { postTweets } from '../../apis/tweet';
 import { async } from 'q';
 import Swal from 'sweetalert2';
+import { useNavigate } from 'react-router-dom';
 const MainPost= ( {user} ) => {
     const [tweetText, setTweetText] =useState ('');
     const [message, setMessage] = useState('')
-
+    const navigate =useNavigate();
 
 
     const handleSubmit = async () => {
@@ -46,16 +47,13 @@ const MainPost= ( {user} ) => {
           return
         }
         setTweetText('');
-        window.location.reload();//直接刷新頁面
+        navigate (`/AC_twitter_frontend/main`);
+        //window.location.reload();//直接刷新頁面
+        
+        
       }
     
 
-    //const handleSubmit =async () => {
-      //  const data = await postTweets(tweetText);
-        //console.log(data);//測試
-        //setTweetText('');//傳完回到空值
-        //window.location.reload();//直接刷新頁面
-    //}
     if(!user){
         return null;//可以改成加載loading
     }

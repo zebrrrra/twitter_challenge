@@ -63,13 +63,13 @@ const FollowTab = ({ userId,updateTag,setUpdateTag }) => {
         setActiveTab(tabName);
         switch (tabName) {
             case "追隨者":
-                navigate(`/${userId}/followers`);
+                navigate(userId ? `/${userId}/followers` : '/profile/followers');
                 break;
             case "正在追隨":
-                navigate(`/${userId}/followings`);
+                navigate(userId ? `/${userId}/followings` : '/profile/followings');
                 break;
             default:
-                navigate(`/${userId}/followers`);
+                navigate(userId ? `/${userId}/followers` : '/profile/followers');
                 break;
         }
     };
