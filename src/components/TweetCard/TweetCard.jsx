@@ -31,7 +31,8 @@ const TweetCard = ({ User, tweet, onLike, onUnLike }) => {
     console.log(tweet.id)//這個才有值
 
 
-    const handleAvatarClick = (userId) => {
+    const handleAvatarClick = (event, userId) => {
+        event.stopPropagation();
         navigate(`/${userId}`);
     };
 
@@ -63,11 +64,11 @@ const TweetCard = ({ User, tweet, onLike, onUnLike }) => {
         isCurrentUserLiked,
     } = tweet;
 
-    // onClick = { handleReplyPageClick }
+
     return (
         <>
             <div className={style.tweetCardContainer}>
-                <div className={style.tweetCard} ref={inputRef}>
+                <div className={style.tweetCard} ref={inputRef} onClick={handleReplyPageClick}>
                     <img src={avatar} className={style.avatar} onClick={() => handleAvatarClick(tweet.User.id)} alt="avatar" />
                     <div className={style.contentContainer}>
                         <div className={style.nameAndUserId}>
