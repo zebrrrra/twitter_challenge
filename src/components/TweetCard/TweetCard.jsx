@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import style from './TweetCard.module.scss';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
-import { useState } from "react";
+import { useState, useRef } from "react";
 
 
 dayjs.extend(relativeTime);
@@ -25,6 +25,7 @@ function getTime(createdAt) {
 
 const TweetCard = ({ User, tweet, onLike, onUnLike }) => {
     const [openModal, setOpenModal] = useState(false)
+    const inputRef = useRef(null);
     const navigate = useNavigate();
     const tweetId = tweet.id
     console.log(tweet.id)//這個才有值
@@ -43,11 +44,12 @@ const TweetCard = ({ User, tweet, onLike, onUnLike }) => {
         }
     };
 
-    const handleClick = () => {
+    const handleClick = (e) => {
+        e.stopPropagation();
         setOpenModal(true)
     }
 
-    const handleReplyPageClick = () => {
+    const handleReplyPageClick = (tweetId) => {
 
         navigate(`/tweets/${tweetId}`);
     }
@@ -61,11 +63,11 @@ const TweetCard = ({ User, tweet, onLike, onUnLike }) => {
         isCurrentUserLiked,
     } = tweet;
 
-
+    // onClick = { handleReplyPageClick }
     return (
         <>
             <div className={style.tweetCardContainer}>
-                <div className={style.tweetCard} onClick={handleReplyPageClick}>
+                <div className={style.tweetCard} ref={inputRef}>
                     <img src={avatar} className={style.avatar} onClick={() => handleAvatarClick(tweet.User.id)} alt="avatar" />
                     <div className={style.contentContainer}>
                         <div className={style.nameAndUserId}>
@@ -98,6 +100,19 @@ const TweetCard = ({ User, tweet, onLike, onUnLike }) => {
 }
 
 export default TweetCard
+
+
+// function MyComponent() {
+//     const myRef = useRef(null);
+
+//     // 其他组件代码...
+
+//     return (
+//         <div ref={myRef}>
+//             {/* 其他 JSX */}
+//         </div>
+//     );
+// }
 
 
 
