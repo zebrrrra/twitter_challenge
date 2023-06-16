@@ -18,17 +18,17 @@ function App() {
       <Router>
         <AuthProvider>
           <Routes>
-            <Route path="/AC_twitter_frontend/login" element={<LoginPage />} />
-            <Route path="/AC_twitter_frontend/main" element={<HomePage />} />
-            <Route path="/AC_twitter_frontend/admin" element={<AdminLoginPage />} />
-            <Route path="/AC_twitter_frontend/admin/list" element={<ProtectedRouter><AdminHomePage /></ProtectedRouter>} />
-            <Route path="/AC_twitter_frontend/admin/user" element={<ProtectedRouter><AdminUserPage /></ProtectedRouter>} />
-            <Route path="/AC_twitter_frontend/setting" element={<SettingPage />} />
-            <Route path="/AC_twitter_frontend/register" element={<RegisterPage />} />
-            <Route path="/AC_twitter_frontend/tweets/:tweetId" element={<ReplyPage />} />
-            <Route path="/AC_twitter_frontend/:id/follow/*" element={<HandleProfilePage />} />
-            <Route path="/AC_twitter_frontend/:id/*" element={<HandleProfilePage />} />
-            <Route path="/AC_twitter_frontend/profile" element={<ProfilePage />} />
+            <Route path="login" element={<LoginPage />} />
+            <Route path="main" element={<HomePage />} />
+            <Route path="admin" element={<AdminLoginPage />} />
+            <Route path="admin/list" element={<ProtectedRouter><AdminHomePage /></ProtectedRouter>} />
+            <Route path="admin/user" element={<ProtectedRouter><AdminUserPage /></ProtectedRouter>} />
+            <Route path="setting" element={<SettingPage />} />
+            <Route path="register" element={<RegisterPage />} />
+            <Route path="tweets/:tweetId" element={<ReplyPage />} />
+            <Route path=":id/follow/*" element={<HandleProfilePage />} />
+            <Route path=":id/*" element={<HandleProfilePage />} />
+            <Route path="profile" element={<ProfilePage />} />
             <Route path="*" element={<HomePage />} />
           </Routes>
 
@@ -42,8 +42,8 @@ function App() {
 const HandleProfilePage = () => {
   const { id } = useParams();
   const { isAuthenticated, user } = useAuth();
-  const matchFollowers = useMatch("/AC_twitter_frontend/:id/followers");
-  const matchFollowings = useMatch("/AC_twitter_frontend/:id/followings")
+  const matchFollowers = useMatch(":id/followers");
+  const matchFollowings = useMatch(":id/followings")
   console.log('userParamas',useParams());
 
   if (isAuthenticated && user) {
