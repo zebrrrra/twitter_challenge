@@ -14,9 +14,6 @@ const ProfilePage = () => {
   const navigate = useNavigate();
   // const{}=useParmas()
   console.log(user)
-  const currentId = user?.id
-
-  // const { isAuthenticated,user } =useContext(AuthContext);
 
   return (
     <div className={style.profileContainer}>
@@ -26,7 +23,7 @@ const ProfilePage = () => {
         </div>
         <div className={style.middleColumn}>
           <Header userId={user?.id} />
-          <Main userId={user && user?.id} />
+          <Main userId={user?.id} />
         </div>
         <div className={style.rightColumn}>
           <RecommendList />

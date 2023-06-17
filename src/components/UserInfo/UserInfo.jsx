@@ -8,11 +8,13 @@ import { useState, useEffect } from "react"
 import { getUsers } from "../../apis/user"
 import { useAuth } from "../../context/AuthContext"
 
-const UserInfo = () => {
+const UserInfo = ({ userId }) => {
   const [openModal, setOpenModal] = useState(false);
   const [currentData, setCurrentData] = useState(null)
-  const [userId, setUserId] = useState(null);
-  const { user } = useAuth()
+  // const [userId, setUserId] = useState(null);
+  // const { user } = useAuth()
+  // 改成上方傳下來的userId
+
 
   const { account, avatar, cover, name, introduction, followersCount, followingsCount } = currentData || {};
 
@@ -28,15 +30,15 @@ const UserInfo = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      if (user) {
-        const userData = await getUsers(user?.id);
+      if (userId) {
+        const userData = await getUsers(userId);
         console.log(userData)
         setCurrentData(userData);
-        setUserId(user?.id)
+        // setUserId(user?.id)
       }
     };
     fetchData();
-  }, [userId, user, openModal]);
+  }, [userId, openModal]);
 
 
 
@@ -56,7 +58,7 @@ const UserInfo = () => {
         <span className={style.account}>@{account}</span>
         <p>{introduction}</p>
         <div className={style.linkGroup}>
-          <Link to={`/${userId}/followings`}  className={style.link}>{followingsCount}個<span>正在追隨</span></Link>
+          <Link to={`/${userId}/followings`} className={style.link}>{followingsCount}個<span>正在追隨</span></Link>
           <Link to={`/${userId}/followers`} className={style.link}>{followersCount}個<span>跟隨者</span></Link>
         </div>
       </div>

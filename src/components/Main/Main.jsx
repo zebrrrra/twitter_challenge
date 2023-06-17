@@ -3,10 +3,11 @@ import UserInfo from '../UserInfo/UserInfo'
 const Main = ({ userId }) => {
   //const { id } = useParams();
   //const {user} = useAuth();
+  console.log(`${userId} in Main`)
 
   return (
     <>
-      <UserInfo />
+      <UserInfo userId={userId} />
       <Tab userId={userId} />
 
     </>

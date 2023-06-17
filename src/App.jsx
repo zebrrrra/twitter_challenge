@@ -28,7 +28,7 @@ function App() {
             <Route path="tweets/:tweetId" element={<ReplyPage />} />
             <Route path=":id/follow/*" element={<HandleProfilePage />} />
             <Route path=":id/*" element={<HandleProfilePage />} />
-            <Route path="profile" element={<ProfilePage />} />
+            <Route path="profile/*" element={<ProfilePage />} />
             <Route path="*" element={<HomePage />} />
           </Routes>
 
@@ -44,13 +44,13 @@ const HandleProfilePage = () => {
   const { isAuthenticated, user } = useAuth();
   const matchFollowers = useMatch(":id/followers");
   const matchFollowings = useMatch(":id/followings")
-  console.log('userParamas',useParams());
+  console.log('userParamas', useParams());
 
   if (isAuthenticated && user) {
     console.log(`id: ${id}, user.id: ${user.id}`);
     if (matchFollowers || matchFollowings) {
       return (<FollowPage />)
-    } else if  (id === String(user.id)) {
+    } else if (id === String(user.id)) {
       return <ProfilePage />;
     } else {
       return <OtherProfilePage id={id} />;
