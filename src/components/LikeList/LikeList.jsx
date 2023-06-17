@@ -4,16 +4,17 @@ import LikeCard from '../LikeCard/LikeCard';
 import { getUserLike } from '../../apis/user';
 import useLike from '../../hooks/LikeHook';
 import { useAuth } from '../../context/AuthContext';
-//import style from '';
-//假設有Authcontext(還沒寫)
+import { useUpdateTag } from '../../context/UpdateTagContext';
 
 const LikeList =({userId })=> {
     const {user} =useAuth();
     const currentUserId = user?.id;
+    const { updateTag, setUpdateTag } = useUpdateTag();
     const [likes,setLikes] = useState([]);
     const {likeTweets: updateLikes,handleLike,handleUnLike} =useLike({
         dataItems:likes,
         currentUserId: currentUserId,    
+        setUpdateTag
     });
 
     useEffect(()=>{
@@ -25,7 +26,7 @@ const LikeList =({userId })=> {
             }
         }
         fetchLikes();
-     }, [userId] );
+     }, [userId,updateTag] );
      
      console.log('likeTweets', updateLikes);
 return updateLikes?updateLikes.map((like,index) => 
