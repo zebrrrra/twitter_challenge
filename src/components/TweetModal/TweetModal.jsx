@@ -53,7 +53,7 @@ const TweetModal = ({open,onClose,User}) => {
           return
         }
         setTweetText('');
-        navigate ('/');
+        navigate (`${user.id}`);//要測試
         window.location.reload();//直接刷新頁面
      
       }

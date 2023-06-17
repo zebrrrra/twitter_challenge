@@ -47,8 +47,8 @@ const MainPost= ( {user} ) => {
           return
         }
         setTweetText('');
-        navigate ('/');
-        window.location.reload();//直接刷新頁面
+        navigate (`${user.id}`);//要測試
+        //window.location.reload();//直接刷新頁面
         
         
       }
