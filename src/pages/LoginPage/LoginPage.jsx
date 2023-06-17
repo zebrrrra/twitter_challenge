@@ -35,8 +35,6 @@ const LoginPage = () => {
     }
 
     const { success, message } = await login({ account, password });
-    console.log(success)
-    console.log(message)
 
     if (success) {
       Swal.fire({
@@ -66,15 +64,6 @@ const LoginPage = () => {
     }
     return
   }
-  // Swal.fire({
-  //   title: '登入失敗',
-  //   icon: 'error',
-  //   showConfirmButton: false,
-  //   timer: 1000,
-  //   position: 'top',
-  // });
-  // setResponseError(true)
-  // return
   useEffect(() => {
     if (isAuthenticated) {
       navigate(`/${user?.id}/`);

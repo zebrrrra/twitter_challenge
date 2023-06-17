@@ -7,32 +7,21 @@ import { useAuth } from '../../context/AuthContext';
 // import OtherUserInfo from '../OtherUserInfo/OtherUserInfo';
 import MainTweet from '../MainTweet/MainTweet';
 import { getATweet } from '../../apis/tweet';
+import { getUsers } from '../../apis/user';
 import { useEffect, useState } from 'react';
 import MainReply from '../MainReply/MainReply';
 
 const ReplyMainInTest = () => {
   const { tweetId } = useParams()
   const [tweet, setTweet] = useState(null)
-  console.log(tweetId)//有值
-
-  // const { user } = useAuth();
-  // console.log(tweetId)
-  // 主推文需要的資料
-  // const [detailTweet, setDetailTweet] = useState(null)
-  // 回覆列表
   const [replies, setReplies] = useState(null)
+  const [currentUserAvatar, setCurrentUserAvatar] = useState(null)
+  const { user } = useAuth();
+  const currentUserId = user && user.id
+  // 回覆列表
 
   // User包
   const [User, setUser] = useState(null)
-
-  // const {
-  //   User: { name, account, avatar } = {},
-  //   description,
-  //   repliesCount,
-  //   likesCount,
-  //   createdAt,
-  //   isCurrentUserLiked,
-  // } = tweet;
 
   // 載入時取得一推文
   useEffect(() => {
@@ -45,12 +34,14 @@ const ReplyMainInTest = () => {
           repliesCount,
           likesCount,
           createdAt,
+          User,
         } = data;
         const tweet = {
           description,
           repliesCount,
           likesCount,
           createdAt,
+          User
         }
         setTweet(tweet)
         setReplies(data.Replies)
@@ -61,14 +52,12 @@ const ReplyMainInTest = () => {
     fetchATweet();
   }, [tweetId])//當推文id改變時重新拉一次
 
-
   console.log(User)//推文的主人
-  // console.log(detailTweet)
   console.log(replies)
 
   return (
     <>
-      <MainTweet User={User} tweetId={tweetId} tweet={tweet} />
+      <MainTweet tweetId={tweetId} tweet={tweet} currentUserAvatar={currentUserAvatar} />
       <MainReply USer={User} tweetId={tweetId} />
       {/* <OtherUserInfo currentId={currentId} />
       <Tab userId={currentId} /> */}
