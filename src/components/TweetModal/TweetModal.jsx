@@ -56,7 +56,7 @@ const TweetModal = ({ open, onClose, onTweetSubmit }) => {
       return
     }
     setTweetText('');
-    // navigate(`${user.id}`);//要測試
+    navigate(`/${user.id}`);//要測試
     // window.location.reload();//直接刷新頁面
   }
   if (!open) return
