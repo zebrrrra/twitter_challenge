@@ -11,6 +11,13 @@ const handleAvatarClick = (userId) => {
   navigate(`/${userId}`);
 };
 
+const handleButtonClick = () => {
+  if (user.isCurrentUserFollowed) {
+    onUnfollow(user.id);
+  } else {
+    onFollow(user.id);
+  }
+}
 
     return (
         <div className={style.followCardContainer}>
@@ -18,16 +25,8 @@ const handleAvatarClick = (userId) => {
         <img className={style.avatar} src={user.avatar}onClick={() => handleAvatarClick(user.id)}alt="Avatar"/>
         <div className={style.userInfo}>
         <div className={style.name}>{user.name}</div>
-        <div className={style.intro}>{user.introduction}</div></div>
-        {user.isCurrentUserFollowed ? (
-          <button className={buttonClass} onClick={() => onUnfollow(user.id)}>
-            {buttonText}
-          </button>
-        ) : (
-          <button className={buttonClass} onClick={() => onFollow(user.id)}>
-            {buttonText}
-          </button>
-             )}
+        <span className={style.intro}>{user.introduction}</span></div>
+        <button className={buttonClass} onClick={handleButtonClick}>{buttonText}</button>
         </div>
         </div> 
     

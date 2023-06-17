@@ -4,11 +4,11 @@ import { HomePage, ProfilePage, LoginPage, AdminLoginPage, RegisterPage, FollowP
 import OtherProfilePage from './pages/OtherProfilePage/OtherProfilePage';
 import { AuthProvider } from "./context/AuthContext";
 import { useAuth } from './context/AuthContext';
-import { useFollow } from "./context/FollowContext";
 import ProtectedRouter from './components/AdminProtectedRouter';
 import ReplyPage from "./pages/ReplyPage/ReplyPage";
 import AdminUserPage from './pages/AdminUserPage/AdminUserPage';
 import AdminHomePage from "./pages/AdminHomePage/AdminHomePage";
+import { UpdateTagProvider } from "./context/UpdateTagContext";
 
 function App() {
 
@@ -17,6 +17,7 @@ function App() {
     <div className="App">
       <Router>
         <AuthProvider>
+        <UpdateTagProvider>
           <Routes>
             <Route path="login" element={<LoginPage />} />
             <Route path="main" element={<HomePage />} />
@@ -31,7 +32,7 @@ function App() {
             <Route path="profile/*" element={<ProfilePage />} />
             <Route path="*" element={<HomePage />} />
           </Routes>
-
+          </UpdateTagProvider>
         </AuthProvider>
       </Router>
 
