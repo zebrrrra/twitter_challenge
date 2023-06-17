@@ -1,14 +1,15 @@
 import { useState, useEffect } from 'react';
 import {postLike, postUnLike} from '../apis/like';
 import { getATweet } from '../apis/tweet';
+import { useUpdateTag } from '../context/UpdateTagContext';
 
-
-const useLike = ({dataItems, currentUserId})=> {
+const useLike = ({dataItems, currentUserId,setUpdateTag})=> {
   const [likeTweets, setLikeTweets] = useState(dataItems);
-
+  const { updateTag } = useUpdateTag();
   useEffect (()=>{
     setLikeTweets(dataItems);
-  },[dataItems]);
+  },[dataItems, updateTag]);
+
   const updateTweet = async (id) => {
     const updatedTweet = await getATweet(id);
     if (updatedTweet) {
@@ -35,7 +36,8 @@ const useLike = ({dataItems, currentUserId})=> {
               ? { ...item, ...updatedTweet, isCurrentUserLiked: true }
               : item
         ));
-      }
+        setUpdateTag(!updateTag); 
+      }    
     }
     }
   
@@ -57,7 +59,8 @@ const useLike = ({dataItems, currentUserId})=> {
           ? { ...item, Tweet: updatedTweet, isCurrentUserLiked: false }
           : item
         ));
-      }
+        setUpdateTag(!updateTag); 
+      }  
     }
   }
   };

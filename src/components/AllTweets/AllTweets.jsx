@@ -2,11 +2,15 @@ import { useEffect, useState } from 'react';
 import TweetCard from '../TweetCard/TweetCard';
 import { getAllTweets } from '../../apis/tweet';
 import useLike from '../../hooks/LikeHook';
+import { useUpdateTag } from '../../context/UpdateTagContext';
 
 
 const AllTweets = ({ userId, newTweet }) => {
     const [allTweets, setAllTweets] = useState([]);
-    const { likeTweets: updateLikes, handleLike, handleUnLike } = useLike({ dataItems: allTweets });
+    const { updateTag, setUpdateTag } = useUpdateTag();
+    const {likeTweets: updateLikes,handleLike,handleUnLike} =useLike({dataItems:allTweets,setUpdateTag});
+
+    
     useEffect(() => {
         const fetchTweets = async () => {
             const data = await getAllTweets();
@@ -16,7 +20,8 @@ const AllTweets = ({ userId, newTweet }) => {
             }
         }
         fetchTweets();
-    }, [userId, newTweet]);
+    }, [userId, newTweet,updateTag]);
+
 
     return updateLikes ? updateLikes.map(alltweet => {
         if (!alltweet.User) {
