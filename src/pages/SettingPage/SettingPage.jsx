@@ -27,7 +27,7 @@ const SettingPage = () => {
   const { putUserSetting, isAuthenticated, user } = useAuth()
   // console.log(user)
   const currentUserId = user && user.id
-  console.log(currentUserId)
+
 
 
   const handleSubmit = async (e) => {
@@ -37,7 +37,7 @@ const SettingPage = () => {
 
 
 
-    if (!account.trim() || !password.trim() || !name.trim() || !checkPassword.trim() || !email.trim()) {
+    if (!account?.trim() || !password?.trim() || !name?.trim() || !checkPassword?.trim() || !email?.trim()) {
       Swal.fire({
         title: '內容不可為空白',
         icon: 'error',

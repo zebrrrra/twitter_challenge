@@ -14,10 +14,7 @@ const ProfilePage = () => {
   const navigate = useNavigate();
   // const{}=useParmas()
   console.log(user)
-  console.log(user.id)//可以取得
-  console.log(user.name)
-  console.log(user.avatar)
-  const currentId = user.id
+  const currentId = user?.id
 
   // const { isAuthenticated,user } =useContext(AuthContext);
 
@@ -28,8 +25,8 @@ const ProfilePage = () => {
           <Navbar />
         </div>
         <div className={style.middleColumn}>
-          <Header userId={user.id} />
-          <Main userId={user && user.id} />
+          <Header userId={user?.id} />
+          <Main userId={user && user?.id} />
         </div>
         <div className={style.rightColumn}>
           <RecommendList />
