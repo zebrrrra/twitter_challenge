@@ -5,20 +5,32 @@ import { Link } from "react-router-dom"
 import EditModal from "../EditModal/EditModal"
 import { useState, useEffect } from "react"
 import { getUsers } from "../../apis/user"
-import { useAuth } from "../../context/AuthContext"
 import { ReactComponent as BellOpen } from "../../assets/icon/btn_notfi打開.svg"
 import { ReactComponent as BellClose } from "../../assets/icon/btn_notfi關閉.svg"
 import email from "../../assets/icon/email.svg"
+import { useUpdateTag } from '../../context/UpdateTagContext';
+import useFollow from "../../hooks/FollowHook";
 
 const OtherUserInfo = ({ userId }) => {
   const [openModal, setOpenModal] = useState(false);
   const [currentData, setCurrentData] = useState(null)
   const [isToggle, setIsToggle] = useState(false)
-  const { account, avatar, cover, name, introduction, followersCount, followingsCount } = currentData || {}
-
+  const { updateTag, setUpdateTag } = useUpdateTag();
+  const { id,account, avatar, cover, name, introduction, followersCount, followingsCount,isCurrentUserFollowed } = currentData || {}
+  const { handleFollow, handleUnFollow } = useFollow(null,setUpdateTag);
+  
   console.log(userId)
 
-  const handleFollow = () => { }
+const buttonClass = isCurrentUserFollowed ?style.buttonFollowing: style.buttonFollower;
+const buttonText = isCurrentUserFollowed? "正在跟隨":"跟隨";
+
+const handleFollowClick = () => {
+  if (isCurrentUserFollowed) {
+    handleUnFollow(id);
+  } else {
+    handleFollow(id);
+  }
+}
 
 
   useEffect(() => {
@@ -27,7 +39,7 @@ const OtherUserInfo = ({ userId }) => {
       setCurrentData(userData);
     };
     fetchData();
-  }, [userId, openModal]);
+  }, [userId, openModal,updateTag]);
 
 
   return (
@@ -43,7 +55,7 @@ const OtherUserInfo = ({ userId }) => {
           <img src={email} alt="email" />
         </div>
         {isToggle ? <BellOpen onClick={() => setIsToggle(!isToggle)} /> : <BellClose onClick={() => setIsToggle(!isToggle)} />}
-        <button className={style.buttonFollowing} type="button" onClick={handleFollow}>{"正在跟隨"}</button>
+        <button className={buttonClass} onClick={handleFollowClick}>{buttonText}</button>
       </div>
       <div className={style.textContainer}>
         <h5 className={style.name}>{name}</h5>

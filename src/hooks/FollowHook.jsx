@@ -2,7 +2,13 @@ import { useState,useEffect } from "react";
 import { getUsers } from "../apis/user";
 import { postFollowShips, deleteFollowShips } from "../apis/followship";
 
-const useFollow = (loginUserId, setFollowingUsers, setFollowerUsers, setRecommendUsers,setUpdateTag) => {
+const useFollow = (
+  loginUserId,
+  setFollowingUsers = () => {},
+  setFollowerUsers = () => {},
+  setRecommendUsers = () => {},
+  setUpdateTag
+) => {
 const [updateTag, setLocalUpdateTag] = useState(false);
 //let updateTagGlobal = false;
 //const setUpdateTagGlobal = () => updateTagGlobal = !updateTagGlobal;
