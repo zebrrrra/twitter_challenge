@@ -18,10 +18,7 @@ const ReplyMainInTest = () => {
   const [currentUserAvatar, setCurrentUserAvatar] = useState(null)
   const { user } = useAuth();
   const currentUserId = user && user.id
-  // 回覆列表
 
-  // User包
-  const [User, setUser] = useState(null)
 
   // 載入時取得一推文
   useEffect(() => {
@@ -45,20 +42,18 @@ const ReplyMainInTest = () => {
         }
         setTweet(tweet)
         setReplies(data.Replies)
-        setUser(data.User)
         // setTweetId(id)
       }
     }
     fetchATweet();
   }, [tweetId])//當推文id改變時重新拉一次
 
-  console.log(User)//推文的主人
   console.log(replies)
 
   return (
     <>
       <MainTweet tweetId={tweetId} tweet={tweet} currentUserAvatar={currentUserAvatar} />
-      <MainReply USer={User} tweetId={tweetId} />
+      <MainReply tweetId={tweetId} />
       {/* <OtherUserInfo currentId={currentId} />
       <Tab userId={currentId} /> */}
       {/* <UserInfo userId={id} />

@@ -1,9 +1,17 @@
-//MainTweet.jsx
 import style from "./MainTweet.module.scss"
+import { useState } from "react"
 import { ReactComponent as Like } from "../../assets/icons/outlinedlike.svg"
 import { ReactComponent as Reply } from "../../assets/icons/outlinedreply.svg"
 import ReplyModal from "../ReplyModal/ReplyModal"
-import { useState } from "react"
+import dayjs from "dayjs"
+import relativeTime from 'dayjs/plugin/relativeTime';
+
+dayjs.extend(relativeTime);
+dayjs.locale('zh-tw');
+function getTime(time) {
+  const createdTime = dayjs(time);
+  return createdTime.format('A hh:mm・YYYY年MM月DD日 ');
+}
 
 const MainTweet = ({ tweet, tweetId, currentUserAvatar }) => {
   const [openModal, setOpenModal] = useState(false)
@@ -30,7 +38,7 @@ const MainTweet = ({ tweet, tweetId, currentUserAvatar }) => {
             </div>
           </div>
           <p className={style.introduction}>{description}</p>
-          <p className={style.time}>{createdAt}</p>
+          <p className={style.time}>{getTime(createdAt)}</p>
         </div>
         <div className={style.dataContainer}>
           <div className={style.data}>{repliesCount}<span>回覆</span></div>
