@@ -1,16 +1,17 @@
-import FollowCard from "../FollowCard/FollowCard";
+/*import FollowCard from "../FollowCard/FollowCard";
 import useFollow from "../../hooks/FollowHook";
 import { useEffect,useState } from "react";
 import { getUserFollowers } from "../../apis/user";
 
-const FollowersList = ({userId,loginUserId })=>{
+const FollowersList = ({userId,loginUserId,setUpdateTag })=>{
 const [users, setUsers] = useState([]);
-const {handleFollow,handleUnFollow,updateTag,setUpdateTag}=useFollow(loginUserId,setUsers);
-console.log('Rendering FollowerList with users:', users);
+const {handleFollow,handleUnFollow,updateTag}=useFollow(loginUserId,setUsers,setUpdateTag);
+
 
 
 useEffect(()=>{
     const fetchFollowers= async ()=>{
+         console.log('updateTag changed:', updateTag); 
         const userData = await getUserFollowers(userId);
         console.log(userData);//測試
         console.log(users);
@@ -35,11 +36,11 @@ useEffect(()=>{
     loginUserId={loginUserId}
     onFollow={handleFollow}
     onUnfollow={handleUnFollow} 
-    setUpdateTag={setUpdateTag}/>
+    />
     
      ))}
      </>
     )
     };
 
-export default FollowersList;
+export default FollowersList;*/

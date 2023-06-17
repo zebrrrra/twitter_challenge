@@ -7,6 +7,8 @@ import { useNavigate,useParams } from 'react-router-dom';
 import { useEffect,useState } from 'react';
 import style from './FollowPage.module.scss';
 import {getUsers} from '../../apis/user';
+import { UpdateTagProvider } from '../../context/UpdateTagContext';
+
 const FollowPage = ()=>{
   //網址用戶的id
     const {id} =useParams();
@@ -15,7 +17,8 @@ const FollowPage = ()=>{
     console.log(user); //測試
     const navigate =useNavigate();
     const [profileUser,setProfileUser] =useState(null);
-    const [updateTag, setUpdateTag] = useState(false); // 新增 updateTag 
+  
+    //const [isCurrentFollowed, setIsCurrentFollowed] = useState(false);
 
     useEffect(()=>{
       if (!isAuthenticated){
@@ -27,10 +30,11 @@ const FollowPage = ()=>{
         setProfileUser(userData);
       };
       fetchUser();
-    }, [navigate, isAuthenticated, id, updateTag]);
+    }, [navigate, isAuthenticated, id]);
 
     //整個頁面的follow方法
-    
+  
+
     return(
         <div className={style.followContainer}>
         <div className={style.homeColumn}>
@@ -39,10 +43,10 @@ const FollowPage = ()=>{
             </div>
             <div className={style.middleColumn}>
               <Headers userId={profileUser && profileUser.id}/>
-            <FollowTab userId={id} loginUserId={user && user.id} updateTag={updateTag}  setUpdateTag={setUpdateTag}/>
+            <FollowTab userId={id} loginUserId={user && user.id}/>
             </div>
         <div className={style.rightColumn}>
-            <FollowRecommendList updateTag={updateTag}  setUpdateTag={setUpdateTag}/>
+            <FollowRecommendList userId={id} loginUserId={user && user.id}  />
             </div>
       </div>
     </div>
