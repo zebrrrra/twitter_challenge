@@ -4,7 +4,7 @@ import { getATweetReply } from '../../apis/tweet'
 
 
 
-const MainReply = ({ tweetId }) => {
+const MainReply = ({ tweetId, newReply }) => {
   const [replies, setReplies] = useState([]);
   console.log(tweetId);
   useEffect(() => {
@@ -16,7 +16,7 @@ const MainReply = ({ tweetId }) => {
       }
     }
     fetchReplies();
-  }, [tweetId]);
+  }, [tweetId, newReply]);
 
   return replies.map(reply => <MainReplyCard key={reply.id} reply={reply} type="reply" />);
 }

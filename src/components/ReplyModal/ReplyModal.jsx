@@ -1,24 +1,38 @@
-//ReplyModal.jsx
+import dayjs from 'dayjs';
+import relativeTime from 'dayjs/plugin/relativeTime';
 import style from "./ReplyModal.module.scss"
 import { ReactComponent as Line } from "../../assets/icons/line.svg"
 import { useAuth } from "../../context/AuthContext"
 import { useState } from "react"
 import Swal from "sweetalert2"
 import { postATweetReply } from "../../apis/tweet"
+import { useLocation } from 'react-router-dom';
 
+dayjs.extend(relativeTime);
+dayjs.locale('zh-tw');
+function getTime(createdAt) {
+  const currentTime = dayjs();
+  const createdTime = dayjs(createdAt);
 
-// 需要getuser，關掉modal後拉api，更新底下回覆list
+  if (currentTime.diff(createdTime, 'hour') < 24) {
+    return createdTime.fromNow();//day.js的套件
+  } else {
+    return createdTime.format('YYYY/MM/DD');
+  }
+}
 
 const ReplyModal = ({
-  onClose, open, tweetId, tweet, currentUserAvatar }) => {
+  onClose, open, tweetId, tweet, currentUserAvatar, onReplySubmit }) => {
   const [comment, setComment] = useState('')
   const [message, setMessage] = useState('')
   const { user } = useAuth()
+  const location = useLocation()
+  const isReplyPage = location.pathname === `/tweets/${tweetId}`
 
   if (!open) return
-  console.log(tweet)
-  console.log(tweetId)
-  console.log(user.avatar)// no updata img
+  // console.log(tweet)
+  // console.log(tweetId)
+  // console.log(`user`.avatar)// no updata img
 
   const { description, createdAt, User } = tweet || {}
   const { account, avatar, name } = User || {}
@@ -59,6 +73,10 @@ const ReplyModal = ({
         timer: 3000,
         position: 'top',
       });
+
+      if (isReplyPage) {
+        onReplySubmit(comment)
+      }
       onClose(false)
       return
     }
@@ -83,7 +101,7 @@ const ReplyModal = ({
           </div>
           <div className={style.rightContainer}>
             <div className={style.rightTopContainer}>
-              <h5 className={style.name}>{name}<span>@{account}・{createdAt}小時</span></h5>
+              <h5 className={style.name}>{name}<span>@{account}・{getTime(createdAt)}小時</span></h5>
               <p className={style.introduction}>{description}</p>
               <p className={style.hint}>回覆給<span>@{account}</span></p>
             </div>

@@ -15,10 +15,15 @@ const ReplyMainInTest = () => {
   const { tweetId } = useParams()
   const [tweet, setTweet] = useState(null)
   const [replies, setReplies] = useState(null)
+  const [newReply, setNeweRplies] = useState(null)
   const [currentUserAvatar, setCurrentUserAvatar] = useState(null)
+
   const { user } = useAuth();
   const currentUserId = user && user.id
 
+  const handleReplySubmit = (newReplyValue) => {
+    setNeweRplies(newReplyValue)
+  }
 
   // 載入時取得一推文
   useEffect(() => {
@@ -52,12 +57,8 @@ const ReplyMainInTest = () => {
 
   return (
     <>
-      <MainTweet tweetId={tweetId} tweet={tweet} currentUserAvatar={currentUserAvatar} />
-      <MainReply tweetId={tweetId} />
-      {/* <OtherUserInfo currentId={currentId} />
-      <Tab userId={currentId} /> */}
-      {/* <UserInfo userId={id} />
-      <Tab userId={user && user.id} /> */}
+      <MainTweet tweetId={tweetId} tweet={tweet} currentUserAvatar={currentUserAvatar} onReplySubmit={handleReplySubmit} />
+      <MainReply tweetId={tweetId} newReply={newReply} />
     </>
   )
 
