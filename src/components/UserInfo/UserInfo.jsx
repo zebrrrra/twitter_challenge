@@ -71,7 +71,7 @@ const UserInfo = () => {
       </div>
       <div className={style.textContainer}>
         <h5 className={style.name}>{name}</h5>
-        <span className={style.account}>{account}</span>
+        <span className={style.account}>@{account}</span>
         <p>{introduction}</p>
         <div className={style.linkGroup}>
           <Link to="followings" className={style.link}>{followingsCount}個<span>正在追隨</span></Link>

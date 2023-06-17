@@ -5,10 +5,10 @@ import { ReactComponent as Reply } from "../../assets/icons/outlinedreply.svg"
 import ReplyModal from "../ReplyModal/ReplyModal"
 import { useState } from "react"
 
-const MainTweet = ({ User, tweet, tweetId }) => {
+const MainTweet = ({ tweet, tweetId, currentUserAvatar }) => {
   const [openModal, setOpenModal] = useState(false)
 
-  const { repliesCount, likesCount, description, createdAt } = tweet || {}
+  const { repliesCount, likesCount, description, createdAt, User } = tweet || {}
 
   const { account, avatar, name } = User || {}
 
@@ -45,7 +45,7 @@ const MainTweet = ({ User, tweet, tweetId }) => {
           </div>
         </div>
       </div>
-      {openModal && <ReplyModal open={openModal} onClose={(value) => setOpenModal(value)} User={User} tweet={tweet} tweetId={tweetId} />}
+      {openModal && <ReplyModal open={openModal} onClose={(value) => setOpenModal(value)} tweet={tweet} tweetId={tweetId} currentUserAvatar={currentUserAvatar} />}
     </>
 
   )
