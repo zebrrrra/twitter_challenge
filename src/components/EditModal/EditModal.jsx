@@ -12,9 +12,6 @@ const EditModal = ({ open, onClose, userId, userData }) => {
   const { user } = useAuth()
 
   const { avatar, cover, name, introduction } = userData
-  console.log(userData)
-  console.log(userId)
-  console.log(user.id)
 
   const [editName, setEditName] = useState(name);
   const [editAvatar, setEditAvatar] = useState(avatar);

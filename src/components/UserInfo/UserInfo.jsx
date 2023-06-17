@@ -13,18 +13,8 @@ const UserInfo = () => {
   const [currentData, setCurrentData] = useState(null)
   const [userId, setUserId] = useState(null);
   const { user } = useAuth()
-  // const { account, avatar, cover, name, introduction, followersCount, followingsCount } = currentData || {}
 
-  const account = currentData && currentData.account
-  const avatar = currentData && currentData.avatar
-  const cover = currentData && currentData.cover
-  const name = currentData && currentData.name
-  const introduction = currentData && currentData.introduction
-  const followersCount = currentData && currentData.followersCount
-  const followingsCount = currentData && currentData.followingsCount
-
-
-
+  const { account, avatar, cover, name, introduction, followersCount, followingsCount } = currentData || {};
 
   // 點按鈕的
   const handleOpenClick = async () => {
@@ -35,14 +25,6 @@ const UserInfo = () => {
     console.log(userData)//有抓到
     setCurrentData(userData)
   }
-
-  // useEffect(() => {
-  //   if (user) {
-  //     setUserId(user.id);
-  //   }
-  // }, [user]);
-
-  // const userId = user?.id;
 
   useEffect(() => {
     const fetchData = async () => {

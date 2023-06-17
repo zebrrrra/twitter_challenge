@@ -10,27 +10,24 @@ import { ReactComponent as BellOpen } from "../../assets/icon/btn_notfi打開.sv
 import { ReactComponent as BellClose } from "../../assets/icon/btn_notfi關閉.svg"
 import email from "../../assets/icon/email.svg"
 
-const OtherUserInfo = ({ currentId, user }) => {
+const OtherUserInfo = ({ userId }) => {
   const [openModal, setOpenModal] = useState(false);
   const [currentData, setCurrentData] = useState(null)
   const [isToggle, setIsToggle] = useState(false)
-  // const buttonClass = user.isCurrentUserFollowed ? style.buttonFollowing : style.buttonFollower;
-  // const buttonText = user.isCurrentUserFollowed ? "正在跟隨" : "跟隨";
   const { account, avatar, cover, name, introduction, followersCount, followingsCount } = currentData || {}
 
-  // const { user } = useAuth()
-  console.log(currentId)
+  console.log(userId)
 
   const handleFollow = () => { }
 
 
   useEffect(() => {
     const fetchData = async () => {
-      const userData = await getUsers(currentId);
+      const userData = await getUsers(userId);
       setCurrentData(userData);
     };
     fetchData();
-  }, [currentId, openModal]);
+  }, [userId, openModal]);
 
 
   return (
@@ -46,7 +43,6 @@ const OtherUserInfo = ({ currentId, user }) => {
           <img src={email} alt="email" />
         </div>
         {isToggle ? <BellOpen onClick={() => setIsToggle(!isToggle)} /> : <BellClose onClick={() => setIsToggle(!isToggle)} />}
-        {/* <button className={bellClass} type="button" onClick={() => setIsToggle(!isToggle)}></button> */}
         <button className={style.buttonFollowing} type="button" onClick={handleFollow}>{"正在跟隨"}</button>
       </div>
       <div className={style.textContainer}>
@@ -58,7 +54,7 @@ const OtherUserInfo = ({ currentId, user }) => {
           <Link to="" className={style.link}>{followersCount}個<span>跟隨者</span></Link>
         </div>
       </div>
-      {openModal && <EditModal open={openModal} onClose={(value) => setOpenModal(value)} currentId={currentId} userData={currentData} />}
+      {openModal && <EditModal open={openModal} onClose={(value) => setOpenModal(value)} currentId={userId} userData={currentData} />}
     </div >
 
   )
