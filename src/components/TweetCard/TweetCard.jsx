@@ -83,7 +83,7 @@ const TweetCard = ({ User, tweet, onLike, onUnLike }) => {
                         </div>
                         <div className={style.countContainer}>
                             <div className={style.count}>
-                                <Reply onClick={handleModalClick} className={style.count} />{repliesCount}</div>
+                                <Reply className={style.replyIcon} onClick={handleModalClick}  />{repliesCount}</div>
                             <div className={style.count}>
                                 {isCurrentUserLiked ?
                                     <IsLikeIcon className={style.isLikeIcon} onClick={handleButtonClick} />
