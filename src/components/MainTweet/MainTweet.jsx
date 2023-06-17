@@ -13,7 +13,7 @@ function getTime(time) {
   return createdTime.format('A hh:mm・YYYY年MM月DD日 ');
 }
 
-const MainTweet = ({ tweet, tweetId, currentUserAvatar }) => {
+const MainTweet = ({ tweet, tweetId, currentUserAvatar, onReplySubmit }) => {
   const [openModal, setOpenModal] = useState(false)
 
   const { repliesCount, likesCount, description, createdAt, User } = tweet || {}
@@ -53,7 +53,7 @@ const MainTweet = ({ tweet, tweetId, currentUserAvatar }) => {
           </div>
         </div>
       </div>
-      {openModal && <ReplyModal open={openModal} onClose={(value) => setOpenModal(value)} tweet={tweet} tweetId={tweetId} currentUserAvatar={currentUserAvatar} />}
+      {openModal && <ReplyModal open={openModal} onClose={(value) => setOpenModal(value)} tweet={tweet} tweetId={tweetId} currentUserAvatar={currentUserAvatar} onReplySubmit={onReplySubmit} />}
     </>
 
   )
