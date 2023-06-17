@@ -9,7 +9,6 @@ const Main = ({ userId }) => {
     <>
       <UserInfo userId={userId} />
       <Tab userId={userId} />
-
     </>
   )
 
