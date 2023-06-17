@@ -2,12 +2,16 @@ import style from './HomePage.module.scss'
 //import AllTweets from '../../components/AllTweets/AllTweets';
 import { Navbars, Header, MainPost, AllTweets, RecommendList } from '../../components';
 import { useAuth } from '../../context/AuthContext'
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 //import { useContext } from 'react';
 
 
 const HomePage = () => {
+  const [newTweet, setNewTweet] = useState(null)
+  const handTweetSubmit = (newTweetValue) => {
+    setNewTweet(newTweetValue)
+  }
   const { isAuthenticated, user } = useAuth();
   console.log(user); //測試
   const navigate = useNavigate();
@@ -21,12 +25,12 @@ const HomePage = () => {
     <div className={style.homeContainer}>
       <div className={style.homeColumn}>
         <div className={style.leftColumn}>
-          <Navbars />
+          <Navbars onTweetSubmit={handTweetSubmit} />
         </div>
         <div className={style.middleColumn}>
           <Header />
-          <MainPost user={user} />
-          <AllTweets />
+          <MainPost user={user} onTweetSubmit={handTweetSubmit} />
+          <AllTweets newTweet={newTweet} />
         </div>
         <div className={style.rightColumn}>
           <RecommendList />

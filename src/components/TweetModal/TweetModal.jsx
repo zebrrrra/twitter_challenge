@@ -6,16 +6,17 @@ import Swal from 'sweetalert2';
 import { useNavigate } from "react-router-dom";
 
 
-const TweetModal = ({ open, onClose, }) => {
+const TweetModal = ({ open, onClose, onTweetSubmit }) => {
 
   const [tweetText, setTweetText] = useState('');//要填預設值
   const [message, setMessage] = useState('')
   const { user } = useAuth();
   const navigate = useNavigate();
+
   const handleClick = () => {
-    console.log('clodeedf')
     onClose(false)
   }
+
   const handleSubmit = async () => {
     if (!tweetText.trim()) {
       Swal.fire({
@@ -40,9 +41,9 @@ const TweetModal = ({ open, onClose, }) => {
       return
     }
 
-    const { success } = await postTweets(tweetText)
-    console.log(success)
-    if (success) {
+    const { status } = await postTweets(tweetText)
+    console.log(status)
+    if (status === 'success') {
       Swal.fire({
         title: '內容成功提交',
         icon: 'success',
@@ -50,13 +51,13 @@ const TweetModal = ({ open, onClose, }) => {
         timer: 3000,
         position: 'top',
       });
+      onTweetSubmit(tweetText)
       onClose(false)
       return
     }
     setTweetText('');
-    navigate(`${user.id}`);//要測試
-    window.location.reload();//直接刷新頁面
-
+    // navigate(`${user.id}`);//要測試
+    // window.location.reload();//直接刷新頁面
   }
   if (!open) return
   return (

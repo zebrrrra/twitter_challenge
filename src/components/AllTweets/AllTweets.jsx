@@ -4,11 +4,10 @@ import { getAllTweets } from '../../apis/tweet';
 import useLike from '../../hooks/LikeHook';
 
 
-const AllTweets =({ userId })=>{
+const AllTweets = ({ userId, newTweet }) => {
     const [allTweets, setAllTweets] = useState([]);
-    const {likeTweets: updateLikes,handleLike,handleUnLike} =useLike({dataItems:allTweets});
-
-    useEffect(()=>{
+    const { likeTweets: updateLikes, handleLike, handleUnLike } = useLike({ dataItems: allTweets });
+    useEffect(() => {
         const fetchTweets = async () => {
             const data = await getAllTweets();
             console.log(data); //測試
@@ -17,17 +16,18 @@ const AllTweets =({ userId })=>{
             }
         }
         fetchTweets();
-    }, [ userId]); 
+    }, [userId, newTweet]);
 
-    return updateLikes?updateLikes.map(alltweet => {
-        if(!alltweet.User){
+    return updateLikes ? updateLikes.map(alltweet => {
+        if (!alltweet.User) {
             return null;
         }
-    return<TweetCard key={alltweet.id}
-     tweet={alltweet} 
-     onLike={()=>handleLike(alltweet.id)}
-    onUnLike={()=>handleUnLike(alltweet.id)} 
-     type="alltweet"/>}):null;
+        return <TweetCard key={alltweet.id}
+            tweet={alltweet}
+            onLike={() => handleLike(alltweet.id)}
+            onUnLike={() => handleUnLike(alltweet.id)}
+            type="alltweet" />
+    }) : null;
 }
 
 export default AllTweets;
