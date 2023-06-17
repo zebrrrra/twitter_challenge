@@ -16,7 +16,7 @@ import isInfoIcon from '../../assets/icons/isProfile.svg'
 import { useAuth } from '../../context/AuthContext';
 
 
-const Navbars = () => {
+const Navbars = ({ onTweetSubmit }) => {
   const [openModal, setOpenModal] = useState(false);
   const [activeTab, setActiveTab] = useState('');
   const [isIconClicked, setIconClicked] = useState(false);
@@ -31,6 +31,8 @@ const Navbars = () => {
   const handlebuttonClick = () => {
     setOpenModal(true)
   }
+
+
   const handleLogout = () => {
     localStorage.removeItem('token');
     navigate('/login');
@@ -79,7 +81,7 @@ const Navbars = () => {
           </Link>
           <button className={style.NavbarButton} onClick={handlebuttonClick}>推文</button>
         </div>
-        {openModal && <TweetModal open={openModal} onClose={() => setOpenModal(false)} />}
+        {openModal && <TweetModal open={openModal} onClose={() => setOpenModal(false)} onTweetSubmit={onTweetSubmit} />}
       </div>
       <div className={style.logout} onClick={handleLogout}><img className={style.NavbarPng} src={LogoutIcon} alt="logout" />登出</div>
     </>

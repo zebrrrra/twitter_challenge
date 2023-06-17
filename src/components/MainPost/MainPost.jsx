@@ -6,7 +6,7 @@ import Swal from 'sweetalert2';
 import { useNavigate } from 'react-router-dom';
 import TweetModal from '../TweetModal/TweetModal';
 import { Value } from 'sass';
-const MainPost = ({ user }) => {
+const MainPost = ({ user, onTweetSubmit }) => {
   // const [tweetText, setTweetText] = useState('');
   // const [message, setMessage] = useState('')
   const navigate = useNavigate();
@@ -31,7 +31,7 @@ const MainPost = ({ user }) => {
           /></div>
       </div>
       <button className={style.tweetButton} onClick={handleOpen}>推文</button>
-      {openModal && <TweetModal open={openModal} onClose={(Value) => setOpenModal(Value)} />}
+      {openModal && <TweetModal open={openModal} onClose={(Value) => setOpenModal(Value)} onTweetSubmit={onTweetSubmit} />}
 
     </div>
     // TweetModal

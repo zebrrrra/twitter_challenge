@@ -5,12 +5,13 @@ import useLike from '../../hooks/LikeHook';
 import { useUpdateTag } from '../../context/UpdateTagContext';
 
 
-const AllTweets =({ userId })=>{
+const AllTweets = ({ userId, newTweet }) => {
     const [allTweets, setAllTweets] = useState([]);
     const { updateTag, setUpdateTag } = useUpdateTag();
     const {likeTweets: updateLikes,handleLike,handleUnLike} =useLike({dataItems:allTweets,setUpdateTag});
 
-    useEffect(()=>{
+    
+    useEffect(() => {
         const fetchTweets = async () => {
             const data = await getAllTweets();
             console.log(data); //測試
@@ -19,17 +20,19 @@ const AllTweets =({ userId })=>{
             }
         }
         fetchTweets();
-    }, [ userId,updateTag]); 
+    }, [userId, newTweet,updateTag]);
 
-    return updateLikes?updateLikes.map(alltweet => {
-        if(!alltweet.User){
+
+    return updateLikes ? updateLikes.map(alltweet => {
+        if (!alltweet.User) {
             return null;
         }
-    return<TweetCard key={alltweet.id}
-     tweet={alltweet} 
-     onLike={()=>handleLike(alltweet.id)}
-    onUnLike={()=>handleUnLike(alltweet.id)} 
-     type="alltweet"/>}):null;
+        return <TweetCard key={alltweet.id}
+            tweet={alltweet}
+            onLike={() => handleLike(alltweet.id)}
+            onUnLike={() => handleUnLike(alltweet.id)}
+            type="alltweet" />
+    }) : null;
 }
 
 export default AllTweets;
