@@ -10,7 +10,7 @@ import { useUpdateTag } from '../../context/UpdateTagContext';
  const FollowRecommendList = ({userId,loginUserId})=>{
     const [users, setUsers] = useState([]);
     const { updateTag, setUpdateTag } = useUpdateTag();
-    const { handleFollow, handleUnFollow } = useFollow(loginUserId, null, null, setUsers, setUpdateTag);
+    const { handleFollow, handleUnFollow } = useFollow(loginUserId, setUsers, setUpdateTag);
 
     useEffect(()=>{
         const fetchTopFollowers = async () => {
