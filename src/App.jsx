@@ -10,28 +10,30 @@ import AdminUserPage from './pages/AdminUserPage/AdminUserPage';
 import AdminHomePage from "./pages/AdminHomePage/AdminHomePage";
 import { UpdateTagProvider } from "./context/UpdateTagContext";
 
+const basename = process.env.PUBLIC_URL
+
 function App() {
 
   // 為了做調試將/改成setting
   return (
-    <div className="App">
-      <Router>
+    <div className="App" >
+      <Router basename={basename}>
         <AuthProvider>
-        <UpdateTagProvider>
-          <Routes>
-            <Route path="login" element={<LoginPage />} />
-            <Route path="main" element={<HomePage />} />
-            <Route path="admin" element={<AdminLoginPage />} />
-            <Route path="admin/list" element={<ProtectedRouter><AdminHomePage /></ProtectedRouter>} />
-            <Route path="admin/user" element={<ProtectedRouter><AdminUserPage /></ProtectedRouter>} />
-            <Route path="setting" element={<SettingPage />} />
-            <Route path="register" element={<RegisterPage />} />
-            <Route path="tweets/:tweetId" element={<ReplyPage />} />
-            <Route path=":id/follow/*" element={<HandleProfilePage />} />
-            <Route path=":id/*" element={<HandleProfilePage />} />
-            <Route path="profile/*" element={<ProfilePage />} />
-            <Route path="*" element={<HomePage />} />
-          </Routes>
+          <UpdateTagProvider>
+            <Routes>
+              <Route path="login" element={<LoginPage />} />
+              <Route path="main" element={<HomePage />} />
+              <Route path="admin" element={<AdminLoginPage />} />
+              <Route path="admin/list" element={<ProtectedRouter><AdminHomePage /></ProtectedRouter>} />
+              <Route path="admin/user" element={<ProtectedRouter><AdminUserPage /></ProtectedRouter>} />
+              <Route path="setting" element={<SettingPage />} />
+              <Route path="register" element={<RegisterPage />} />
+              <Route path="tweets/:tweetId" element={<ReplyPage />} />
+              <Route path=":id/follow/*" element={<HandleProfilePage />} />
+              <Route path=":id/*" element={<HandleProfilePage />} />
+              <Route path="profile/*" element={<ProfilePage />} />
+              <Route path="*" element={<HomePage />} />
+            </Routes>
           </UpdateTagProvider>
         </AuthProvider>
       </Router>

@@ -16,21 +16,21 @@ const OtherUserInfo = ({ userId }) => {
   const [currentData, setCurrentData] = useState(null)
   const [isToggle, setIsToggle] = useState(false)
   const { updateTag, setUpdateTag } = useUpdateTag();
-  const { id,account, avatar, cover, name, introduction, followersCount, followingsCount,isCurrentUserFollowed } = currentData || {}
-  const { handleFollow, handleUnFollow } = useFollow(null,setUpdateTag);
-  
+  const { id, account, avatar, cover, name, introduction, followersCount, followingsCount, isCurrentUserFollowed } = currentData || {}
+  const { handleFollow, handleUnFollow } = useFollow(null, setUpdateTag);
+
   console.log(userId)
 
-const buttonClass = isCurrentUserFollowed ?style.buttonFollowing: style.buttonFollower;
-const buttonText = isCurrentUserFollowed? "正在跟隨":"跟隨";
+  const buttonClass = isCurrentUserFollowed ? style.buttonFollowing : style.buttonFollower;
+  const buttonText = isCurrentUserFollowed ? "正在跟隨" : "跟隨";
 
-const handleFollowClick = () => {
-  if (isCurrentUserFollowed) {
-    handleUnFollow(id);
-  } else {
-    handleFollow(id);
+  const handleFollowClick = () => {
+    if (isCurrentUserFollowed) {
+      handleUnFollow(id);
+    } else {
+      handleFollow(id);
+    }
   }
-}
 
 
   useEffect(() => {
@@ -39,7 +39,7 @@ const handleFollowClick = () => {
       setCurrentData(userData);
     };
     fetchData();
-  }, [userId, openModal,updateTag]);
+  }, [userId, openModal, updateTag]);
 
 
   return (
@@ -59,7 +59,7 @@ const handleFollowClick = () => {
       </div>
       <div className={style.textContainer}>
         <h5 className={style.name}>{name}</h5>
-        <span className={style.account}>{account}</span>
+        <span className={style.account}>@{account}</span>
         <p>{introduction}</p>
         <div className={style.linkGroup}>
           <Link to="" className={style.link}>{followingsCount}個<span>正在追隨</span></Link>
