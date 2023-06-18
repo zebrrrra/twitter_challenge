@@ -1,12 +1,12 @@
 @import '../../style/base.scss';
 
 .replyContainer {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    width: 100%;
-    min-height: 100vh;
-    padding: 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+  min-height: 100vh;
+  padding: 0;
 
 }
 
@@ -20,25 +20,29 @@
 .leftColumn,
 .rightColumn {
   background-color: #fff;
-  position: sticky; /* 改為 sticky */
-  top: 0; /* 固定在頂部 */
-  height: 100vh; /* 使用 viewport 高度 */
+  position: sticky;
+  /* 改為 sticky */
+  top: 0;
+  /* 固定在頂部 */
+  height: 100vh;
+  /* 使用 viewport 高度 */
 }
 
 .leftColumn {
   margin-right: 24px;
-  flex:0 0 200px;
+  flex: 0 0 200px;
 }
 
 .rightColumn {
   margin-right: 24px;
-  flex:0 0 200px;
+  flex: 0 0 200px;
 }
 
 .middleColumn {
-  flex: 3;
+  // flex: 3;
   position: relative;
   background-color: #fff;
   padding-right: 25px;
   overflow-y: auto;
+  width: 640px;
 }

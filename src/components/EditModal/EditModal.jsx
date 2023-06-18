@@ -1,15 +1,11 @@
 import { useState } from "react"
 import style from "../EditModal/EditModal.module.scss"
 import AuthInput from "../AuthInput/AuthInput"
-// import testAvatar from '../../assets/icons/editAvatar.svg'
-// import testCover from "../../assets/icons/editCover.svg"
 import { ReactComponent as Upload } from "../../assets/icons/camera.svg"
 import { ReactComponent as Fork } from "../../assets/icons/Vector.svg"
 import { putUserProfile } from "../../apis/user"
-import { useAuth } from "../../context/AuthContext"
 import Swal from "sweetalert2"
 const EditModal = ({ open, onClose, userId, userData }) => {
-  const { user, setPayload } = useAuth()
 
   const { avatar, cover, name, introduction } = userData
   const [editName, setEditName] = useState(name);
@@ -44,7 +40,6 @@ const EditModal = ({ open, onClose, userId, userData }) => {
     if (!data) return;
     setEditCover(data)
     const reader = new FileReader();
-
     reader.onload = (e) => {
       setPreViewCover(e.target.result);
     };
@@ -77,7 +72,7 @@ const EditModal = ({ open, onClose, userId, userData }) => {
       return
     }
 
-    const { success, message } = await putUserProfile({ id: userId, name: editName, avatar: editAvatar, cover: editCover, introduction: editIntroduction })
+    const { success } = await putUserProfile({ id: userId, name: editName, avatar: editAvatar, cover: editCover, introduction: editIntroduction })
     if (success) {
       console.log('成功')
       Swal.fire({
@@ -87,22 +82,13 @@ const EditModal = ({ open, onClose, userId, userData }) => {
         timer: 2000,
         position: 'top',
       });
-      localStorage.setItem('avatar', editAvatar);
-      setPayload((preState) => {
-        return {
-          ...preState,
-          name: editName,
-          avatar: editAvatar,
-          cover: editCover,
-          introduction: editIntroduction
-        }
-      })
+      const imageURL = URL.createObjectURL(editAvatar)
+      localStorage.setItem('avatar', imageURL);
       onClose(false)
       return
     }
 
     if (!success) {
-      console.log(message)
       Swal.fire({
         title: '編輯失敗',
         icon: 'error',

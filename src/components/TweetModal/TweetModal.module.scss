@@ -48,7 +48,6 @@
   flex-direction: row;
   width: 100%;
   padding: 16px 16px 0 24px;
-  //outline: auto;
 
 }
 
@@ -58,6 +57,10 @@
   object-fit: cover;
   border: 1px solid $background-color;
   border-radius: 50%;
+
+  >img {
+    border-radius: 50%;
+  }
 
 }
 
