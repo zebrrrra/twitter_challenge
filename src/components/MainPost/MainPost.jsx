@@ -9,7 +9,10 @@ const MainPost = ({ user, onTweetSubmit }) => {
   const [tweetText, setTweetText] = useState('');
   const [message, setMessage] = useState('')
   const navigate = useNavigate();
-  const userAvatar = localStorage.getItem('avatar') ? localStorage.getItem('avatar') : user.avatar
+  const userAvatar = localStorage.getItem('avatar') ? localStorage.getItem('avatar') : user?.avatar
+
+  // console.log(user?.avatar)
+  // console.log(userAvatar)
 
   const handleSubmit = async () => {
 

@@ -74,7 +74,6 @@ const EditModal = ({ open, onClose, userId, userData }) => {
 
     const { success } = await putUserProfile({ id: userId, name: editName, avatar: editAvatar, cover: editCover, introduction: editIntroduction })
     if (success) {
-      console.log('成功')
       Swal.fire({
         title: '編輯成功',
         icon: 'success',

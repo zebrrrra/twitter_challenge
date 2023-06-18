@@ -35,6 +35,7 @@ const Navbars = ({ onTweetSubmit }) => {
 
   const handleLogout = () => {
     localStorage.removeItem('token');
+    localStorage.removeItem('avatar');
     navigate('/login');
   }
 

@@ -21,7 +21,6 @@ const UserInfo = ({ userId }) => {
 
     // 發送api載入自己的資料
     const userData = await getUsers(userId)
-    console.log(userData)//有抓到
     setCurrentData(userData)
   }
 
