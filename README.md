@@ -1,8 +1,7 @@
 # AC Twitter 專案  
+此為ALPHA CAMP 小組協作畢業專案，本組採前後分離，由2位前端、2位後端開發。
 
-此為ALPHA CAMP 小組協作畢業專案，本組採前後分離，由2位前端2位後端開發。
 ## 預覽
-
 ![image](https://github.com/zebrrrra/AC_twitter_frontend/assets/123958778/c1aede27-7451-42e3-95c5-771b7732e90f)
 ![image](https://github.com/zebrrrra/AC_twitter_frontend/assets/123958778/0d3b4334-1786-4d2e-8325-2057915ed8dd)
 
@@ -30,7 +29,8 @@
 
 ## 網站位置
 
-Website - https://zebrrrra.github.io/AC_twitter_frontend
+* Website - https://zebrrrra.github.io/AC_twitter_frontend
+* 後端Repo - https://github.com/klu0926/twitter-api-2023
 
 ## 作業環境
 
@@ -47,7 +47,7 @@ Website - https://zebrrrra.github.io/AC_twitter_frontend
    `npm install`
 4. 安裝完成後使用
     `npm start`
-5.瀏覽器會自動開啟 [http://localhost:3000](http://localhost:3000) ，出現畫面。
+6. 瀏覽器會自動開啟 [http://localhost:3000](http://localhost:3000)，出現畫面。
 
 
 ## 開發人員
