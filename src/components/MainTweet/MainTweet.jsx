@@ -1,8 +1,11 @@
 import style from "./MainTweet.module.scss"
 import { useState } from "react"
-import { ReactComponent as Like } from "../../assets/icons/outlinedlike.svg"
+import { ReactComponent as LikeIcon } from '../../assets/icon/like_1.svg';
+import { ReactComponent as IsLikeIcon } from '../../assets/icon/like.svg';
 import { ReactComponent as Reply } from "../../assets/icons/outlinedreply.svg"
 import ReplyModal from "../ReplyModal/ReplyModal"
+import useLike from "../../hooks/LikeHook"
+
 import dayjs from "dayjs"
 import relativeTime from 'dayjs/plugin/relativeTime';
 
@@ -13,16 +16,25 @@ function getTime(time) {
   return createdTime.format('A hh:mm・YYYY年MM月DD日 ');
 }
 
-const MainTweet = ({ tweet, tweetId, currentUserAvatar, onReplySubmit }) => {
+const MainTweet = ({ tweet, tweetId, currentUserAvatar, onReplySubmit, setUpdateTag, onUnLike,onLike }) => {
   const [openModal, setOpenModal] = useState(false)
-
-  const { repliesCount, likesCount, description, createdAt, User } = tweet || {}
-
+  const { repliesCount, likesCount, description, createdAt, User, isCurrentUserLiked } = tweet || {}
   const { account, avatar, name } = User || {}
+
+
 
   const handleClick = () => {
     setOpenModal(true)
   }
+
+  const handleLikeClick = () => {
+    if (isCurrentUserLiked) {
+      onUnLike(tweetId);
+    } else {
+      onLike(tweetId);
+    }
+  }
+
 
   return (
     <>
@@ -49,7 +61,11 @@ const MainTweet = ({ tweet, tweetId, currentUserAvatar, onReplySubmit }) => {
             <Reply onClick={handleClick} />
           </div>
           <div className={style.icon}>
-            <Like />
+            {isCurrentUserLiked ?
+              <IsLikeIcon className={style.isLikeIcon} onClick={handleLikeClick} />
+              :
+              <LikeIcon className={style.likeIcon} onClick={handleLikeClick} />
+            }
           </div>
         </div>
       </div>

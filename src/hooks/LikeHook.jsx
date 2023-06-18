@@ -3,12 +3,14 @@ import {postLike, postUnLike} from '../apis/like';
 import { getATweet } from '../apis/tweet';
 import { useUpdateTag } from '../context/UpdateTagContext';
 
-const useLike = ({dataItems, currentUserId,setUpdateTag})=> {
-  const [likeTweets, setLikeTweets] = useState(dataItems);
+const useLike = ({dataItems, currentUserId, setUpdateTag}) => {
+  const [likeTweets, setLikeTweets] = useState(Array.isArray(dataItems) ? dataItems : [dataItems]);
   const { updateTag } = useUpdateTag();
-  useEffect (()=>{
-    setLikeTweets(dataItems);
-  },[dataItems, updateTag]);
+  
+  useEffect(() => {
+    setLikeTweets(Array.isArray(dataItems) ? dataItems : [dataItems]);
+  }, [dataItems, updateTag]);
+
 
   const updateTweet = async (id) => {
     const updatedTweet = await getATweet(id);
