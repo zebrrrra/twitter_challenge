@@ -11,9 +11,6 @@ import { useAuth } from "../../context/AuthContext"
 const UserInfo = ({ userId }) => {
   const [openModal, setOpenModal] = useState(false);
   const [currentData, setCurrentData] = useState(null)
-  // const [userId, setUserId] = useState(null);
-  // const { user } = useAuth()
-  // 改成上方傳下來的userId
 
 
   const { account, avatar, cover, name, introduction, followersCount, followingsCount } = currentData || {};
@@ -32,9 +29,7 @@ const UserInfo = ({ userId }) => {
     const fetchData = async () => {
       if (userId) {
         const userData = await getUsers(userId);
-        console.log(userData)
         setCurrentData(userData);
-        // setUserId(user?.id)
       }
     };
     fetchData();

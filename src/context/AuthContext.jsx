@@ -52,7 +52,7 @@ export const AuthProvider = ({ children }) => {
                 introduction: payload.introduction,
                 email: payload.email,
                 cover: payload.cover
-            }
+            }, payload, setPayload
             , register: async (data) => {
                 const result = await register({
                     account: data.account,

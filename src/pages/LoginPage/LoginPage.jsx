@@ -49,7 +49,6 @@ const LoginPage = () => {
       return
     }
 
-    console.log(errorInfo)//沒有值
     if (!success) {
       console.log(responseError)
       Swal.fire({
@@ -66,7 +65,8 @@ const LoginPage = () => {
   }
   useEffect(() => {
     if (isAuthenticated) {
-      navigate(`/${user?.id}/`);
+      navigate('/main');
+
     }
   }, [navigate, isAuthenticated, user]);
 

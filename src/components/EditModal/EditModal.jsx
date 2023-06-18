@@ -9,10 +9,9 @@ import { putUserProfile } from "../../apis/user"
 import { useAuth } from "../../context/AuthContext"
 import Swal from "sweetalert2"
 const EditModal = ({ open, onClose, userId, userData }) => {
-  const { user } = useAuth()
+  const { user, setPayload } = useAuth()
 
   const { avatar, cover, name, introduction } = userData
-
   const [editName, setEditName] = useState(name);
   const [editAvatar, setEditAvatar] = useState(avatar);
   const [editCover, setEditCover] = useState(cover);
@@ -57,7 +56,7 @@ const EditModal = ({ open, onClose, userId, userData }) => {
 
   // 儲存後發送api
   const handleProfileSave = async ({ cover, avatar, name, introduction }) => {
-    if (!editName.trim() || !editIntroduction.trim()) {
+    if (!editName?.trim() || !editIntroduction?.trim()) {
       Swal.fire({
         title: '內容不可為空白',
         icon: 'error',
@@ -88,6 +87,16 @@ const EditModal = ({ open, onClose, userId, userData }) => {
         timer: 2000,
         position: 'top',
       });
+      localStorage.setItem('avatar', editAvatar);
+      setPayload((preState) => {
+        return {
+          ...preState,
+          name: editName,
+          avatar: editAvatar,
+          cover: editCover,
+          introduction: editIntroduction
+        }
+      })
       onClose(false)
       return
     }
@@ -102,9 +111,6 @@ const EditModal = ({ open, onClose, userId, userData }) => {
         position: 'top',
       });
     }
-    console.log(message)
-
-
   }
 
 

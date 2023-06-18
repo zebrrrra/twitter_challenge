@@ -25,14 +25,15 @@ const ReplyModal = ({
   onClose, open, tweetId, tweet, currentUserAvatar, onReplySubmit }) => {
   const [comment, setComment] = useState('')
   const [message, setMessage] = useState('')
-  const { user } = useAuth()
+  const { user, payload } = useAuth()
   const location = useLocation()
+
   const isReplyPage = location.pathname === `/tweets/${tweetId}`
 
   if (!open) return
-  // console.log(tweet)
-  // console.log(tweetId)
   // console.log(`user`.avatar)// no updata img
+  console.log(user)
+  console.log(payload)
 
   const { description, createdAt, User } = tweet || {}
   const { account, avatar, name } = User || {}
