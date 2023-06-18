@@ -22,7 +22,6 @@ const MainTweet = ({ tweet, tweetId, onReplySubmit, setUpdateTag, onUnLike, onLi
 
   const { account, avatar, name } = User || {}
 
-  console.log(repliesCount)//yes
 
   const handleClick = () => {
     setOpenModal(true)

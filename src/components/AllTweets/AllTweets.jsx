@@ -7,10 +7,14 @@ import { useUpdateTag } from '../../context/UpdateTagContext';
 
 const AllTweets = ({ userId, newTweet }) => {
     const [allTweets, setAllTweets] = useState([]);
+    const [newReply, setNewReply] = useState(null)
     const { updateTag, setUpdateTag } = useUpdateTag();
-    const {likeTweets: updateLikes,handleLike,handleUnLike} =useLike({dataItems:allTweets,setUpdateTag});
+    const { likeTweets: updateLikes, handleLike, handleUnLike } = useLike({ dataItems: allTweets, setUpdateTag });
 
-    
+    // const handleReplyClick = (value) => {
+    //     setNewReply(value)
+    // }
+
     useEffect(() => {
         const fetchTweets = async () => {
             const data = await getAllTweets();
@@ -20,7 +24,7 @@ const AllTweets = ({ userId, newTweet }) => {
             }
         }
         fetchTweets();
-    }, [userId, newTweet,updateTag]);
+    }, [userId, newTweet, updateTag]);
 
 
     return updateLikes ? updateLikes.map(alltweet => {
@@ -31,7 +35,8 @@ const AllTweets = ({ userId, newTweet }) => {
             tweet={alltweet}
             onLike={() => handleLike(alltweet.id)}
             onUnLike={() => handleUnLike(alltweet.id)}
-            type="alltweet" />
+            type="alltweet"
+        />
     }) : null;
 }
 

@@ -8,7 +8,7 @@ import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import { useState, useEffect } from "react";
 import { useAuth } from '../../context/AuthContext';
-
+import { useUpdateTag } from '../../context/UpdateTagContext';
 
 dayjs.extend(relativeTime);
 dayjs.locale('zh-tw');
@@ -24,13 +24,12 @@ function getTime(createdAt) {
 }
 
 
-const TweetCard = ({ User, tweet, onLike, onUnLike }) => {
+const TweetCard = ({ User, tweet, onLike, onUnLike, onReplyModalClick, onReplySubmit }) => {
     const [openModal, setOpenModal] = useState(false)
-    const [currentUserAvatar, setCurrentUserAvatar] = useState(null)
     const { user } = useAuth()
-    const currentUserId = user && user.id
 
     const navigate = useNavigate();
+    const { setUpdateTag } = useUpdateTag()
 
     const handleAvatarClick = (event, tweetOwnerId) => {
         event.stopPropagation();
@@ -49,6 +48,7 @@ const TweetCard = ({ User, tweet, onLike, onUnLike }) => {
 
     const handleModalClick = (e) => {
         e.stopPropagation();
+        onReplyModalClick(tweet.id)
         setOpenModal(true)
     }
 
@@ -82,7 +82,7 @@ const TweetCard = ({ User, tweet, onLike, onUnLike }) => {
                         </div>
                         <div className={style.countContainer}>
                             <div className={style.count}>
-                                <Reply className={style.replyIcon} onClick={handleModalClick}  />{repliesCount}</div>
+                                <Reply className={style.replyIcon} onClick={handleModalClick} />{repliesCount}</div>
                             <div className={style.count}>
                                 {isCurrentUserLiked ?
                                     <IsLikeIcon className={style.isLikeIcon} onClick={handleButtonClick} />
@@ -96,7 +96,7 @@ const TweetCard = ({ User, tweet, onLike, onUnLike }) => {
                 </div>
 
             </div>
-            {openModal && <ReplyModal open={openModal} onClose={(value) => setOpenModal(value)} User={User} tweet={tweet} tweetId={tweet.id} currentUserAvatar={currentUserAvatar} />}
+            {openModal && <ReplyModal open={openModal} onClose={(value) => setOpenModal(value)} User={User} tweet={tweet} tweetId={tweet.id} onReplySubmit={onReplySubmit} />}
         </>
     );
 
@@ -106,3 +106,91 @@ export default TweetCard
 
 
 
+
+
+
+
+
+
+
+// const TweetCard = ({ User, tweet, onLike, onUnLike, onReplySubmit, onReplyPageClick }) => {
+//     const [openModal, setOpenModal] = useState(false)
+
+//     const { user } = useAuth()
+//     const currentUserId = user && user.id
+
+//     const navigate = useNavigate();
+
+//     const handleAvatarClick = (event, tweetOwnerId) => {
+//         event.stopPropagation();
+//         navigate(`/${tweetOwnerId}`);
+//     };
+
+//     const handleButtonClick = (e) => {
+//         e.stopPropagation()
+//         console.log('like:', onLike, 'unlike:', onUnLike, 'isCurrentUserLiked:', tweet.isCurrentUserLiked);
+//         if (tweet.isCurrentUserLiked) {
+//             onUnLike(tweet.id);
+//         } else {
+//             onLike(tweet.id);
+//         }
+//     };
+
+//     const handleModalClick = (e, tweetId) => {
+//         e.stopPropagation();
+//         // onReplyPageClick(tweetId)
+//         setOpenModal(true)
+//     }
+
+//     const handleReplyPageClick = (tweetId) => {
+//         navigate(`/tweets/${tweetId}`);
+//     }
+
+
+//     const {
+//         User: { name, account, avatar } = {},
+//         description,
+//         repliesCount,
+//         likesCount,
+//         createdAt,
+//         isCurrentUserLiked,
+//     } = tweet;
+
+
+
+
+
+//     return (
+//         <>
+//             <div className={style.tweetCardContainer}>
+//                 <div className={style.tweetCard} onClick={() => handleReplyPageClick(tweet.id)}>
+//                     <img src={avatar} className={style.avatar} onClick={(event) => handleAvatarClick(event, tweet.User.id)} alt="avatar" />
+//                     <div className={style.contentContainer}>
+//                         <div className={style.nameAndUserId}>
+//                             <span className={style.name}>{name}</span>
+//                             <span className={style.userIdTime}>@{account}・{getTime(createdAt)}</span>
+//                         </div>
+//                         <div className={style.tweet}>
+//                             {description}
+//                         </div>
+//                         <div className={style.countContainer}>
+//                             <div className={style.count}>
+//                                 <Reply className={style.replyIcon} onClick={handleModalClick(tweet.id)} />{repliesCount}</div>
+//                             <div className={style.count}>
+//                                 {isCurrentUserLiked ?
+//                                     <IsLikeIcon className={style.isLikeIcon} onClick={handleButtonClick} />
+//                                     :
+//                                     <LikeIcon className={style.likeIcon} onClick={handleButtonClick} />
+//                                 }
+//                                 {likesCount}</div>
+//                         </div>
+//                     </div>
+
+//                 </div>
+
+//             </div>
+//             {openModal && <ReplyModal open={openModal} onClose={(value) => setOpenModal(value)} User={User} tweet={tweet} tweetId={tweet.id} onReplySubmit={onReplySubmit} />}
+//         </>
+//     );
+
+// }
