@@ -73,11 +73,15 @@ const TweetModal = ({ open, onClose, onTweetSubmit }) => {
           <div className={`${style.avatarContainer} ${style.down}`}>
             <img src={userAvatar} alt="avatar" />
           </div>
-          <textarea
-            style={{ resize: 'none', width: '88%' }}
-            value={tweetText}
-            onChange={(e) => setTweetText(e.target.value)}
-            placeholder="有什麼新鮮事?"> </textarea>
+          <div className={style.textareaContainer}>
+            <textarea
+              style={{ resize: 'none', width: '88%' }}
+              value={tweetText}
+              onChange={(e) => setTweetText(e.target.value)}
+              placeholder="有什麼新鮮事?">
+            </textarea>
+            <small className={style.small}>{message}</small>
+          </div>
           <button className={style.button} onClick={handleSubmit}>推文</button>
         </div>
       </div>

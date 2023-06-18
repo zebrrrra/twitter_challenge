@@ -11,8 +11,6 @@ const MainPost = ({ user, onTweetSubmit }) => {
   const navigate = useNavigate();
   const userAvatar = localStorage.getItem('avatar') ? localStorage.getItem('avatar') : user?.avatar
 
-  // console.log(user?.avatar)
-  // console.log(userAvatar)
 
   const handleSubmit = async () => {
 
@@ -57,15 +55,21 @@ const MainPost = ({ user, onTweetSubmit }) => {
     navigate('/main');
   }
 
-
-
-
-
+  <div className={style.textareaContainer}>
+    <textarea
+      style={{ resize: 'none', width: '88%' }}
+      value={tweetText}
+      onChange={(e) => setTweetText(e.target.value)}
+      placeholder="有什麼新鮮事?">
+    </textarea>
+    <small className={style.small}>{message}</small>
+  </div>
 
 
   const handleAvatarClick = (userId) => {
     navigate(`/${userId}`);
   };
+
 
   if (!user) {
     return null;//可以改成加載loading
@@ -74,13 +78,15 @@ const MainPost = ({ user, onTweetSubmit }) => {
     <div className={style.mainPostContainer} >
       <img className={style.avatar} src={userAvatar} onClick={() => handleAvatarClick(user.id)} alt="avatar" />
       <div className={style.tweetArea}>
-        <div className={style.tweetText}>
-          <textarea className={style.tweetText}
-            type="text"
-            placeholder="有什麼新鮮事？"
-            value={tweetText}
-            onChange={(e) => setTweetText(e.target.value)}
-          /></div>
+        <textarea className={style.tweetText}
+          type="text"
+          placeholder="有什麼新鮮事？"
+          value={tweetText}
+          onChange={(e) => setTweetText(e.target.value)}
+        />
+        <small className={style.small}>{message}</small>
+        {/* <div className={style.tweetText}>
+        </div> */}
       </div>
       <button className={style.tweetButton} onClick={handleSubmit}>推文</button>
       {/*<button className={style.tweetButton} onClick={handleOpen}>推文</button>
