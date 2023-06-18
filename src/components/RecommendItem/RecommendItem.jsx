@@ -1,4 +1,5 @@
 import style from './RecommendItem.module.scss';
+import { useNavigate } from 'react-router-dom';
 
 const RecommendItem = ({user, onFollow, onUnfollow})=>{
 const buttonClass = user.isCurrentUserFollowed ?style.buttonFollowing:style.buttonFollower;
@@ -11,10 +12,15 @@ const handleButtonClick = () => {
       onFollow(user.id);
     }
   }
+
+  const navigate = useNavigate();
+  const handleAvatarClick = (userId) => {
+      navigate(`/${userId}`);
+    };
 return(
     <div className={style.recommendCard}>
         
-        <img className={style.avatar} src={user.avatar}alt="Avatar"/>
+        <img src={user.avatar} className={style.avatar} onClick={() => handleAvatarClick(user.id)} alt="avatar"/>
         <div className={style.userInfo}>
         <div className={style.name}>{user.name} </div>
         <div className={style.userName}>@{user.account}</div>
