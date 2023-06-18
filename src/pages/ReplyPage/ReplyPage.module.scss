@@ -44,5 +44,11 @@
   background-color: #fff;
   padding-right: 25px;
   overflow-y: auto;
-  width: 640px;
+    //隱藏滾動條 (不一定每個瀏覽器有效)
+    scrollbar-width: none;
+    -ms-overflow-style: none; //ms
+    &::-webkit-scrollbar { //scss寫法
+      display: none;
+  }
+    
 }

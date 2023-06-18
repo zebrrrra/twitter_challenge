@@ -4,7 +4,6 @@
 
 .HeaderContainer {
   height: 74px;
-  width: 100%;
   display: flex;
   flex-direction: row;
   justify-content: start;
@@ -28,7 +27,6 @@
   justify-content: flex-start;
   text-align: left;
   margin-left: 16px;
-
   .name {
     @include fontStyle(18, 700);
   }
@@ -43,5 +41,7 @@
 .Header {
   @include fontStyle(24, 700);
   line-height: 26px;
-  padding-top: 26px;
+  padding-top: 24px;
+  padding-bottom: 24px;
+  padding-left: 16px;
 }
