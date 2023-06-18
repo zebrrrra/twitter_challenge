@@ -66,6 +66,7 @@ const ReplyModal = ({
 
     const { success } = await postATweetReply({ tweetId, comment })
     console.log(success)
+    setUpdateTag(prev => !prev);
     if (success) {
       Swal.fire({
         title: '內容成功提交',
@@ -82,7 +83,7 @@ const ReplyModal = ({
       return
     }
   }
-  setUpdateTag(prev => !prev);
+
   
   return (
     <div className={style.background}>
