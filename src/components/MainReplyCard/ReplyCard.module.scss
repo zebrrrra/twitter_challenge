@@ -7,7 +7,7 @@
     gap: 16px;
     box-sizing: border-box;
     border: 1px solid $border-color;
-    cursor: pointer;
+
 
 }
 
@@ -17,6 +17,7 @@
     align-items: start;
     gap: 16px;
     box-sizing: border-box;
+    
 
 }
 
@@ -33,6 +34,7 @@
     flex-direction: column;
     justify-content: start;
     width: calc(100% - 50px);
+    
 
 }
 
