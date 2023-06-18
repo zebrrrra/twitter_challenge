@@ -99,7 +99,7 @@ const LikeCard = ({ User,like,onLike,onUnLike }) => {
 
             </div>
             </div>
-            {openModal && <ReplyModal open={openModal} onClose={(value) => setOpenModal(value)} User={User} like={like} tweetId={like.Tweet.id} currentUserAvatar={currentUserAvatar} />}
+            {openModal && <ReplyModal open={openModal} onClose={(value) => setOpenModal(value)} User={User}tweet={like.Tweet} tweetId={like.Tweet.id} currentUserAvatar={currentUserAvatar} />}
         </>
     );
  
