@@ -8,6 +8,7 @@ height: 53px;
 border-left: 1px solid $border-color;
 border-right: 1px solid $border-color;
 border-bottom: 1px solid $border-color;
+width: 640px;
 }
 
 .tab{
@@ -31,3 +32,10 @@ border-bottom: 1px solid $border-color;
     color: #FF6600;
     border-bottom: 2px solid #FF6600;
     }
+
+
+.noFollow{
+    @include fontStyle(15,700);
+    margin-top: 20px;
+
+}

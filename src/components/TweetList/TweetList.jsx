@@ -22,6 +22,11 @@ const TweetList =({ userId })=>{
         fetchTweets();
     },[userId,updateTag]); 
 
+
+    if (tweets.length === 0) {
+        return <h4>這邊還沒有推文。要追加什麼嗎?</h4>;
+      }
+
     return updateLikes?updateLikes.map((tweet,index) => 
     <TweetCard 
     key={tweet.id} 

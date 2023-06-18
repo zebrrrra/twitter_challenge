@@ -76,7 +76,7 @@ const FollowTab = ({ userId, loginUserId }) => {
     const users = Array.isArray(followingUsers) ? followingUsers : Array.from(followingUsers);
     
     if (users.length === 0) {
-      return <div>No following users</div>;
+      return <div className={style.noFollow}>這邊還沒有人...</div>;
     }
     
     return (
@@ -96,7 +96,7 @@ const FollowTab = ({ userId, loginUserId }) => {
     const users = Array.isArray(followerUsers) ? followerUsers : Array.from(followerUsers);
     
     if (users.length === 0) {
-      return <div>No follower users</div>;
+      return <div className={style.noFollow}>這邊還沒有人...</div>;
     }
     
     return (

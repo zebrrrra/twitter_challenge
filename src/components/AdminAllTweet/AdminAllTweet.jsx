@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { getAdminAllTweets } from '../../apis/admin';
 import { deleteAdminUserTweets } from '../../apis/admin';
 import AdminTweetCard from '../AdminTweetCard/AdminTweetCard';
-
+import Swal from 'sweetalert2';
 
 
 
@@ -11,6 +11,14 @@ const AdminAllTweets =({ userId })=>{
     const [allUserTweets, setAllUserTweets] = useState([]);
 
     const handleOnDelete = async (id) => {
+        Swal.fire({
+            title: '你確定要刪除嗎?',
+            text: '刪除後不可回復',
+            icon: 'warning',
+            showCancelButton: true,
+
+        }).then(async (result) => {
+            if (result.isConfirmed){
         try {
             const response = await deleteAdminUserTweets(id);
             if (response && response.status === 'success') {
@@ -22,6 +30,7 @@ const AdminAllTweets =({ userId })=>{
             console.error("error while deleting tweet: ", error);
             return null;
         }
+    }})
     };
         
     

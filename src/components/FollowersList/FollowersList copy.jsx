@@ -1,4 +1,4 @@
-import FollowCard from "../FollowCard/FollowCard";
+/*import FollowCard from "../FollowCard/FollowCard";
 import { postFollowShips,deleteFollowShips } from "../../apis/followship";
 import { getUserFollowers,getUsers } from "../../apis/user";
 import { useEffect,useState } from "react";
@@ -69,4 +69,4 @@ const FollowersList = ({userId})=>{
     )
     };
 
-export default FollowersList;
+export default FollowersList;*/

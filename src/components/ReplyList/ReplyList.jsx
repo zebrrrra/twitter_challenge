@@ -18,6 +18,10 @@ const ReplyList = ({ userId }) => {
     fetchReplies();
   }, [userId]);
 
+  if (replies.length === 0) {
+    return <h4>這邊還沒有回覆。要追加什麼嗎?</h4>;
+  }
+
   return replies.map(reply => <ReplyCard key={reply.id} reply={reply} type="reply" />);
 }
 

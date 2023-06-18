@@ -29,6 +29,10 @@ const LikeList =({userId })=> {
      }, [userId,updateTag] );
      
 
+     if (likes.length === 0) {
+        return <h4>這邊還沒有喜歡的回覆。要追加什麼嗎?</h4>;
+      }
+
 return updateLikes?updateLikes.map((like,index) => 
 <LikeCard 
 like={like}
