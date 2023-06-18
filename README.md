@@ -24,23 +24,24 @@
 3. 管理者可以查看所有已註冊用戶的資訊，包含頭像、背景圖片、暱稱、帳號、推文數、愛心數量等。
 
 ## 作業環境
-React: 18.2.0
-React-scripts: 4.0.3
-jsonwebtoken: 8.5.1
+*React: 18.2.0
+*React-scripts: 4.0.3
+*jsonwebtoken: 8.5.1
 
 
 ## 如何安裝
 1. 確認已經有npm及Node.js。
 2. 下載本專案。
 3. 安裝本專案，使用
-   `npm install`
+  * `npm install`
 4. 安裝完成後使用
-   `npm start`
+    *`npm start`
 5.瀏覽器會自動開啟 [http://localhost:3000](http://localhost:3000) ，出現畫面。
 
 
 ## 開發人員
 
-
+*
+*
 
 
