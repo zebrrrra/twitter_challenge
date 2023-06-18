@@ -27,6 +27,7 @@ const AdminTweetCard = ({ tweet,handleOnDelete }) => {
         description,
         createdAt,
     } = tweet;
+    const shortDescription = description.length > 50 ? description.slice (0,50) +'...':description;
 
 
         return (
@@ -40,7 +41,7 @@ const AdminTweetCard = ({ tweet,handleOnDelete }) => {
                             <span className={style.userIdTime}>@{account}・{getTime(createdAt)}</span>
                         </div>
                         <div className={style.tweet}>
-                            {description} 
+                            {shortDescription} 
                         </div>
         
                     </div>

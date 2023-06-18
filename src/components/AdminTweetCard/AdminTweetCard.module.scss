@@ -1,3 +1,5 @@
+@import '../../style//base.scss';
+
 .tweetCardContainer {
     display: flex;
     flex-direction: column;
@@ -6,6 +8,8 @@
     height: 103px;
     margin-right: 131px;
     box-sizing: border-box;
+    width: 100%;
+    border: 1px solid $border-color; 
 
 }
 
@@ -79,6 +83,7 @@
     align-items: center;
     padding-top: 8px;
     padding-bottom: 8px;
+    width: 100%;
 }
 
 .reply {

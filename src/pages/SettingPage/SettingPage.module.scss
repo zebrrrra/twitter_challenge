@@ -68,14 +68,17 @@
   justify-self: end;
 }
 
-
-
-
-
-.middleColumn {
-  flex: 3;
-  position: relative;
-  background-color: #fff;
-  padding-right: 25px;
-  overflow-y: auto;
+.settingHeader{
+  @include fontStyle(24,700);
+    height: 74px;
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    align-items: center;
+    border-left: 1px solid $border-color;
+    border-right: 1px solid $border-color;
+    border-bottom: 1px solid $border-color;
+    
+  
+  
 }

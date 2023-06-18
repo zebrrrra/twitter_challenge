@@ -121,7 +121,7 @@ const SettingPage = () => {
           <Navbar />
         </div>
         <div className={style.middleColumn}>
-          <Header />
+          <div className={style.settingHeader}>帳戶設定</div>
           <form className={style.form} onSubmit={handleSubmit}>
             {authInputCollection.map(({ label, id, type, placeholder, value, maxLength, onChange }) => (
               <AuthInput

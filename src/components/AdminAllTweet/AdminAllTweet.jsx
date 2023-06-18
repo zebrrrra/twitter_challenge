@@ -10,8 +10,6 @@ import AdminTweetCard from '../AdminTweetCard/AdminTweetCard';
 const AdminAllTweets =({ userId })=>{
     const [allUserTweets, setAllUserTweets] = useState([]);
 
-
-
     const handleOnDelete = async (id) => {
         try {
             const response = await deleteAdminUserTweets(id);
@@ -38,6 +36,8 @@ const AdminAllTweets =({ userId })=>{
         }
         fetchTweets();
     }, [ userId]); 
+
+    
 
     return allUserTweets.map(allUsertweet => {
     if(!allUsertweet.User){

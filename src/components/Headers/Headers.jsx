@@ -55,9 +55,6 @@ const Header = ({userId, setCurrentSection}) => {
         <span className={style.name}>{name}</span>
         <div className={style.tweetCount}>{tweetCount} 推文</div></div>
     </>;
-    } else if (path.includes('/settings')) {
-        headerContext = 
-        <div className={style.Header}>帳戶設定</div>
     } 
     else if (path.includes(`/tweets/:tweetId`)){
         headerContext =

@@ -1,3 +1,5 @@
+@import '../../style//base.scss';
+
 .recommendListContainer {
     position: relative;
     width: 100%;
@@ -5,7 +7,7 @@
     top: 16px;
     /* grayscale/dark-20 */
     background: #FAFAFB;
-    //border-radius: 16px; 
+    border: 1px solid $secondary-color;
 }
 
 /* card/popular */
@@ -15,18 +17,17 @@
     align-items: flex-start;
     margin-left: 25px;
     //position: relative;
-    height: 82px;
+    height: 72px;
     box-sizing: border-box; //直接填滿
 }
 
 .avatar {
-    //position: absolute;
     width: 50px;
     height: 50px;
     margin-right: 16px;
     border-radius: 50%; 
     cursor: pointer;
-    //top: 16px;
+
 }
 
 .userInfo {
@@ -38,12 +39,7 @@
 
 }
 
-.name,
-.userName {
-    font-family: 'Noto Sans TC';
-    font-style: normal;
 
-}
 
 .name {
     width: auto; // 讓名稱的寬度可以自適應
@@ -66,8 +62,7 @@
 // buttonFollower取消flex
 .buttonFollowing,
 .buttonFollower {
-    //flex-direction: column;
-    //justify-content: center;
+  
     align-items: center;
     text-align: center;
     height: 40px;

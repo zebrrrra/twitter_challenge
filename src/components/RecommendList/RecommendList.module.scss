@@ -1,3 +1,5 @@
+@import '../../style//base.scss';
+
 .recommendListContainer {
     position: relative;
     width: 100%;
@@ -64,17 +66,13 @@
 // buttonFollower取消flex
 .buttonFollowing,
 .buttonFollower {
-    //flex-direction: column;
-    //justify-content: center;
+    @include fontStyle(16,400);
     align-items: center;
     text-align: center;
     height: 40px;
     margin-left: 16px;
-    font-weight: 400;
-    font-size: 16px;
     line-height: 24px;
     border-radius: 50px;
-    font-family: 'Noto Sans TC', sans-serif;
     font-style: normal;
     //right: 16px;
     top: calc(50% - 40px/2); //figma:直接除二
@@ -86,19 +84,22 @@
     display: flex;
     width: 80px;
     font-style: normal;
-    color: #FFFFFF;
+    color:$background-color;
     flex: none;
-    background: #FF6600;
+    background: $brand-color;
 
 }
 
 .buttonFollower {
-    //align-items: flex-start;
     width: 64px;
-    /* grayscale/dark-0 */
-    background: #FFFFFF;
-    /* color/brand/main */
-    color: #FF6600;
-    /* color/brand/main */
-    border: 1px solid #FF6600;
+    background: $background-color;
+    color: $brand-color;
+    border: 1px solid $brand-color;
+}
+
+.RecommendHeader{
+@include fontStyle(24,700);
+@include box (96,24);
+height: 74px;
+    
 }
