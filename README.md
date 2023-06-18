@@ -2,10 +2,12 @@
 
 此為ALPHA CAMP 小組協作畢業專案，本組採前後分離，由2位前端2位後端開發。
 ## 預覽
+
 ![image](https://github.com/zebrrrra/AC_twitter_frontend/assets/123958778/c1aede27-7451-42e3-95c5-771b7732e90f)
 ![image](https://github.com/zebrrrra/AC_twitter_frontend/assets/123958778/0d3b4334-1786-4d2e-8325-2057915ed8dd)
 
 ## 專案功能
+
 ### 前台
 1. 一般使用者可以註冊、登入。
 2. 可以在首頁查看所有推文。
@@ -25,25 +27,35 @@
 2. 管理者可以看所有網站推文，並刪除推文。
 3. 管理者可以查看所有已註冊用戶的資訊，包含頭像、背景圖片、暱稱、帳號、推文數、愛心數量等。
 
+
+## 網站位置
+
+Website - https://zebrrrra.github.io/AC_twitter_frontend
+
 ## 作業環境
-*React: 18.2.0
-*React-scripts: 4.0.3
-*jsonwebtoken: 8.5.1
+
+* React: 18.2.0
+* React-scripts: 4.0.3
+* jsonwebtoken: 8.5.1
 
 
 ## 如何安裝
+
 1. 確認已經有npm及Node.js。
 2. 下載本專案。
 3. 安裝本專案，使用
-  * `npm install`
+   `npm install`
 4. 安裝完成後使用
-    *`npm start`
+    `npm start`
 5.瀏覽器會自動開啟 [http://localhost:3000](http://localhost:3000) ，出現畫面。
 
 
 ## 開發人員
 
-*
-*
-
+### 前端
+[zebrrrra](https://github.com/zebrrrra)<br>
+[Jena Lin](https://github.com/J6127)
+### 後端
+[kim1037](https://github.com/kim1037)<br>
+[klu0926](https://github.com/klu0926)
 
