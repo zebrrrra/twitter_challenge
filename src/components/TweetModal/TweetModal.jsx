@@ -16,6 +16,7 @@ const TweetModal = ({ open, onClose, onTweetSubmit }) => {
   const handleClick = () => {
     onClose(false)
   }
+  const userAvatar = localStorage.getItem('avatar')
 
   const handleSubmit = async () => {
     if (!tweetText.trim()) {
@@ -69,7 +70,7 @@ const TweetModal = ({ open, onClose, onTweetSubmit }) => {
 
         <div className={style.ContentContainer}>
           <div className={`${style.avatarContainer} ${style.down}`}>
-            <img src={user.avatar} alt="avatar" />
+            <img src={userAvatar} alt="avatar" />
           </div>
           <textarea
             style={{ resize: 'none', width: '88%' }}

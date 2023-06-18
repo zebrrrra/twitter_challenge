@@ -4,7 +4,7 @@
   width: 100%;
   position: relative;
   padding: 16px 16px 0;
-  outline: auto;
+  border: #E6ECF0 1px solid;
 }
 
 // 還有一條灰線沒有實現
@@ -71,7 +71,10 @@
   width: 100%;
   display: flex;
   justify-content: flex-start;
-  margin: 16px 0;
+  // margin: 16px 0;
+  padding: 16px 0;
+  height: 60px;
+  border-bottom: #E6ECF0 1px solid;
 
   .data {
     @include fontStyle(19, 700);
@@ -96,7 +99,9 @@
   width: 100%;
   display: flex;
   align-items: center;
-  margin: 20px 0;
+  padding: 20px 0;
+  height: 68px;
+  border-bottom: #E6ECF0 1px solid;
 
   svg {
     cursor: pointer;

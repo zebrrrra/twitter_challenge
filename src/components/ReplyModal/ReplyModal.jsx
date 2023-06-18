@@ -25,15 +25,14 @@ const ReplyModal = ({
   onClose, open, tweetId, tweet, currentUserAvatar, onReplySubmit }) => {
   const [comment, setComment] = useState('')
   const [message, setMessage] = useState('')
-  const { user, payload } = useAuth()
+  // const { user, payload } = useAuth()
   const location = useLocation()
 
   const isReplyPage = location.pathname === `/tweets/${tweetId}`
 
   if (!open) return
-  // console.log(`user`.avatar)// no updata img
-  console.log(user)
-  console.log(payload)
+
+  const userAvatar = localStorage.getItem('avatar')
 
   const { description, createdAt, User } = tweet || {}
   const { account, avatar, name } = User || {}
@@ -97,7 +96,7 @@ const ReplyModal = ({
             </div>
             <Line className={style.line} />
             <div className={`${style.avatarContainer} ${style.down}`}>
-              <img src={currentUserAvatar} alt="回覆者avatar" />
+              <img src={userAvatar} alt="回覆者avatar" />
             </div>
           </div>
           <div className={style.rightContainer}>
@@ -107,9 +106,12 @@ const ReplyModal = ({
               <p className={style.hint}>回覆給<span>@{account}</span></p>
             </div>
             <div className={style.rightBottomContainer}>
-              <div className={style.tweetText}>
-                <input className={style.tweetText} type="text" placeholder="推你的回覆" required onChange={(e) => setComment(e.target.value)} />
-              </div>
+              <textarea
+                style={{ resize: 'none', width: '88%' }}
+                className={style.tweetText}
+                value={comment}
+                onChange={(e) => setComment(e.target.value)}
+                placeholder="推你的回覆"></textarea>
               <div className={style.ReplyButtonContainer}>
                 {isError && <small>{message}</small>}
                 <button onClick={handleReplyClick}>回覆</button>
