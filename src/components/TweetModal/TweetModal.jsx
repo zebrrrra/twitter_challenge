@@ -44,7 +44,6 @@ const TweetModal = ({ open, onClose, onTweetSubmit }) => {
     }
 
     const { status } = await postTweets(tweetText)
-    console.log(status)
     if (status === 'success') {
       Swal.fire({
         title: '內容成功提交',
@@ -53,12 +52,14 @@ const TweetModal = ({ open, onClose, onTweetSubmit }) => {
         timer: 3000,
         position: 'top',
       });
+
+      if (typeof onTweetSubmit === 'function'){
       onTweetSubmit(tweetText)
-      onClose(false)
       return
     }
+    onClose(false)}
     setTweetText('');
-    navigate(`/${user.id}`);//要測試
+    //navigate(`/${user.id}`);//要測試
     // window.location.reload();//直接刷新頁面
   }
   if (!open) return

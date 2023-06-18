@@ -18,17 +18,13 @@
   //border-radius: 16px;
 }
 
-.leftColumn,
-.rightColumn {
-  background-color: #fff;
-
-  height: 100vh; /* 使用 viewport 高度 */
-}
-
-
 .leftColumn {
+  position: relative;
+  background-color: #fff;
+  height: 100vh; /* 使用 viewport 高度 */
   margin-right: 24px;
   flex:0 0 200px;
+  z-index: 1;
 }
 
 .middleColumn {
