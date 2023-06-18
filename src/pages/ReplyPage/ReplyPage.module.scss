@@ -26,16 +26,20 @@
   /* 固定在頂部 */
   height: 100vh;
   /* 使用 viewport 高度 */
+
+  
 }
 
 .leftColumn {
   margin-right: 24px;
   flex: 0 0 200px;
+  z-index: 1;
 }
 
 .rightColumn {
   margin-right: 24px;
   flex: 0 0 200px;
+
 }
 
 .middleColumn {
@@ -49,6 +53,8 @@
     -ms-overflow-style: none; //ms
     &::-webkit-scrollbar { //scss寫法
       display: none;
+      
   }
+  
     
 }
