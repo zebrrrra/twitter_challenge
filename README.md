@@ -2,6 +2,8 @@
 
 此為ALPHA CAMP 小組協作畢業專案，本組採前後分離，由2位前端2位後端開發。
 ## 預覽
+![image](https://github.com/zebrrrra/AC_twitter_frontend/assets/123958778/c1aede27-7451-42e3-95c5-771b7732e90f)
+![image](https://github.com/zebrrrra/AC_twitter_frontend/assets/123958778/0d3b4334-1786-4d2e-8325-2057915ed8dd)
 
 ## 專案功能
 ### 前台
