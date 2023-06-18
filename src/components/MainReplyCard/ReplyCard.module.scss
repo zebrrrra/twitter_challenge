@@ -1,9 +1,13 @@
+@import '../../style/base.scss';
+
 .tweetCardContainer {
     display: flex;
     flex-direction: column;
-    padding: 0;
+    padding: 16px;
     gap: 16px;
     box-sizing: border-box;
+    border: 1px solid $border-color;
+    cursor: pointer;
 
 }
 
@@ -21,6 +25,7 @@
     width: 50px;
     height: 50px;
     border-radius: 50%;
+    cursor: pointer;
 }
 
 .contentContainer {
@@ -39,35 +44,32 @@
 }
 
 .name {
-    font-family: 'Noto Sans TC';
-    ;
+    @include fontStyle(16,700);
     font-style: normal;
-    color: #171725;
-    font-weight: 700;
-    font-size: 16px;
+    color: $main-text-color;
     line-height: 26px;
     margin-right: 8px;
 }
 
 .userIdTime {
+    @include fontStyle(14,400);
     font-weight: 400;
     font-size: 14px;
     line-height: 22px;
-    color: #6C757D;
+    color: $secondary-color;
 }
 
 
 .tweet {
+    @include fontStyle(16,400);
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     text-align: left;
     padding: auto;
     width: 528px;
-    font-weight: 400;
-    font-size: 16px;
     line-height: 26px;
-    color: #171725;
+    color:  $main-text-color;
 }
 
 .replyContainer {
@@ -80,13 +82,13 @@
 
 .reply {
     font-size: 14px;
-    color: #6C757D;
+    color: $secondary-color;
     margin-right: 2px;
 }
 
 .replyId {
     font-size: 14px;
-    color: #FF6600;
+    color: $brand-color;
 }
 
 .countContainer {

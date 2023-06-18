@@ -1,14 +1,16 @@
 import {ReactComponent as LikeIcon} from '../../assets/icon/like_1.svg';
 import {ReactComponent as IsLikeIcon} from '../../assets/icon/like.svg';
-import replyIcon from '../../assets/icon/reply_1.svg'
+import { ReactComponent as Reply } from "../../assets/icons/outlinedreply.svg"
 import style from './LikeCard.module.scss';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
+import ReplyModal from "../ReplyModal/ReplyModal"
 import { useNavigate } from 'react-router-dom';
+import { useState } from "react";
+import { useAuth } from '../../context/AuthContext';
 
 dayjs.extend(relativeTime);
 dayjs.locale('zh-tw');
-//要算時間用-先保留試著用Day.js
 function getTime(createdAt) {
     const currentTime = dayjs();
     const createdTime = dayjs(createdAt);
@@ -22,20 +24,40 @@ function getTime(createdAt) {
 
 
 
-const LikeCard = ({ like,onLike,onUnLike }) => {
+const LikeCard = ({ User,like,onLike,onUnLike }) => {
+    const [openModal, setOpenModal] = useState(false)
+    const [currentUserAvatar, setCurrentUserAvatar] = useState(null)
+    
+    const { user } = useAuth()
+    const currentUserId = user && user.id
+    
     const navigate = useNavigate();
-    const handleAvatarClick = (userId) => {
-        navigate(`/${userId}`);
-      };
 
-    const handleButtonClick =  () =>{
-        console.log('like:',onLike, 'unlike:', onUnLike,'isCurrentUserLiked:', like.isCurrentUserLiked);
-        if (like.isCurrentUserLiked){
-         onUnLike (like.Tweet.id);
-        } else{
-            onLike (like.Tweet.id);
+    const handleAvatarClick = (event, tweetOwnerId) => {
+        event.stopPropagation();
+        navigate(`/${tweetOwnerId}`);
+    };
+
+    const handleButtonClick = (e) => {
+        e.stopPropagation()
+        console.log('like:', onLike, 'unlike:', onUnLike, 'isCurrentUserLiked:', like.isCurrentUserLiked);
+        if (like.isCurrentUserLiked) {
+            onUnLike(like.id);
+        } else {
+            onLike(like.id);
         }
     };
+    const handleModalClick = (e) => {
+        e.stopPropagation();
+        setOpenModal(true)
+    }
+
+    const handleReplyPageClick = (tweetId) => {
+
+        navigate(`/tweets/${tweetId}`);
+    }
+
+
     const {
         Tweet:{
         User: {name,account,avatar}= {},
@@ -52,8 +74,8 @@ const LikeCard = ({ like,onLike,onUnLike }) => {
     return (
         <>
             <div className={style.tweetCardContainer}>
-            <div className={style.tweetCard}>
-            <img src={avatar} className={style.avatar} onClick={() => handleAvatarClick(like.Tweet.User.id)}alt="avatar"/>
+            <div className={style.tweetCard} onClick={() => handleReplyPageClick(like.id)}>
+            <img src={avatar} className={style.avatar} onClick={(event) => handleAvatarClick(event, like.User.id)} alt="avatar" />
                 <div className={style.contentContainer}>
                     <div className={style.nameAndUserId}>
                         <span className={style.name}>{name}</span>
@@ -64,7 +86,7 @@ const LikeCard = ({ like,onLike,onUnLike }) => {
                     </div>
                     <div className={style.countContainer}>
                         <div className={style.count}>
-                            <img src={replyIcon} alt="reply" />{repliesCount}</div>
+                        <Reply className={style.replyIcon} onClick={handleModalClick}  />{repliesCount}</div>
                         <div className={style.count}>
                            {isCurrentUserLiked? 
                                 <IsLikeIcon className={style.isLikeIcon} onClick={handleButtonClick}/>
@@ -77,6 +99,7 @@ const LikeCard = ({ like,onLike,onUnLike }) => {
 
             </div>
             </div>
+            {openModal && <ReplyModal open={openModal} onClose={(value) => setOpenModal(value)} User={User} like={like} tweetId={like.id} currentUserAvatar={currentUserAvatar} />}
         </>
     );
  
