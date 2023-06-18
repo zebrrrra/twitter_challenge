@@ -7,6 +7,7 @@ import { useState } from "react"
 import Swal from "sweetalert2"
 import { postATweetReply } from "../../apis/tweet"
 import { useLocation } from 'react-router-dom';
+import { useUpdateTag } from '../../context/UpdateTagContext';
 
 dayjs.extend(relativeTime);
 dayjs.locale('zh-tw');
@@ -27,7 +28,7 @@ const ReplyModal = ({
   const [message, setMessage] = useState('')
   const { user } = useAuth()
   const location = useLocation()
-
+  const { setUpdateTag } = useUpdateTag();
   const isReplyPage = location.pathname === `/tweets/${tweetId}`
 
   if (!open) return
@@ -81,7 +82,8 @@ const ReplyModal = ({
       return
     }
   }
-
+  setUpdateTag(prev => !prev);
+  
   return (
     <div className={style.background}>
       <div className={style.container}>
