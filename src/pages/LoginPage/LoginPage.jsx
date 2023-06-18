@@ -34,23 +34,22 @@ const LoginPage = () => {
       return
     }
 
-    const { success, message } = await login({ account, password });
+    const response = await login({ account, password });
 
-    if (success) {
-      Swal.fire({
-        title: '登入成功',
-        icon: 'success',
-        showConfirmButton: false,
-        timer: 2000,
-        position: 'top',
-      });
-      setResponseError(false)
-      navigate('/main')
-      return
-    }
-
-    if (!success) {
-      console.log(responseError)
+    if (response.success) {
+      if (response.role === 'user') {
+        Swal.fire({
+          title: '登入成功',
+          icon: 'success',
+          showConfirmButton: false,
+          timer: 2000,
+          position: 'top',
+        });
+        setResponseError(false)
+        navigate('/main')
+        return
+      }
+    } else {
       Swal.fire({
         title: '登入失敗',
         icon: 'error',
@@ -59,10 +58,11 @@ const LoginPage = () => {
         position: 'top',
       });
       setResponseError(true)
-      setErrorInfo(message)
+      setErrorInfo(response.message)
+      return
     }
-    return
   }
+
   useEffect(() => {
     if (isAuthenticated) {
       navigate('/main');
@@ -100,4 +100,7 @@ const LoginPage = () => {
     </div>
   )
 }
+
+
+
 export default LoginPage

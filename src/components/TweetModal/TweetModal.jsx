@@ -13,11 +13,12 @@ const TweetModal = ({ open, onClose, onTweetSubmit }) => {
   const { user } = useAuth();
   const navigate = useNavigate();
 
+
+  const userAvatar = localStorage.getItem('avatar') ? localStorage.getItem('avatar') : user.avatar
+
   const handleClick = () => {
     onClose(false)
   }
-  const userAvatar = localStorage.getItem('avatar')
-
   const handleSubmit = async () => {
     if (!tweetText.trim()) {
       Swal.fire({

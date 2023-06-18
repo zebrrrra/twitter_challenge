@@ -28,18 +28,20 @@ const AdminLoginPage = () => {
       return
     }
 
-    const { success, message } = await adminLogin({ account, password })
+    const response = await adminLogin({ account, password })
 
-    if (success) {
-      Swal.fire({
-        title: '登入成功',
-        icon: 'success',
-        showConfirmButton: false,
-        timer: 2000,
-        position: 'top',
-      });
-      setResponseError(false)
-      return
+    if (response.success) {
+      if (response.role === 'admin') {
+        Swal.fire({
+          title: '登入成功',
+          icon: 'success',
+          showConfirmButton: false,
+          timer: 2000,
+          position: 'top',
+        });
+        setResponseError(false)
+        return
+      }
     } else {
       Swal.fire({
         title: '登入失敗',
@@ -49,7 +51,7 @@ const AdminLoginPage = () => {
         position: 'top',
       });
       setResponseError(true)
-      setErrorInfo(message)
+      setErrorInfo(response.message)
       return
     }
   }

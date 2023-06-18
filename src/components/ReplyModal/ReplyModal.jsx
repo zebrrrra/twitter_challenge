@@ -25,14 +25,14 @@ const ReplyModal = ({
   onClose, open, tweetId, tweet, currentUserAvatar, onReplySubmit }) => {
   const [comment, setComment] = useState('')
   const [message, setMessage] = useState('')
-  // const { user, payload } = useAuth()
+  const { user } = useAuth()
   const location = useLocation()
 
   const isReplyPage = location.pathname === `/tweets/${tweetId}`
 
   if (!open) return
 
-  const userAvatar = localStorage.getItem('avatar')
+  const userAvatar = localStorage.getItem('avatar') ? localStorage.getItem('avatar') : user.avatar
 
   const { description, createdAt, User } = tweet || {}
   const { account, avatar, name } = User || {}

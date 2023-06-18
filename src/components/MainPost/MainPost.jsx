@@ -5,13 +5,14 @@ import { postTweets } from "../../apis/tweet";
 import Swal from 'sweetalert2';
 
 
-const MainPost= ( {user, onTweetSubmit} ) => {
-   const [tweetText, setTweetText] = useState('');
-   const [message, setMessage] = useState('')
+const MainPost = ({ user, onTweetSubmit }) => {
+  const [tweetText, setTweetText] = useState('');
+  const [message, setMessage] = useState('')
   const navigate = useNavigate();
+  const userAvatar = localStorage.getItem('avatar') ? localStorage.getItem('avatar') : user.avatar
 
   const handleSubmit = async () => {
-    
+
     if (!tweetText.trim()) {
       Swal.fire({
         title: '內容不可空白',
@@ -35,7 +36,7 @@ const MainPost= ( {user, onTweetSubmit} ) => {
       return
     }
 
-    const { status} = await postTweets(tweetText)
+    const { status } = await postTweets(tweetText)
     console.log(status)
     if (status === 'success') {
       Swal.fire({
@@ -60,15 +61,15 @@ const MainPost= ( {user, onTweetSubmit} ) => {
 
 
   const handleAvatarClick = (userId) => {
-      navigate(`/${userId}`);
-    };
+    navigate(`/${userId}`);
+  };
 
   if (!user) {
     return null;//可以改成加載loading
   }
   return (
     <div className={style.mainPostContainer} >
-      <img className={style.avatar} src={user.avatar} onClick={()=>handleAvatarClick(user.id)}alt="avatar" />
+      <img className={style.avatar} src={userAvatar} onClick={() => handleAvatarClick(user.id)} alt="avatar" />
       <div className={style.tweetArea}>
         <div className={style.tweetText}>
           <textarea className={style.tweetText}

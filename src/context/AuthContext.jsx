@@ -85,7 +85,7 @@ export const AuthProvider = ({ children }) => {
                     setIsAuthenticated(true);
                     localStorage.setItem('token', token);
                     return {
-                        success: true, message: result.message
+                        success: true, message: result.message, role: result.data.user.role
                     }
                 } else {
                     setPayload(null);
@@ -97,6 +97,7 @@ export const AuthProvider = ({ children }) => {
             },
             logout: () => {
                 localStorage.removeItem('token');
+                localStorage.removeItem('avatar');
                 setPayload(null);
                 setIsAuthenticated(false);
             },
@@ -117,7 +118,7 @@ export const AuthProvider = ({ children }) => {
                     setIsAuthenticated(true);
                     localStorage.setItem('token', token);
                     return {
-                        success: true, message: result.message
+                        success: true, message: result.message, role: result.data.user.role
                     }
                 } else {
                     setPayload(null);
