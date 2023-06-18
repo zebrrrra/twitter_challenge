@@ -25,6 +25,7 @@ const ReplyCard = ({reply}) => {
 
     const {
         User: { name, account,avatar } = {},
+        Tweet: { User } = {},
         comment,
         createdAt,
     } = reply;
@@ -40,7 +41,7 @@ const ReplyCard = ({reply}) => {
                             </div>
                             <div className={style.replyContainer}>
                                 <div className={style.reply}>回覆</div>
-                                <div className={style.replyId}>@{account}</div> </div>
+                                <div className={style.replyId}>@{User?.account}</div> </div>
                             <div className={style.tweet}>
                                 {comment}
                             </div>
