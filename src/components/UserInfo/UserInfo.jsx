@@ -7,11 +7,12 @@ import EditModal from "../EditModal/EditModal"
 import { useState, useEffect } from "react"
 import { getUsers } from "../../apis/user"
 import { useAuth } from "../../context/AuthContext"
+import { useUpdateTag } from '../../context/UpdateTagContext';
 
 const UserInfo = ({ userId }) => {
   const [openModal, setOpenModal] = useState(false);
   const [currentData, setCurrentData] = useState(null)
-
+  const { updateTag, setUpdateTag } = useUpdateTag();
 
   const { account, avatar, cover, name, introduction, followersCount, followingsCount } = currentData || {};
 
@@ -32,7 +33,7 @@ const UserInfo = ({ userId }) => {
       }
     };
     fetchData();
-  }, [userId, openModal]);
+  }, [userId, openModal,setUpdateTag]);
 
 
 

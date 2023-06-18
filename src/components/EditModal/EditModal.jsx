@@ -5,6 +5,8 @@ import { ReactComponent as Upload } from "../../assets/icons/camera.svg"
 import { ReactComponent as Fork } from "../../assets/icons/Vector.svg"
 import { putUserProfile } from "../../apis/user"
 import Swal from "sweetalert2"
+import { useUpdateTag } from '../../context/UpdateTagContext';
+
 const EditModal = ({ open, onClose, userId, userData }) => {
 
   const { avatar, cover, name, introduction } = userData
@@ -17,7 +19,7 @@ const EditModal = ({ open, onClose, userId, userData }) => {
   const [preViewAvatar, setPreViewAvatar] = useState('');
   const [preViewCover, setPreViewCover] = useState('');
 
-
+  const { setUpdateTag } = useUpdateTag();
 
   // 預覽
   const handleAvatarUpload = (e) => {
@@ -73,6 +75,7 @@ const EditModal = ({ open, onClose, userId, userData }) => {
     }
 
     const { success } = await putUserProfile({ id: userId, name: editName, avatar: editAvatar, cover: editCover, introduction: editIntroduction })
+    setUpdateTag(prev => !prev);
     if (success) {
       Swal.fire({
         title: '編輯成功',
