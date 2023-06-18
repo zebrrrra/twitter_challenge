@@ -20,7 +20,6 @@ const LikeList =({userId })=> {
     useEffect(()=>{
         const fetchLikes = async () => {
             const data = await getUserLike(userId);  
-            console.log(data);//測試
             if (data) {
                 setLikes(data);
             }

@@ -13,7 +13,7 @@ const ReplyMain = () => {
   useEffect(()=>{
       const fetchTweets = async () => {
           const data = await getATweet(id);
-          console.log(data); //測試
+
           if (data) {
               setTweet(data);
           }

@@ -9,7 +9,6 @@ const [adminAllUser, setAdminAllUsers] = useState([]);
 useEffect(()=>{
     const fetchAdminUser =async ()=>{
         const data = await getAdminUsers();
-        console.log(data);
         if (data) {
             setAdminAllUsers(data);
         }

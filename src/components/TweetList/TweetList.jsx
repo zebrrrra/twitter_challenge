@@ -14,7 +14,6 @@ const TweetList =({ userId })=>{
     useEffect(()=>{
         const fetchTweets = async () => {
             const data = await getUserTweets(userId);
-            console.log(data); //測試
             if (data) {
                 setTweets(data);
             }

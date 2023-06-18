@@ -21,8 +21,6 @@ const FollowTab = ({ userId, loginUserId }) => {
     const fetchFollowersAndFollowings = async () => {
       const followingData = await getUserFollowings(userId);
       const followerData = await getUserFollowers(userId);
-      console.log('followerData:', followerData); 
-      console.log('followingData:', followingData); 
       if (followingData) {
         setFollowingUsers(followingData.map(user => ({
           ...user.Following,
@@ -57,7 +55,6 @@ const FollowTab = ({ userId, loginUserId }) => {
   }, [location.pathname]);
 
   const handleClick = (tabName) => {
-    console.log('Click event:', tabName);
     setActiveTab(tabName);
     switch (tabName) {
       case "追隨者":

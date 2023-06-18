@@ -16,7 +16,6 @@ import { useUpdateTag } from '../../context/UpdateTagContext';
         const fetchTopFollowers = async () => {
       
             const userData =await getTopFollowers();
-            console.log (userData);//測試
             if (userData) {
                 setUsers(userData);
             }

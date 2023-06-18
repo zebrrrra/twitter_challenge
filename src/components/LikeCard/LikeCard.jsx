@@ -40,7 +40,6 @@ const LikeCard = ({ User,like,onLike,onUnLike }) => {
 
     const handleButtonClick = (e) => {
         e.stopPropagation()
-        console.log('like:', onLike, 'unlike:', onUnLike, 'isCurrentUserLiked:', like.isCurrentUserLiked);
         if (like.isCurrentUserLiked) {
             onUnLike(like.id);
         } else {

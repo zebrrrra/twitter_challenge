@@ -13,7 +13,6 @@ const ProfilePage = () => {
   const { user } = useAuth()
   const navigate = useNavigate();
   // const{}=useParmas()
-  console.log(user)
 
   return (
     <div className={style.profileContainer}>

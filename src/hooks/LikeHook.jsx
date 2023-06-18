@@ -66,7 +66,6 @@ const useLike = ({ dataItems, currentUserId, setUpdateTag }) => {
       }
     }
   };
-  // console.log('likeTweetsat', likeTweets);
   return {
     likeTweets,
     handleLike,

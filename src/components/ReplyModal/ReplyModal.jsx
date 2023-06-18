@@ -65,7 +65,6 @@ const ReplyModal = ({
     }
 
     const { success } = await postATweetReply({ tweetId, comment })
-    console.log(success)
     if (success) {
       setUpdateTag(prev => !prev);
       Swal.fire({

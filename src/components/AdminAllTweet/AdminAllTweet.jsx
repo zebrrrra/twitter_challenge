@@ -38,7 +38,6 @@ const AdminAllTweets =({ userId })=>{
     useEffect(()=>{
         const fetchTweets = async () => {
             const data = await getAdminAllTweets();
-            console.log(data); //測試
             if (data) {
                 setAllUserTweets(data);
             }

@@ -47,10 +47,9 @@ const HandleProfilePage = () => {
   const { isAuthenticated, user } = useAuth();
   const matchFollowers = useMatch(":id/followers");
   const matchFollowings = useMatch(":id/followings")
-  console.log('userParamas', useParams());
+
 
   if (isAuthenticated && user) {
-    console.log(`id: ${id}, user.id: ${user.id}`);
     if (matchFollowers || matchFollowings) {
       return (<FollowPage />)
     } else if (id === String(user.id)) {

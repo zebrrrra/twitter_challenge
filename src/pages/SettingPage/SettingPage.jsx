@@ -25,14 +25,12 @@ const SettingPage = () => {
 
 
   const { putUserSetting, isAuthenticated, user } = useAuth()
-  // console.log(user)
   const currentUserId = user && user.id
 
 
 
   const handleSubmit = async (e) => {
     const id = user.id
-    console.log(id)
     e.preventDefault();
 
 
@@ -84,7 +82,6 @@ const SettingPage = () => {
       setErrorInfo(message)
       return
     }
-    // console.log(errorInfo)//空的
   }
   useEffect(() => {
     const fetchCurrentUserData = async () => {
@@ -99,13 +96,6 @@ const SettingPage = () => {
     fetchCurrentUserData()
   }, [currentUserId])
 
-  // useEffect(() => {
-  //   if (isAuthenticated) {
-  //     navigate('/login');
-  //   } else {
-  //     navigate('/:id/*');
-  //   }
-  // })
   const authInputCollection = [
     { label: '帳號', id: '帳號', type: 'text', placeholder: '請輸入帳號', value: account, onChange: (accountValue) => setAccount(accountValue) },
     { label: '名稱', id: 'name', type: 'text', placeholder: '請輸入使用者名稱', value: name, maxLength: 50, onChange: (nameValue) => setName(nameValue) },

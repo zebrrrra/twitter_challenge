@@ -38,7 +38,6 @@ const MainPost = ({ user, onTweetSubmit }) => {
     }
 
     const { status } = await postTweets(tweetText)
-    console.log(status)
     if (status === 'success') {
       Swal.fire({
         title: '內容成功提交',

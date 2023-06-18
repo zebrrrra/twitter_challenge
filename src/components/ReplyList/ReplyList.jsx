@@ -6,11 +6,9 @@ import { getUserRepliedTweets } from '../../apis/user';
 
 const ReplyList = ({ userId }) => {
   const [replies, setReplies] = useState([]);
-  console.log(userId);
   useEffect(() => {
     const fetchReplies = async () => {
       const data = await getUserRepliedTweets(userId);
-      console.log(data); // 測試
       if (data) {
         setReplies(data);
       }

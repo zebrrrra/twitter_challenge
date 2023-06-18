@@ -7,8 +7,6 @@ export const login = async ({ account, password }) => {
     return response.data
   } catch (err) {
     console.error('[Login Failed]:', err)
-    console.log(err.response)
-    console.log(err.response.data)
     return err.response.data
   }
 }
@@ -18,19 +16,11 @@ export const login = async ({ account, password }) => {
 export const register = async ({ account, name, password, email, checkPassword }) => {
   try {
     const response = await axios.post(`${baseUrl}/users`, { account, name, password, email, checkPassword })
-    // console.log(data)
     return response.data
-    // if (response.data.status === 'success') {
-    //   return { success: true, message: response.data.message }
-    // }
   } catch (err) {
-    console.log('err.response.data', err.response.data)
     return err.response.data
   }
 }
-// return {
-//   status: false, errorInfo: err.response.data.message
-// }
 
 export const adminLogin = async ({ account, password }) => {
 
@@ -41,8 +31,6 @@ export const adminLogin = async ({ account, password }) => {
     // 若要加上身份篩選data.data.user.role取得字串搭配{data}
 
   } catch (err) {
-    console.log('error message:', err.response.data.message)
-    console.log('error status:', err.response.status)
     return err.response.data
   }
 }
@@ -50,11 +38,6 @@ export const adminLogin = async ({ account, password }) => {
 
 export const putUserSetting = async ({ id, account, name, email, password, checkPassword }) => {
   try {
-    console.log('account:', account)
-    console.log('name:', name)
-    console.log('email:', email)
-    console.log('password:', password)
-    console.log('checkPassword:', checkPassword)
 
     const token = localStorage.getItem('token')
     const response = await axios.put(`${baseUrl}/users/${id}`, { account, name, email, password, checkPassword },
@@ -65,15 +48,10 @@ export const putUserSetting = async ({ id, account, name, email, password, check
         },
       }
     )
-    console.log(response)
     if (response.data.status === 'success') {
-      console.log('成功')
       return response.data
     }
   } catch (err) {
-    console.log('失敗')
-    console.log(err.response.data)
-    console.log(err.response)
     // return err.response
     return err.response.data
   }
@@ -82,7 +60,6 @@ export const putUserSetting = async ({ id, account, name, email, password, check
 
 export const putUserProfile = async ({ id, name, avatar, cover, introduction }) => {
   const token = localStorage.getItem('token')
-  console.log(token)
   try {
 
     const formData = new FormData();
@@ -100,7 +77,6 @@ export const putUserProfile = async ({ id, name, avatar, cover, introduction }) 
     });
     return { success: true, message: response.data.message }
   } catch (err) {
-    console.log('error', err)
     return { success: false, message: err.response.data.message }
   }
 }
@@ -142,7 +118,6 @@ export const getUserTweets = async (id) => {
 
 //GET /api/users/:id/replied_tweets 看見某使用者發過回覆的推文
 export const getUserRepliedTweets = async (id) => {
-  //const token ='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTQsImVtYWlsIjoidXNlcjFAZXhhbXBsZS5jb20iLCJuYW1lIjoidXNlcjEiLCJhdmF0YXIiOiJodHRwczovL2kucHJhdmF0YXIuY2MvMzAwP2ltZz03MiIsImludHJvZHVjdGlvbiI6InByYWVzZW50aXVtIHF1byBlbmltIGRvbG9yaWJ1cyBoaWMiLCJyb2xlIjoidXNlciIsImFjY291bnQiOiJ1c2VyMSIsImNvdmVyIjoiaHR0cHM6Ly9sb3JlbWZsaWNrci5jb20vNjQwLzQ4MC9jaXR5P2xvY2s9MzYiLCJjcmVhdGVkQXQiOiIyMDIzLTA2LTA5VDA3OjE2OjMzLjAwMFoiLCJ1cGRhdGVkQXQiOiIyMDIzLTA2LTA5VDA3OjE2OjMzLjAwMFoiLCJpYXQiOjE2ODYzMTQyNzMsImV4cCI6MTY4ODkwNjI3M30.NLl7ruyc2FBqWpnPv_Ixu_SMnA9lVS5QDyQdexrma70'
   const token = localStorage.getItem('token');
   try {
     const response = await axios.get(`${baseUrl}/users/${id}/replied_tweets`, {
@@ -158,7 +133,6 @@ export const getUserRepliedTweets = async (id) => {
 
 //GET /api/users/:id/likes 看見某使用者點過的 Like
 export const getUserLike = async (id) => {
-  //const token ='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTQsImVtYWlsIjoidXNlcjFAZXhhbXBsZS5jb20iLCJuYW1lIjoidXNlcjEiLCJhdmF0YXIiOiJodHRwczovL2kucHJhdmF0YXIuY2MvMzAwP2ltZz03MiIsImludHJvZHVjdGlvbiI6InByYWVzZW50aXVtIHF1byBlbmltIGRvbG9yaWJ1cyBoaWMiLCJyb2xlIjoidXNlciIsImFjY291bnQiOiJ1c2VyMSIsImNvdmVyIjoiaHR0cHM6Ly9sb3JlbWZsaWNrci5jb20vNjQwLzQ4MC9jaXR5P2xvY2s9MzYiLCJjcmVhdGVkQXQiOiIyMDIzLTA2LTA5VDA3OjE2OjMzLjAwMFoiLCJ1cGRhdGVkQXQiOiIyMDIzLTA2LTA5VDA3OjE2OjMzLjAwMFoiLCJpYXQiOjE2ODYzMTQyNzMsImV4cCI6MTY4ODkwNjI3M30.NLl7ruyc2FBqWpnPv_Ixu_SMnA9lVS5QDyQdexrma70'  
   const token = localStorage.getItem('token');
   try {
     const response = await axios.get(`${baseUrl}/users/${id}/likes`, {
@@ -198,7 +172,6 @@ export const getUserFollowers = async (id) => {
     return response.data;
 
   } catch (error) {
-    console.log('Error: cannnot get user followers', error)
   }
 };
 
@@ -207,7 +180,6 @@ export const getUserFollowers = async (id) => {
 //GET /api/users/topFollowers 回傳 10 位最多followers的user
 
 export const getTopFollowers = async () => {
-  //const token ='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTQsImVtYWlsIjoidXNlcjFAZXhhbXBsZS5jb20iLCJuYW1lIjoidXNlcjEiLCJhdmF0YXIiOiJodHRwczovL2kucHJhdmF0YXIuY2MvMzAwP2ltZz03MiIsImludHJvZHVjdGlvbiI6InByYWVzZW50aXVtIHF1byBlbmltIGRvbG9yaWJ1cyBoaWMiLCJyb2xlIjoidXNlciIsImFjY291bnQiOiJ1c2VyMSIsImNvdmVyIjoiaHR0cHM6Ly9sb3JlbWZsaWNrci5jb20vNjQwLzQ4MC9jaXR5P2xvY2s9MzYiLCJjcmVhdGVkQXQiOiIyMDIzLTA2LTA5VDA3OjE2OjMzLjAwMFoiLCJ1cGRhdGVkQXQiOiIyMDIzLTA2LTA5VDA3OjE2OjMzLjAwMFoiLCJpYXQiOjE2ODYzMTQyNzMsImV4cCI6MTY4ODkwNjI3M30.NLl7ruyc2FBqWpnPv_Ixu_SMnA9lVS5QDyQdexrma70'  
   const token = localStorage.getItem('token');
   try {
     const response = await axios.get(`${baseUrl}/users/topFollowers`, {
@@ -223,9 +195,3 @@ export const getTopFollowers = async () => {
 
 
 
-
-//先寫來測試
-//getUsers(4);
-//getUserLike(2);
-//getUserTweets(14);
-//getUserRepliedTweets(14);

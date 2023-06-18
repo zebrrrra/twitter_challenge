@@ -16,7 +16,6 @@ function getTime(createdAt) {
 
 const OpenTweet = ({ tweet,onLike,onUnLike }) => {
     const handleButtonClick =  () =>{
-        console.log('like:',onLike, 'unlike:', onUnLike,'isCurrentUserLiked:', tweet.isCurrentUserLiked);
         if (tweet.isCurrentUserLiked){
          onUnLike (tweet.id);
         } else{

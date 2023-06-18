@@ -14,7 +14,6 @@ const FollowPage = ()=>{
     const {id} =useParams();
     //登入用戶 
     const { user,isAuthenticated} = useAuth();
-    console.log(user); //測試
     const navigate =useNavigate();
     const [profileUser,setProfileUser] =useState(null);
   

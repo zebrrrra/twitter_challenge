@@ -19,7 +19,6 @@ const OtherUserInfo = ({ userId }) => {
   const { id, account, avatar, cover, name, introduction, followersCount, followingsCount, isCurrentUserFollowed } = currentData || {}
   const { handleFollow, handleUnFollow } = useFollow(null, setUpdateTag);
 
-  console.log(userId)
 
   const buttonClass = isCurrentUserFollowed ? style.buttonFollowing : style.buttonFollower;
   const buttonText = isCurrentUserFollowed ? "正在跟隨" : "跟隨";

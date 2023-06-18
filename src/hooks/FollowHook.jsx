@@ -46,7 +46,6 @@ const handleFollow = async (id) => {
       setUpdateTag(prevState => !prevState);
     }
   } catch (error) {
-    console.log('handleFollow error:', error);
   }
 };
 

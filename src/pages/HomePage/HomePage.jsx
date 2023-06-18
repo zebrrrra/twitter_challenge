@@ -13,7 +13,6 @@ const HomePage = () => {
     setNewTweet(newTweetValue)
   }
   const { isAuthenticated, user } = useAuth();
-  console.log(user); //測試
   const navigate = useNavigate();
   useEffect(() => {
     if (!isAuthenticated) {
