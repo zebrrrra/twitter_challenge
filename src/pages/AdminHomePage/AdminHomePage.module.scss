@@ -10,35 +10,43 @@
 
 }
 
-.homeColumn {
-  display: flex;
-  flex-direction: row;
-  height: 100%;
-  //border-radius: 16px;
-}
 
-.leftColumn,
-.rightColumn {
+.leftColumn{
   background-color: #fff;
   position: sticky; /* 改為 sticky */
   top: 0; /* 固定在頂部 */
   height: 100vh; /* 使用 viewport 高度 */
+  margin-right: 24px;
+  flex: 1;
+  
 }
 
-.leftColumn {
-  margin-right: 24px;
-  flex:0 0 200px;
-}
-
-.rightColumn {
-  margin-right: 24px;
-  flex:0 0 200px;
-}
 
 .middleColumn {
-  flex: 3;
+  flex: 6;
   position: relative;
   background-color: #fff;
   padding-right: 25px;
   overflow-y: auto;
+}
+
+
+.HeaderContainer {
+  height: 74px;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+  align-items: center;
+  border-left: 1px solid $border-color;
+  border-right: 1px solid $border-color; 
+  border-bottom: 1px solid $border-color; 
+  
+}
+
+.Header{
+  @include fontStyle(24,700);
+  line-height:26px;
+  text-align: center;
+  
 }

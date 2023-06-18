@@ -16,7 +16,9 @@ const AdminUserPage = () => {
           <AdminNavbars />
         </div>
         <div className={style.middleColumn}>
-          <AdminHeader />
+        <div className={style.HeaderContainer}>
+        <div className={style.Header}>使用者列表</div>
+        </div>
             <AdminUserList user={user&&user.id}/>
         </div>
       </div>

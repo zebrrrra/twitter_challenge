@@ -7,14 +7,16 @@
   @include box(210, 314);
   border-radius: 10px;
   position: relative;
-  flex-basis: 25%;
+  flex: 0 0 calc(25% - 10px);
   background: #F6F7F8;
   margin-bottom: 16px;
-  
+  margin-left:10px;
+  z-index:1 ;
 }
 
 .bgContainer {
-  @include box(210, 140);
+  height: 140px;
+  flex-basis: 100%;
   display: flex;
   margin:0;
   background-size: cover;
@@ -23,21 +25,23 @@
   position: relative;
   overflow: hidden;
   border-radius:10px 10px 0px 0px;
-  
+  z-index: 10;
 
 }
 
 .avatarContainer {
   @include box(100, 100);
-  position: absolute;
+  position: relative;
+  margin-top: -70px;
+  margin-left: 55px;
+  z-index: 100;
   justify-content: center;
   align-items: center;
   object-fit: cover;
   border-radius: 50%;
   overflow: hidden;
   border: 4px solid #FFFFFF;
-  top: 64px;
-  left:55px;
+
   
 
 
@@ -63,20 +67,20 @@
   height: 21.6px;
   filter:  grayscale(100%) brightness(80%);
   margin-left:10px;
-  margin-right: 5px;
+  margin-right: 10px;
 
 }
 
 
 .textContainer {
   width: 100%;
-  position: absolute;
-  top: 172px;
+  position: relative;
+  margin-top: 10px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 0 16px;
+  
 
   .name {
     font-weight: 700;

@@ -1,9 +1,6 @@
 import style from "./AdminUserCard.module.scss"
-import background from '../../assets/icons/background.svg'
-import avatar from '../../assets/icons/avatar.svg'
-import { Link } from "react-router-dom"
-import { ReactComponent as PostIcon } from '../../assets/icon/post.svg';
-import { ReactComponent as LikeIcon } from '../../assets/icon/like_1.svg'
+import { ReactComponent as PostIcon } from '../../assets/icons/post.svg';
+import { ReactComponent as LikeIcon } from '../../assets/icons/likeLine.svg';
 
 
 
