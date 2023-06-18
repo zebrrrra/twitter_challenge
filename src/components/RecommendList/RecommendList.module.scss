@@ -4,10 +4,11 @@
     position: relative;
     width: 100%;
     top: 16px;
+    height: 60%;
     /* grayscale/dark-20 */
     background: #FAFAFB;
     //border-radius: 16px; 
- 
+
     
     
 }
@@ -17,7 +18,6 @@
     display: flex;
     align-items: flex-start;
     margin-left: 25px;
-    //position: relative;
     height: 82px;
     box-sizing: border-box; //直接填滿
 }
@@ -99,7 +99,10 @@
 
 .RecommendHeader{
 @include fontStyle(24,700);
-@include box (96,24);
-height: 74px;
-    
+text-align: start;
+height: 45px;
+width: 100%;
+border-bottom: 1px solid #E6ECF0;
+margin-bottom: 16px; 
+margin-top: 10px;     
 }

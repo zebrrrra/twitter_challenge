@@ -15,7 +15,7 @@
 }
 
 .container {
-  width: 45%;
+  width: 50%;
   height: 300px;
   position: fixed;
   top: 56px;
@@ -31,7 +31,7 @@
   height: 56px;
   text-align: left;
   padding: 20px;
-
+  border-bottom:1px solid #E6ECF0;
 
   button {
     color: $brand-color;
@@ -49,6 +49,7 @@
   width: 100%;
   padding: 16px 16px 0 24px;
 
+
 }
 
 
@@ -56,8 +57,6 @@
   @include box(50, 50);
   object-fit: cover;
   border: 1px solid $background-color;
-  border-radius: 50%;
-
   >img {
     border-radius: 50%;
   }
@@ -86,6 +85,7 @@ textarea {
   text-align: start;
   margin-top: 0.5rem;
   margin-left: 1rem;
+  
 }
 
 
@@ -100,24 +100,3 @@ textarea {
   color: $background-color;
 }
 
-
-// .tweetText {
-//   border: none;
-//   height: 100%;
-//   width: 100%;
-//   line-height: normal;
-//   padding-top: 0;
-//   text-align: top;
-//   font-weight: 700;
-//   font-size: 18px;
-//   line-height: 18px;
-//   color: #6C757D;
-//   margin-bottom: 10px;
-
-//   input {
-//     height: 50px; //調整高度
-//     border: none;
-//     padding: 0;
-
-//   }
-// }

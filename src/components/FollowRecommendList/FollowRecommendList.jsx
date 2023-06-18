@@ -26,7 +26,8 @@ import { useUpdateTag } from '../../context/UpdateTagContext';
 
     return (
     <div className={style.recommendListContainer}>
-      <h5 className="justify center">推薦跟隨</h5>
+            <div className={style.HeaderContainer}>
+       <h4 className={style.RecommendHeader}>推薦跟隨</h4></div>
       {users.map(user => (
         <RecommendItem 
         key={user.id} 

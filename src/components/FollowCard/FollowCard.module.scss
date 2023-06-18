@@ -1,29 +1,35 @@
+@import '../../style/base.scss';
 
 .followCardContainer{
     position: relative;
-    width:639px;//撐開
-    gap:16px;
+    //撐開
+    width: 640px;
     img{
         width: 50px;
        height: 50px;
 
     }
+    border: 1px solid $border-color;
+
 }
 .followCard{
     display: flex;
     align-items: flex-start;
     height: 143px;
     box-sizing: border-box;
+    
 }
 
 
 
 .avatar{
+    margin-top: 16px;
     width: 50px;
     height: 50px;
     border-radius: 50%; 
 }
 .intro {
+    margin-top: 10px;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -32,6 +38,7 @@
 
 }
 .userInfo {
+    margin-top: 5px;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -41,12 +48,6 @@
 }
 
 
-.name,
-.userName {
-    font-family: 'Noto Sans TC';
-    font-style: normal;
-
-}
 
 .name {
     width: auto; // 讓名稱的寬度可以自適應
@@ -55,6 +56,7 @@
     font-size: 16px;
     line-height: 26px;
     color: #171725;
+    margin-top: 10px;
 }
 
 .userName {
@@ -64,23 +66,20 @@
     font-size: 14px;
     line-height: 22px;
     color: #92929D;
+    margin-top: 10px;
 }
 
 // buttonFollower取消flex
 .buttonFollowing,
 .buttonFollower {
-
+    @include fontStyle(16,400);
+    margin-top: 10px;
     align-items: center;
     text-align: center;
     height: 40px;
     margin-left: 16px;
-    font-weight: 400;
-    font-size: 16px;
     line-height: 24px;
     border-radius: 50px;
-    font-family: 'Noto Sans TC', sans-serif;
-    font-style: normal;
-    //right: 16px;
     top: calc(50% - 40px/2); //figma:直接除二
     margin-right: 16px;
 
