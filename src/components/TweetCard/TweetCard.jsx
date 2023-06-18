@@ -8,7 +8,6 @@ import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import { useState, useEffect } from "react";
 import { useAuth } from '../../context/AuthContext';
-import { getUsers } from '../../apis/user';
 
 
 dayjs.extend(relativeTime);

@@ -28,26 +28,15 @@ const LikeList =({userId })=> {
         fetchLikes();
      }, [userId,updateTag] );
      
-     console.log('likeTweets', updateLikes);
+
 return updateLikes?updateLikes.map((like,index) => 
 <LikeCard 
 like={like}
  key={like.id}
  onLike={()=>handleLike(like.Tweet.id)}
  onUnLike={()=>handleUnLike(like.Tweet.id)} 
+ 
  type="like"/>): null;
     }
 
 export default LikeList;
-
-/*const TweetList =({tweetsContext})=>{
-
-    return (
-        <div className="tweetList">
-            {tweetsContext.sort((a,b)=> b.timeStamp- a.timeStamp).map((tweet)=>(
-                <TweetCard key={tweet.id} tweet={tweet}/>
-            ))}
-        </div>
-    );
-};
-export default TweetList;*/

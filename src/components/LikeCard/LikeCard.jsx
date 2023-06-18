@@ -27,7 +27,7 @@ function getTime(createdAt) {
 const LikeCard = ({ User,like,onLike,onUnLike }) => {
     const [openModal, setOpenModal] = useState(false)
     const [currentUserAvatar, setCurrentUserAvatar] = useState(null)
-    
+
     const { user } = useAuth()
     const currentUserId = user && user.id
     
@@ -74,8 +74,8 @@ const LikeCard = ({ User,like,onLike,onUnLike }) => {
     return (
         <>
             <div className={style.tweetCardContainer}>
-            <div className={style.tweetCard} onClick={() => handleReplyPageClick(like.id)}>
-            <img src={avatar} className={style.avatar} onClick={(event) => handleAvatarClick(event, like.User.id)} alt="avatar" />
+            <div className={style.tweetCard} onClick={() => handleReplyPageClick(like.Tweet.id)}>
+            <img src={avatar} className={style.avatar} onClick={(event) => handleAvatarClick(event, like.Tweet.User.id)} alt="avatar" />
                 <div className={style.contentContainer}>
                     <div className={style.nameAndUserId}>
                         <span className={style.name}>{name}</span>
@@ -99,7 +99,7 @@ const LikeCard = ({ User,like,onLike,onUnLike }) => {
 
             </div>
             </div>
-            {openModal && <ReplyModal open={openModal} onClose={(value) => setOpenModal(value)} User={User} like={like} tweetId={like.id} currentUserAvatar={currentUserAvatar} />}
+            {openModal && <ReplyModal open={openModal} onClose={(value) => setOpenModal(value)} User={User} like={like} tweetId={like.Tweet.id} currentUserAvatar={currentUserAvatar} />}
         </>
     );
  

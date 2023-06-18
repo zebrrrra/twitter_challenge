@@ -101,7 +101,7 @@ const ReplyModal = ({
           </div>
           <div className={style.rightContainer}>
             <div className={style.rightTopContainer}>
-              <h5 className={style.name}>{name}<span>@{account}・{getTime(createdAt)}小時</span></h5>
+              <h5 className={style.name}>{name}<span>@{account}・{getTime(createdAt)}</span></h5>
               <p className={style.introduction}>{description}</p>
               <p className={style.hint}>回覆給<span>@{account}</span></p>
             </div>
