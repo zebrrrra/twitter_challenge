@@ -81,8 +81,11 @@ const EditModal = ({ open, onClose, userId, userData }) => {
         timer: 2000,
         position: 'top',
       });
-      const imageURL = URL.createObjectURL(editAvatar)
-      localStorage.setItem('avatar', imageURL);
+      // 如果使用者有編輯頭像
+      if (preViewAvatar) {
+        const imageURL = URL.createObjectURL(editAvatar)
+        localStorage.setItem('avatar', imageURL);
+      }
       onClose(false)
       return
     }

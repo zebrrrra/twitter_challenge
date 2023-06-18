@@ -1,23 +1,18 @@
-//ReplyMainInTest.jsx
-
-// import UserInfo from '../UserInfo/UserInfo'
 import Tab from '../Tab/Tab';
 import { useParams } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
-// import OtherUserInfo from '../OtherUserInfo/OtherUserInfo';
 import MainTweet from '../MainTweet/MainTweet';
 import { getATweet } from '../../apis/tweet';
 import { useUpdateTag } from '../../context/UpdateTagContext';
 import { useEffect, useState } from 'react';
 import MainReply from '../MainReply/MainReply';
-import { postLike,postUnLike } from '../../apis/like';
+import { postLike, postUnLike } from '../../apis/like';
 
 const ReplyMainInTest = () => {
   const { tweetId } = useParams()
   const [tweet, setTweet] = useState(null)
   const [replies, setReplies] = useState(null)
   const [newReply, setNeweRplies] = useState(null)
-  const [currentUserAvatar, setCurrentUserAvatar] = useState(null)
   const { updateTag, setUpdateTag } = useUpdateTag();
   const [isCurrentUserLiked, setIsCurrentUserLiked] = useState(false);
 
@@ -30,16 +25,16 @@ const ReplyMainInTest = () => {
 
   const handleLikeInReply = async (id) => {
     const response = await postLike(id);
-    if (id!== currentUserId && response && response.status === 'success') {
+    if (id !== currentUserId && response && response.status === 'success') {
       setUpdateTag(!updateTag);
-    }    
+    }
   }
-  
+
   const handleUnLikeInReply = async (id) => {
     const response = await postUnLike(id);
-    if (id!== currentUserId && response && response.status === 'success') {
+    if (id !== currentUserId && response && response.status === 'success') {
       setUpdateTag(!updateTag);
-    }  
+    }
   };
 
   // 載入時取得一推文
@@ -47,7 +42,6 @@ const ReplyMainInTest = () => {
     const fetchATweet = async () => {
       const data = await getATweet(tweetId);
       if (data) {
-        console.log(data); //測試
         const {
           description,
           repliesCount,
@@ -66,17 +60,15 @@ const ReplyMainInTest = () => {
         }
         setTweet(tweet)
         setReplies(data.Replies)
-        // setTweetId(id)
       }
     }
     fetchATweet();
-  }, [tweetId,updateTag])//當推文id改變時重新拉一次
+  }, [tweetId, updateTag, newReply])//當推文id改變時重新拉一次
 
-  console.log(replies)
 
   return (
     <>
-      <MainTweet tweetId={tweetId} tweet={tweet} currentUserAvatar={currentUserAvatar} updateTag={updateTag} onReplySubmit={handleReplySubmit}  isCurrentUserLiked={isCurrentUserLiked} onLike={handleLikeInReply} onUnLike={handleUnLikeInReply}/>
+      <MainTweet tweetId={tweetId} tweet={tweet} updateTag={updateTag} newReply={newReply} onReplySubmit={handleReplySubmit} isCurrentUserLiked={isCurrentUserLiked} onLike={handleLikeInReply} onUnLike={handleUnLikeInReply} />
       <MainReply tweetId={tweetId} newReply={newReply} />
     </>
   )

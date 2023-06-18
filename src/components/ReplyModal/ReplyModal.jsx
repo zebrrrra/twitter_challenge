@@ -23,7 +23,7 @@ function getTime(createdAt) {
 }
 
 const ReplyModal = ({
-  onClose, open, tweetId, tweet, currentUserAvatar, onReplySubmit }) => {
+  onClose, open, tweetId, tweet, onReplySubmit }) => {
   const [comment, setComment] = useState('')
   const [message, setMessage] = useState('')
   const { user } = useAuth()
@@ -66,8 +66,8 @@ const ReplyModal = ({
 
     const { success } = await postATweetReply({ tweetId, comment })
     console.log(success)
-    setUpdateTag(prev => !prev);
     if (success) {
+      setUpdateTag(prev => !prev);
       Swal.fire({
         title: '內容成功提交',
         icon: 'success',
@@ -84,7 +84,6 @@ const ReplyModal = ({
     }
   }
 
-  
   return (
     <div className={style.background}>
       <div className={style.container}>

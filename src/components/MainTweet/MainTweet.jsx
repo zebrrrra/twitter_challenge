@@ -1,5 +1,5 @@
 import style from "./MainTweet.module.scss"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { ReactComponent as LikeIcon } from '../../assets/icon/like_1.svg';
 import { ReactComponent as IsLikeIcon } from '../../assets/icon/like.svg';
 import { ReactComponent as Reply } from "../../assets/icons/outlinedreply.svg"
@@ -16,12 +16,13 @@ function getTime(time) {
   return createdTime.format('A hh:mm・YYYY年MM月DD日 ');
 }
 
-const MainTweet = ({ tweet, tweetId, currentUserAvatar, onReplySubmit, setUpdateTag, onUnLike,onLike }) => {
+const MainTweet = ({ tweet, tweetId, onReplySubmit, setUpdateTag, onUnLike, onLike }) => {
   const [openModal, setOpenModal] = useState(false)
-  const { repliesCount, likesCount, description, createdAt, User, isCurrentUserLiked } = tweet || {}
+  const { likesCount, repliesCount, description, createdAt, User, isCurrentUserLiked } = tweet || {}
+
   const { account, avatar, name } = User || {}
 
-
+  console.log(repliesCount)//yes
 
   const handleClick = () => {
     setOpenModal(true)
@@ -69,7 +70,7 @@ const MainTweet = ({ tweet, tweetId, currentUserAvatar, onReplySubmit, setUpdate
           </div>
         </div>
       </div>
-      {openModal && <ReplyModal open={openModal} onClose={(value) => setOpenModal(value)} tweet={tweet} tweetId={tweetId} currentUserAvatar={currentUserAvatar} onReplySubmit={onReplySubmit} />}
+      {openModal && <ReplyModal open={openModal} onClose={(value) => setOpenModal(value)} tweet={tweet} tweetId={tweetId} onReplySubmit={onReplySubmit} />}
     </>
 
   )
