@@ -60,6 +60,14 @@ const Header = ({userId, setCurrentSection}) => {
         headerContext =
         <div className={style.Header}>推文</div>
     }
+    else if (path.includes(`/`)){
+        headerContext = 
+        <><div className={style.imgContainer}>
+        <img src={LeftIcon} alt="left" onClick={handleClickSection} /></div>
+        <div className={style.contentContainer}>
+        <div className={style.Header}> 推文</div></div>
+    </>;
+    }
     else {
         headerContext = '';
     }
