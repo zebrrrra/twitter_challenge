@@ -7,7 +7,7 @@ import Swal from 'sweetalert2';
 
 
 
-const AdminAllTweets =({ userId })=>{
+const AdminAllTweets = ({ userId }) => {
     const [allUserTweets, setAllUserTweets] = useState([]);
 
     const handleOnDelete = async (id) => {
@@ -18,24 +18,24 @@ const AdminAllTweets =({ userId })=>{
             showCancelButton: true,
 
         }).then(async (result) => {
-            if (result.isConfirmed){
-        try {
-            const response = await deleteAdminUserTweets(id);
-            if (response && response.status === 'success') {
-                setAllUserTweets(allUserTweets => allUserTweets.filter((tweet) => tweet.id !== id));
-            } else {
-                return null;
+            if (result.isConfirmed) {
+                try {
+                    const response = await deleteAdminUserTweets(id);
+                    if (response && response.status === 'success') {
+                        setAllUserTweets(allUserTweets => allUserTweets.filter((tweet) => tweet.id !== id));
+                    } else {
+                        return null;
+                    }
+                } catch (error) {
+                    console.error("error while deleting tweet: ", error);
+                    return null;
+                }
             }
-        } catch (error) {
-            console.error("error while deleting tweet: ", error);
-            return null;
-        }
-    }})
+        })
     };
-        
-    
 
-    useEffect(()=>{
+
+    useEffect(() => {
         const fetchTweets = async () => {
             const data = await getAdminAllTweets();
             if (data) {
@@ -43,19 +43,21 @@ const AdminAllTweets =({ userId })=>{
             }
         }
         fetchTweets();
-    }, [ userId]); 
+    }, [userId]);
 
-    
+
 
     return allUserTweets.map(allUsertweet => {
-    if(!allUsertweet.User){
-        return null;
-    }
-    return<AdminTweetCard 
-    key={allUsertweet.id} 
-    tweet={allUsertweet} 
-    handleOnDelete={handleOnDelete} 
-    type="alltweet"/>})}
-;
+        if (!allUsertweet.User) {
+            return null;
+        }
+        return <AdminTweetCard
+            key={allUsertweet.id}
+            tweet={allUsertweet}
+            handleOnDelete={handleOnDelete}
+            type="alltweet" />
+    })
+}
+    ;
 
 export default AdminAllTweets;

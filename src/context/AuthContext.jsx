@@ -62,9 +62,7 @@ export const AuthProvider = ({ children }) => {
                     checkPassword: data.checkPassword
 
                 });
-                console.log(result)
                 if (result.status === 'success') {
-                    console.log(result.message)
                     return { success: true, message: result.message }
                 } else {
                     return { success: false, message: result.message }
@@ -81,7 +79,6 @@ export const AuthProvider = ({ children }) => {
                     const { token } = result.data;
                     const tempPayload = jwt.decode(token);
                     setPayload(tempPayload);
-                    console.log(payload)
                     setIsAuthenticated(true);
                     localStorage.setItem('token', token);
                     return {
@@ -107,14 +104,11 @@ export const AuthProvider = ({ children }) => {
                     {
                         account: data.account,
                         password: data.password,
-                    }
-                );
-                console.log(result)
+                    })
                 if (result.status === 'success') {
                     const { token } = result.data;
                     const tempPayload = jwt.decode(token);
                     setPayload(tempPayload);
-                    console.log(payload)
                     setIsAuthenticated(true);
                     localStorage.setItem('token', token);
                     return {
@@ -138,7 +132,6 @@ export const AuthProvider = ({ children }) => {
                     checkPassword: data.checkPassword
 
                 });
-                console.log(result)
                 if (result.status === 'success') {
                     return { success: true, message: result.message }
                 } else {
@@ -164,5 +157,5 @@ export default AuthContext;
                     //     setPayload(null);
                     //     setIsAuthenticated(false);
                     // }
-                    // console.log(success)
+                    // success)
                     // return success

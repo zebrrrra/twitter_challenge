@@ -1,5 +1,5 @@
-import {ReactComponent as LikeIcon} from '../../assets/icon/like_1.svg';
-import {ReactComponent as IsLikeIcon} from '../../assets/icon/like.svg';
+import { ReactComponent as LikeIcon } from '../../assets/icon/like_1.svg';
+import { ReactComponent as IsLikeIcon } from '../../assets/icon/like.svg';
 import { ReactComponent as Reply } from "../../assets/icons/outlinedreply.svg"
 import style from './LikeCard.module.scss';
 import dayjs from 'dayjs';
@@ -24,13 +24,13 @@ function getTime(createdAt) {
 
 
 
-const LikeCard = ({ User,like,onLike,onUnLike }) => {
+const LikeCard = ({ User, like, onLike, onUnLike }) => {
     const [openModal, setOpenModal] = useState(false)
     const [currentUserAvatar, setCurrentUserAvatar] = useState(null)
 
     const { user } = useAuth()
     const currentUserId = user && user.id
-    
+
     const navigate = useNavigate();
 
     const handleAvatarClick = (event, tweetOwnerId) => {
@@ -58,13 +58,13 @@ const LikeCard = ({ User,like,onLike,onUnLike }) => {
 
 
     const {
-        Tweet:{
-        User: {name,account,avatar}= {},
-        description,
-        repliesCount,
-        likesCount,
-        createdAt,
-        }={},
+        Tweet: {
+            User: { name, account, avatar } = {},
+            description,
+            repliesCount,
+            likesCount,
+            createdAt,
+        } = {},
         isCurrentUserLiked,
     } = like;
 
@@ -73,36 +73,36 @@ const LikeCard = ({ User,like,onLike,onUnLike }) => {
     return (
         <>
             <div className={style.tweetCardContainer}>
-            <div className={style.tweetCard} onClick={() => handleReplyPageClick(like.Tweet.id)}>
-            <img src={avatar} className={style.avatar} onClick={(event) => handleAvatarClick(event, like.Tweet.User.id)} alt="avatar" />
-                <div className={style.contentContainer}>
-                    <div className={style.nameAndUserId}>
-                        <span className={style.name}>{name}</span>
-                        <span className={style.userIdTime}>@{account}・{getTime(createdAt)}</span>
+                <div className={style.tweetCard} onClick={() => handleReplyPageClick(like.Tweet.id)}>
+                    <img src={avatar} className={style.avatar} onClick={(event) => handleAvatarClick(event, like.Tweet.User.id)} alt="avatar" />
+                    <div className={style.contentContainer}>
+                        <div className={style.nameAndUserId}>
+                            <span className={style.name}>{name}</span>
+                            <span className={style.userIdTime}>@{account}・{getTime(createdAt)}</span>
+                        </div>
+                        <div className={style.tweet}>
+                            {description}
+                        </div>
+                        <div className={style.countContainer}>
+                            <div className={style.count}>
+                                <Reply className={style.replyIcon} onClick={handleModalClick} />{repliesCount}</div>
+                            <div className={style.count}>
+                                {isCurrentUserLiked ?
+                                    <IsLikeIcon className={style.isLikeIcon} onClick={handleButtonClick} />
+                                    :
+                                    <LikeIcon className={style.likeIcon} onClick={handleButtonClick} />
+                                }
+                                {likesCount}</div>
+                        </div>
                     </div>
-                    <div className={style.tweet}>
-                        {description}
-                    </div>
-                    <div className={style.countContainer}>
-                        <div className={style.count}>
-                        <Reply className={style.replyIcon} onClick={handleModalClick}  />{repliesCount}</div>
-                        <div className={style.count}>
-                           {isCurrentUserLiked? 
-                                <IsLikeIcon className={style.isLikeIcon} onClick={handleButtonClick}/>
-                                :
-                                <LikeIcon className={style.likeIcon} onClick={handleButtonClick} />
-                            }
-                            {likesCount}</div>
-                    </div>
-                </div>
 
+                </div>
             </div>
-            </div>
-            {openModal && <ReplyModal open={openModal} onClose={(value) => setOpenModal(value)} User={User}tweet={like.Tweet} tweetId={like.Tweet.id} currentUserAvatar={currentUserAvatar} />}
+            {openModal && <ReplyModal open={openModal} onClose={(value) => setOpenModal(value)} User={User} tweet={like.Tweet} tweetId={like.Tweet.id} currentUserAvatar={currentUserAvatar} />}
         </>
     );
- 
-    }
+
+}
 
 
 export default LikeCard;

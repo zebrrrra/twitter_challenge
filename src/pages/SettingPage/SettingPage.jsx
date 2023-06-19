@@ -25,6 +25,7 @@ const SettingPage = () => {
 
 
   const { putUserSetting, isAuthenticated, user } = useAuth()
+  // user)
   const currentUserId = user && user.id
 
 
@@ -82,6 +83,7 @@ const SettingPage = () => {
       setErrorInfo(message)
       return
     }
+    // errorInfo)//空的
   }
   useEffect(() => {
     const fetchCurrentUserData = async () => {
