@@ -73,7 +73,7 @@ const SettingPage = () => {
     if (!success) {
 
       Swal.fire({
-        title: '編輯失敗',
+        title: `${message}`,
         icon: 'error',
         showConfirmButton: false,
         timer: 2000,

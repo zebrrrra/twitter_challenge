@@ -57,7 +57,7 @@ const RegisterPage = () => {
     if (!success) {
 
       Swal.fire({
-        title: '註冊失敗',
+        title: `${message}`,
         icon: 'error',
         showConfirmButton: false,
         timer: 2000,
