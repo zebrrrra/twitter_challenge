@@ -1,25 +1,25 @@
 import OpenTweet from '../OpenTweet/OpenTweet'
 import ReplyList from '../ReplyList/ReplyList'
-import { useEffect,useState } from 'react';
-import {useParams} from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import useLike from '../../hooks/LikeHook';
-import {getATweet} from '../../apis/tweet';
+import { getATweet } from '../../apis/tweet';
 
 const ReplyMain = () => {
   const { id } = useParams();
   const [tweet, setTweet] = useState([]);
-  const {likeTweets, handleLike,handleUnLike} =useLike({dataItems:tweet?[tweet]:[]});
+  const { likeTweets, handleLike, handleUnLike } = useLike({ dataItems: tweet ? [tweet] : [] });
 
-  useEffect(()=>{
-      const fetchTweets = async () => {
-          const data = await getATweet(id);
+  useEffect(() => {
+    const fetchTweets = async () => {
+      const data = await getATweet(id);
 
-          if (data) {
-              setTweet(data);
-          }
+      if (data) {
+        setTweet(data);
       }
-      fetchTweets();
-  },[id]); 
+    }
+    fetchTweets();
+  }, [id]);
 
   useEffect(() => {
     if (likeTweets.length > 0) {
@@ -28,13 +28,13 @@ const ReplyMain = () => {
   }, [likeTweets]);
 
 
-   return (
+  return (
     <>
-    {tweet && <OpenTweet
-     tweet={tweet}
-     onLike={()=>handleLike(id)}
-     onUnLike={()=>handleUnLike(id)}/>}
-    
+      {tweet && <OpenTweet
+        tweet={tweet}
+        onLike={() => handleLike(id)}
+        onUnLike={() => handleUnLike(id)} />}
+
     </>
   )
 

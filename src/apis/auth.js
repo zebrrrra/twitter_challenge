@@ -5,9 +5,9 @@ export const login = async ({ account, password }) => {
     const { data } = await axios.post(`${authURl}/api/users/login`, { account, password })
     return data
   } catch (err) {
-    if (err.response){
+    if (err.response) {
       return err.response.data;
-    }else if (err.request){
+    } else if (err.request) {
 
       return { status: "error", message: "No response received from server." };
     } else {

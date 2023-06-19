@@ -33,7 +33,7 @@ const UserInfo = ({ userId }) => {
       }
     };
     fetchData();
-  }, [userId, openModal,setUpdateTag]);
+  }, [userId, openModal, setUpdateTag]);
 
 
 

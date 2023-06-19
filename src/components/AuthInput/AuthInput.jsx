@@ -10,7 +10,7 @@ const AuthInput = ({ label, id, type, placeholder, value, maxLength, onChange, h
 
   // 檢測後端錯誤以及是否為錯誤對應欄位
   let DisplayError = responseError && errorInfo.includes(id);
-  let AccountError = responseError && errorInfo.includes('不存在') && id === '帳號';
+  let AccountError = responseError && errorInfo.includes('不存在') && id === 'account';
 
   const number = (value || '').length
   const containerStyle = {
@@ -33,7 +33,7 @@ const AuthInput = ({ label, id, type, placeholder, value, maxLength, onChange, h
     if (!maxLength) return
     if (number > maxLength) {
       setError(true);
-      setMessage('字數超出上限！');
+      setMessage('字數超出上限!');
       return
     } else {
       setError(false);
