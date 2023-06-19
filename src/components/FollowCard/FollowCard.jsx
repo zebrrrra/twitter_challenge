@@ -26,9 +26,9 @@ const handleButtonClick = () => {
         <div className={style.userInfo}>
         <div className={style.name}>{user.name}</div>
         <span className={style.intro}>{user.introduction}</span></div>
-        <button className={buttonClass} onClick={handleButtonClick}>{buttonText}</button>
-        </div>
-        </div> 
+        {user.id !== loginUserId && <button className={buttonClass} onClick={handleButtonClick}>{buttonText}</button>}
+    </div>
+  </div>
     
     )
     
