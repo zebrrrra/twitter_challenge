@@ -33,7 +33,7 @@ const AuthInput = ({ label, id, type, placeholder, value, maxLength, onChange, h
     if (!maxLength) return
     if (number > maxLength) {
       setError(true);
-      setMessage('字數超出上限');
+      setMessage('字數超出上限!');
       return
     } else {
       setError(false);
