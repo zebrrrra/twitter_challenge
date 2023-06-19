@@ -55,7 +55,7 @@ const EditModal = ({ open, onClose, userId, userData }) => {
   const handleProfileSave = async ({ cover, avatar, name, introduction }) => {
     if (!editName?.trim() || !editIntroduction?.trim()) {
       Swal.fire({
-        title: '內容不可為空白',
+        title: '內容不可空白',
         icon: 'error',
         showConfirmButton: false,
         timer: 2000,
@@ -65,7 +65,7 @@ const EditModal = ({ open, onClose, userId, userData }) => {
     }
     if (editName.length > 50 || editIntroduction.length > 160) {
       Swal.fire({
-        title: '字數超出上限',
+        title: '字數超出上限!',
         icon: 'error',
         showConfirmButton: false,
         timer: 2000,
