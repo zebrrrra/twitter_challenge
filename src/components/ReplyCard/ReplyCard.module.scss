@@ -69,6 +69,9 @@
     width: 528px;
     line-height: 26px;
     color:  $main-text-color;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    word-break: break-all;
 }
 
 .replyContainer {
