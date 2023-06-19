@@ -47,6 +47,10 @@
   text-align: left;
   line-height: 36px;
   color: $name-color;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  word-break: break-all;
+  margin:5px;
 }
 
 .time {
