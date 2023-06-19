@@ -16,6 +16,7 @@ export const login = async ({ account, password }) => {
 export const register = async ({ account, name, password, email, checkPassword }) => {
   try {
     const response = await axios.post(`${baseUrl}/users`, { account, name, password, email, checkPassword })
+    // data)
     return response.data
   } catch (err) {
     return err.response.data
@@ -133,6 +134,7 @@ export const getUserRepliedTweets = async (id) => {
 
 //GET /api/users/:id/likes 看見某使用者點過的 Like
 export const getUserLike = async (id) => {
+
   const token = localStorage.getItem('token');
   try {
     const response = await axios.get(`${baseUrl}/users/${id}/likes`, {
@@ -172,6 +174,7 @@ export const getUserFollowers = async (id) => {
     return response.data;
 
   } catch (error) {
+    console.error('Error: cannnot get user followers', error)
   }
 };
 
@@ -180,6 +183,7 @@ export const getUserFollowers = async (id) => {
 //GET /api/users/topFollowers 回傳 10 位最多followers的user
 
 export const getTopFollowers = async () => {
+
   const token = localStorage.getItem('token');
   try {
     const response = await axios.get(`${baseUrl}/users/topFollowers`, {

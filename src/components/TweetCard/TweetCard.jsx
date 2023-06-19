@@ -39,7 +39,6 @@ const TweetCard = ({ User, tweet, onLike, onUnLike }) => {
 
     const handleButtonClick = (e) => {
         e.stopPropagation()
-        console.log('like:', onLike, 'unlike:', onUnLike, 'isCurrentUserLiked:', tweet.isCurrentUserLiked);
         if (tweet.isCurrentUserLiked) {
             onUnLike(tweet.id);
         } else {

@@ -13,6 +13,7 @@ const HomePage = () => {
     setNewTweet(newTweetValue)
   }
   const { isAuthenticated, user } = useAuth();
+
   const navigate = useNavigate();
   useEffect(() => {
     if (!isAuthenticated) {
