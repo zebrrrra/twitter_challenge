@@ -14,7 +14,6 @@ const basename = process.env.PUBLIC_URL
 
 function App() {
 
-  // 為了做調試將/改成setting
   return (
     <div className="App" >
       <Router basename={basename}>

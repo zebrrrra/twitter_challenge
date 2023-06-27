@@ -21,9 +21,10 @@
 .leftColumn {
   position: relative;
   background-color: #fff;
-  height: 100vh; /* 使用 viewport 高度 */
+  height: 100vh;
+  /* 使用 viewport 高度 */
   margin-right: 24px;
-  flex:0 0 200px;
+  flex: 0 0 200px;
   z-index: 1;
 }
 
@@ -63,17 +64,30 @@
   justify-self: end;
 }
 
-.settingHeader{
-  @include fontStyle(24,700);
-    height: 74px;
-    display: flex;
-    flex-direction: row;
-    justify-content: start;
-    align-items: center;
-    border-left: 1px solid $border-color;
-    border-right: 1px solid $border-color;
-    border-bottom: 1px solid $border-color;
-    
-  
-  
+.settingHeader {
+  @include fontStyle(24, 700);
+  height: 74px;
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+  align-items: center;
+  border-left: 1px solid $border-color;
+  border-right: 1px solid $border-color;
+  border-bottom: 1px solid $border-color;
+}
+
+@media screen and (max-width: 376px) {
+  .homeContainer {
+    display: unset;
+  }
+
+  .leftColumn {
+    display: none;
+  }
+
+  .form {
+    width: unset;
+  }
+
+  // 待新增navbar
 }

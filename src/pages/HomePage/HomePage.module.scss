@@ -15,6 +15,7 @@
   flex-direction: row;
   height: 100%;
   //border-radius: 16px;
+  width: 100%; //new add
 }
 
 .leftColumn,
@@ -49,8 +50,10 @@
   //隱藏滾動條 (不一定每個瀏覽器有效)
   scrollbar-width: none;
   -ms-overflow-style: none; //ms
-  &::-webkit-scrollbar { //scss寫法
+
+  &::-webkit-scrollbar {
+    //scss寫法
     display: none;
-}
-  
+  }
+
 }

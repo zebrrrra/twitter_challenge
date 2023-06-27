@@ -16,13 +16,13 @@
 }
 
 .container {
-  width: 45%;
+  width: 55%;
   height: 610px;
   position: fixed;
   display: flex;
   flex-direction: column;
   top: 56px;
-  left: 50%;
+  left: 47%;
   transform: translateX(-50%);
   background-color: $background-color;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
@@ -41,7 +41,7 @@
     display: flex;
 
     >button {
-      color: $brand-color;
+      width: 30px;
     }
 
     >h5 {
@@ -50,6 +50,11 @@
       line-height: 26px;
       color: #1C1C1C;
     }
+
+  }
+
+  .backButton {
+    display: none;
   }
 
   .saveButton {
@@ -134,4 +139,44 @@
   height: 100%;
   margin-top: 80px;
 
+}
+
+@media screen and (max-width: 376px) {
+  .grayBackground {
+    visibility: hidden;
+    position: unset;
+  }
+
+  .container {
+    width: 100%;
+    top: 0px;
+    left: 50%;
+    visibility: visible;
+    box-shadow: none;
+  }
+
+  .header {
+    height: 75px;
+  }
+
+  .bgContainer {
+    height: 124px;
+  }
+
+  .avatarContainer {
+    @include box(80, 80);
+    top: 25%;
+  }
+
+  .closeButton {
+    display: none;
+  }
+
+  .backButton {
+    display: block; //箭頭顯示有問題
+  }
+
+  .inputContainer {
+    padding: 0px 32px;
+  }
 }

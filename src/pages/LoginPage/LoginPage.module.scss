@@ -14,7 +14,7 @@
   justify-content: center;
 
   // 將表單改為RWD的設置
-  padding: 0 calc((100% - 356px) / 2);
+  padding: 0 calc((100% - 337px) / 2);
 }
 
 .form {
@@ -31,7 +31,8 @@
 }
 
 .button {
-  @include box(356, 46);
+  width: 100%;
+  height: 46px;
   @include fontStyle(20, 400);
   margin-top: 8px;
   line-height: 30px;
@@ -41,10 +42,11 @@
 }
 
 .linkGroup {
-  width: 340px;
+  width: 100%;
   display: flex;
   justify-content: flex-end;
   margin-top: 22px;
+  padding-right: 10px;
 }
 
 .link {

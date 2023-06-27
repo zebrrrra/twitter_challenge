@@ -3,6 +3,8 @@ import style from "../EditModal/EditModal.module.scss"
 import AuthInput from "../AuthInput/AuthInput"
 import { ReactComponent as Upload } from "../../assets/icons/camera.svg"
 import { ReactComponent as Fork } from "../../assets/icons/Vector.svg"
+import { ReactComponent as Close } from "../../assets/icons/orangeClose.svg"
+import { ReactComponent as Back } from "../../assets/icons/back.svg"
 import { putUserProfile } from "../../apis/user"
 import Swal from "sweetalert2"
 import { useUpdateTag } from '../../context/UpdateTagContext';
@@ -111,7 +113,10 @@ const EditModal = ({ open, onClose, userId, userData }) => {
       <div className={style.container}>
         <header className={style.header}>
           <div className={style.leftContainer}>
-            <button onClick={() => onClose(false)}> X </button>
+            <button onClick={() => onClose(false)}>
+              <Close className={style.closeButton} />
+              <Back className={style.backButton} />
+            </button>
             <h5 className="title">編輯個人資料</h5>
           </div>
           <button className={style.saveButton} onClick={handleProfileSave}> 儲存 </button>
