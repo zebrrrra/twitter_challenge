@@ -30,14 +30,18 @@
   width: 100%;
   height: 56px;
   text-align: left;
-  padding: 20px;
-  border-bottom:1px solid #E6ECF0;
+  padding: 12px 20px;
+  border-bottom: 1px solid #E6ECF0;
 
   button {
-    color: $brand-color;
+    // color: $brand-color;
     width: 30px;
-    height: 30px
+    // height: 30px
   }
+}
+
+.backButton {
+  display: none;
 }
 
 
@@ -57,6 +61,7 @@
   @include box(50, 50);
   object-fit: cover;
   border: 1px solid $background-color;
+
   >img {
     border-radius: 50%;
   }
@@ -85,7 +90,7 @@ textarea {
   text-align: start;
   margin-top: 0.5rem;
   margin-left: 1rem;
-  
+
 }
 
 
@@ -100,3 +105,40 @@ textarea {
   color: $background-color;
 }
 
+@media screen and (max-width: 376px) {
+  .background {
+    visibility: hidden;
+    position: unset;
+  }
+
+  .container {
+    width: 100%;
+    height: 100%;
+    top: 0px;
+    left: 50%;
+    visibility: visible;
+  }
+
+  .buttonContainer {
+    height: 75px
+  }
+
+  .closeButton {
+    display: none;
+  }
+
+  .backButton {
+    display: block;
+  }
+
+  .button {
+    position: fixed;
+    margin-top: unset;
+    top: 15px;
+    right: 20px;
+  }
+
+  .ContentContainer {
+    height: 100vh;
+  }
+}

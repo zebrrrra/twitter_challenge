@@ -1,0 +1,61 @@
+@import "../../style/base.scss";
+
+.container {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+  align-items: center;
+
+  .avatarContainer {
+    flex-direction: column;
+    color: gray;
+    font-weight: 300;
+
+    img {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+  }
+
+  .contentContainer {
+    max-width: 60%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+
+    p {
+      @include fontStyle(15, 400);
+      max-width: max-content;
+      padding: 10px 20px;
+      text-align: left;
+      background-color: $border-color;
+      border-radius: 25px 25px 25px 0px;
+      line-height: normal;
+    }
+
+    span {
+      @include fontStyle(13, 400);
+      color: $default-color;
+    }
+  }
+
+  &.owner {
+    flex-direction: row-reverse;
+
+    .avatarContainer {
+      display: none;
+    }
+
+    .contentContainer {
+      align-items: flex-end;
+
+      p {
+        border-radius: 25px 25px 0px 25px;
+        color: #fff;
+        background: $brand-color;
+      }
+    }
+  }
+}

@@ -4,6 +4,9 @@ import { postTweets } from "../../apis/tweet";
 import { useAuth } from "../../context/AuthContext"
 import Swal from 'sweetalert2';
 import { useNavigate } from "react-router-dom";
+import { ReactComponent as Close } from "../../assets/icons/orangeClose.svg";
+import { ReactComponent as Back } from "../../assets/icons/back.svg";
+
 
 
 const TweetModal = ({ open, onClose, onTweetSubmit }) => {
@@ -53,11 +56,12 @@ const TweetModal = ({ open, onClose, onTweetSubmit }) => {
         position: 'top',
       });
 
-      if (typeof onTweetSubmit === 'function'){
-      onTweetSubmit(tweetText)
-      return
+      if (typeof onTweetSubmit === 'function') {
+        onTweetSubmit(tweetText)
+        return
+      }
+      onClose(false)
     }
-    onClose(false)}
     setTweetText('');
     //navigate(`/${user.id}`);//要測試
     // window.location.reload();//直接刷新頁面
@@ -67,7 +71,10 @@ const TweetModal = ({ open, onClose, onTweetSubmit }) => {
     <div className={style.background}>
       <div className={style.container}>
         <div className={style.buttonContainer}>
-          <button className={style.saveButton} onClick={handleClick}> X </button>
+          <button onClick={handleClick}>
+            <Close className={style.closeButton} />
+            <Back className={style.backButton} />
+          </button>
         </div>
 
         <div className={style.ContentContainer}>

@@ -12,6 +12,8 @@ import ReplyList from "./ReplyList/ReplyList";
 import OtherUserInfo from "./OtherUserInfo/OtherUserInfo";
 import MainTweet from "./MainTweet/MainTweet.module.css"
 import ReplyMainInTest from "./ReplyMainInTest/ReplyMainInTest";
+import ChatInput from "./ChatInput/ChatInput";
+import ChatMessage from "./ChatMessage/ChatMessage";
 
-export { AuthInput, UserInfo, TweetModal, Header, Navbars, MainPost, AllTweets, RecommendList, OtherUserInfo, MainTweet, ReplyMainInTest }
+export { AuthInput, UserInfo, TweetModal, Header, Navbars, MainPost, AllTweets, RecommendList, OtherUserInfo, MainTweet, ReplyMainInTest, ChatInput, ChatMessage }
 
