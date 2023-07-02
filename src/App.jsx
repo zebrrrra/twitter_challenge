@@ -8,6 +8,7 @@ import ProtectedRouter from './components/AdminProtectedRouter';
 import ReplyPage from "./pages/ReplyPage/ReplyPage";
 import AdminUserPage from './pages/AdminUserPage/AdminUserPage';
 import AdminHomePage from "./pages/AdminHomePage/AdminHomePage";
+import ChatPage from "./pages/ChatPage/ChatPage";
 import { UpdateTagProvider } from "./context/UpdateTagContext";
 
 const basename = process.env.PUBLIC_URL
@@ -31,6 +32,7 @@ function App() {
               <Route path=":id/follow/*" element={<HandleProfilePage />} />
               <Route path=":id/*" element={<HandleProfilePage />} />
               <Route path="profile/*" element={<ProfilePage />} />
+              <Route path="chat" element ={<ChatPage/>}/>
               <Route path="*" element={<HomePage />} />
             </Routes>
           </UpdateTagProvider>
