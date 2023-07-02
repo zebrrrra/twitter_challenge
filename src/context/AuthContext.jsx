@@ -1,11 +1,12 @@
 //import { async } from 'q';
 import { createContext, useState } from 'react';
-// import {login}  from '../apis/auth';
 import { login, adminLogin } from '../apis/user';
 import * as jwt from 'jsonwebtoken';
 import { useLocation } from 'react-router-dom';
 import { useContext, useEffect } from 'react';
 import { register, putUserSetting } from '../apis/user';
+//socket.io
+import {io} from 'socket.io-client';
 
 const defaultAuthContext = {
     isAuthenticated: false,
@@ -22,6 +23,7 @@ export const useAuth = () => useContext(AuthContext);
 export const AuthProvider = ({ children }) => {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [payload, setPayload] = useState(null);
+    const [socket,setSocket] =useState(null);
 
     const { pathname } = useLocation();
     useEffect(() => {
@@ -30,15 +32,25 @@ export const AuthProvider = ({ children }) => {
             if (!token) {
                 setIsAuthenticated(false);
                 setPayload(null);
+                if(socket){ //斷開socket
+                    socket.disconnect();
+                    setSocket(null);
+                }
                 return;
+      
             } else {
                 const tempPayload = jwt.decode(token);
                 setPayload(tempPayload);
                 setIsAuthenticated(true);
+                if(!socket)
+                {
+                    const newSocket=io("https://tranquil-basin-75437.herokuapp.com");
+                    setSocket(newSocket);
+                }
             }
         };
         checkTokenIsValid();
-    }, [pathname]);
+    }, [pathname,socket]);
 
     return (
         <AuthContext.Provider value={{
@@ -81,6 +93,10 @@ export const AuthProvider = ({ children }) => {
                     setPayload(tempPayload);
                     setIsAuthenticated(true);
                     localStorage.setItem('token', token);
+                    //socket.io連線傳遞account
+                    const newSocket = io("https://tranquil-basin-75437.herokuapp.com");
+                    newSocket.emit('client-join',data.account);
+                    setSocket(newSocket);
                     return {
                         success: true, message: result.message, role: result.data.user.role
                     }
@@ -97,6 +113,11 @@ export const AuthProvider = ({ children }) => {
                 localStorage.removeItem('avatar');
                 setPayload(null);
                 setIsAuthenticated(false);
+                //socket登出
+                if(socket){
+                    socket.emit('client-leave',payload.account);
+                    socket.disconnect();
+                }
             },
 
             adminLogin: async (data) => {
@@ -129,7 +150,8 @@ export const AuthProvider = ({ children }) => {
                     name: data.name,
                     email: data.email,
                     password: data.password,
-                    checkPassword: data.checkPassword
+                    checkPassword: data.checkPassword,
+                    socket,
 
                 });
                 if (result.status === 'success') {
@@ -146,16 +168,3 @@ export const AuthProvider = ({ children }) => {
 };
 
 export default AuthContext;
-
-
-// const tempPayload = jwt.decode(token);
-                    // if (tempPayload) {
-                    //     setPayload(tempPayload);
-                    //     setIsAuthenticated(true);
-                    //     localStorage.setItem('token', token);
-                    // } else {
-                    //     setPayload(null);
-                    //     setIsAuthenticated(false);
-                    // }
-                    // success)
-                    // return success

@@ -10,6 +10,7 @@ import AdminUserPage from './pages/AdminUserPage/AdminUserPage';
 import AdminHomePage from "./pages/AdminHomePage/AdminHomePage";
 import ChatPage from "./pages/ChatPage/ChatPage";
 import { UpdateTagProvider } from "./context/UpdateTagContext";
+import {ChatContextProvider} from './context/ChatContext';
 
 const basename = process.env.PUBLIC_URL
 
@@ -20,6 +21,7 @@ function App() {
       <Router basename={basename}>
         <AuthProvider>
           <UpdateTagProvider>
+          <ChatContextProvider>
             <Routes>
               <Route path="login" element={<LoginPage />} />
               <Route path="main" element={<HomePage />} />
@@ -35,6 +37,7 @@ function App() {
               <Route path="chat" element ={<ChatPage/>}/>
               <Route path="*" element={<HomePage />} />
             </Routes>
+            </ChatContextProvider>
           </UpdateTagProvider>
         </AuthProvider>
       </Router>
