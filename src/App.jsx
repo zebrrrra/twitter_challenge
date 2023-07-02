@@ -24,6 +24,7 @@ function App() {
           <ChatContextProvider>
             <Routes>
               <Route path="login" element={<LoginPage />} />
+              <Route path="chat" element ={<ChatPage/>}/>
               <Route path="main" element={<HomePage />} />
               <Route path="admin" element={<AdminLoginPage />} />
               <Route path="admin/list" element={<ProtectedRouter><AdminHomePage /></ProtectedRouter>} />
@@ -34,7 +35,6 @@ function App() {
               <Route path=":id/follow/*" element={<HandleProfilePage />} />
               <Route path=":id/*" element={<HandleProfilePage />} />
               <Route path="profile/*" element={<ProfilePage />} />
-              <Route path="chat" element ={<ChatPage/>}/>
               <Route path="*" element={<HomePage />} />
             </Routes>
             </ChatContextProvider>

@@ -14,7 +14,7 @@ import isSettingIcon from '../../assets/icons/isSetting.svg'
 import isInfoIcon from '../../assets/icons/isProfile.svg'
 import chatIcon from '../../assets/icons/message.svg'
 //chat
-import {io} from 'socket.io-client';
+import { useChat } from '../../context/ChatContext';
 
 const ChatNavbars = ({ onTweetSubmit }) => {
   const [openModal, setOpenModal] = useState(false);
@@ -25,16 +25,19 @@ const ChatNavbars = ({ onTweetSubmit }) => {
   const location = useLocation();
 
   //要讀取socket.io
-  const socket = io('https://tranquil-basin-75437.herokuapp.com');
+  const socket = useChat();
  //連線
   useEffect (()=>{
+    if(socket){
     socket.on('server-message',()=>{
       setHasNewMessage(true);
     });
     return ()=>{
+      if(socket){
       socket.off('server-message');
     };
-  },[]);
+  }}
+  },[socket]);
 
 
   useEffect(() => {

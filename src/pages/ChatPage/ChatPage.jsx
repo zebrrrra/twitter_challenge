@@ -3,6 +3,7 @@ import { useAuth } from '../../context/AuthContext';
 import {ChatNavbar, ChatMessage} from '../../components';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useChat } from '../../context/ChatContext';
 
 
 const ChatPage = () => {
@@ -15,6 +16,8 @@ const ChatPage = () => {
       navigate('/login');
     }
   }, [navigate, isAuthenticated])
+
+  const socket=useChat();
 
   return (
     <div className={style.homeContainer}>
