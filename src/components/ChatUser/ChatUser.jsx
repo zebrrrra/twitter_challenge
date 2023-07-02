@@ -1,43 +1,40 @@
-import style from './RecommendList.module.scss';
-import RecommendItem from '../RecommendItem/RecommendItem';
-import {useState, useEffect} from 'react'; 
-import {getTopFollowers} from '../../apis/user';
-import useFollow from "../../hooks/FollowHook";
-//import {postFollowShips, deleteFollowShips } from '../../apis/followship';
-//import {useAuth} from '../../context/AuthContext';
-import { useUpdateTag } from '../../context/UpdateTagContext';
+import { useState, useEffect } from 'react';
+import { useAuth } from '../../context/AuthContext';
 
- const RecommendList = ({userId,loginUserId})=>{
-    const [users, setUsers] = useState([]);
-    const { updateTag, setUpdateTag } = useUpdateTag();
-    const { handleFollow, handleUnFollow } = useFollow(loginUserId, setUsers, setUpdateTag);
+const ChatUser = () => {
+  const { socket } = useAuth();
+  const [onlineUsers, setOnlineUsers] = useState([]);
+  const [onlineMessage, setOnlineMessage] = useState('');
 
-    useEffect(()=>{
-        const fetchTopFollowers = async () => {
-      
-            const userData =await getTopFollowers();
+  useEffect(() => {
+    if (socket) {
+      socket.on('server-update', (users) => {
+        setOnlineUsers(users);
+      });
+      socket.on('server-join', (message) => {
+        setOnlineMessage(message);
+      });
+    }
 
-            if (userData) {
-                setUsers(userData);
-            }
-        }
-        fetchTopFollowers();
-    },[userId,updateTag]);
+    return () => {
+      if (socket) {
+        socket.off('server-update');
+        socket.off('server-join');
+      }
+    };
+  }, [socket]);
 
-    return (
-    <div className={style.recommendListContainer}>
-      <div className={style.HeaderContainer}>
-      <h4 className={style.RecommendHeader}>推薦跟隨</h4></div>
-      {users.map(user => (
-        <RecommendItem 
-        key={user.id} 
-        user={user}
-        loginUserId={loginUserId}
-        onFollow={handleFollow}
-        onUnfollow={handleUnFollow} />
+  return (
+    <div>
+      {onlineUsers.map(user => (
+        <div key={user.id}>
+          <img src={user.avatar} alt={user.name} />
+          <p>{user.name}</p>
+        </div>
       ))}
+      <p>{onlineMessage}</p>
     </div>
-  )
+  );
 };
 
-export default RecommendList;
+export default ChatUser;

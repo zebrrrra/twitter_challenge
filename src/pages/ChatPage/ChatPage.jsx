@@ -23,7 +23,7 @@ const ChatPage = () => {
           <ChatNavbar/>
         </div>
         <div className={style.middleColumn}>
-          <ChatUser/>
+          {/*<ChatUser/>*/}
 
         </div>
         <div className={style.rightColumn}>
