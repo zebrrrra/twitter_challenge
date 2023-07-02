@@ -26,6 +26,7 @@ export const AuthProvider = ({ children }) => {
     const [socket,setSocket] =useState(null);
 
     const { pathname } = useLocation();
+    
     useEffect(() => {
         const checkTokenIsValid = async () => {
             const token = localStorage.getItem('token');
@@ -45,6 +46,8 @@ export const AuthProvider = ({ children }) => {
                 if(!socket)
                 {
                     const newSocket=io("https://tranquil-basin-75437.herokuapp.com");
+                    newSocket.on('connect',()=>{
+                        console.log('connected')})
                     setSocket(newSocket);
                 }
             }
@@ -95,7 +98,11 @@ export const AuthProvider = ({ children }) => {
                     localStorage.setItem('token', token);
                     //socket.io連線傳遞account
                     const newSocket = io("https://tranquil-basin-75437.herokuapp.com");
-                    newSocket.emit('client-join',data.account);
+                    newSocket.on('connect',()=>{
+                        console.log('connect to')
+                        newSocket.emit('client-join',data.account);
+                    })
+
                     setSocket(newSocket);
                     return {
                         success: true, message: result.message, role: result.data.user.role
@@ -114,10 +121,14 @@ export const AuthProvider = ({ children }) => {
                 setPayload(null);
                 setIsAuthenticated(false);
                 //socket登出
+                
                 if(socket){
-                    socket.emit('client-leave',payload.account);
-                    socket.disconnect();
-                }
+                    socket.on('disconnect',()=>{
+                        socket.emit('client-leave',payload.account);
+                        socket.disconnect();
+                    })
+
+               }
             },
 
             adminLogin: async (data) => {

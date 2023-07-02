@@ -23,14 +23,14 @@ const ChatPage = () => {
     <div className={style.homeContainer}>
       <div className={style.homeColumn}>
         <div className={style.leftColumn}>
-          <ChatNavbar/>
+         {/* <ChatNavbar/>*/}
         </div>
         <div className={style.middleColumn}>
           {/*<ChatUser/>*/}
 
         </div>
         <div className={style.rightColumn}>
-          <ChatMessage/>
+          {/*<ChatMessage/>*/}
         </div>
       </div>
     </div>
