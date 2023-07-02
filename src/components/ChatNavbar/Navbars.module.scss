@@ -1,0 +1,98 @@
+@import '../../style/base.scss';
+//@import'../../pages/HomePage/HomePage.module.scss';
+
+/* Left column */
+
+.navbarContainer {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    height: 100vh;
+    //justify-content: space-between;
+    background: #FFFFFF;
+    z-index: 9999;
+
+}
+
+
+.NavbarLogo {
+    margin: 13px;
+    width: 50px;
+    height: 50px;
+}
+
+.NavbarPng {
+    width: 24px;
+    height: 24px;
+
+}
+
+.NavbarGroup {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    height: 244px;
+
+    .NavbarItem {
+        display: flex;
+        align-items: center;
+        width: 178px;
+        height: 58px;
+        font-family: 'Noto Sans TC';
+        font-style: normal;
+        font-weight: 700;
+        font-size: 18px;
+        line-height: 26px;
+        color: #44444F;
+        justify-content: start;
+        cursor: pointer;
+
+        img {
+            margin: 0 17px;
+        }
+        
+    }
+    .NavbarItem.active {
+        color: #FF6600; 
+      }
+}
+
+
+.NavbarButton {
+    display: block;
+    width: 178px;
+    height: 46px;
+    border: none;
+    outline: none;
+    justify-content: center;
+    background: #FF6600;
+    border-radius: 50px;
+    font-weight: 400;
+    font-size: 20px;
+    text-decoration: none;
+    color: #FFFFFF;
+    cursor: pointer; //要記得Button都要
+
+}
+
+.logout {
+    display: flex;
+    align-items: center;
+    height: 58px;
+    font-family: 'Noto Sans TC';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 26px;
+    justify-content: start;
+    color: #44444F;
+    margin-top: 400px;
+    left: 180px;
+    cursor: pointer;
+
+    img {
+        margin: 0 17px;
+    }
+
+
+}
