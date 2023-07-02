@@ -34,8 +34,10 @@ export const AuthProvider = ({ children }) => {
                 setIsAuthenticated(false);
                 setPayload(null);
                 if(socket){ //斷開socket
+                    socket.on('close',()=>{
+                        socket.emit('client-leave',payload.account);
                     socket.disconnect();
-                    setSocket(null);
+                    })
                 }
                 return;
       
@@ -122,12 +124,13 @@ export const AuthProvider = ({ children }) => {
                 setIsAuthenticated(false);
                 //socket登出
                 
+                
                 if(socket){
-                    socket.on('disconnect',()=>{
+                    socket.on('close',()=>{
+                        console.log('disconnect')
                         socket.emit('client-leave',payload.account);
-                        socket.disconnect();
+                    socket.disconnect();
                     })
-
                }
             },
 
