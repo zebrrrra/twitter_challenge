@@ -31,13 +31,15 @@ export const AuthProvider = ({ children }) => {
         const checkTokenIsValid = async () => {
             const token = localStorage.getItem('token');
             if (!token) {
+                const account = payload ? payload.account : null;
                 setIsAuthenticated(false);
                 setPayload(null);
-                if(socket){ //斷開socket
-                    socket.on('close',()=>{
-                        socket.emit('client-leave',payload.account);
-                    socket.disconnect();
-                    })
+                    if (socket) {
+                        socket.emit('client-leave', account, () => {
+                            socket.disconnect();
+                            setSocket(null);
+                        });
+
                 }
                 return;
       
@@ -118,20 +120,18 @@ export const AuthProvider = ({ children }) => {
                 }
             },
             logout: () => {
+               //socket登出
+                if (socket) {
+                    socket.emit('client-leave', payload.account, () => {
+                        socket.disconnect();
+                        setSocket(null);
+                    });
                 localStorage.removeItem('token');
                 localStorage.removeItem('avatar');
                 setPayload(null);
                 setIsAuthenticated(false);
-                //socket登出
                 
-                
-                if(socket){
-                    socket.on('close',()=>{
-                        console.log('disconnect')
-                        socket.emit('client-leave',payload.account);
-                    socket.disconnect();
-                    })
-               }
+                }
             },
 
             adminLogin: async (data) => {
