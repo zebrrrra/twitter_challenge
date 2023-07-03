@@ -1,0 +1,19 @@
+@import "../../style/base.scss";
+
+.container {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+  justify-content: center;
+  align-items: center;
+
+  >p {
+    @include fontStyle(15, 500);
+    color: $default-color;
+    background: $border-color;
+    padding: 7px, 14px, 7px, 14px;
+    width: max-content;
+    padding: 10px 20px;
+    border-radius: 50px;
+  }
+}

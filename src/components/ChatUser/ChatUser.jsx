@@ -4,8 +4,6 @@ import { useAuth } from '../../context/AuthContext';
 const ChatUser = () => {
 
 
-
-
 }
 
 export default ChatUser;

@@ -9,9 +9,8 @@ import RecommendList from "./RecommendList/RecommendList";
 import OtherUserInfo from "./OtherUserInfo/OtherUserInfo";
 import MainTweet from "./MainTweet/MainTweet.module.css"
 import ReplyMainInTest from "./ReplyMainInTest/ReplyMainInTest";
-import ChatInput from "./ChatInput/ChatInput";
-import ChatMessage from "./ChatMessage/ChatMessage";
 import ChatNavbar from './ChatNavbar/ChatNavbars'
+import ChatRoom from "./ChatRoom/ChatRoom";
 
-export { AuthInput, UserInfo, TweetModal, Header, Navbars, MainPost, AllTweets, RecommendList, OtherUserInfo, MainTweet, ReplyMainInTest, ChatInput, ChatMessage, ChatNavbar }
+export { AuthInput, UserInfo, TweetModal, Header, Navbars, MainPost, AllTweets, RecommendList, OtherUserInfo, MainTweet, ReplyMainInTest, ChatNavbar, ChatRoom }
 

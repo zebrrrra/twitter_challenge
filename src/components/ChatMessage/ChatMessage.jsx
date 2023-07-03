@@ -1,9 +1,10 @@
 import style from "./ChatMessage.module.scss"
 import avatar from "../../assets/icons/avatar.svg"
-const ChatMessage = () => {
+const ChatMessage = ({ isOwner }) => {
   //TODO 判斷message的擁有者，若是發送message的人看到會是加上owner的樣式，他人則是無owner樣式
+
   return (
-    <div className={`${style.container} ${style.owner}`}>
+    <div className={`${style.container} ${isOwner && style.owner}`}>
       <div className={style.avatarContainer}>
         <img
           src={avatar}

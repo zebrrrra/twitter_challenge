@@ -1,0 +1,17 @@
+@import '../../style/base.scss';
+
+.chatRoomContainer {
+  width: 100%;
+}
+
+.HeaderContainer {
+  height: 74px;
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+  align-items: center;
+  border-left: 1px solid $border-color;
+  border-right: 1px solid $border-color;
+  border-bottom: 1px solid $border-color;
+
+}
