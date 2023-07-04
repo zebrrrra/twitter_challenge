@@ -15,29 +15,32 @@ import isInfoIcon from '../../assets/icons/isProfile.svg'
 import chatIcon from '../../assets/icons/message.svg'
 //chat
 import { useChat } from '../../context/ChatContext';
+import { useAuth } from '../../context/AuthContext';
 
 const ChatNavbars = ({ onTweetSubmit }) => {
   const [openModal, setOpenModal] = useState(false);
   const [activeTab, setActiveTab] = useState('');
   const [isIconClicked, setIconClicked] = useState(false);
-  const [hasNewMessage, setHasNewMessage]= useState(false);
+  const [hasNewMessage, setHasNewMessage] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
+  const { logout } = useAuth()
 
   //要讀取socket.io
   const socket = useChat();
- //連線
-  useEffect (()=>{
-    if(socket){
-    socket.on('server-message',()=>{
-      setHasNewMessage(true);
-    });
-    return ()=>{
-      if(socket){
-      socket.off('server-message');
-    };
-  }}
-  },[socket]);
+  //連線
+  useEffect(() => {
+    if (socket) {
+      socket.on('server-message', () => {
+        setHasNewMessage(true);
+      });
+      return () => {
+        if (socket) {
+          socket.off('server-message');
+        };
+      }
+    }
+  }, [socket]);
 
 
   useEffect(() => {
@@ -50,16 +53,17 @@ const ChatNavbars = ({ onTweetSubmit }) => {
 
 
   const handleLogout = () => {
-    localStorage.removeItem('token');
-    localStorage.removeItem('avatar');
-    navigate('/login');
+    logout()
+    // localStorage.removeItem('token');
+    // localStorage.removeItem('avatar');
+    // navigate('/login');
   }
 
 
   const handleTabClick = (tabName) => {
     setActiveTab(tabName);
     setIconClicked(true);
-    if(tabName===''){
+    if (tabName === '') {
       setHasNewMessage(false);
     }
   }
@@ -78,13 +82,13 @@ const ChatNavbars = ({ onTweetSubmit }) => {
               <span>首頁</span>
             </div>
           </Link>
-           <Link to="/">
+          <Link to="/">
             <div
               className={`${style.NavbarItem} ${location.pathname === '/' ? style.active : ''}`}
               onClick={() => handleTabClick('')}
             >
               <img className={style.NavbarPng}
-                src={isIconClicked === '/' ?chatIcon:chatIcon} alt="Icon" /> {/* 要確定Icon設計是否要自己畫*/}
+                src={isIconClicked === '/' ? chatIcon : chatIcon} alt="Icon" /> {/* 要確定Icon設計是否要自己畫*/}
               <span>公開聊天室</span>
             </div>
           </Link>
@@ -115,7 +119,7 @@ const ChatNavbars = ({ onTweetSubmit }) => {
         {openModal && <TweetModal open={openModal} onClose={() => setOpenModal(false)} onTweetSubmit={onTweetSubmit} />}
         <div className={style.logout} onClick={handleLogout}><img className={style.NavbarPng} src={LogoutIcon} alt="logout" />登出</div>
       </div>
-      
+
     </>
 
   )

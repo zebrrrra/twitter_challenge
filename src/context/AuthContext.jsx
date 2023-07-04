@@ -25,6 +25,8 @@ export const AuthProvider = ({ children }) => {
     const [payload, setPayload] = useState(null);
     const [socket, setSocket] = useState(null);
     const [onlineMessages, setOnlineMessages] = useState([])
+    const [offlineMessages, setOfflineMessages] = useState([])
+
 
     const { pathname } = useLocation();
 
@@ -60,6 +62,43 @@ export const AuthProvider = ({ children }) => {
         checkTokenIsValid();
     }, [pathname, socket]);
 
+    // 卸載監聽
+    // useEffect(() => {
+    //     const handleServerJoin = (res) => {
+    //         console.log('has join')
+    //         setOnlineMessages((prevState) => {
+    //             const isDuplicate = prevState.some((item) => item === res);
+    //             if (isDuplicate) {
+    //                 return prevState;
+    //             }
+    //             return [...prevState, res];
+    //         });
+    //     };
+    //     const handleServerLeave = (res) => {
+    //         console.log('has leave')
+
+    //         setOfflineMessages((prevState) => {
+    //             const isDuplicate = prevState.some((item) => item === res);
+    //             if (isDuplicate) {
+    //                 return prevState;
+    //             }
+    //             return [...prevState, res];
+    //         });
+    //     };
+
+    //     if (socket) {
+    //         console.log('hi')
+    //         socket.on('server-join', handleServerJoin);
+    //         socket.on('server-leave', handleServerLeave);
+    //     }
+
+    //     return () => {
+    //         console.log('bye')
+    //         socket.off('server-join', handleServerJoin);
+    //         socket.off('server-leave', handleServerLeave);
+    //     };
+    // }, [socket]);
+
     return (
         <AuthContext.Provider value={{
             isAuthenticated,
@@ -72,7 +111,7 @@ export const AuthProvider = ({ children }) => {
                 introduction: payload.introduction,
                 email: payload.email,
                 cover: payload.cover
-            }, payload, setPayload, onlineMessages
+            }, payload, setPayload, onlineMessages, offlineMessages
             , register: async (data) => {
                 const result = await register({
                     account: data.account,
@@ -103,12 +142,13 @@ export const AuthProvider = ({ children }) => {
                     localStorage.setItem('token', token);
                     //socket.io連線傳遞account
                     const newSocket = io("https://tranquil-basin-75437.herokuapp.com");
+                    setSocket(newSocket);
                     newSocket.on('connect', () => {
                         console.log('connect to')
                         newSocket.emit('client-join', data.account);
                     })
                     // 傳遞上線資訊
-                    newSocket.on('server-join', (res) => {
+                    const handleServerJoin = (res) => {
                         setOnlineMessages(preState => {
                             const isDuplicate = preState.some(item => item === res)
                             if (isDuplicate) {
@@ -116,8 +156,10 @@ export const AuthProvider = ({ children }) => {
                             }
                             return [...preState, res]
                         })
-                    })
-                    setSocket(newSocket);
+                    }
+                    newSocket.on('server-join', handleServerJoin)
+
+
                     return {
                         success: true, message: result.message, role: result.data.user.role
                     }
@@ -130,8 +172,19 @@ export const AuthProvider = ({ children }) => {
                 }
             },
             logout: () => {
+                const handleServerLeave = (res) => {
+                    console.log('has leave')
+                    setOfflineMessages((prevState) => {
+                        const isDuplicate = prevState.some((item) => item === res);
+                        if (isDuplicate) {
+                            return prevState;
+                        }
+                        return [...prevState, res];
+                    });
+                };
                 //socket登出
                 if (socket) {
+                    socket.on('server-leave', handleServerLeave);
                     socket.emit('client-leave', payload.account, () => {
                         socket.disconnect();
                         setSocket(null);
@@ -140,7 +193,6 @@ export const AuthProvider = ({ children }) => {
                     localStorage.removeItem('avatar');
                     setPayload(null);
                     setIsAuthenticated(false);
-
                 }
             },
 
