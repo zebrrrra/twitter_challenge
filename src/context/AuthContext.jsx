@@ -24,8 +24,6 @@ export const AuthProvider = ({ children }) => {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [payload, setPayload] = useState(null);
     const [socket, setSocket] = useState(null);
-    const [onlineMessages, setOnlineMessages] = useState([])
-    const [offlineMessages, setOfflineMessages] = useState([])
 
 
     const { pathname } = useLocation();
@@ -51,53 +49,18 @@ export const AuthProvider = ({ children }) => {
                 setPayload(tempPayload);
                 setIsAuthenticated(true);
                 if (!socket) {
-                    const newSocket = io("https://tranquil-basin-75437.herokuapp.com");
+                    const newSocket = io("https://twitter-ac-team-d93c31406834.herokuapp.com");
                     newSocket.on('connect', () => {
                         console.log('connected')
+                        setSocket(newSocket);
                     })
-                    setSocket(newSocket);
                 }
             }
         };
         checkTokenIsValid();
     }, [pathname, socket]);
 
-    // 卸載監聽
-    // useEffect(() => {
-    //     const handleServerJoin = (res) => {
-    //         console.log('has join')
-    //         setOnlineMessages((prevState) => {
-    //             const isDuplicate = prevState.some((item) => item === res);
-    //             if (isDuplicate) {
-    //                 return prevState;
-    //             }
-    //             return [...prevState, res];
-    //         });
-    //     };
-    //     const handleServerLeave = (res) => {
-    //         console.log('has leave')
 
-    //         setOfflineMessages((prevState) => {
-    //             const isDuplicate = prevState.some((item) => item === res);
-    //             if (isDuplicate) {
-    //                 return prevState;
-    //             }
-    //             return [...prevState, res];
-    //         });
-    //     };
-
-    //     if (socket) {
-    //         console.log('hi')
-    //         socket.on('server-join', handleServerJoin);
-    //         socket.on('server-leave', handleServerLeave);
-    //     }
-
-    //     return () => {
-    //         console.log('bye')
-    //         socket.off('server-join', handleServerJoin);
-    //         socket.off('server-leave', handleServerLeave);
-    //     };
-    // }, [socket]);
 
     return (
         <AuthContext.Provider value={{
@@ -111,7 +74,7 @@ export const AuthProvider = ({ children }) => {
                 introduction: payload.introduction,
                 email: payload.email,
                 cover: payload.cover
-            }, payload, setPayload, onlineMessages, offlineMessages
+            }, payload, setPayload, socket
             , register: async (data) => {
                 const result = await register({
                     account: data.account,
@@ -141,24 +104,12 @@ export const AuthProvider = ({ children }) => {
                     setIsAuthenticated(true);
                     localStorage.setItem('token', token);
                     //socket.io連線傳遞account
-                    const newSocket = io("https://tranquil-basin-75437.herokuapp.com");
-                    setSocket(newSocket);
+                    const newSocket = io("https://twitter-ac-team-d93c31406834.herokuapp.com");
                     newSocket.on('connect', () => {
                         console.log('connect to')
+                        setSocket(newSocket);
                         newSocket.emit('client-join', data.account);
                     })
-                    // 傳遞上線資訊
-                    const handleServerJoin = (res) => {
-                        setOnlineMessages(preState => {
-                            const isDuplicate = preState.some(item => item === res)
-                            if (isDuplicate) {
-                                return preState
-                            }
-                            return [...preState, res]
-                        })
-                    }
-                    newSocket.on('server-join', handleServerJoin)
-
 
                     return {
                         success: true, message: result.message, role: result.data.user.role
@@ -172,19 +123,9 @@ export const AuthProvider = ({ children }) => {
                 }
             },
             logout: () => {
-                const handleServerLeave = (res) => {
-                    console.log('has leave')
-                    setOfflineMessages((prevState) => {
-                        const isDuplicate = prevState.some((item) => item === res);
-                        if (isDuplicate) {
-                            return prevState;
-                        }
-                        return [...prevState, res];
-                    });
-                };
+
                 //socket登出
                 if (socket) {
-                    socket.on('server-leave', handleServerLeave);
                     socket.emit('client-leave', payload.account, () => {
                         socket.disconnect();
                         setSocket(null);
