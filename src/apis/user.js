@@ -1,5 +1,5 @@
 import axios from 'axios';
-const baseUrl = 'https://tranquil-basin-75437.herokuapp.com/api';
+const baseUrl = 'https://twitter-ac-team-d93c31406834.herokuapp.com/api';
 
 export const login = async ({ account, password }) => {
   try {
@@ -82,18 +82,20 @@ export const putUserProfile = async ({ id, name, avatar, cover, introduction }) 
   }
 }
 
-export const getUsers = async (id) => {
+export const getUsers = async ({ id, signal }) => {
   const token = localStorage.getItem('token');
   try {
     const response = await axios.get(`${baseUrl}/users/${id}`, {
       headers: {
         Authorization: `Bearer ${token}`
-      }
+      },
+      signal
     });
     return response.data;
   } catch (error) {
-    console.error('Error:cannot get user', error);
-    return error.response.data
+    if (error.message !== 'canceled') {
+      console.error('Error:cannot get user', error);
+    }
   }
 };
 

@@ -84,18 +84,10 @@ const MainPost = ({ user, onTweetSubmit }) => {
           onChange={(e) => setTweetText(e.target.value)}
         />
         <small className={style.small}>{message}</small>
-        {/* <div className={style.tweetText}>
-        </div> */}
       </div>
       <button className={style.tweetButton} onClick={handleSubmit}>推文</button>
-      {/*<button className={style.tweetButton} onClick={handleOpen}>推文</button>
-      {openModal && <TweetModal open={openModal} onClose={(Value) => setOpenModal(Value)} onTweetSubmit={onTweetSubmit} />}
-  */}
     </div>
-    // TweetModal
-
   )
-
 }
 
 export default MainPost;

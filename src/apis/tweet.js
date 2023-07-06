@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const baseUrl = 'https://tranquil-basin-75437.herokuapp.com/api';
+const baseUrl = 'https://twitter-ac-team-d93c31406834.herokuapp.com/api';
 
 
 //POST /api/tweets 新增推文
@@ -25,19 +25,21 @@ export const postTweets = async (description) => { //新增推文內容
 
 //GET /api/tweets 取得所有推文，包括推文作者
 
-export const getAllTweets = async () => {
+export const getAllTweets = async (signal) => {
 
   const token = localStorage.getItem('token');
   try {
     const response = await axios.get(`${baseUrl}/tweets`, {
       headers: {
         Authorization: `Bearer ${token}`
-      }
-
+      },
+      signal
     });
     return response.data;
   } catch (error) {
-    console.error('Error:cannot get all tweets', error);
+    if (error.message !== 'canceled') {
+      console.error('Error:cannot get all tweets', error);
+    }
   }
 };
 

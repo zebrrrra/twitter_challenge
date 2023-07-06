@@ -33,11 +33,16 @@ const OtherUserInfo = ({ userId }) => {
 
 
   useEffect(() => {
+    const controller = new AbortController();
+
     const fetchData = async () => {
-      const userData = await getUsers(userId);
+      const userData = await getUsers({ id: userId, signal: controller.signal });
       setCurrentData(userData);
     };
     fetchData();
+    return () => {
+      controller.abort()
+    }
   }, [userId, openModal, updateTag]);
 
 

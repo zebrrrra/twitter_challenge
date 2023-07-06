@@ -53,14 +53,12 @@ const TweetModal = ({ open, onClose, onTweetSubmit }) => {
         position: 'top',
       });
 
-      if (typeof onTweetSubmit === 'function'){
-      onTweetSubmit(tweetText)
-      return
+      if (typeof onTweetSubmit === 'function') {
+        onTweetSubmit(tweetText)
+      }
+      onClose(false)
+      setTweetText('');
     }
-    onClose(false)}
-    setTweetText('');
-    //navigate(`/${user.id}`);//要測試
-    // window.location.reload();//直接刷新頁面
   }
   if (!open) return
   return (
@@ -90,4 +88,3 @@ const TweetModal = ({ open, onClose, onTweetSubmit }) => {
   );
 }
 export default TweetModal
-// { resize: 'none', width: '528px', height: '300px' }

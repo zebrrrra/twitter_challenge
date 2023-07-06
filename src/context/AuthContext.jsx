@@ -146,16 +146,3 @@ export const AuthProvider = ({ children }) => {
 };
 
 export default AuthContext;
-
-
-// const tempPayload = jwt.decode(token);
-                    // if (tempPayload) {
-                    //     setPayload(tempPayload);
-                    //     setIsAuthenticated(true);
-                    //     localStorage.setItem('token', token);
-                    // } else {
-                    //     setPayload(null);
-                    //     setIsAuthenticated(false);
-                    // }
-                    // success)
-                    // return success
