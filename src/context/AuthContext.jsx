@@ -52,6 +52,7 @@ export const AuthProvider = ({ children }) => {
                     const newSocket = io("https://twitter-ac-team-d93c31406834.herokuapp.com");
                     newSocket.on('connect', () => {
                         console.log('connected')
+                        newSocket.emit('client-join',tempPayload.account)
                         setSocket(newSocket);
                     })
                 }

@@ -4,6 +4,7 @@ import { ChatNavbar, ChatRoom } from '../../components';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useChat } from '../../context/ChatContext';
+import ChatUser from '../../components/ChatUser/ChatUser';
 
 
 const ChatPage = () => {
@@ -26,7 +27,7 @@ const ChatPage = () => {
           <ChatNavbar />
         </div>
         <div className={style.middleColumn}>
-          {/* <ChatUser /> */}
+          <ChatUser /> 
         </div>
         <div className={style.rightColumn}>
           <ChatRoom />
