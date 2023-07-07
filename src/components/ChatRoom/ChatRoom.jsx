@@ -11,57 +11,40 @@ import 'dayjs/locale/zh-tw';
 
 
 const ChatRoom = ({ headerContext = '公開聊天室' }) => {
-  const [onlineMessages, setOnlineMessages] = useState([])
-  const [offlineMessages, setOfflineMessages] = useState([])
   const [message, setMessage] = useState([])
-  const { socket, user } = useAuth() || {}
+  const { socket } = useAuth() || {}
   dayjs.locale('zh-tw');
 
 
   useEffect(() => {
     const handleServerJoin = (res) => {
-      console.log('has join')
-      setOnlineMessages((prevState) => {
-        // const isDuplicate = prevState.some((item) => item === res);
-        // if (isDuplicate) {
-        //   return prevState;
-        // }
-        return [...prevState, res];
+      setMessage((prevState) => {
+        return [...prevState, { isChat: false, message: res }];
       });
     };
 
     const handleServerLeave = (res) => {
-      console.log('has leave')
-      setOfflineMessages((prevState) => {
-        // const isDuplicate = prevState.some((item) => item === res);
-        // if (isDuplicate) {
-        //   return prevState;
-        // }
-        return [...prevState, res];
+      setMessage((prevState) => {
+        return [...prevState, { isChat: false, message: res }];
       });
     };
 
     const handleServerMessage = (res) => {
       const time = dayjs(res.timestamp).format('A hh:mm');
       const other = { text: res.message, time, avatar: res.user.avatar, isOwner: false }
-      console.log(other)
-      setMessage((preState => [...preState, other]))
+      setMessage((preState => [...preState, { isChat: true, message: other }]))
     }
 
     if (socket) {
-      console.log('hi')
+      console.log(`${socket} mounted`)
       socket.on('server-join', handleServerJoin);
       socket.on('server-message', handleServerMessage);
       socket.on('server-leave', handleServerLeave);
 
     }
-    console.log(`${socket} mounted`)
 
     return () => {
       // 跳頁或下線都會進入cleanup 
-      console.log('bye')
-      setOnlineMessages([])
-      setOfflineMessages([])
 
       if (socket) {
         console.log(`${socket} unmounted`)
@@ -74,10 +57,9 @@ const ChatRoom = ({ headerContext = '公開聊天室' }) => {
   }, [socket]);
 
   const handleSelfSend = (text) => {
-    console.log(text)
     const time = dayjs().format('A hh:mm')
     const self = { text, time, avatar, isOwner: true }
-    setMessage((preState => [...preState, self]))
+    setMessage((preState => [...preState, { isChat: true, message: self }]))
   }
 
 
@@ -88,7 +70,7 @@ const ChatRoom = ({ headerContext = '公開聊天室' }) => {
       <div className={style.HeaderContainer}>
         {headerContext}
       </div>
-      <ChatBody message={message} online={onlineMessages} offline={offlineMessages} />
+      <ChatBody message={message} />
       <ChatInput onSelfSend={handleSelfSend} />
     </>
   )
