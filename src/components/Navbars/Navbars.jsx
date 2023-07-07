@@ -20,7 +20,7 @@ const Navbars = ({ onTweetSubmit }) => {
   const [openModal, setOpenModal] = useState(false);
   const [activeTab, setActiveTab] = useState('');
   const [isIconClicked, setIconClicked] = useState(false);
-
+  const { logout, socket } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -34,9 +34,9 @@ const Navbars = ({ onTweetSubmit }) => {
 
 
   const handleLogout = () => {
-    localStorage.removeItem('token');
-    localStorage.removeItem('avatar');
+    logout();
     navigate('/login');
+    
   }
 
 

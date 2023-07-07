@@ -1,0 +1,7 @@
+@import "../../style/base.scss";
+
+.chatBodyContainer {
+  padding: 10px;
+  height: calc(100% - 138px);
+  overflow: scroll;
+}

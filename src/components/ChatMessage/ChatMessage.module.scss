@@ -24,10 +24,11 @@
     display: flex;
     flex-direction: column;
     align-items: flex-start;
+    overflow-wrap: break-word;
 
     p {
       @include fontStyle(15, 400);
-      max-width: max-content;
+      max-width: 100%;
       padding: 10px 20px;
       text-align: left;
       background-color: $border-color;

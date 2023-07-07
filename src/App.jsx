@@ -10,7 +10,7 @@ import AdminUserPage from './pages/AdminUserPage/AdminUserPage';
 import AdminHomePage from "./pages/AdminHomePage/AdminHomePage";
 import ChatPage from "./pages/ChatPage/ChatPage";
 import { UpdateTagProvider } from "./context/UpdateTagContext";
-import {ChatContextProvider} from './context/ChatContext';
+import { ChatContextProvider } from './context/ChatContext';
 
 const basename = process.env.PUBLIC_URL
 
@@ -21,22 +21,24 @@ function App() {
       <Router basename={basename}>
         <AuthProvider>
           <UpdateTagProvider>
-          <ChatContextProvider>
-            <Routes>
-              <Route path="login" element={<LoginPage />} />
-              <Route path="main" element={<HomePage />} />
-              <Route path="admin" element={<AdminLoginPage />} />
-              <Route path="admin/list" element={<ProtectedRouter><AdminHomePage /></ProtectedRouter>} />
-              <Route path="admin/user" element={<ProtectedRouter><AdminUserPage /></ProtectedRouter>} />
-              <Route path="setting" element={<SettingPage />} />
-              <Route path="register" element={<RegisterPage />} />
-              <Route path="tweets/:tweetId" element={<ReplyPage />} />
-              <Route path=":id/follow/*" element={<HandleProfilePage />} />
-              <Route path=":id/*" element={<HandleProfilePage />} />
-              <Route path="profile/*" element={<ProfilePage />} />
-              <Route path="chat" element ={<ChatPage/>}/>
-              <Route path="*" element={<HomePage />} />
-            </Routes>
+            <ChatContextProvider>
+              <Routes>
+                <Route path="login" element={<LoginPage />} />
+                <Route path="chat" element={<ChatPage />} />
+                {/* <Route path="main" element={<HomePage />} /> */}
+                {/* 暫時為了顯示chatpage做的設定 */}
+                <Route path="main" element={<ChatPage />} />
+                <Route path="admin" element={<AdminLoginPage />} />
+                <Route path="admin/list" element={<ProtectedRouter><AdminHomePage /></ProtectedRouter>} />
+                <Route path="admin/user" element={<ProtectedRouter><AdminUserPage /></ProtectedRouter>} />
+                <Route path="setting" element={<SettingPage />} />
+                <Route path="register" element={<RegisterPage />} />
+                <Route path="tweets/:tweetId" element={<ReplyPage />} />
+                <Route path=":id/follow/*" element={<HandleProfilePage />} />
+                <Route path=":id/*" element={<HandleProfilePage />} />
+                <Route path="profile/*" element={<ProfilePage />} />
+                <Route path="*" element={<HomePage />} />
+              </Routes>
             </ChatContextProvider>
           </UpdateTagProvider>
         </AuthProvider>
