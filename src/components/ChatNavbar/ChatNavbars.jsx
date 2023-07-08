@@ -67,6 +67,10 @@ const ChatNavbars = ({ onTweetSubmit }) => {
       setHasNewMessage(false);
     }
   }
+  const handleOpenChatClick = () => {
+    handleTabClick('')
+    socket.emit('client-record')
+  }
 
   return (
     <>
@@ -82,10 +86,10 @@ const ChatNavbars = ({ onTweetSubmit }) => {
               <span>首頁</span>
             </div>
           </Link>
-          <Link to="/">
+          {/* 暫時 */}
+          <Link to="/main">
             <div
-              className={`${style.NavbarItem} ${location.pathname === '/' ? style.active : ''}`}
-              onClick={() => handleTabClick('')}
+              className={`${style.NavbarItem} ${location.pathname === '/' ? style.active : ''}`} onClick={handleOpenChatClick}
             >
               <img className={style.NavbarPng}
                 src={isIconClicked === '/' ? chatIcon : chatIcon} alt="Icon" /> {/* 要確定Icon設計是否要自己畫*/}

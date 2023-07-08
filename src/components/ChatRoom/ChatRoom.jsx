@@ -3,61 +3,70 @@ import { useState, useEffect } from "react"
 import ChatInput from "../ChatInput/ChatInput"
 import ChatBody from "../ChatBody/ChatBody"
 import avatar from "../../assets/icons/avatar.svg"
+import { useChat } from '../../context/ChatContext';
 
-// import { useChat } from "../../context/ChatContext"
 import { useAuth } from "../../context/AuthContext"
-import dayjs from 'dayjs';
-import 'dayjs/locale/zh-tw';
+import { chatTimeFormat } from "../../apis/data"
 
 
 const ChatRoom = ({ headerContext = '公開聊天室' }) => {
   const [message, setMessage] = useState([])
-  const { socket } = useAuth() || {}
-  dayjs.locale('zh-tw');
+  const [historyMessage, setHistoryMessage] = useState([])
+  const { user } = useAuth() || {}
+  const socket = useChat()
 
 
   useEffect(() => {
     const handleServerJoin = (res) => {
-      setMessage((prevState) => {
-        return [...prevState, { isChat: false, message: res }];
-      });
+      setMessage((prevState) => [...prevState, { isChat: false, message: res }]);
     };
 
     const handleServerLeave = (res) => {
-      setMessage((prevState) => {
-        return [...prevState, { isChat: false, message: res }];
-      });
+      setMessage((prevState) => [...prevState, { isChat: false, message: res }]);
     };
 
     const handleServerMessage = (res) => {
-      const time = dayjs(res.timestamp).format('A hh:mm');
+      const time = chatTimeFormat(res.timestamp);
       const other = { text: res.message, time, avatar: res.user.avatar, isOwner: false }
-      setMessage((preState => [...preState, { isChat: true, message: other }]))
+      setMessage((preState) => [...preState, { isChat: true, message: other }])
     }
+
+    const handleServerRecord = (res) => {
+      const history = res.map(({ message, timestamp, User }) => ({ text: message, time: chatTimeFormat(timestamp), avatar: User.avatar, isOwner: User.id === user.id }))
+
+      setHistoryMessage((prevState) => {
+
+        const isDuplicate = prevState.some((item) => item.message?.every((msg) => history.some((h) => h.text === msg.text)))
+
+        if (isDuplicate) {
+          return prevState;
+        }
+        return [...prevState, history]
+      })
+    }
+
 
     if (socket) {
       console.log(`${socket} mounted`)
+      socket.emit('client-record')
+      socket.once('server-record', handleServerRecord)
       socket.on('server-join', handleServerJoin);
       socket.on('server-message', handleServerMessage);
       socket.on('server-leave', handleServerLeave);
-
     }
 
     return () => {
-      // 跳頁或下線都會進入cleanup 
-
-      if (socket) {
-        console.log(`${socket} unmounted`)
-        socket?.off('server-join', handleServerJoin);
-        socket?.off('server-message', handleServerMessage);
-        socket?.off('server-leave', handleServerLeave);
-
-      }
+      // 重整進入cleanup     
+      console.log(`${socket} unmounted`)
+      socket?.off('server-record', handleServerRecord)
+      socket?.off('server-join', handleServerJoin);
+      socket?.off('server-message', handleServerMessage);
+      socket?.off('server-leave', handleServerLeave);
     };
   }, [socket]);
 
   const handleSelfSend = (text) => {
-    const time = dayjs().format('A hh:mm')
+    const time = chatTimeFormat()
     const self = { text, time, avatar, isOwner: true }
     setMessage((preState => [...preState, { isChat: true, message: self }]))
   }
@@ -70,7 +79,7 @@ const ChatRoom = ({ headerContext = '公開聊天室' }) => {
       <div className={style.HeaderContainer}>
         {headerContext}
       </div>
-      <ChatBody message={message} />
+      <ChatBody message={message} historyMessage={historyMessage} />
       <ChatInput onSelfSend={handleSelfSend} />
     </>
   )

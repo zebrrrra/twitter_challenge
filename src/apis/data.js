@@ -1,3 +1,11 @@
+import dayjs from 'dayjs';
+import 'dayjs/locale/zh-tw';
+
+export const chatTimeFormat = (data) => {
+  dayjs.locale('zh-tw');
+  const time = dayjs(data).format('A hh:mm');
+  return time
+}
 // const { data } = await axios.post(`${baseUrl}/admin/login`, { account, password })
 // console.log(data.data.user)
 //其結構如下
