@@ -1,5 +1,5 @@
 //import { async } from 'q';
-import { createContext, useState } from 'react';
+import { createContext, useState, useMemo } from 'react';
 import { login, adminLogin } from '../apis/user';
 import * as jwt from 'jsonwebtoken';
 import { useLocation } from 'react-router-dom';
@@ -24,11 +24,16 @@ export const AuthProvider = ({ children }) => {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [payload, setPayload] = useState(null);
     const [socket, setSocket] = useState(null);
-
-
     const { pathname } = useLocation();
 
     useEffect(() => {
+        const newSocket = io("https://twitter-ac-team-d93c31406834.herokuapp.com");
+        const handleConnectSocket = () => {
+            console.log('connected:check permission')
+            setSocket(newSocket)
+            newSocket.emit('client-join', payload?.account)
+        }
+
         const checkTokenIsValid = async () => {
             const token = localStorage.getItem('token');
             if (!token) {
@@ -49,16 +54,23 @@ export const AuthProvider = ({ children }) => {
                 setPayload(tempPayload);
                 setIsAuthenticated(true);
                 if (!socket) {
-                    const newSocket = io("https://twitter-ac-team-d93c31406834.herokuapp.com");
-                    newSocket.on('connect', () => {
-                        console.log('connected')
-                        newSocket.emit('client-join',tempPayload.account)
-                        setSocket(newSocket);
-                    })
+                    // const newSocket = io("https://twitter-ac-team-d93c31406834.herokuapp.com");
+                    newSocket.on('connect', handleConnectSocket)
+                    // newSocket.on('connect', () => {
+                    //     console.log('connected:check permission')
+                    //     newSocket.emit('client-join', tempPayload.account)
+                    //     setSocket(newSocket);
+                    // })
                 }
             }
         };
         checkTokenIsValid();
+        return () => {
+            if (socket) {
+                console.log('bye')
+                socket.off('connect', handleConnectSocket)
+            }
+        }
     }, [pathname, socket]);
 
 
@@ -107,7 +119,7 @@ export const AuthProvider = ({ children }) => {
                     //socket.io連線傳遞account
                     const newSocket = io("https://twitter-ac-team-d93c31406834.herokuapp.com");
                     newSocket.on('connect', () => {
-                        console.log('connect to')
+                        console.log('connect to: login success')
                         setSocket(newSocket);
                         newSocket.emit('client-join', data.account);
                     })
@@ -133,6 +145,7 @@ export const AuthProvider = ({ children }) => {
                     });
                     localStorage.removeItem('token');
                     localStorage.removeItem('avatar');
+                    localStorage.removeItem('usersUpdate');
                     setPayload(null);
                     setIsAuthenticated(false);
                 }
