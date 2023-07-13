@@ -26,6 +26,7 @@ const ChatRoom = ({ headerContext = '公開聊天室' }) => {
     };
 
     const handleServerMessage = (res) => {
+      console.log(res)
       const time = chatTimeFormat(res.timestamp);
       const other = { text: res.message, time, avatar: res.user.avatar, isOwner: false }
       setMessage((preState) => [...preState, { isChat: true, message: other }])
@@ -65,9 +66,10 @@ const ChatRoom = ({ headerContext = '公開聊天室' }) => {
     };
   }, [socket]);
 
-  const handleSelfSend = (text) => {
-    const time = chatTimeFormat()
-    const self = { text, time, avatar, isOwner: true }
+
+  // 接收來自ChatInput的props
+  const handleSelfSend = (text, time) => {
+    const self = { text, time: chatTimeFormat(time), avatar, isOwner: true }
     setMessage((preState => [...preState, { isChat: true, message: self }]))
   }
 

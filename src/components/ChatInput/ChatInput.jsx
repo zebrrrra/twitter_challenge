@@ -2,18 +2,22 @@ import style from "./ChatInput.module.scss"
 import { useState } from "react"
 import { ReactComponent as Send } from "../../assets/icons/send.svg"
 import { useAuth } from "../../context/AuthContext"
+import dayjs from 'dayjs';
 
 const ChatInput = ({ onSelfSend }) => {
   const [text, setText] = useState('')
-  const { user, socket } = useAuth()
+  const { socket } = useAuth()
 
 
   const handleSend = (e) => {
     e.preventDefault();
 
     if (socket) {
-      onSelfSend(text)
-      socket.emit('client-message', user.account, text)
+      const time = dayjs().format('YYYY-MM-DD HH:mm:ss')
+      console.log(time)
+      // FIXME 無法成功emit
+      socket.emit('client-message', text, time)
+      onSelfSend(text, time)
     }
     setText('')
   }
