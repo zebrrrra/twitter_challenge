@@ -1,23 +1,22 @@
 import style from "./ChatInput.module.scss"
 import { useState } from "react"
 import { ReactComponent as Send } from "../../assets/icons/send.svg"
-import { useAuth } from "../../context/AuthContext"
+import { useChat } from "../../context/ChatContext"
 
-const ChatInput = ({ onSelfSend }) => {
+const ChatInput = () => {
   const [text, setText] = useState('')
-  const { user, socket } = useAuth()
-
+  const socket = useChat()
 
   const handleSend = (e) => {
     e.preventDefault();
 
     if (socket) {
-      onSelfSend(text)
-      socket.emit('client-message', user.account, text)
+      const time = new Date()
+      socket.emit('client-message', text, time)
+      console.log('send', text, time)
     }
     setText('')
   }
-
 
   return (
     <form className={style.container} onSubmit={handleSend}>
