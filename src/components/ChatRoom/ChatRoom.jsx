@@ -2,7 +2,6 @@ import style from "./ChatRoom.module.scss"
 import { useState, useEffect } from "react"
 import ChatInput from "../ChatInput/ChatInput"
 import ChatBody from "../ChatBody/ChatBody"
-import avatar from "../../assets/icons/avatar.svg"
 import { useChat } from '../../context/ChatContext';
 
 import { useAuth } from "../../context/AuthContext"
@@ -28,8 +27,8 @@ const ChatRoom = ({ headerContext = '公開聊天室' }) => {
     const handleServerMessage = (res) => {
       console.log(res)
       const time = chatTimeFormat(res.timestamp);
-      const other = { text: res.message, time, avatar: res.user.avatar, isOwner: false }
-      setMessage((preState) => [...preState, { isChat: true, message: other }])
+      const message = { text: res.message, time, avatar: res.user.avatar, isOwner: res.user.id === user.id }
+      setMessage((preState) => [...preState, { isChat: true, message }])
     }
 
     const handleServerRecord = (res) => {
@@ -50,7 +49,7 @@ const ChatRoom = ({ headerContext = '公開聊天室' }) => {
     if (socket) {
       console.log(`${socket} mounted`)
       socket.emit('client-record')
-      socket.once('server-record', handleServerRecord)
+      socket.on('server-record', handleServerRecord)
       socket.on('server-join', handleServerJoin);
       socket.on('server-message', handleServerMessage);
       socket.on('server-leave', handleServerLeave);
@@ -64,17 +63,7 @@ const ChatRoom = ({ headerContext = '公開聊天室' }) => {
       socket?.off('server-message', handleServerMessage);
       socket?.off('server-leave', handleServerLeave);
     };
-  }, [socket]);
-
-
-  // 接收來自ChatInput的props
-  const handleSelfSend = (text, time) => {
-    const self = { text, time: chatTimeFormat(time), avatar, isOwner: true }
-    setMessage((preState => [...preState, { isChat: true, message: self }]))
-  }
-
-
-
+  }, [socket?.connected]);
 
   return (
     <>
@@ -82,7 +71,8 @@ const ChatRoom = ({ headerContext = '公開聊天室' }) => {
         {headerContext}
       </div>
       <ChatBody message={message} historyMessage={historyMessage} />
-      <ChatInput onSelfSend={handleSelfSend} />
+      <ChatInput />
+
     </>
   )
 }

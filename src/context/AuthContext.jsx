@@ -31,7 +31,7 @@ export const AuthProvider = ({ children }) => {
         const handleConnectSocket = () => {
             console.log('connected:check permission')
             setSocket(newSocket)
-            newSocket.emit('client-join', payload?.account)
+            newSocket.emit('client-join', payload?.id)
         }
 
         const checkTokenIsValid = async () => {
@@ -121,7 +121,7 @@ export const AuthProvider = ({ children }) => {
                     newSocket.on('connect', () => {
                         console.log('connect to: login success')
                         setSocket(newSocket);
-                        newSocket.emit('client-join', data.account);
+                        newSocket.emit('client-join', payload?.id);
                     })
 
                     return {
@@ -139,7 +139,7 @@ export const AuthProvider = ({ children }) => {
 
                 //socket登出
                 if (socket) {
-                    socket.emit('client-leave', payload.account, () => {
+                    socket.emit('client-leave', payload.id, () => {
                         socket.disconnect();
                         setSocket(null);
                     });
