@@ -9,12 +9,11 @@ import { useAuth } from "../../context/AuthContext"
 import { chatTimeFormat } from "../../apis/data"
 
 
-const ChatRoom = ({ headerContext = '公開聊天室' }) => {
+const ChatRoom = ({ headerContext, roomId }) => {
   const [message, setMessage] = useState([])
   const [historyMessage, setHistoryMessage] = useState([])
   const { user } = useAuth() || {}
   const socket = useChat()
-
 
   useEffect(() => {
     const handleServerJoin = (res) => {
@@ -25,13 +24,10 @@ const ChatRoom = ({ headerContext = '公開聊天室' }) => {
       setMessage((prevState) => [...prevState, { isChat: false, message: res }]);
     };
 
-    const handleServerMessage = (res) => {
-      console.log(res)
-      const other = { text: res.message, time: chatTimeFormat(res.timestamp), avatar: res.user.avatar, isOwner: res.user.id === user.id }
-      setMessage((preState) => [...preState, { isChat: true, message: other }])
-    }
-
     const handleServerRecord = (res) => {
+      console.log('server-record', res)
+      if (roomId !== res[0].roomId) return
+
       const history = res.map(({ message, timestamp, User }) => ({ text: message, time: chatTimeFormat(timestamp), avatar: User.avatar, isOwner: User.id === user.id }))
 
       setHistoryMessage((prevState) => {
@@ -43,15 +39,19 @@ const ChatRoom = ({ headerContext = '公開聊天室' }) => {
         }
         return [...prevState, history]
       })
+
+    }
+
+    if (socket && roomId === 4) {
+      socket.on('server-join', handleServerJoin);
+      socket.on('server-leave', handleServerLeave);
     }
 
     if (socket) {
       console.log(`${socket} mounted`)
-      socket.emit('client-record')
+      console.log(roomId)
+      socket.emit('client-record', roomId)
       socket.on('server-record', handleServerRecord)
-      socket.on('server-message', handleServerMessage);
-      socket.on('server-join', handleServerJoin);
-      socket.on('server-leave', handleServerLeave);
     }
 
     return () => {
@@ -59,10 +59,31 @@ const ChatRoom = ({ headerContext = '公開聊天室' }) => {
       console.log(`${socket} unmounted`)
       socket?.off('server-record', handleServerRecord)
       socket?.off('server-join', handleServerJoin);
-      socket?.off('server-message', handleServerMessage);
       socket?.off('server-leave', handleServerLeave);
     };
   }, [socket?.connected]);
+
+  // 獨立監聽server-message
+  useEffect(() => {
+    const handleServerMessage = (res) => {
+      console.log('server-message', res)
+      if (roomId !== Number(res.room)) return
+
+      const other = { text: res.message, time: chatTimeFormat(res.timestamp), avatar: res.user.avatar, isOwner: res.user.id === user.id }
+      setMessage((preState) => [...preState, { isChat: true, message: other }])
+
+    }
+
+    if (socket) {
+      console.log('im lisening')
+      socket.on('server-message', handleServerMessage);
+    }
+
+    return () => {
+      console.log('not lisening')
+      socket?.off('server-message', handleServerMessage);
+    }
+  }, [socket])
 
   // 接收來自ChatInput的props
   const handleSelfSend = (text, time) => {
@@ -77,8 +98,13 @@ const ChatRoom = ({ headerContext = '公開聊天室' }) => {
         {headerContext}
       </div>
       <ChatBody message={message} historyMessage={historyMessage} />
-      <ChatInput onSelfSend={handleSelfSend} />
+      <ChatInput onSelfSend={handleSelfSend} roomId={roomId} />
     </>
   )
 }
 export default ChatRoom
+
+
+
+
+

@@ -1,7 +1,7 @@
 import style from './ChatPage.module.scss';
 import { useAuth } from '../../context/AuthContext';
 import { ChatNavbar, ChatRoom } from '../../components';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useChat } from '../../context/ChatContext';
 import ChatUser from '../../components/ChatUser/ChatUser';
@@ -10,6 +10,7 @@ import ChatUser from '../../components/ChatUser/ChatUser';
 const ChatPage = () => {
 
   const { isAuthenticated, user } = useAuth();
+  const socket = useChat();
 
   const navigate = useNavigate();
   useEffect(() => {
@@ -18,7 +19,10 @@ const ChatPage = () => {
     }
   }, [navigate, isAuthenticated])
 
-  const socket = useChat();
+  // TODO 在ChatPage元件加上以下
+  // 接收來自ChatUser的回調函式（攜帶著別人的name、account以及roomId）
+  const fakeName = 'user1'
+  const fakeRoomId = 304
 
   return (
     <div className={style.homeContainer}>
@@ -27,10 +31,10 @@ const ChatPage = () => {
           <ChatNavbar />
         </div>
         <div className={style.middleColumn}>
-          <ChatUser /> 
+          <ChatUser />
         </div>
         <div className={style.rightColumn}>
-          <ChatRoom />
+          <ChatRoom headerContext={fakeName || "公開聊天室"} roomId={fakeRoomId || 4} />
         </div>
       </div>
     </div>

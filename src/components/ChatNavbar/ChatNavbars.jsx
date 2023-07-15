@@ -69,7 +69,7 @@ const ChatNavbars = ({ onTweetSubmit }) => {
   }
   const handleOpenChatClick = () => {
     handleTabClick('')
-    socket.emit('client-record')
+    // socket.emit('client-record')
   }
 
   return (
