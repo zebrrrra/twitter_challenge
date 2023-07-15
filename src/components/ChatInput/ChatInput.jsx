@@ -3,7 +3,7 @@ import { useState } from "react"
 import { ReactComponent as Send } from "../../assets/icons/send.svg"
 import { useChat } from "../../context/ChatContext"
 
-const ChatInput = () => {
+const ChatInput = ({ onSelfSend }) => {
   const [text, setText] = useState('')
   const socket = useChat()
 
@@ -13,7 +13,7 @@ const ChatInput = () => {
     if (socket) {
       const time = new Date()
       socket.emit('client-message', text, time)
-      console.log('send', text, time)
+      onSelfSend(text, time)
     }
     setText('')
   }
