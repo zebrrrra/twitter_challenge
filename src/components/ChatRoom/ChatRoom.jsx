@@ -1,6 +1,7 @@
 import style from "./ChatRoom.module.scss"
 import { useState, useEffect } from "react"
 import ChatInput from "../ChatInput/ChatInput"
+import avatar from "../../assets/icons/avatar.svg"
 import ChatBody from "../ChatBody/ChatBody"
 import { useChat } from '../../context/ChatContext';
 
@@ -26,9 +27,8 @@ const ChatRoom = ({ headerContext = '公開聊天室' }) => {
 
     const handleServerMessage = (res) => {
       console.log(res)
-      const time = chatTimeFormat(res.timestamp);
-      const message = { text: res.message, time, avatar: res.user.avatar, isOwner: res.user.id === user.id }
-      setMessage((preState) => [...preState, { isChat: true, message }])
+      const other = { text: res.message, time: chatTimeFormat(res.timestamp), avatar: res.user.avatar, isOwner: res.user.id === user.id }
+      setMessage((preState) => [...preState, { isChat: true, message: other }])
     }
 
     const handleServerRecord = (res) => {
@@ -45,13 +45,12 @@ const ChatRoom = ({ headerContext = '公開聊天室' }) => {
       })
     }
 
-
     if (socket) {
       console.log(`${socket} mounted`)
       socket.emit('client-record')
       socket.on('server-record', handleServerRecord)
-      socket.on('server-join', handleServerJoin);
       socket.on('server-message', handleServerMessage);
+      socket.on('server-join', handleServerJoin);
       socket.on('server-leave', handleServerLeave);
     }
 
@@ -65,14 +64,20 @@ const ChatRoom = ({ headerContext = '公開聊天室' }) => {
     };
   }, [socket?.connected]);
 
+  // 接收來自ChatInput的props
+  const handleSelfSend = (text, time) => {
+    const self = { text, time: chatTimeFormat(time), avatar, isOwner: true }
+    setMessage((preState => [...preState, { isChat: true, message: self }]))
+  }
+
+
   return (
     <>
       <div className={style.HeaderContainer}>
         {headerContext}
       </div>
       <ChatBody message={message} historyMessage={historyMessage} />
-      <ChatInput />
-
+      <ChatInput onSelfSend={handleSelfSend} />
     </>
   )
 }
