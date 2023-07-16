@@ -4,12 +4,12 @@ import { ChatNavbar, ChatRoom } from '../../components';
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useChat } from '../../context/ChatContext';
-import ChatPrivateText from'../../components/ChatPrivateText/ChatPrivateText';
+import ChatPrivateText from '../../components/ChatPrivateText/ChatPrivateText';
 
 const PrivateChatPage = () => {
-
+  const [headerContext, setHeaderContext] = useState('')
   const { isAuthenticated, user } = useAuth();
-  const {roomId, userId} =useParams();
+  const { roomId, targetId } = useParams();
   const socket = useChat();
   const navigate = useNavigate();
   useEffect(() => {
@@ -18,18 +18,15 @@ const PrivateChatPage = () => {
     }
   }, [navigate, isAuthenticated])
 
-//const [roomId, setRoomId] =useState(4);
-//const [selectedUserId, setSelectedUserId] =useState(null);
-//const handleClick = (roomId, userId) =>{
-//  setRoomId(roomId);
-//  setSelectedUserId(userId);
-//}
-
-
-  // TODO 在ChatPage元件加上以下
-  // 接收來自ChatUser的回調函式（攜帶著別人的name、account以及roomId）
- //const fakeName = 'user1'
-  //const fakeRoomId = 304
+  useEffect(() => {
+    const matchChatPerson = () => {
+      if (targetId) {
+        const target = JSON.parse(localStorage.getItem('usersUpdate')).filter(({ id }) => id === Number(targetId))
+        setHeaderContext(target[0].name)
+      }
+    }
+    matchChatPerson()
+  }, [targetId])
 
   return (
     <div className={style.homeContainer}>
@@ -41,7 +38,7 @@ const PrivateChatPage = () => {
           <ChatPrivateText />
         </div>
         <div className={style.rightColumn}>
-        <ChatRoom headerContext={user|| "公開聊天室"} roomId={roomId|| 4} userId={userId||304} />
+          <ChatRoom headerContext={headerContext} roomId={roomId} />
         </div>
       </div>
     </div>

@@ -14,7 +14,7 @@ const ChatRoom = ({ headerContext, roomId }) => {
   const [historyMessage, setHistoryMessage] = useState([])
   const { user } = useAuth() || {}
   const socket = useChat()
-
+  console.log(roomId)
   useEffect(() => {
     const handleServerJoin = (res) => {
       setMessage((prevState) => [...prevState, { isChat: false, message: res }]);
