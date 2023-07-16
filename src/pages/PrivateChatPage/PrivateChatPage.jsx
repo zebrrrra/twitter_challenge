@@ -1,17 +1,16 @@
 import style from './ChatPage.module.scss';
 import { useAuth } from '../../context/AuthContext';
 import { ChatNavbar, ChatRoom } from '../../components';
-import { useEffect,useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useChat } from '../../context/ChatContext';
-import ChatUser from '../../components/ChatUser/ChatUser';
+import ChatPrivateText from'../../components/ChatPrivateText/ChatPrivateText';
 
-
-const ChatPage = () => {
+const PrivateChatPage = () => {
 
   const { isAuthenticated, user } = useAuth();
+  const {roomId, userId} =useParams();
   const socket = useChat();
-
   const navigate = useNavigate();
   useEffect(() => {
     if (!isAuthenticated) {
@@ -19,16 +18,18 @@ const ChatPage = () => {
     }
   }, [navigate, isAuthenticated])
 
+//const [roomId, setRoomId] =useState(4);
+//const [selectedUserId, setSelectedUserId] =useState(null);
+//const handleClick = (roomId, userId) =>{
+//  setRoomId(roomId);
+//  setSelectedUserId(userId);
+//}
+
+
   // TODO 在ChatPage元件加上以下
   // 接收來自ChatUser的回調函式（攜帶著別人的name、account以及roomId）
-  const fakeName = 'user1'
-  const fakeRoomId = 304
-const [roomId, setRoomId] =useState(4);
-const [selectedUserId, setSelectedUserId] =useState(null);
-const handleClick = (roomId, userId) =>{
-  setRoomId(roomId);
-  setSelectedUserId(userId);
-}
+ //const fakeName = 'user1'
+  //const fakeRoomId = 304
 
   return (
     <div className={style.homeContainer}>
@@ -37,15 +38,14 @@ const handleClick = (roomId, userId) =>{
           <ChatNavbar />
         </div>
         <div className={style.middleColumn}>
-          <ChatUser onUserClick={handleClick} />
+          <ChatPrivateText />
         </div>
         <div className={style.rightColumn}>
-        <ChatRoom headerContext={fakeName || "公開聊天室"} roomId={fakeRoomId || 4} />
-          
+        <ChatRoom headerContext={user|| "公開聊天室"} roomId={roomId|| 4} userId={userId||304} />
         </div>
       </div>
     </div>
   )
 }
 
-export default ChatPage;
+export default PrivateChatPage;

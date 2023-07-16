@@ -11,6 +11,7 @@ import AdminHomePage from "./pages/AdminHomePage/AdminHomePage";
 import ChatPage from "./pages/ChatPage/ChatPage";
 import { UpdateTagProvider } from "./context/UpdateTagContext";
 import { ChatContextProvider } from './context/ChatContext';
+import PrivateChatPage from "./pages/PrivateChatPage/PrivateChatPage";
 
 const basename = process.env.PUBLIC_URL
 
@@ -25,6 +26,7 @@ function App() {
               <Routes>
                 <Route path="login" element={<LoginPage />} />
                 <Route path="chat" element={<ChatPage />} />
+                <Route path="chat/:roomId/:targetId" element={<PrivateChatPage/>} />
                 {/* <Route path="main" element={<HomePage />} /> */}
                 {/* 暫時為了顯示chatpage做的設定 */}
                 <Route path="main" element={<ChatPage />} />
