@@ -33,10 +33,10 @@ const ChatRoom = ({ headerContext, roomId }) => {
       setMessage((prevState) => 
       [...prevState, { isChat: false, message: res }]);
     };
-
     if (socket && roomId === 4) {
       socket.on('server-join', handleServerJoin);
       socket.on('server-leave', handleServerLeave);
+
     }
 
     return () => {
@@ -95,8 +95,10 @@ const ChatRoom = ({ headerContext, roomId }) => {
     return () => {
       console.log('not lisening')
       socket?.off('server-message', handleServerMessage);
+
     }
   }, [socket,roomId])
+
 
   // 接收來自ChatInput的props
   const handleSelfSend = (text, time) => {
