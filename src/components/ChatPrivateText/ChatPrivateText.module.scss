@@ -31,12 +31,24 @@
 
 .userInfo {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
 
-
 }
+
+.userTime {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+//.user{
+//  display: flex;
+//flex-direction: row;
+//justify-content: flex-start;
+
+//}
 
 .name {
   @include fontStyle(16, 700);
