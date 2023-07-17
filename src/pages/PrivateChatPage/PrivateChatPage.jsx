@@ -21,11 +21,16 @@ const PrivateChatPage = () => {
   useEffect(() => {
     const matchChatPerson = () => {
       if (targetId) {
-        const target = JSON.parse(localStorage.getItem('usersUpdate')).filter(({ id }) => id === Number(targetId))
-        setHeaderContext(target[0].name)
+        const usersUpdate = JSON.parse(localStorage.getItem('usersUpdate'));
+        if (usersUpdate) {
+          const target = usersUpdate.filter(({ id }) => id === Number(targetId));
+          if (target.length > 0) {
+            setHeaderContext(target[0].name);
+          }
+        }
       }
     }
-    matchChatPerson()
+    matchChatPerson();
   }, [targetId])
 
   return (
@@ -35,7 +40,7 @@ const PrivateChatPage = () => {
           <ChatNavbar />
         </div>
         <div className={style.middleColumn}>
-          <ChatPrivateText />
+          <ChatPrivateText roomId={roomId} />
         </div>
         <div className={style.rightColumn}>
           <ChatRoom headerContext={headerContext} roomId={roomId} />

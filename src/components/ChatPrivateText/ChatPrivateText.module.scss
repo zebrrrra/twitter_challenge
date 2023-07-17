@@ -2,7 +2,7 @@
 
 
 
-.onLineUser{
+.onLineList{
     display: flex;
     align-items: center;
     @include fontStyle(16, 700);
@@ -19,6 +19,7 @@
     height: 82px;
     box-sizing: border-box; //直接填滿
     border:1px solid $border-color;
+    cursor: pointer;
 
 }
 
@@ -27,7 +28,6 @@
     height: 50px;
     margin-left: 16px;
     border-radius: 50%;
-    cursor: pointer;
 
 }
 

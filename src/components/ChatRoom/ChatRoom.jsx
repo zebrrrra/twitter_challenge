@@ -15,13 +15,23 @@ const ChatRoom = ({ headerContext, roomId }) => {
   const { user } = useAuth() || {}
   const socket = useChat()
 
+  useEffect(()=>{
+    setMessage([]);
+    setHistoryMessage([]);
+    if(socket?.connected){
+      socket.emit('client-record',roomId)
+    }
+  },[roomId]);
+
   useEffect(() => {
     const handleServerJoin = (res) => {
-      setMessage((prevState) => [...prevState, { isChat: false, message: res }]);
+      setMessage((prevState) =>
+      [...prevState, { isChat: false, message: res }]);
     };
 
     const handleServerLeave = (res) => {
-      setMessage((prevState) => [...prevState, { isChat: false, message: res }]);
+      setMessage((prevState) => 
+      [...prevState, { isChat: false, message: res }]);
     };
 
     if (socket && roomId === 4) {
@@ -33,7 +43,7 @@ const ChatRoom = ({ headerContext, roomId }) => {
       socket?.off('server-join', handleServerJoin);
       socket?.off('server-leave', handleServerLeave);
     };
-  }, [socket?.connected]);
+  }, [socket]);
 
   const handleServerRecord = useCallback((res) => {
     console.log('server-record', res)
@@ -64,7 +74,7 @@ const ChatRoom = ({ headerContext, roomId }) => {
     return () => {
       socket?.off('server-record', handleServerRecord)
     }
-  }, [socket?.connected])
+  }, [socket,roomId])
 
   // 獨立監聽server-message
   useEffect(() => {
@@ -86,7 +96,7 @@ const ChatRoom = ({ headerContext, roomId }) => {
       console.log('not lisening')
       socket?.off('server-message', handleServerMessage);
     }
-  }, [socket])
+  }, [socket,roomId])
 
   // 接收來自ChatInput的props
   const handleSelfSend = (text, time) => {

@@ -26,7 +26,7 @@ function App() {
               <Routes>
                 <Route path="login" element={<LoginPage />} />
                 <Route path="chat" element={<ChatPage />} />
-                <Route path="chat/:roomId/:targetId" element={<PrivateChatPage/>} />
+                <Route path="chat/:roomId" element={<PrivateChatPage/>} />
                 {/* <Route path="main" element={<HomePage />} /> */}
                 {/* 暫時為了顯示chatpage做的設定 */}
                 <Route path="main" element={<ChatPage />} />

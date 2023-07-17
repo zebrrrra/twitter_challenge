@@ -1,16 +1,21 @@
 import { useState, useEffect, useCallback } from "react";
 import { useAuth } from "../../context/AuthContext";
-import { useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import style from './ChatPrivateText.module.scss';
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
 
-const ChatPrivateText = () => {
+const ChatPrivateText = (roomId) => {
   const { socket } = useAuth() || {};
   const [history, setHistory] = useState({ empty: true, messages: [] });
-  const { roomId } = useParams();
+  const navigate =useNavigate();
+  dayjs.extend(relativeTime);
+  const now =dayjs();
 
   useEffect(() => {
     if (socket) {
       // BUG emit兩次
-      socket.emit("client-new-message");
+      socket.emit("client-new-message",roomId);
       socket.on("server-new-message", (res) => {
         console.log('server-new-message', res)
 
@@ -29,21 +34,34 @@ const ChatPrivateText = () => {
       socket?.off("server-new-message");
     };
   }, [roomId]);
-
   console.log(history)
+
+
+
+
 
   return (
     <div className='history'>
+       <div className={style.onLineList}>訊息</div>
       {history.empty ? (
         <div>尚未聊天過，開始發送訊息吧!</div>
       ) : (
-        history.messages.map((item, index) => (
-          <div className='historyItem' key={index}>
-            <img src={item.User.avatar} alt={item.User.name} />
-            <div>{item.User.name}</div>
-            <div>{item.message.slice(0, 50)}</div>
-          </div>
-        ))
+        history.messages.map((item, index) => {
+          const messageDate = dayjs(item.timestamp);
+          const formatDate = now.diff(messageDate, 'day') >= 1
+            ? messageDate.format('YYYY/MM/DD')
+            : messageDate.from(now);
+  
+          return (
+            <div className={style.chatUserCard} key={index} onClick={() => navigate(`/chat/${item.roomId}`)}>
+              <img className={style.avatar} src={item.User.avatar} alt={item.User.name} />
+              <div className={style.name}>{item.User.name}</div>
+              <div className={style.userName}>@{item.User.account}</div>
+              <div>{formatDate}</div>
+              <div>{item.message.slice(0, 50)}</div>
+            </div>
+          );
+        })
       )}
     </div>
   );

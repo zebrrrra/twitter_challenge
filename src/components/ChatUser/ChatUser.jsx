@@ -43,10 +43,6 @@ const ChatUser = () => {
 
 
   const navigate = useNavigate();
-  //const navigateToPriviate =(roomId,targetId)=>{
-  //navigate(`/chat/${roomId}/${targetId}`);
-  //socket.off('server-get-room',navigateToPriviate);
-  //}
 
   //傳遞資料
   const handleAvatarClick = (targetId) => {
@@ -54,7 +50,7 @@ const ChatUser = () => {
       socket.emit('client-get-room', targetId);
       socket.on('server-get-room', roomId => {
         // navigate到PrivateChatPage並將roomId和targetId作為URL參數
-        navigate(`/chat/${roomId}/${targetId}`);
+        navigate(`/chat/${roomId}`);
         socket.off('server-get-room');
       });
     }
