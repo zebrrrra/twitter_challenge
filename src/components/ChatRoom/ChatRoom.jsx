@@ -1,5 +1,5 @@
 import style from "./ChatRoom.module.scss"
-import { useState, useEffect } from "react"
+import { useState, useEffect, useCallback } from "react"
 import ChatInput from "../ChatInput/ChatInput"
 import avatar from "../../assets/icons/avatar.svg"
 import ChatBody from "../ChatBody/ChatBody"
@@ -14,7 +14,7 @@ const ChatRoom = ({ headerContext, roomId }) => {
   const [historyMessage, setHistoryMessage] = useState([])
   const { user } = useAuth() || {}
   const socket = useChat()
-  console.log(roomId)
+
   useEffect(() => {
     const handleServerJoin = (res) => {
       setMessage((prevState) => [...prevState, { isChat: false, message: res }]);
@@ -24,44 +24,47 @@ const ChatRoom = ({ headerContext, roomId }) => {
       setMessage((prevState) => [...prevState, { isChat: false, message: res }]);
     };
 
-    const handleServerRecord = (res) => {
-      console.log('server-record', res)
-      if (roomId !== res[0].roomId) return
-
-      const history = res.map(({ message, timestamp, User }) => ({ text: message, time: chatTimeFormat(timestamp), avatar: User.avatar, isOwner: User.id === user.id }))
-
-      setHistoryMessage((prevState) => {
-
-        const isDuplicate = prevState.some((item) => item.message?.every((msg) => history.some((h) => h.text === msg.text)))
-
-        if (isDuplicate) {
-          return prevState;
-        }
-        return [...prevState, history]
-      })
-
-    }
-
     if (socket && roomId === 4) {
       socket.on('server-join', handleServerJoin);
       socket.on('server-leave', handleServerLeave);
     }
 
-    if (socket) {
-      console.log(`${socket} mounted`)
-      console.log(roomId)
-      socket.emit('client-record', roomId)
-      socket.on('server-record', handleServerRecord)
-    }
-
     return () => {
-      // 重整進入cleanup     
-      console.log(`${socket} unmounted`)
-      socket?.off('server-record', handleServerRecord)
       socket?.off('server-join', handleServerJoin);
       socket?.off('server-leave', handleServerLeave);
     };
   }, [socket?.connected]);
+
+  const handleServerRecord = useCallback((res) => {
+    console.log('server-record', res)
+    if (Number(roomId) !== res[0].roomId) return
+
+    const history = res.map(({ message, timestamp, User }) => ({ text: message, time: chatTimeFormat(timestamp), avatar: User.avatar, isOwner: User.id === user.id }))
+
+    setHistoryMessage((prevState) => {
+
+      const isDuplicate = prevState.some((item) => item.message?.every((msg) => history.some((h) => h.text === msg.text)))
+
+      if (isDuplicate) {
+        return prevState;
+      }
+      return [...prevState, history]
+    })
+  }, [roomId, user?.id])
+
+  // 獨立監聽server-record
+  useEffect(() => {
+    if (socket) {
+      // BUG emit兩次
+      socket.emit('client-record', roomId)
+      socket.on('server-record', handleServerRecord)
+      console.log('emit new message', roomId)
+    }
+
+    return () => {
+      socket?.off('server-record', handleServerRecord)
+    }
+  }, [socket?.connected])
 
   // 獨立監聽server-message
   useEffect(() => {
