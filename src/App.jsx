@@ -12,6 +12,7 @@ import ChatPage from "./pages/ChatPage/ChatPage";
 import { UpdateTagProvider } from "./context/UpdateTagContext";
 import { ChatContextProvider } from './context/ChatContext';
 import PrivateChatPage from "./pages/PrivateChatPage/PrivateChatPage";
+import { ChatUserProvider } from "./context/ChatUserContext";
 
 const basename = process.env.PUBLIC_URL
 
@@ -25,11 +26,11 @@ function App() {
             <ChatContextProvider>
               <Routes>
                 <Route path="login" element={<LoginPage />} />
-                <Route path="chat" element={<ChatPage />} />
-                <Route path="chat/:roomId/:targetId" element={<PrivateChatPage/>} />
-                {/* <Route path="main" element={<HomePage />} /> */}
+                <Route path="main" element={<HomePage />} />
+                <Route path="chat" element={<ChatUserProvider><ChatPage /></ChatUserProvider>} />
+                <Route path="chat/:roomId" element={<ChatUserProvider><PrivateChatPage /></ChatUserProvider>} />
                 {/* 暫時為了顯示chatpage做的設定 */}
-                <Route path="main" element={<ChatPage />} />
+                {/* <Route path="main" element={<ChatPage />} /> */}
                 <Route path="admin" element={<AdminLoginPage />} />
                 <Route path="admin/list" element={<ProtectedRouter><AdminHomePage /></ProtectedRouter>} />
                 <Route path="admin/user" element={<ProtectedRouter><AdminUserPage /></ProtectedRouter>} />

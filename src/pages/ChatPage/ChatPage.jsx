@@ -1,16 +1,14 @@
 import style from './ChatPage.module.scss';
 import { useAuth } from '../../context/AuthContext';
 import { ChatNavbar, ChatRoom } from '../../components';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useChat } from '../../context/ChatContext';
 import ChatUser from '../../components/ChatUser/ChatUser';
 
 
 const ChatPage = () => {
 
-  const { isAuthenticated, user } = useAuth();
-  const socket = useChat();
+  const { isAuthenticated } = useAuth();
 
   const navigate = useNavigate();
   useEffect(() => {
@@ -18,8 +16,6 @@ const ChatPage = () => {
       navigate('/login');
     }
   }, [navigate, isAuthenticated])
-
-  const [selectedUserId, setSelectedUserId] = useState(null);
 
   return (
     <div className={style.homeContainer}>
@@ -31,7 +27,7 @@ const ChatPage = () => {
           <ChatUser />
         </div>
         <div className={style.rightColumn}>
-          <ChatRoom headerContext={"公開聊天室"} roomId={4} />
+          <ChatRoom headerContext={{ title: '公開聊天室', subtitle: '' }} roomId={4} />
         </div>
       </div>
     </div>

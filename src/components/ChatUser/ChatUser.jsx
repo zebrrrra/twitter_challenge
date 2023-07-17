@@ -2,11 +2,14 @@ import { useState, useEffect } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import style from './ChatUser.module.scss';
 import { useNavigate } from 'react-router-dom';
+import { useChatUser } from '../../context/ChatUserContext';
 
 const ChatUser = () => {
 
   const { socket } = useAuth() || {};
+  const { setChatUser } = useChatUser()
   const [usersUpdate, setUsersUpdate] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
 
@@ -42,11 +45,6 @@ const ChatUser = () => {
 
 
 
-  const navigate = useNavigate();
-  //const navigateToPriviate =(roomId,targetId)=>{
-  //navigate(`/chat/${roomId}/${targetId}`);
-  //socket.off('server-get-room',navigateToPriviate);
-  //}
 
   //傳遞資料
   const handleAvatarClick = (targetId) => {
@@ -54,11 +52,17 @@ const ChatUser = () => {
       socket.emit('client-get-room', targetId);
       socket.on('server-get-room', roomId => {
         // navigate到PrivateChatPage並將roomId和targetId作為URL參數
-        navigate(`/chat/${roomId}/${targetId}`);
+        navigate(`/chat/${roomId}`);
         socket.off('server-get-room');
       });
     }
+    const usersUpdate = JSON.parse(localStorage.getItem('usersUpdate'));
+    if (usersUpdate) {
+      const target = usersUpdate.filter(({ id }) => id === Number(targetId))
+      setChatUser(target[0])
+    }
   }
+
   return (
 
     <>

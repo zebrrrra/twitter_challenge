@@ -2,12 +2,12 @@
 
 
 
-.onLineUser{
+.onLineUser {
     display: flex;
     align-items: center;
     @include fontStyle(16, 700);
     text-align: left;
-    border-left:1px solid $border-color;
+    border-left: 1px solid $border-color;
     height: 74px;
     padding-left: 16px;
 
@@ -18,7 +18,7 @@
     align-items: center;
     height: 82px;
     box-sizing: border-box; //直接填滿
-    border:1px solid $border-color;
+    border: 1px solid $border-color;
 
 }
 
@@ -27,7 +27,7 @@
     height: 50px;
     margin-left: 16px;
     border-radius: 50%;
-
+    cursor: pointer;
 }
 
 .userInfo {
@@ -41,7 +41,7 @@
 
 .name {
     @include fontStyle(16, 700);
-    width: auto; 
+    width: auto;
     line-height: 26px;
     color: #171725;
     margin-left: 10px;

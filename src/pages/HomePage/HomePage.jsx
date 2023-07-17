@@ -4,7 +4,7 @@ import { Navbars, Header, MainPost, AllTweets, RecommendList } from '../../compo
 import { useAuth } from '../../context/AuthContext'
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-//import { useContext } from 'react';
+import ChatNavbars from '../../components/ChatNavbar/ChatNavbars';
 
 const HomePage = () => {
   const [newTweet, setNewTweet] = useState(null)
@@ -24,7 +24,8 @@ const HomePage = () => {
     <div className={style.homeContainer}>
       <div className={style.homeColumn}>
         <div className={style.leftColumn}>
-          <Navbars onTweetSubmit={handTweetSubmit} />
+          {/* <Navbars onTweetSubmit={handTweetSubmit} /> */}
+          <ChatNavbars onTweetSubmit={handTweetSubmit} />
         </div>
         <div className={style.middleColumn}>
           <Header />

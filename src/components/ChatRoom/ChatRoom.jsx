@@ -15,6 +15,34 @@ const ChatRoom = ({ headerContext, roomId }) => {
   const { user } = useAuth() || {}
   const socket = useChat()
 
+  const handleServerRecord = useCallback((res) => {
+    console.log('server-record', res)
+    if (Number(roomId) !== res[0].roomId) return
+
+    const history = res.map(({ message, timestamp, User }) => ({ text: message, time: chatTimeFormat(timestamp), avatar: User.avatar, isOwner: User.id === user.id }))
+
+    setHistoryMessage((prevState) => {
+
+      const isDuplicate = prevState.some((item) => item.message?.every((msg) => history.some((h) => h.text === msg.text)))
+
+      if (isDuplicate) {
+        return prevState;
+      }
+      return [...prevState, history]
+    })
+  }, [roomId, user?.id])
+
+  useEffect(() => {
+    setMessage([]);
+    setHistoryMessage([]);
+    if (socket?.connected) {
+      socket.emit('client-record', roomId)
+      console.log('emit record', roomId)
+    }
+
+  }, [roomId]);
+
+  // 監聽上下線
   useEffect(() => {
     const handleServerJoin = (res) => {
       setMessage((prevState) => [...prevState, { isChat: false, message: res }]);
@@ -35,36 +63,16 @@ const ChatRoom = ({ headerContext, roomId }) => {
     };
   }, [socket?.connected]);
 
-  const handleServerRecord = useCallback((res) => {
-    console.log('server-record', res)
-    if (Number(roomId) !== res[0].roomId) return
-
-    const history = res.map(({ message, timestamp, User }) => ({ text: message, time: chatTimeFormat(timestamp), avatar: User.avatar, isOwner: User.id === user.id }))
-
-    setHistoryMessage((prevState) => {
-
-      const isDuplicate = prevState.some((item) => item.message?.every((msg) => history.some((h) => h.text === msg.text)))
-
-      if (isDuplicate) {
-        return prevState;
-      }
-      return [...prevState, history]
-    })
-  }, [roomId, user?.id])
-
   // 獨立監聽server-record
   useEffect(() => {
     if (socket) {
-      // BUG emit兩次
-      socket.emit('client-record', roomId)
       socket.on('server-record', handleServerRecord)
-      console.log('emit new message', roomId)
     }
 
     return () => {
       socket?.off('server-record', handleServerRecord)
     }
-  }, [socket?.connected])
+  }, [socket?.connected, roomId])
 
   // 獨立監聽server-message
   useEffect(() => {
@@ -86,7 +94,7 @@ const ChatRoom = ({ headerContext, roomId }) => {
       console.log('not lisening')
       socket?.off('server-message', handleServerMessage);
     }
-  }, [socket])
+  }, [socket, roomId])
 
   // 接收來自ChatInput的props
   const handleSelfSend = (text, time) => {
@@ -94,11 +102,11 @@ const ChatRoom = ({ headerContext, roomId }) => {
     setMessage((preState => [...preState, { isChat: true, message: self }]))
   }
 
-
   return (
     <>
       <div className={style.HeaderContainer}>
-        {headerContext}
+        <div className={style.title}>{headerContext.title}</div>
+        {roomId !== 4 && (<div className={style.subtitle}>@{headerContext.subtitle}</div>)}
       </div>
       <ChatBody message={message} historyMessage={historyMessage} />
       <ChatInput onSelfSend={handleSelfSend} roomId={roomId} />

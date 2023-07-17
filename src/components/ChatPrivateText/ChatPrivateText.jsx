@@ -1,11 +1,19 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect } from "react";
 import { useAuth } from "../../context/AuthContext";
-import { useParams } from "react-router-dom";
+import style from './ChatPrivateText.module.scss';
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
+import { useNavigate } from "react-router-dom";
+import { useChatUser } from "../../context/ChatUserContext";
 
-const ChatPrivateText = () => {
+const ChatPrivateText = ({ roomId }) => {
   const { socket } = useAuth() || {};
   const [history, setHistory] = useState({ empty: true, messages: [] });
-  const { roomId } = useParams();
+  const { setChatUser } = useChatUser()
+
+  const navigate = useNavigate();
+  dayjs.extend(relativeTime);
+  const now = dayjs();
 
   useEffect(() => {
     if (socket) {
@@ -30,35 +38,37 @@ const ChatPrivateText = () => {
     };
   }, [roomId]);
 
-  console.log(history)
+  const handleTextClick = (targetData) => {
+    console.log('房間號碼', targetData)
+    setChatUser(targetData.user)
+    navigate(`/chat/${targetData.roomId}`)
+  }
 
   return (
     <div className='history'>
+      <div className={style.onLineList}>訊息</div>
       {history.empty ? (
         <div>尚未聊天過，開始發送訊息吧!</div>
       ) : (
-        history.messages.map((item, index) => (
-          <div className='historyItem' key={index}>
-            <img src={item.User.avatar} alt={item.User.name} />
-            <div>{item.User.name}</div>
-            <div>{item.message.slice(0, 50)}</div>
-          </div>
-        ))
+        history.messages.map((item, index) => {
+          const messageDate = dayjs(item.timestamp);
+          const formatDate = now.diff(messageDate, 'day') >= 1
+            ? messageDate.format('YYYY/MM/DD')
+            : messageDate.from(now);
+
+          return (
+            <div className={style.chatUserCard} key={index} onClick={() => handleTextClick({ roomId: item.roomId, user: item.User })}>
+              <img className={style.avatar} src={item.User.avatar} alt={item.User.name} />
+              <div className={style.name}>{item.User.name}</div>
+              <div className={style.userName}>@{item.User.account}</div>
+              <div>{formatDate}</div>
+              <div>{item.message.slice(0, 50)}</div>
+            </div>
+          );
+        })
       )}
     </div>
   );
 };
 
 export default ChatPrivateText;
-
-
- // socket.on("client-record", (res) => {
-    //   console.log(res)
-    //   if (Array.isArray(res)) {
-    //     setHistory({ empty: false, messages: res });
-    //   } else if (res === "尚未聊天過，開始發送訊息吧!") {
-    //     setHistory({ empty: true, messages: [] });
-    //   } else {
-    //     console.error("Unexpected server response:", res);
-    //   }
-    // });
