@@ -55,10 +55,15 @@ const ChatPrivateText = (roomId) => {
           return (
             <div className={style.chatUserCard} key={index} onClick={() => navigate(`/chat/${item.roomId}`)}>
               <img className={style.avatar} src={item.User.avatar} alt={item.User.name} />
+              <div className={style.userInfo}>
+                <div className={style.userTime}>
+ 
               <div className={style.name}>{item.User.name}</div>
               <div className={style.userName}>@{item.User.account}</div>
-              <div>{formatDate}</div>
-              <div>{item.message.slice(0, 50)}</div>
+              <div className={style.time}>{formatDate}</div>
+              </div>
+              <div className={style.message}>{item.message.slice(0, 50)}</div>
+            </div>
             </div>
           );
         })
