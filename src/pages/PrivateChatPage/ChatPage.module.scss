@@ -1,0 +1,57 @@
+@import '../../style/base.scss';
+
+.homeContainer {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  min-height: 100vh;
+  padding: 0;
+
+}
+
+.homeColumn {
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+  width: 100%;
+  justify-content: center;
+}
+
+.leftColumn,
+.rightColumn {
+  background-color: #fff;
+  position: sticky;
+  /* 改為 sticky */
+  top: 0;
+  /* 固定在頂部 */
+  height: 100vh;
+  /* 使用 viewport 高度 */
+}
+
+.leftColumn {
+  margin-right: 24px;
+  flex: 0 0 200px;
+  z-index: 1;
+}
+
+.rightColumn {
+  min-width: calc(70% - 200px);
+}
+
+.middleColumn {
+  min-width: 30%;
+  position: relative;
+  background-color: #fff;
+
+  overflow-y: auto;
+
+  //隱藏滾動條 (不一定每個瀏覽器有效)
+  scrollbar-width: none;
+  -ms-overflow-style: none; //ms
+
+  &::-webkit-scrollbar {
+    //scss寫法
+    display: none;
+  }
+
+}

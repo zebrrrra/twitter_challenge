@@ -10,6 +10,7 @@ import ChatUser from '../../components/ChatUser/ChatUser';
 const ChatPage = () => {
 
   const { isAuthenticated, user } = useAuth();
+  const socket = useChat();
 
   const navigate = useNavigate();
   useEffect(() => {
@@ -18,7 +19,7 @@ const ChatPage = () => {
     }
   }, [navigate, isAuthenticated])
 
-  const socket = useChat();
+  const [selectedUserId, setSelectedUserId] = useState(null);
 
   return (
     <div className={style.homeContainer}>
@@ -27,10 +28,10 @@ const ChatPage = () => {
           <ChatNavbar />
         </div>
         <div className={style.middleColumn}>
-          <ChatUser /> 
+          <ChatUser />
         </div>
         <div className={style.rightColumn}>
-          <ChatRoom />
+          <ChatRoom headerContext={"公開聊天室"} roomId={4} />
         </div>
       </div>
     </div>

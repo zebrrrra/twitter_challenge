@@ -1,5 +1,5 @@
 //import { async } from 'q';
-import { createContext, useState, useMemo } from 'react';
+import { createContext, useState } from 'react';
 import { login, adminLogin } from '../apis/user';
 import * as jwt from 'jsonwebtoken';
 import { useLocation } from 'react-router-dom';
@@ -71,7 +71,7 @@ export const AuthProvider = ({ children }) => {
                 socket.off('connect', handleConnectSocket)
             }
         }
-    }, [pathname, socket]);
+    }, [pathname, socket?.connected]);
 
 
 
