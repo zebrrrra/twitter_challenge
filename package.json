@@ -1,7 +1,7 @@
 {
   "name": "ac_twitter_frontend",
   "version": "0.1.0",
-  "homepage": "https://zebrrrra.github.io/AC_twitter_frontend",
+  "homepage": "https://j6127.github.io/AC_twitter_frontend_challenge/",
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.5",
