@@ -3,6 +3,8 @@ import { useAuth } from '../../context/AuthContext';
 import style from './ChatUser.module.scss';
 import { useNavigate } from 'react-router-dom';
 import { useChatUser } from '../../context/ChatUserContext';
+import Skeleton from 'react-loading-skeleton'
+import 'react-loading-skeleton/dist/skeleton.css'
 
 const ChatUser = () => {
 
@@ -68,6 +70,7 @@ const ChatUser = () => {
     <>
 
       <div className={style.onLineUser}>上線使用者({usersUpdate.length})</div>
+      {usersUpdate.length === 0 && (<Skeleton count={5} className={style.skeleton} />)}
       {usersUpdate.map((user, index) => (
         <div className={style.chatUserCard} onClick={() => handleAvatarClick(user.id)}>
           <div className={style.userInfo}>
