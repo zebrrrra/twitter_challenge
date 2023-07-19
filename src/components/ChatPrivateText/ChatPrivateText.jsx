@@ -1,13 +1,13 @@
 import { useState, useEffect } from "react";
-import { useAuth } from "../../context/AuthContext";
 import style from './ChatPrivateText.module.scss';
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import { useNavigate } from "react-router-dom";
 import { useChatUser } from "../../context/ChatUserContext";
+import { useChat } from "../../context/ChatContext";
 
 const ChatPrivateText = ({ roomId }) => {
-  const { socket } = useAuth() || {};
+  const socket = useChat()
   const [history, setHistory] = useState({ empty: true, messages: [] });
   const { setChatUser } = useChatUser()
 
@@ -17,7 +17,6 @@ const ChatPrivateText = ({ roomId }) => {
 
   useEffect(() => {
     if (socket) {
-      // BUG emit兩次
       socket.emit("client-new-message");
       socket.on("server-new-message", (res) => {
         console.log('server-new-message', res)
@@ -38,7 +37,7 @@ const ChatPrivateText = ({ roomId }) => {
     };
   }, [roomId]);
 
-  const handleTextClick = (targetData) => {
+  const handleRoomClick = (targetData) => {
     console.log('房間號碼', targetData)
     setChatUser(targetData.user)
     navigate(`/chat/${targetData.roomId}`)
@@ -57,7 +56,7 @@ const ChatPrivateText = ({ roomId }) => {
             : messageDate.from(now);
 
           return (
-            <div className={style.chatUserCard} key={index} onClick={() => handleTextClick({ roomId: item.roomId, user: item.User })}>
+            <div className={style.chatUserCard} key={index} onClick={() => handleRoomClick({ roomId: item.roomId, user: item.User })}>
               <img className={style.avatar} src={item.User.avatar} alt={item.User.name} />
               <div className={style.name}>{item.User.name}</div>
               <div className={style.userName}>@{item.User.account}</div>

@@ -12,6 +12,7 @@ const ChatUser = () => {
   const socket = useChat()
   const { setChatUser } = useChatUser()
   const [usersUpdate, setUsersUpdate] = useState([]);
+  const [loading, setLoading] = useState(true)
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -22,6 +23,9 @@ const ChatUser = () => {
 
     if (socket) {
       const handleUserUpdate = (res) => {
+        if (res) {
+          setLoading(false)
+        }
         console.log('res:', res);
         setUsersUpdate(res.filter(({ id }) => id !== user.id).map(user => ({
           id: user.id,
@@ -35,6 +39,7 @@ const ChatUser = () => {
 
       return () => {
         socket.off('server-update', handleUserUpdate);
+        setLoading(true)
       };
     }
   }, [socket]);
@@ -71,9 +76,9 @@ const ChatUser = () => {
     <>
 
       <div className={style.onLineUser}>上線使用者({usersUpdate.length})</div>
-      {usersUpdate.length === 0 && (<Skeleton count={5} className={style.skeleton} />)}
-      {usersUpdate.map((user, index) => (
-        <div className={style.chatUserCard} onClick={() => handleAvatarClick(user.id)}>
+      {loading && (<Skeleton count={5} className={style.skeleton} />)}
+      {usersUpdate.map((user) => (
+        <div className={style.chatUserCard} onClick={() => handleAvatarClick(user.id)} key={user.id}>
           <div className={style.userInfo}>
             <p><img className={style.avatar} src={user.avatar} alt="Avatar" /></p>
             <div className={style.name}>{user.name}</div>

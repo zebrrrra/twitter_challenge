@@ -34,6 +34,19 @@ const ChatRoom = ({ headerContext, roomId }) => {
     })
   }, [roomId, user?.id])
 
+  // enter room & leave room
+  useEffect(() => {
+    if (socket?.connected && roomId !== 4) {
+      socket.emit('client-enter-room', roomId);
+      socket.on('server-enter-room', (res) => console.log(res))
+
+      return () => {
+        // socket.emit('client-leave-room', roomId)後端會自動leave
+        socket.off('server-enter-room', (res) => console.log(res))
+      }
+    }
+  }, [roomId])
+
   useEffect(() => {
     if (socket?.connected) {
       socket.emit('client-record', roomId)
@@ -74,7 +87,6 @@ const ChatRoom = ({ headerContext, roomId }) => {
     }
 
     return () => {
-      console.log('clean listen server-record')
       socket?.off('server-record', handleServerRecord)
     }
   }, [socket?.connected, roomId])
@@ -83,7 +95,7 @@ const ChatRoom = ({ headerContext, roomId }) => {
   useEffect(() => {
     const handleServerMessage = (res) => {
       console.log('server-message', res)
-      if (roomId !== Number(res.room)) return
+      if (Number(roomId) !== Number(res.room)) return
 
       const other = { text: res.message, time: chatTimeFormat(res.timestamp), avatar: res.user.avatar, isOwner: res.user.id === user.id }
       setMessage((preState) => [...preState, { isChat: true, message: other }])
