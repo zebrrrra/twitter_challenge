@@ -29,8 +29,6 @@ function App() {
                 <Route path="main" element={<HomePage />} />
                 <Route path="chat" element={<ChatUserProvider><ChatPage /></ChatUserProvider>} />
                 <Route path="chat/:roomId" element={<ChatUserProvider><PrivateChatPage /></ChatUserProvider>} />
-                {/* 暫時為了顯示chatpage做的設定 */}
-                {/* <Route path="main" element={<ChatPage />} /> */}
                 <Route path="admin" element={<AdminLoginPage />} />
                 <Route path="admin/list" element={<ProtectedRouter><AdminHomePage /></ProtectedRouter>} />
                 <Route path="admin/user" element={<ProtectedRouter><AdminUserPage /></ProtectedRouter>} />

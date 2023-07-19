@@ -54,11 +54,7 @@ const ChatNavbars = ({ onTweetSubmit }) => {
 
   const handleLogout = () => {
     logout()
-    // localStorage.removeItem('token');
-    // localStorage.removeItem('avatar');
-    // navigate('/login');
   }
-
 
   const handleTabClick = (tabName) => {
     setActiveTab(tabName);

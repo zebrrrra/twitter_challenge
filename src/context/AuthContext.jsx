@@ -1,6 +1,6 @@
 //import { async } from 'q';
 import { createContext, useState } from 'react';
-import { login, adminLogin } from '../apis/user';
+import { adminLogin } from '../apis/user';
 import * as jwt from 'jsonwebtoken';
 import { useLocation } from 'react-router-dom';
 import { useContext, useEffect } from 'react';
@@ -29,9 +29,10 @@ export const AuthProvider = ({ children }) => {
     useEffect(() => {
         const newSocket = io("https://twitter-ac-team-d93c31406834.herokuapp.com");
         const handleConnectSocket = () => {
-            console.log('connected:check permission')
+            console.log('connected:check permission', socket)
             setSocket(newSocket)
             newSocket.emit('client-join', payload?.id)
+
         }
 
         const checkTokenIsValid = async () => {
@@ -54,13 +55,7 @@ export const AuthProvider = ({ children }) => {
                 setPayload(tempPayload);
                 setIsAuthenticated(true);
                 if (!socket) {
-                    // const newSocket = io("https://twitter-ac-team-d93c31406834.herokuapp.com");
                     newSocket.on('connect', handleConnectSocket)
-                    // newSocket.on('connect', () => {
-                    //     console.log('connected:check permission')
-                    //     newSocket.emit('client-join', tempPayload.account)
-                    //     setSocket(newSocket);
-                    // })
                 }
             }
         };
@@ -87,7 +82,7 @@ export const AuthProvider = ({ children }) => {
                 introduction: payload.introduction,
                 email: payload.email,
                 cover: payload.cover
-            }, payload, setPayload, socket
+            }, payload, setPayload, setIsAuthenticated, setSocket, socket
             , register: async (data) => {
                 const result = await register({
                     account: data.account,
@@ -103,39 +98,7 @@ export const AuthProvider = ({ children }) => {
                     return { success: false, message: result.message }
                 }
             }
-            , login: async (data) => {
-                const result = await login(
-                    {
-                        account: data.account,
-                        password: data.password,
-                    }
-                );
-                if (result.status === 'success') {
-                    const { token } = result.data;
-                    const tempPayload = jwt.decode(token);
-                    setPayload(tempPayload);
-                    setIsAuthenticated(true);
-                    localStorage.setItem('token', token);
-                    //socket.io連線傳遞account
-                    const newSocket = io("https://twitter-ac-team-d93c31406834.herokuapp.com");
-                    newSocket.on('connect', () => {
-                        console.log('connect to: login success')
-                        setSocket(newSocket);
-                        newSocket.emit('client-join', payload?.id);
-                    })
-
-                    return {
-                        success: true, message: result.message, role: result.data.user.role
-                    }
-                } else {
-                    setPayload(null);
-                    setIsAuthenticated(false);
-                    return {
-                        success: false, message: result.message
-                    }
-                }
-            },
-            logout: () => {
+            , logout: () => {
 
                 //socket登出
                 if (socket) {

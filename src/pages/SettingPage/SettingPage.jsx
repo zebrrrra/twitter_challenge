@@ -23,7 +23,6 @@ const SettingPage = () => {
   const { pathname } = useLocation();
 
 
-
   const { putUserSetting, isAuthenticated, user } = useAuth()
   // user)
   const currentUserId = user && user.id

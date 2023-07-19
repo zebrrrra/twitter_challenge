@@ -6,13 +6,15 @@ import { useAuth } from '../../context/AuthContext';
 import { useState } from 'react'
 import Swal from 'sweetalert2'
 import { useEffect } from 'react';
+import useLogin from '../../hooks/LoginHook';
 
 const LoginPage = () => {
   const [account, setAccount] = useState('')
   const [password, setPassword] = useState('')
   const [responseError, setResponseError] = useState(true)
   const [errorInfo, setErrorInfo] = useState('')
-  const { login, isAuthenticated, user } = useAuth();
+  const { isAuthenticated, user } = useAuth();
+  const { handleLogin } = useLogin()
   const navigate = useNavigate()
 
   const authInputCollection = [
@@ -34,7 +36,7 @@ const LoginPage = () => {
       return
     }
 
-    const response = await login({ account, password });
+    const response = await handleLogin({ account, password });
 
     if (response.success) {
       if (response.role === 'user') {

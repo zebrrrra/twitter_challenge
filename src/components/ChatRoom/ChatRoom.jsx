@@ -17,8 +17,10 @@ const ChatRoom = ({ headerContext, roomId }) => {
 
   const handleServerRecord = useCallback((res) => {
     console.log('server-record', res)
+    if (res === '尚未聊天過，開始發送訊息吧!') {
+      setHistoryMessage({ text: res, time: null, avatar: null, isOwner: null })
+    }
     if (Number(roomId) !== res[0].roomId) return
-
     const history = res.map(({ message, timestamp, User }) => ({ text: message, time: chatTimeFormat(timestamp), avatar: User.avatar, isOwner: User.id === user.id }))
 
     setHistoryMessage((prevState) => {
@@ -33,11 +35,13 @@ const ChatRoom = ({ headerContext, roomId }) => {
   }, [roomId, user?.id])
 
   useEffect(() => {
-    setMessage([]);
-    setHistoryMessage([]);
     if (socket?.connected) {
       socket.emit('client-record', roomId)
       console.log('emit record', roomId)
+    }
+    return () => {
+      setMessage([]);
+      setHistoryMessage([]);
     }
 
   }, [roomId]);
@@ -70,6 +74,7 @@ const ChatRoom = ({ headerContext, roomId }) => {
     }
 
     return () => {
+      console.log('clean listen server-record')
       socket?.off('server-record', handleServerRecord)
     }
   }, [socket?.connected, roomId])

@@ -31,7 +31,7 @@
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    height: 244px;
+    flex: 1 1 0;
 
     .NavbarItem {
         display: flex;
@@ -50,11 +50,12 @@
         img {
             margin: 0 17px;
         }
-        
+
     }
+
     .NavbarItem.active {
-        color: #FF6600; 
-      }
+        color: #FF6600;
+    }
 }
 
 
@@ -86,7 +87,6 @@
     line-height: 26px;
     justify-content: start;
     color: #44444F;
-    margin-top: 400px;
     left: 180px;
     cursor: pointer;
 

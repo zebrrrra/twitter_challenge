@@ -5,16 +5,16 @@ import { useNavigate } from 'react-router-dom';
 import { useChatUser } from '../../context/ChatUserContext';
 import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
+import { useChat } from '../../context/ChatContext';
 
 const ChatUser = () => {
-
-  const { socket } = useAuth() || {};
+  const { user } = useAuth()
+  const socket = useChat()
   const { setChatUser } = useChatUser()
   const [usersUpdate, setUsersUpdate] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
-
     const savedUpdate = localStorage.getItem('usersUpdate');
     if (savedUpdate) {
       setUsersUpdate(JSON.parse(savedUpdate));
@@ -23,16 +23,15 @@ const ChatUser = () => {
     if (socket) {
       const handleUserUpdate = (res) => {
         console.log('res:', res);
-        setUsersUpdate(res.map(user => ({
+        setUsersUpdate(res.filter(({ id }) => id !== user.id).map(user => ({
           id: user.id,
           account: user.account,
           name: user.name,
           avatar: user.avatar
         })))
-
       };
+      socket.emit('client-join', user.id);
       socket.on('server-update', handleUserUpdate);
-
 
       return () => {
         socket.off('server-update', handleUserUpdate);
@@ -41,7 +40,9 @@ const ChatUser = () => {
   }, [socket]);
 
   useEffect(() => {
-    localStorage.setItem('usersUpdate', JSON.stringify(usersUpdate));
+    if (usersUpdate) {
+      localStorage.setItem('usersUpdate', JSON.stringify(usersUpdate));
+    }
     console.log('userUpdate:', usersUpdate);
   }, [usersUpdate]);
 
