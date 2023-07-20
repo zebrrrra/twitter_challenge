@@ -14,7 +14,6 @@ const ChatRoom = ({ headerContext, roomId }) => {
   const [historyMessage, setHistoryMessage] = useState([])
   const { user } = useAuth() || {}
   const socket = useChat()
-
   const handleServerRecord = useCallback((res) => {
     console.log('server-record', res)
     if (res === '尚未聊天過，開始發送訊息吧!') {
@@ -62,23 +61,25 @@ const ChatRoom = ({ headerContext, roomId }) => {
   // 監聽上下線
   useEffect(() => {
     const handleServerJoin = (res) => {
-      setMessage((prevState) => [...prevState, { isChat: false, message: res }]);
+      setMessage((prevState) =>
+      [...prevState, { isChat: false, message: res }]);
     };
 
     const handleServerLeave = (res) => {
-      setMessage((prevState) => [...prevState, { isChat: false, message: res }]);
+      setMessage((prevState) => 
+      [...prevState, { isChat: false, message: res }]);
     };
-
     if (socket && roomId === 4) {
       socket.on('server-join', handleServerJoin);
       socket.on('server-leave', handleServerLeave);
+
     }
 
     return () => {
       socket?.off('server-join', handleServerJoin);
       socket?.off('server-leave', handleServerLeave);
     };
-  }, [socket?.connected]);
+  }, [socket]);
 
   // 獨立監聽server-record
   useEffect(() => {
@@ -90,6 +91,8 @@ const ChatRoom = ({ headerContext, roomId }) => {
       socket?.off('server-record', handleServerRecord)
     }
   }, [socket?.connected, roomId])
+
+
 
   // 獨立監聽server-message
   useEffect(() => {
@@ -110,8 +113,10 @@ const ChatRoom = ({ headerContext, roomId }) => {
     return () => {
       console.log('not lisening')
       socket?.off('server-message', handleServerMessage);
+
     }
   }, [socket, roomId])
+
 
   // 接收來自ChatInput的props
   const handleSelfSend = (text, time) => {

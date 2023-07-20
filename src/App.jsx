@@ -26,6 +26,7 @@ function App() {
             <ChatContextProvider>
               <Routes>
                 <Route path="login" element={<LoginPage />} />
+
                 <Route path="main" element={<HomePage />} />
                 <Route path="chat" element={<ChatUserProvider><ChatPage /></ChatUserProvider>} />
                 <Route path="chat/:roomId" element={<ChatUserProvider><PrivateChatPage /></ChatUserProvider>} />

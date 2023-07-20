@@ -26,6 +26,7 @@ const PrivateChatPage = () => {
     handleHeaderContex()
   }, [chatUser?.id])
 
+
   return (
     <div className={style.homeContainer}>
       <div className={style.homeColumn}>

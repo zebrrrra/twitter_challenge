@@ -53,6 +53,7 @@ const ChatUser = () => {
 
 
 
+  const navigate = useNavigate();
 
   //傳遞資料
   const handleAvatarClick = (targetId) => {

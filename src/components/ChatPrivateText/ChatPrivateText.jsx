@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import style from './ChatPrivateText.module.scss';
 import dayjs from "dayjs";
@@ -18,6 +19,7 @@ const ChatPrivateText = ({ roomId }) => {
   useEffect(() => {
     if (socket) {
       socket.emit("client-new-message");
+
       socket.on("server-new-message", (res) => {
         console.log('server-new-message', res)
 
@@ -37,15 +39,22 @@ const ChatPrivateText = ({ roomId }) => {
     };
   }, [roomId]);
 
+
   const handleRoomClick = (targetData) => {
     console.log('房間號碼', targetData)
     setChatUser(targetData.user)
     navigate(`/chat/${targetData.roomId}`)
   }
 
+
+
+
+
+
   return (
     <div className='history'>
       <div className={style.onLineList}>訊息</div>
+
       {history.empty ? (
         <div>尚未聊天過，開始發送訊息吧!</div>
       ) : (
@@ -54,6 +63,7 @@ const ChatPrivateText = ({ roomId }) => {
           const formatDate = now.diff(messageDate, 'day') >= 1
             ? messageDate.format('YYYY/MM/DD')
             : messageDate.from(now);
+
 
           return (
             <div className={style.chatUserCard} key={index} onClick={() => handleRoomClick({ roomId: item.roomId, user: item.User })}>
