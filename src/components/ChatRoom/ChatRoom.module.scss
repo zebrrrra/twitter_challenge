@@ -7,11 +7,20 @@
 .HeaderContainer {
   height: 74px;
   display: flex;
-  flex-direction: row;
-  justify-content: start;
-  align-items: center;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: flex-start;
   border-left: 1px solid $border-color;
   border-right: 1px solid $border-color;
   border-bottom: 1px solid $border-color;
+  padding-left: 18px;
+}
 
+.title {
+  @include fontStyle(24, 700);
+}
+
+.subtitle {
+  @include fontStyle(16, 400);
+  color: $secondary-color;
 }

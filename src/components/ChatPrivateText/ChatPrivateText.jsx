@@ -1,21 +1,25 @@
-import { useState, useEffect, useCallback } from "react";
-import { useAuth } from "../../context/AuthContext";
-import { useNavigate } from "react-router-dom";
+
+import { useState, useEffect } from "react";
 import style from './ChatPrivateText.module.scss';
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
+import { useNavigate } from "react-router-dom";
+import { useChatUser } from "../../context/ChatUserContext";
+import { useChat } from "../../context/ChatContext";
 
-const ChatPrivateText = (roomId) => {
-  const { socket } = useAuth() || {};
+const ChatPrivateText = ({ roomId }) => {
+  const socket = useChat()
   const [history, setHistory] = useState({ empty: true, messages: [] });
-  const navigate =useNavigate();
+  const { setChatUser } = useChatUser()
+
+  const navigate = useNavigate();
   dayjs.extend(relativeTime);
-  const now =dayjs();
+  const now = dayjs();
 
   useEffect(() => {
     if (socket) {
-      // BUG emit兩次
-      socket.emit("client-new-message",roomId);
+      socket.emit("client-new-message");
+
       socket.on("server-new-message", (res) => {
         console.log('server-new-message', res)
 
@@ -34,7 +38,14 @@ const ChatPrivateText = (roomId) => {
       socket?.off("server-new-message");
     };
   }, [roomId]);
-  console.log(history)
+
+
+  const handleRoomClick = (targetData) => {
+    console.log('房間號碼', targetData)
+    setChatUser(targetData.user)
+    navigate(`/chat/${targetData.roomId}`)
+  }
+
 
 
 
@@ -42,7 +53,8 @@ const ChatPrivateText = (roomId) => {
 
   return (
     <div className='history'>
-       <div className={style.onLineList}>訊息</div>
+      <div className={style.onLineList}>訊息</div>
+
       {history.empty ? (
         <div>尚未聊天過，開始發送訊息吧!</div>
       ) : (
@@ -51,9 +63,10 @@ const ChatPrivateText = (roomId) => {
           const formatDate = now.diff(messageDate, 'day') >= 1
             ? messageDate.format('YYYY/MM/DD')
             : messageDate.from(now);
-  
+
+
           return (
-            <div className={style.chatUserCard} key={index} onClick={() => navigate(`/chat/${item.roomId}`)}>
+            <div className={style.chatUserCard} key={index} onClick={() => handleRoomClick({ roomId: item.roomId, user: item.User })}>
               <img className={style.avatar} src={item.User.avatar} alt={item.User.name} />
               <div className={style.userInfo}>
                 <div className={style.userTime}>
@@ -73,15 +86,3 @@ const ChatPrivateText = (roomId) => {
 };
 
 export default ChatPrivateText;
-
-
- // socket.on("client-record", (res) => {
-    //   console.log(res)
-    //   if (Array.isArray(res)) {
-    //     setHistory({ empty: false, messages: res });
-    //   } else if (res === "尚未聊天過，開始發送訊息吧!") {
-    //     setHistory({ empty: true, messages: [] });
-    //   } else {
-    //     console.error("Unexpected server response:", res);
-    //   }
-    // });

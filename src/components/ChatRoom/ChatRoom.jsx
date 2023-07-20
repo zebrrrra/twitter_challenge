@@ -14,15 +14,51 @@ const ChatRoom = ({ headerContext, roomId }) => {
   const [historyMessage, setHistoryMessage] = useState([])
   const { user } = useAuth() || {}
   const socket = useChat()
-
-  useEffect(()=>{
-    setMessage([]);
-    setHistoryMessage([]);
-    if(socket?.connected){
-      socket.emit('client-record',roomId)
+  const handleServerRecord = useCallback((res) => {
+    console.log('server-record', res)
+    if (res === '尚未聊天過，開始發送訊息吧!') {
+      setHistoryMessage({ text: res, time: null, avatar: null, isOwner: null })
     }
-  },[roomId]);
+    if (Number(roomId) !== res[0].roomId) return
+    const history = res.map(({ message, timestamp, User }) => ({ text: message, time: chatTimeFormat(timestamp), avatar: User.avatar, isOwner: User.id === user.id }))
 
+    setHistoryMessage((prevState) => {
+
+      const isDuplicate = prevState.some((item) => item.message?.every((msg) => history.some((h) => h.text === msg.text)))
+
+      if (isDuplicate) {
+        return prevState;
+      }
+      return [...prevState, history]
+    })
+  }, [roomId, user?.id])
+
+  // enter room & leave room
+  useEffect(() => {
+    if (socket?.connected && roomId !== 4) {
+      socket.emit('client-enter-room', roomId);
+      socket.on('server-enter-room', (res) => console.log(res))
+
+      return () => {
+        // socket.emit('client-leave-room', roomId)後端會自動leave
+        socket.off('server-enter-room', (res) => console.log(res))
+      }
+    }
+  }, [roomId])
+
+  useEffect(() => {
+    if (socket?.connected) {
+      socket.emit('client-record', roomId)
+      console.log('emit record', roomId)
+    }
+    return () => {
+      setMessage([]);
+      setHistoryMessage([]);
+    }
+
+  }, [roomId]);
+
+  // 監聽上下線
   useEffect(() => {
     const handleServerJoin = (res) => {
       setMessage((prevState) =>
@@ -45,42 +81,24 @@ const ChatRoom = ({ headerContext, roomId }) => {
     };
   }, [socket]);
 
-  const handleServerRecord = useCallback((res) => {
-    console.log('server-record', res)
-    if (Number(roomId) !== res[0].roomId) return
-
-    const history = res.map(({ message, timestamp, User }) => ({ text: message, time: chatTimeFormat(timestamp), avatar: User.avatar, isOwner: User.id === user.id }))
-
-    setHistoryMessage((prevState) => {
-
-      const isDuplicate = prevState.some((item) => item.message?.every((msg) => history.some((h) => h.text === msg.text)))
-
-      if (isDuplicate) {
-        return prevState;
-      }
-      return [...prevState, history]
-    })
-  }, [roomId, user?.id])
-
   // 獨立監聽server-record
   useEffect(() => {
     if (socket) {
-      // BUG emit兩次
-      socket.emit('client-record', roomId)
       socket.on('server-record', handleServerRecord)
-      console.log('emit new message', roomId)
     }
 
     return () => {
       socket?.off('server-record', handleServerRecord)
     }
-  }, [socket,roomId])
+  }, [socket?.connected, roomId])
+
+
 
   // 獨立監聽server-message
   useEffect(() => {
     const handleServerMessage = (res) => {
       console.log('server-message', res)
-      if (roomId !== Number(res.room)) return
+      if (Number(roomId) !== Number(res.room)) return
 
       const other = { text: res.message, time: chatTimeFormat(res.timestamp), avatar: res.user.avatar, isOwner: res.user.id === user.id }
       setMessage((preState) => [...preState, { isChat: true, message: other }])
@@ -97,7 +115,7 @@ const ChatRoom = ({ headerContext, roomId }) => {
       socket?.off('server-message', handleServerMessage);
 
     }
-  }, [socket,roomId])
+  }, [socket, roomId])
 
 
   // 接收來自ChatInput的props
@@ -106,11 +124,11 @@ const ChatRoom = ({ headerContext, roomId }) => {
     setMessage((preState => [...preState, { isChat: true, message: self }]))
   }
 
-
   return (
     <>
       <div className={style.HeaderContainer}>
-        {headerContext}
+        <div className={style.title}>{headerContext.title}</div>
+        {roomId !== 4 && (<div className={style.subtitle}>@{headerContext.subtitle}</div>)}
       </div>
       <ChatBody message={message} historyMessage={historyMessage} />
       <ChatInput onSelfSend={handleSelfSend} roomId={roomId} />

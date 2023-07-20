@@ -2,14 +2,20 @@ import { useState, useEffect } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import style from './ChatUser.module.scss';
 import { useNavigate } from 'react-router-dom';
+import { useChatUser } from '../../context/ChatUserContext';
+import Skeleton from 'react-loading-skeleton'
+import 'react-loading-skeleton/dist/skeleton.css'
+import { useChat } from '../../context/ChatContext';
 
 const ChatUser = () => {
-
-  const { socket } = useAuth() || {};
+  const { user } = useAuth()
+  const socket = useChat()
+  const { setChatUser } = useChatUser()
   const [usersUpdate, setUsersUpdate] = useState([]);
+  const [loading, setLoading] = useState(true)
+  const navigate = useNavigate();
 
   useEffect(() => {
-
     const savedUpdate = localStorage.getItem('usersUpdate');
     if (savedUpdate) {
       setUsersUpdate(JSON.parse(savedUpdate));
@@ -17,26 +23,31 @@ const ChatUser = () => {
 
     if (socket) {
       const handleUserUpdate = (res) => {
+        if (res) {
+          setLoading(false)
+        }
         console.log('res:', res);
-        setUsersUpdate(res.map(user => ({
+        setUsersUpdate(res.filter(({ id }) => id !== user.id).map(user => ({
           id: user.id,
           account: user.account,
           name: user.name,
           avatar: user.avatar
         })))
-
       };
+      socket.emit('client-join', user.id);
       socket.on('server-update', handleUserUpdate);
-
 
       return () => {
         socket.off('server-update', handleUserUpdate);
+        setLoading(true)
       };
     }
   }, [socket]);
 
   useEffect(() => {
-    localStorage.setItem('usersUpdate', JSON.stringify(usersUpdate));
+    if (usersUpdate) {
+      localStorage.setItem('usersUpdate', JSON.stringify(usersUpdate));
+    }
     console.log('userUpdate:', usersUpdate);
   }, [usersUpdate]);
 
@@ -54,14 +65,21 @@ const ChatUser = () => {
         socket.off('server-get-room');
       });
     }
+    const usersUpdate = JSON.parse(localStorage.getItem('usersUpdate'));
+    if (usersUpdate) {
+      const target = usersUpdate.filter(({ id }) => id === Number(targetId))
+      setChatUser(target[0])
+    }
   }
+
   return (
 
     <>
 
       <div className={style.onLineUser}>上線使用者({usersUpdate.length})</div>
-      {usersUpdate.map((user, index) => (
-        <div className={style.chatUserCard} onClick={() => handleAvatarClick(user.id)}>
+      {loading && (<Skeleton count={5} className={style.skeleton} />)}
+      {usersUpdate.map((user) => (
+        <div className={style.chatUserCard} onClick={() => handleAvatarClick(user.id)} key={user.id}>
           <div className={style.userInfo}>
             <p><img className={style.avatar} src={user.avatar} alt="Avatar" /></p>
             <div className={style.name}>{user.name}</div>

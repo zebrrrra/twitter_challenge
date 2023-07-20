@@ -54,11 +54,7 @@ const ChatNavbars = ({ onTweetSubmit }) => {
 
   const handleLogout = () => {
     logout()
-    // localStorage.removeItem('token');
-    // localStorage.removeItem('avatar');
-    // navigate('/login');
   }
-
 
   const handleTabClick = (tabName) => {
     setActiveTab(tabName);
@@ -69,7 +65,6 @@ const ChatNavbars = ({ onTweetSubmit }) => {
   }
   const handleOpenChatClick = () => {
     handleTabClick('')
-    // socket.emit('client-record')
   }
 
   return (
@@ -86,8 +81,7 @@ const ChatNavbars = ({ onTweetSubmit }) => {
               <span>首頁</span>
             </div>
           </Link>
-          {/* 暫時 */}
-          <Link to="/main">
+          <Link to="/chat">
             <div
               className={`${style.NavbarItem} ${location.pathname === '/' ? style.active : ''}`} onClick={handleOpenChatClick}
             >
