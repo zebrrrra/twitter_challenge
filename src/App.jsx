@@ -13,6 +13,7 @@ import { UpdateTagProvider } from "./context/UpdateTagContext";
 import { ChatContextProvider } from './context/ChatContext';
 import PrivateChatPage from "./pages/PrivateChatPage/PrivateChatPage";
 import { ChatUserProvider } from "./context/ChatUserContext";
+import { ChatUnReadProvider } from "./context/ChatUnreadContext";
 
 const basename = process.env.PUBLIC_URL
 
@@ -24,12 +25,14 @@ function App() {
         <AuthProvider>
           <UpdateTagProvider>
             <ChatContextProvider>
+              <ChatUnReadProvider>
               <Routes>
                 <Route path="login" element={<LoginPage />} />
 
                 <Route path="main" element={<HomePage />} />
                 <Route path="chat" element={<ChatUserProvider><ChatPage /></ChatUserProvider>} />
                 <Route path="chat/:roomId" element={<ChatUserProvider><PrivateChatPage /></ChatUserProvider>} />
+                <Route path="pchat" element={<ChatUserProvider><PrivateChatPage /></ChatUserProvider>} />
                 <Route path="admin" element={<AdminLoginPage />} />
                 <Route path="admin/list" element={<ProtectedRouter><AdminHomePage /></ProtectedRouter>} />
                 <Route path="admin/user" element={<ProtectedRouter><AdminUserPage /></ProtectedRouter>} />
@@ -41,6 +44,7 @@ function App() {
                 <Route path="profile/*" element={<ProfilePage />} />
                 <Route path="*" element={<HomePage />} />
               </Routes>
+              </ChatUnReadProvider>
             </ChatContextProvider>
           </UpdateTagProvider>
         </AuthProvider>

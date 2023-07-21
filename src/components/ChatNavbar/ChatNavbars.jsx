@@ -12,26 +12,32 @@ import LogoutIcon from '../../assets/icons/logout.svg'
 import isHomeIcon from '../../assets/icons/isHome.svg'
 import isSettingIcon from '../../assets/icons/isSetting.svg'
 import isInfoIcon from '../../assets/icons/isProfile.svg'
-import chatIcon from '../../assets/icons/message.svg'
+import chatIcon from '../../assets/icons/message.svg';
+import isChatIcon from '../../assets/icons/isMessage.svg';
+import GroupIcon from '../../assets/icons/Group.svg';
 //chat
 import { useChat } from '../../context/ChatContext';
 import { useAuth } from '../../context/AuthContext';
+import { useChatUnRead } from '../../context/ChatUnreadContext';
 
 const ChatNavbars = ({ onTweetSubmit }) => {
   const [openModal, setOpenModal] = useState(false);
   const [activeTab, setActiveTab] = useState('');
   const [isIconClicked, setIconClicked] = useState(false);
   const [hasNewMessage, setHasNewMessage] = useState(false);
-  const navigate = useNavigate();
   const location = useLocation();
   const { logout } = useAuth()
+  const [publicReadCount, setPublicReadCount] = useState(
+    Number(localStorage.getItem("publicReadCount")) || 0);
+    const {chatUnRead}=useChatUnRead();
+   
 
   //要讀取socket.io
   const socket = useChat();
   //連線
   useEffect(() => {
     if (socket) {
-      socket.on('server-message', () => {
+      socket.on('server-message', (data) => {
         setHasNewMessage(true);
       });
       return () => {
@@ -42,11 +48,23 @@ const ChatNavbars = ({ onTweetSubmit }) => {
     }
   }, [socket]);
 
+ // useEffect(() => {
+   // if(socket){
+     // socket.emit('client-new-message');
+      //socket.on('server-new-message',(res) => {
+       // console.log('server-new-message', res)
+       // setUnreadCount(res.allUnreadMessageCounts);
+      //})
+      //return () => socket.off('server-new-message');
+   // }
+  //}, []);
+
 
   useEffect(() => {
     setIconClicked(location.pathname);
   }, [location]);
 
+  
   const handlebuttonClick = () => {
     setOpenModal(true)
   }
@@ -61,11 +79,10 @@ const ChatNavbars = ({ onTweetSubmit }) => {
     setIconClicked(true);
     if (tabName === '') {
       setHasNewMessage(false);
+  
     }
   }
-  const handleOpenChatClick = () => {
-    handleTabClick('')
-  }
+
 
   return (
     <>
@@ -83,11 +100,25 @@ const ChatNavbars = ({ onTweetSubmit }) => {
           </Link>
           <Link to="/chat">
             <div
-              className={`${style.NavbarItem} ${location.pathname === '/' ? style.active : ''}`} onClick={handleOpenChatClick}
+              className={`${style.NavbarItem} ${location.pathname === '/chat' ? style.active : ''}`}
+              onClick={() => {handleTabClick('chat')}}
             >
               <img className={style.NavbarPng}
-                src={isIconClicked === '/' ? chatIcon : chatIcon} alt="Icon" /> {/* 要確定Icon設計是否要自己畫*/}
+                src={isIconClicked === '/chat' ? isChatIcon : chatIcon} 
+                 alt="Icon" /> 
               <span>公開聊天室</span>
+             </div>
+          </Link>
+          <Link to="/pchat">
+            <div
+              className={`${style.NavbarItem} ${location.pathname === '/pchat' ? style.active : ''}`} 
+              onClick={() => {handleTabClick('pchat')}}
+            >
+              <img className={style.NavbarPng}
+               src={chatUnRead.allUnreadMessageCounts > 0 ? GroupIcon : (isIconClicked === '/pchat' ? isChatIcon : chatIcon)} 
+               alt="Icon" /> 
+              <span>私人聊天室</span>
+              {chatUnRead.allUnreadMessageCounts  > 0 &&  (chatUnRead.allUnreadMessageCounts)}
             </div>
           </Link>
 

@@ -1,5 +1,5 @@
 import RecommendList from '../../components/RecommendList/RecommendList';
-import Navbar from '../../components/Navbars/Navbars';
+import ChatNavbars from '../../components/ChatNavbar/ChatNavbars';
 import Header from '../../components/Headers/Headers';
 import Main from '../../components/Main/Main';
 import style from './ProfilePage.module.scss'
@@ -18,7 +18,7 @@ const ProfilePage = () => {
     <div className={style.profileContainer}>
       <div className={style.homeColumn}>
         <div className={style.leftColumn}>
-          <Navbar />
+          <ChatNavbars />
         </div>
         <div className={style.middleColumn}>
           <Header userId={user?.id} />

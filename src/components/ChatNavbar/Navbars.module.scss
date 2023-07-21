@@ -35,6 +35,7 @@
 
     .NavbarItem {
         display: flex;
+        position: relative;
         align-items: center;
         width: 178px;
         height: 58px;
@@ -95,4 +96,15 @@
     }
 
 
+}
+
+
+.unReadDot {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 20px;   
+    height: 20px;  
+    color: #FF6600;
+    z-index: 1;
 }
