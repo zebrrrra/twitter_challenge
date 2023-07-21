@@ -13,7 +13,6 @@ const ChatUser = () => {
   const { setChatUser } = useChatUser()
   const [usersUpdate, setUsersUpdate] = useState([]);
   const [loading, setLoading] = useState(true)
-  const navigate = useNavigate();
 
   useEffect(() => {
     const savedUpdate = localStorage.getItem('usersUpdate');

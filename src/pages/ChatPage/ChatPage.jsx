@@ -27,7 +27,7 @@ const ChatPage = () => {
           <ChatUser />
         </div>
         <div className={style.rightColumn}>
-          <ChatRoom headerContext={{ title: '公開聊天室', subtitle: '' }} roomId={4} />
+          <ChatRoom headerContent={{ title: '公開聊天室', subtitle: '' }} roomId={4} />
         </div>
       </div>
     </div>

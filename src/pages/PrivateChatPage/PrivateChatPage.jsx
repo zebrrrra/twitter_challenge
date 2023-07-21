@@ -7,8 +7,8 @@ import ChatPrivateText from '../../components/ChatPrivateText/ChatPrivateText';
 import { useChatUser } from '../../context/ChatUserContext';
 
 const PrivateChatPage = () => {
-  const [headerContext, setHeaderContext] = useState({})
-  const { isAuthenticated, user } = useAuth();
+  const [headerContent, setHeaderContent] = useState({})
+  const { isAuthenticated } = useAuth();
   const { roomId } = useParams();
   const navigate = useNavigate();
   const { chatUser } = useChatUser()
@@ -20,10 +20,10 @@ const PrivateChatPage = () => {
 
 
   useEffect(() => {
-    const handleHeaderContex = () => {
-      setHeaderContext({ title: chatUser.name, subtitle: chatUser.account })
+    const handleHeaderContent = () => {
+      setHeaderContent({ title: chatUser.name, subtitle: chatUser.account })
     }
-    handleHeaderContex()
+    handleHeaderContent()
   }, [chatUser?.id])
 
 
@@ -37,7 +37,7 @@ const PrivateChatPage = () => {
           <ChatPrivateText roomId={roomId} />
         </div>
         <div className={style.rightColumn}>
-          <ChatRoom headerContext={headerContext} roomId={roomId} />
+          <ChatRoom headerContent={headerContent} roomId={roomId} />
         </div>
       </div>
     </div>

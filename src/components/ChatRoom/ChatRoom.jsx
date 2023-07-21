@@ -9,7 +9,7 @@ import { useAuth } from "../../context/AuthContext"
 import { chatTimeFormat } from "../../apis/data"
 
 
-const ChatRoom = ({ headerContext, roomId }) => {
+const ChatRoom = ({ headerContent, roomId }) => {
   const [message, setMessage] = useState([])
   const [historyMessage, setHistoryMessage] = useState([])
   const { user } = useAuth() || {}
@@ -62,12 +62,12 @@ const ChatRoom = ({ headerContext, roomId }) => {
   useEffect(() => {
     const handleServerJoin = (res) => {
       setMessage((prevState) =>
-      [...prevState, { isChat: false, message: res }]);
+        [...prevState, { isChat: false, message: res }]);
     };
 
     const handleServerLeave = (res) => {
-      setMessage((prevState) => 
-      [...prevState, { isChat: false, message: res }]);
+      setMessage((prevState) =>
+        [...prevState, { isChat: false, message: res }]);
     };
     if (socket && roomId === 4) {
       socket.on('server-join', handleServerJoin);
@@ -127,8 +127,8 @@ const ChatRoom = ({ headerContext, roomId }) => {
   return (
     <>
       <div className={style.HeaderContainer}>
-        <div className={style.title}>{headerContext.title}</div>
-        {roomId !== 4 && (<div className={style.subtitle}>@{headerContext.subtitle}</div>)}
+        <div className={style.title}>{headerContent.title}</div>
+        {roomId !== 4 && (<div className={style.subtitle}>@{headerContent.subtitle}</div>)}
       </div>
       <ChatBody message={message} historyMessage={historyMessage} />
       <ChatInput onSelfSend={handleSelfSend} roomId={roomId} />
