@@ -41,9 +41,6 @@ const ChatPrivateText = ({ roomId }) => {
       socket?.off("server-new-message");
     };
   }, [roomId]);*/
-  useEffect(() => {
-    console.log(chatUnRead);
-  }, [chatUnRead]);
 
   useEffect(()=>{
     if(socket){
@@ -53,7 +50,7 @@ const ChatPrivateText = ({ roomId }) => {
     return()=>{
       socket.emit('client-leave-room');
     }}
-  },[roomId,chatUnRead]);
+  },[roomId]);
 
   const handleRoomClick = (targetData) => {
     console.log('房間號碼', targetData)

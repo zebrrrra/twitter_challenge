@@ -29,11 +29,13 @@ const ChatNavbars = ({ onTweetSubmit }) => {
   const { logout } = useAuth()
   const [publicReadCount, setPublicReadCount] = useState(
     Number(localStorage.getItem("publicReadCount")) || 0);
-    const {chatUnRead}=useChatUnRead();
+    const {socket,chatUnRead} = useChatUnRead();
+
+    
    
 
   //要讀取socket.io
-  const socket = useChat();
+  /*const socket = useChat();
   //連線
   useEffect(() => {
     if (socket) {
@@ -46,7 +48,7 @@ const ChatNavbars = ({ onTweetSubmit }) => {
         };
       }
     }
-  }, [socket]);
+  }, [socket]);*/
 
  // useEffect(() => {
    // if(socket){
@@ -115,10 +117,10 @@ const ChatNavbars = ({ onTweetSubmit }) => {
               onClick={() => {handleTabClick('pchat')}}
             >
               <img className={style.NavbarPng}
-               src={chatUnRead.allUnreadMessageCounts > 0 ? GroupIcon : (isIconClicked === '/pchat' ? isChatIcon : chatIcon)} 
+               src={chatUnRead.allUnreadCounts > 0 ? GroupIcon : (isIconClicked === '/pchat' ? isChatIcon : chatIcon)} 
                alt="Icon" /> 
               <span>私人聊天室</span>
-              {chatUnRead.allUnreadMessageCounts  > 0 &&  (chatUnRead.allUnreadMessageCounts)}
+              <div>{chatUnRead.allUnreadCounts  > 0 && `(${chatUnRead.allUnreadCounts})`}</div>
             </div>
           </Link>
 

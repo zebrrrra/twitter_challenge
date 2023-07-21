@@ -19,12 +19,12 @@ export function ChatUnReadProvider({ children }) {
         console.log('server-new-message', res);
   
         const messages = res.newMessageData;
+        const allUnreadCounts = res.allUnreadMessageCounts;
         if (messages.length === 0) {
-          console.log('nothing is here');
-          setChatUnRead({ empty: true, messages });
+
+          setChatUnRead({ empty: true, messages,allUnreadCounts });
         } else {
-          console.log('something is here');
-          setChatUnRead({ empty: false, messages });
+          setChatUnRead({ empty: false, messages,allUnreadCounts });
         }
       });
   
@@ -33,10 +33,10 @@ export function ChatUnReadProvider({ children }) {
         socket.off('server-new-message');
       };
     }
-  }, [socket, chatUnRead]);
+  }, [socket]);
 
   return (
-    <ChatUnReadContext.Provider value={{ chatUnRead, setChatUnRead }}>
+    <ChatUnReadContext.Provider value={{ chatUnRead, setChatUnRead,socket }}>
       {children}
     </ChatUnReadContext.Provider>
   );
