@@ -14,6 +14,7 @@ const ChatUser = () => {
   const [usersUpdate, setUsersUpdate] = useState([]);
   const [loading, setLoading] = useState(true)
 
+
   useEffect(() => {
     const savedUpdate = localStorage.getItem('usersUpdate');
     if (savedUpdate) {
@@ -59,9 +60,12 @@ const ChatUser = () => {
     if (socket) {
       socket.emit('client-get-room', targetId);
       socket.on('server-get-room', roomId => {
+        socket.emit('client-enter-room', roomId);
+        socket.on('server-enter-room', (res) => console.log(res))
         // navigate到PrivateChatPage並將roomId和targetId作為URL參數
         navigate(`/chat/${roomId}`);
         socket.off('server-get-room');
+        socket.off('server-enter-room', (res) => console.log(res))
       });
     }
     const usersUpdate = JSON.parse(localStorage.getItem('usersUpdate'));

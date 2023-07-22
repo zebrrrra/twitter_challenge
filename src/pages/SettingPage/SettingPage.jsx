@@ -2,8 +2,7 @@
 import { Component, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
-import Navbar from '../../components/Navbars/Navbars';
-import Header from '../../components/Headers/Headers';
+import ChatNavbars from '../../components/ChatNavbar/ChatNavbars';
 import { AuthInput } from '../../components';
 import style from './SettingPage.module.scss'
 import Swal from 'sweetalert2';
@@ -109,7 +108,7 @@ const SettingPage = () => {
     <div className={style.homeContainer}>
       <div className={style.homeColumn}>
         <div className={style.leftColumn}>
-          <Navbar />
+          <ChatNavbars />
         </div>
         <div className={style.middleColumn}>
           <div className={style.settingHeader}>帳戶設定</div>

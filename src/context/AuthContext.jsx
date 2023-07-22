@@ -102,7 +102,7 @@ export const AuthProvider = ({ children }) => {
 
                 //socket登出
                 if (socket) {
-                    socket.emit('client-leave', payload.id, () => {
+                    socket.emit('client-leave', () => {
                         socket.disconnect();
                         setSocket(null);
                     });
