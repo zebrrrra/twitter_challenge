@@ -25,7 +25,7 @@ const PrivateChatPage = () => {
 
   useEffect(() => {
 
-    const handleHeaderContex = () => {
+    const handleHeaderContext = () => {
       switch (Object.keys(chatUser).length) {
         // 未選擇目標對象
         case 0:
@@ -40,7 +40,7 @@ const PrivateChatPage = () => {
       }
 
     }
-    handleHeaderContent()
+    handleHeaderContext()
   }, [chatUser?.id])
 
 
@@ -54,7 +54,7 @@ const PrivateChatPage = () => {
           <ChatPrivateText roomId={roomId} />
         </div>
         <div className={style.rightColumn}>
-          <ChatRoom headerContent={headerContent} roomId={roomId} />
+          <ChatRoom headerContent={headerContext} roomId={roomId} />
         </div>
       </div>
     </div>
