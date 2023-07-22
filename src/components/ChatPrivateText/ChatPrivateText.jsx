@@ -10,52 +10,18 @@ import { useChatUnRead } from "../../context/ChatUnreadContext";
 
 const ChatPrivateText = ({ roomId }) => {
   const socket = useChat()
-  const [history, setHistory] = useState({ empty: true, messages: [] });
   const { setChatUser } = useChatUser();
-  const {chatUnRead}=useChatUnRead();
+  const { chatUnRead } = useChatUnRead();
 
   const navigate = useNavigate();
   dayjs.extend(relativeTime);
   const now = dayjs();
 
-  /*useEffect(() => {
-    if (socket) {
-      socket.emit("client-new-message");
-
-      /*socket.on("server-new-message", (res) => {
-        console.log('server-new-message', res)
-
-        const messages = res.newMessageData
-        if (messages.length === 0) {
-          console.log('nothing is here')
-          setHistory({ empty: true, messages })
-        } else {
-          console.log('something is here')
-          setHistory({ empty: false, messages })
-        }
-      })
-      
-    }
-
-    return () => {
-      socket?.off("server-new-message");
-    };
-  }, [roomId]);*/
-
-  useEffect(()=>{
-    if(socket){
-    if(roomId){
-      socket.emit('client-enter-room',roomId);
-    }
-    return()=>{
-      socket.emit('client-leave-room');
-    }}
-  },[roomId]);
-
   const handleRoomClick = (targetData) => {
     console.log('房間號碼', targetData)
-    if(socket){
-      socket.emit('client-read', roomId);
+    if (socket) {
+      socket.emit('client-enter-room', targetData.roomId);
+      socket.on('server-enter-room', (res) => console.log(res))
     }
     setChatUser(targetData.user)
     navigate(`/chat/${targetData.roomId}`)
@@ -81,18 +47,18 @@ const ChatPrivateText = ({ roomId }) => {
 
 
           return (
-            <div className={style.chatUserCard} key={index} onClick={() => handleRoomClick({ roomId: item.roomId, user: item.User })}>
-              <img className={style.avatar} src={item.User.avatar} alt={item.User.name} />
+            <div className={style.chatUserCard} key={index} onClick={() => handleRoomClick({ roomId: item.roomId, user: item.targetUser })}>
+              <img className={style.avatar} src={item.targetUser.avatar} alt={item.targetUser.name} />
               <div className={style.userInfo}>
                 <div className={style.userTime}>
- 
-              <div className={style.name}>{item.User.name}</div>
-              <div className={style.userName}>@{item.User.account}</div>
-              <div className={style.time}>{formatDate}</div>
+
+                  <div className={style.name}>{item.targetUser.name}</div>
+                  <div className={style.userName}>@{item.targetUser.account}</div>
+                  <div className={style.time}>{formatDate}</div>
+                </div>
+                <div className={style.message}>{item.message.slice(0, 50)}</div>
+                <div> {item.unreadMessageCounts}</div>
               </div>
-              <div className={style.message}>{item.message.slice(0, 50)}</div>
-              <div> {item.unreadMessageCounts}</div>
-            </div>
             </div>
           );
         })
