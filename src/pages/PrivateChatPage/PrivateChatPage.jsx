@@ -54,7 +54,7 @@ const PrivateChatPage = () => {
           <ChatPrivateText roomId={roomId} />
         </div>
         <div className={style.rightColumn}>
-          <ChatRoom headerContent={headerContext} roomId={roomId} />
+          <ChatRoom headerContext={headerContext} roomId={roomId} />
         </div>
       </div>
     </div>
