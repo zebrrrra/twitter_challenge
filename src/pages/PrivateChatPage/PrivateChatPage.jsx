@@ -9,6 +9,7 @@ import { useChatUnRead } from '../../context/ChatUnreadContext';
 
 const PrivateChatPage = () => {
   const [headerContext, setHeaderContext] = useState({})
+
   const { isAuthenticated } = useAuth();
   const { roomId } = useParams();
   const navigate = useNavigate();
@@ -23,6 +24,7 @@ const PrivateChatPage = () => {
 
 
   useEffect(() => {
+
     const handleHeaderContex = () => {
       switch (Object.keys(chatUser).length) {
         // 未選擇目標對象
@@ -36,8 +38,9 @@ const PrivateChatPage = () => {
           setHeaderContext({ title: chatUser.name, subtitle: chatUser.account });
           break;
       }
+
     }
-    handleHeaderContex()
+    handleHeaderContent()
   }, [chatUser?.id])
 
 
@@ -51,7 +54,7 @@ const PrivateChatPage = () => {
           <ChatPrivateText roomId={roomId} />
         </div>
         <div className={style.rightColumn}>
-          <ChatRoom headerContext={headerContext} roomId={roomId} />
+          <ChatRoom headerContent={headerContent} roomId={roomId} />
         </div>
       </div>
     </div>
