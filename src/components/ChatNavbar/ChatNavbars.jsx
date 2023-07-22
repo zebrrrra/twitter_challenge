@@ -1,5 +1,5 @@
 import style from '../Navbars/Navbars.module.scss';
-import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { Link, useNavigate, useLocation, useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 //import Modal
 import TweetModal from '../TweetModal/TweetModal';
@@ -29,10 +29,8 @@ const ChatNavbars = ({ onTweetSubmit }) => {
   const { logout } = useAuth()
   const [publicReadCount, setPublicReadCount] = useState(
     Number(localStorage.getItem("publicReadCount")) || 0);
-    const {socket,chatUnRead} = useChatUnRead();
-
-    
-   
+  const { socket, chatUnRead } = useChatUnRead();
+  const { roomId } = useParams()
 
   //要讀取socket.io
   /*const socket = useChat();
@@ -50,23 +48,11 @@ const ChatNavbars = ({ onTweetSubmit }) => {
     }
   }, [socket]);*/
 
- // useEffect(() => {
-   // if(socket){
-     // socket.emit('client-new-message');
-      //socket.on('server-new-message',(res) => {
-       // console.log('server-new-message', res)
-       // setUnreadCount(res.allUnreadMessageCounts);
-      //})
-      //return () => socket.off('server-new-message');
-   // }
-  //}, []);
-
-
   useEffect(() => {
     setIconClicked(location.pathname);
   }, [location]);
 
-  
+
   const handlebuttonClick = () => {
     setOpenModal(true)
   }
@@ -81,7 +67,7 @@ const ChatNavbars = ({ onTweetSubmit }) => {
     setIconClicked(true);
     if (tabName === '') {
       setHasNewMessage(false);
-  
+
     }
   }
 
@@ -103,24 +89,24 @@ const ChatNavbars = ({ onTweetSubmit }) => {
           <Link to="/chat">
             <div
               className={`${style.NavbarItem} ${location.pathname === '/chat' ? style.active : ''}`}
-              onClick={() => {handleTabClick('chat')}}
+              onClick={() => { handleTabClick('chat') }}
             >
               <img className={style.NavbarPng}
-                src={isIconClicked === '/chat' ? isChatIcon : chatIcon} 
-                 alt="Icon" /> 
+                src={isIconClicked === '/chat' ? isChatIcon : chatIcon}
+                alt="Icon" />
               <span>公開聊天室</span>
-             </div>
+            </div>
           </Link>
-          <Link to="/pchat">
+          <Link to={roomId ? `/chat/${roomId}` : `/chat/${chatUnRead?.messages[0]?.roomId}`}>
             <div
-              className={`${style.NavbarItem} ${location.pathname === '/pchat' ? style.active : ''}`} 
-              onClick={() => {handleTabClick('pchat')}}
+              className={`${style.NavbarItem} ${location.pathname === '/pchat' ? style.active : ''}`}
+              onClick={() => { handleTabClick('pchat') }}
             >
               <img className={style.NavbarPng}
-               src={chatUnRead.allUnreadCounts > 0 ? GroupIcon : (isIconClicked === '/pchat' ? isChatIcon : chatIcon)} 
-               alt="Icon" /> 
+                src={chatUnRead.allUnreadCounts > 0 ? GroupIcon : (isIconClicked === '/pchat' ? isChatIcon : chatIcon)}
+                alt="Icon" />
               <span>私人聊天室</span>
-              <div>{chatUnRead.allUnreadCounts  > 0 && `(${chatUnRead.allUnreadCounts})`}</div>
+              <div>{chatUnRead.allUnreadCounts > 0 && `(${chatUnRead.allUnreadCounts})`}</div>
             </div>
           </Link>
 
@@ -157,6 +143,8 @@ const ChatNavbars = ({ onTweetSubmit }) => {
 }
 export default ChatNavbars;
 
+
+{/* <Link to={isSelectUser ? `/chat/${chatUser}` : `/chat/${chatUnRead?.messages[0]?.roomId}`}> */ }
 
 
 

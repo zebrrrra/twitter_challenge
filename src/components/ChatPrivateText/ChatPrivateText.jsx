@@ -18,6 +18,8 @@ const ChatPrivateText = ({ roomId }) => {
   const now = dayjs();
 
   const handleRoomClick = (targetData) => {
+    // 防止重複點擊
+    if (Number(roomId) === targetData.roomId) return
     console.log('房間號碼', targetData)
     if (socket) {
       socket.emit('client-enter-room', targetData.roomId);

@@ -5,13 +5,16 @@ import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import ChatPrivateText from '../../components/ChatPrivateText/ChatPrivateText';
 import { useChatUser } from '../../context/ChatUserContext';
+import { useChatUnRead } from '../../context/ChatUnreadContext';
 
 const PrivateChatPage = () => {
   const [headerContext, setHeaderContext] = useState({})
-  const { isAuthenticated, user } = useAuth();
+  const { isAuthenticated } = useAuth();
   const { roomId } = useParams();
   const navigate = useNavigate();
   const { chatUser } = useChatUser()
+  const { chatUnRead } = useChatUnRead();
+
   useEffect(() => {
     if (!isAuthenticated) {
       navigate('/login');
@@ -21,7 +24,18 @@ const PrivateChatPage = () => {
 
   useEffect(() => {
     const handleHeaderContex = () => {
-      setHeaderContext({ title: chatUser.name, subtitle: chatUser.account })
+      switch (Object.keys(chatUser).length) {
+        // 未選擇目標對象
+        case 0:
+          setHeaderContext({
+            title: chatUnRead.messages[0].targetUser.name,
+            subtitle: chatUnRead.messages[0].targetUser.account
+          });
+          break;
+        default:
+          setHeaderContext({ title: chatUser.name, subtitle: chatUser.account });
+          break;
+      }
     }
     handleHeaderContex()
   }, [chatUser?.id])
