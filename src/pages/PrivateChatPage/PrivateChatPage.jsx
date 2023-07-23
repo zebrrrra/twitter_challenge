@@ -26,6 +26,9 @@ const PrivateChatPage = () => {
   useEffect(() => {
 
     const handleHeaderContext = () => {
+      // console.log('roomId', roomId)
+      // console.log('chatUser', chatUser, `length: ${Object.keys(chatUser).length}`)
+      // console.log('chatUnRead', chatUnRead.messages[0].targetUser.name)
       switch (Object.keys(chatUser).length) {
         // 未選擇目標對象
         case 0:
@@ -38,9 +41,12 @@ const PrivateChatPage = () => {
           setHeaderContext({ title: chatUser.name, subtitle: chatUser.account });
           break;
       }
-
     }
     handleHeaderContext()
+    return () => {
+      console.log('clean')
+      setHeaderContext({})
+    }
   }, [chatUser?.id])
 
 

@@ -21,14 +21,21 @@ const ChatPrivateText = ({ roomId }) => {
     // 防止重複點擊
     if (Number(roomId) === targetData.roomId) return
     console.log('房間號碼', targetData)
-    if (socket) {
-      socket.emit('client-enter-room', targetData.roomId);
-      socket.on('server-enter-room', (res) => console.log(res))
-    }
     setChatUser(targetData.user)
     navigate(`/chat/${targetData.roomId}`)
   }
 
+  useEffect(() => {
+    if (socket) {
+      if (roomId) {
+        socket.emit('client-enter-room', roomId);
+      }
+      return () => {
+        socket?.off('server-enter-room');
+
+      }
+    }
+  }, [roomId]);
 
 
 

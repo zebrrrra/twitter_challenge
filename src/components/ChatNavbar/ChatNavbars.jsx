@@ -16,7 +16,6 @@ import chatIcon from '../../assets/icons/message.svg';
 import isChatIcon from '../../assets/icons/isMessage.svg';
 import GroupIcon from '../../assets/icons/Group.svg';
 //chat
-import { useChat } from '../../context/ChatContext';
 import { useAuth } from '../../context/AuthContext';
 import { useChatUnRead } from '../../context/ChatUnreadContext';
 
@@ -29,24 +28,8 @@ const ChatNavbars = ({ onTweetSubmit }) => {
   const { logout } = useAuth()
   const [publicReadCount, setPublicReadCount] = useState(
     Number(localStorage.getItem("publicReadCount")) || 0);
-  const { socket, chatUnRead } = useChatUnRead();
+  const { chatUnRead } = useChatUnRead();
   const { roomId } = useParams()
-
-  //要讀取socket.io
-  /*const socket = useChat();
-  //連線
-  useEffect(() => {
-    if (socket) {
-      socket.on('server-message', (data) => {
-        setHasNewMessage(true);
-      });
-      return () => {
-        if (socket) {
-          socket.off('server-message');
-        };
-      }
-    }
-  }, [socket]);*/
 
   useEffect(() => {
     setIconClicked(location.pathname);
@@ -142,9 +125,5 @@ const ChatNavbars = ({ onTweetSubmit }) => {
   )
 }
 export default ChatNavbars;
-
-
-{/* <Link to={isSelectUser ? `/chat/${chatUser}` : `/chat/${chatUnRead?.messages[0]?.roomId}`}> */ }
-
 
 
