@@ -99,11 +99,11 @@ const ChatNavbars = ({ onTweetSubmit }) => {
           </Link>
           <Link to={roomId ? `/chat/${roomId}` : `/chat/${chatUnRead?.messages[0]?.roomId}`}>
             <div
-              className={`${style.NavbarItem} ${location.pathname === '/pchat' ? style.active : ''}`}
-              onClick={() => { handleTabClick('pchat') }}
+              className={`${style.NavbarItem} ${location.pathname === `/chat/${roomId}` ? style.active : ''}`}
+              onClick={() => { handleTabClick(`/chat/${roomId}`) }}
             >
               <img className={style.NavbarPng}
-                src={chatUnRead.allUnreadCounts > 0 ? GroupIcon : (isIconClicked === '/pchat' ? isChatIcon : chatIcon)}
+                src={chatUnRead.allUnreadCounts > 0 ? GroupIcon : (isIconClicked === `/chat/${roomId}` ? isChatIcon : chatIcon)}
                 alt="Icon" />
               <span>私人聊天室</span>
               <div>{chatUnRead.allUnreadCounts > 0 && `(${chatUnRead.allUnreadCounts})`}</div>

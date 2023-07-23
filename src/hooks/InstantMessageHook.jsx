@@ -44,12 +44,11 @@ const useInstantMessage = (roomId) => {
     }
 
     if (socket) {
-      console.log('im lisening')
       socket.on('server-message', handleServerMessage);
     }
 
     return () => {
-      console.log('not lisening')
+      setMessage([])
       socket?.off('server-message', handleServerMessage);
 
     }
