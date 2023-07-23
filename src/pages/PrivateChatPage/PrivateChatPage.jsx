@@ -13,7 +13,7 @@ const PrivateChatPage = () => {
   const { isAuthenticated } = useAuth();
   const { roomId } = useParams();
   const navigate = useNavigate();
-  const { chatUser } = useChatUser()
+  const { chatUser, setChatUser } = useChatUser()
   const { chatUnRead } = useChatUnRead();
 
   useEffect(() => {
@@ -44,11 +44,10 @@ const PrivateChatPage = () => {
     }
     handleHeaderContext()
     return () => {
-      console.log('clean')
       setHeaderContext({})
+      setChatUser({})
     }
-  }, [chatUser?.id])
-
+  }, [roomId])
 
   return (
     <div className={style.homeContainer}>
