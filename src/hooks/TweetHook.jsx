@@ -1,12 +1,13 @@
 import { useState } from "react"
 import Swal from 'sweetalert2';
 import { postTweets } from "../apis/tweet";
+import { useChat } from "../context/ChatContext";
 
 const useTweet = (onTweetSubmit) => {
   const [newTweet, setNewTweet] = useState(null)
   const [tweetText, setTweetText] = useState('');
   const [message, setMessage] = useState('')
-
+  const socket = useChat()
   const handTweetSubmit = (newTweetValue) => {
     setNewTweet(newTweetValue)
   }
@@ -46,6 +47,7 @@ const useTweet = (onTweetSubmit) => {
         position: 'top',
       });
       onTweetSubmit(tweetText)
+      socket.emit('client-push-notice', 'tweet')
       setTweetText('');
       setMessage('')
       return
