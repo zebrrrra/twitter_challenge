@@ -8,6 +8,7 @@ import Swal from "sweetalert2"
 import { postATweetReply } from "../../apis/tweet"
 import { useLocation } from 'react-router-dom';
 import { useUpdateTag } from '../../context/UpdateTagContext';
+import { useChat } from '../../context/ChatContext';
 
 dayjs.extend(relativeTime);
 dayjs.locale('zh-tw');
@@ -29,9 +30,10 @@ const ReplyModal = ({
   const { user } = useAuth()
   const location = useLocation()
   const { setUpdateTag } = useUpdateTag();
+  const socket = useChat()
+  if (!open) return
   const isReplyPage = location.pathname === `/tweets/${tweetId}`
 
-  if (!open) return
 
   const userAvatar = localStorage.getItem('avatar') ? localStorage.getItem('avatar') : user.avatar
 
@@ -39,7 +41,6 @@ const ReplyModal = ({
   const { account, avatar, name } = User || {}
 
   const isError = !comment.trim() || comment.length > 140
-
   const handleReplyClick = async () => {
     if (!comment.trim()) {
       Swal.fire({
@@ -78,6 +79,7 @@ const ReplyModal = ({
       if (isReplyPage) {
         onReplySubmit(comment)
       }
+      socket.emit('client-push-notice', 'reply', User.id)
       onClose(false)
       return
     }
