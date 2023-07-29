@@ -71,7 +71,7 @@ const ChatRoom = ({ headerContext, roomId }) => {
         <div className={style.title}>{headerContext.title}</div>
         {roomId !== 4 && (<div className={style.subtitle}>@{headerContext.subtitle}</div>)}
       </div>
-      <ChatBody message={message} historyMessage={historyMessage} />
+      <ChatBody message={message} historyMessage={historyMessage} roomId={roomId} />
       <ChatInput onSelfSend={handleSelfSend} roomId={roomId} />
     </>
   )

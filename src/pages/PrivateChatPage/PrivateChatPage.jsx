@@ -25,14 +25,24 @@ const PrivateChatPage = () => {
 
 
   useEffect(() => {
+    // no chatUser& no chatUnRead.messages:新用戶直接透過navbar進入私人聊天室
+    // only no chatUser：過去已有談話紀錄，navbar進入私人聊天室抓談話紀錄第一個，點avatar/text就是抓chatUser
+    // only no chatUnRead.messages：過去未有談話紀錄，navbar進入私人聊天室抓chatUser(roomId)，點avatar就是抓chatUser
 
     const handleHeaderContext = () => {
       // console.log('roomId', roomId)
       // console.log('chatUser', chatUser, `length: ${Object.keys(chatUser).length}`)
-      // console.log('chatUnRead', chatUnRead.messages[0].targetUser.name)
-      if (chatUnRead.messages.length === 0) return
+      // console.log('chatUnRead', chatUnRead)
+      // no chatUser& no chatUnRead.messages
+      if (chatUnRead.messages.length === 0 && Object.keys(chatUser).length === 0) {
+        setHeaderContext({
+          title: 'Say something',
+          subtitle: 'I‘m giving up on you'
+        })
+        return
+      }
       switch (Object.keys(chatUser).length) {
-        // 未選擇目標對象
+        //  only no chatUser
         case 0:
           setHeaderContext({
             title: chatUnRead.messages[0].targetUser.name,

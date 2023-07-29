@@ -54,7 +54,6 @@ const ChatNavbars = ({ onTweetSubmit }) => {
     }
   }
 
-
   return (
     <>
       <div className={style.navbarContainer}>
@@ -80,6 +79,7 @@ const ChatNavbars = ({ onTweetSubmit }) => {
               <span>公開聊天室</span>
             </div>
           </Link>
+          {/* FIXME 當no chatUser& no chatUnRead.messages時，roomId是undefined*/}
           <Link to={roomId ? `/chat/${roomId}` : `/chat/${chatUnRead?.messages[0]?.roomId}`}>
             <div
               className={`${style.NavbarItem} ${location.pathname === `/chat/${roomId}` ? style.active : ''}`}
