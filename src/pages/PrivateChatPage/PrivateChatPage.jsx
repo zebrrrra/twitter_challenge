@@ -1,11 +1,11 @@
 import style from './ChatPage.module.scss';
 import { useAuth } from '../../context/AuthContext';
-import { ChatNavbar, ChatRoom } from '../../components';
+import { ChatNavbars, ChatRoom, ChatPrivateText } from '../../components';
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import ChatPrivateText from '../../components/ChatPrivateText/ChatPrivateText';
 import { useChatUser } from '../../context/ChatUserContext';
 import { useChatUnRead } from '../../context/ChatUnreadContext';
+import useTweet from '../../hooks/TweetHook';
 
 const PrivateChatPage = () => {
   const [headerContext, setHeaderContext] = useState({})
@@ -15,6 +15,7 @@ const PrivateChatPage = () => {
   const navigate = useNavigate();
   const { chatUser, setChatUser } = useChatUser()
   const { chatUnRead } = useChatUnRead();
+  const { handTweetSubmit } = useTweet()
 
   useEffect(() => {
     if (!isAuthenticated) {
@@ -29,6 +30,7 @@ const PrivateChatPage = () => {
       // console.log('roomId', roomId)
       // console.log('chatUser', chatUser, `length: ${Object.keys(chatUser).length}`)
       // console.log('chatUnRead', chatUnRead.messages[0].targetUser.name)
+      if (chatUnRead.messages.length === 0) return
       switch (Object.keys(chatUser).length) {
         // 未選擇目標對象
         case 0:
@@ -53,7 +55,7 @@ const PrivateChatPage = () => {
     <div className={style.homeContainer}>
       <div className={style.homeColumn}>
         <div className={style.leftColumn}>
-          <ChatNavbar />
+          <ChatNavbars onTweetSubmit={handTweetSubmit} />
         </div>
         <div className={style.middleColumn}>
           <ChatPrivateText roomId={roomId} />

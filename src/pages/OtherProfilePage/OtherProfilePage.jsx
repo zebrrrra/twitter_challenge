@@ -1,18 +1,20 @@
 import style from './OtherProfilePage.module.scss'
 import { useEffect, useState } from 'react';
 import { RecommendList } from '../../components';
-import { Navbars } from '../../components';
+import { ChatNavbars } from '../../components';
 import { Header } from '../../components';
 import { OtherMain } from '../../components';
 import { useAuth } from '../../context/AuthContext'
 import { useParams } from 'react-router-dom';
 import { useChat } from '../../context/ChatContext';
+import useTweet from '../../hooks/TweetHook';
 
 const OtherProfilePage = () => {
   const { user } = useAuth()
   const { id } = useParams();  // 從 URL 參數中取得 userId
   const userId = id || user.id;  // 如果 URL 參數中有 userId，就使用它，否則使用當前用戶的 ID
   const socket = useChat()
+  const { handTweetSubmit } = useTweet()
   const [isSubscribed, setIsSubscribed] = useState(false)
 
   useEffect(() => {
@@ -33,7 +35,7 @@ const OtherProfilePage = () => {
     <div className={style.profileContainer}>
       <div className={style.homeColumn}>
         <div className={style.leftColumn}>
-          <Navbars />
+          <ChatNavbars onTweetSubmit={handTweetSubmit} />
         </div>
         <div className={style.middleColumn}>
           <Header userId={userId} />

@@ -1,71 +1,25 @@
 import style from "./TweetModal.module.scss"
-import { useState } from 'react';
-import { postTweets } from "../../apis/tweet";
 import { useAuth } from "../../context/AuthContext"
-import Swal from 'sweetalert2';
-import { useNavigate } from "react-router-dom";
 import { ReactComponent as Close } from "../../assets/icons/orangeClose.svg";
 import { ReactComponent as Back } from "../../assets/icons/back.svg";
-
-
+import useTweet from "../../hooks/TweetHook";
 
 const TweetModal = ({ open, onClose, onTweetSubmit }) => {
-
-  const [tweetText, setTweetText] = useState('');//要填預設值
-  const [message, setMessage] = useState('')
   const { user } = useAuth();
-  const navigate = useNavigate();
-
+  const { tweetSubmit, message, tweetText, setTweetText } = useTweet(onTweetSubmit)
 
   const userAvatar = localStorage.getItem('avatar') ? localStorage.getItem('avatar') : user.avatar
 
   const handleClick = () => {
     onClose(false)
   }
-  const handleSubmit = async () => {
-    if (!tweetText.trim()) {
-      Swal.fire({
-        title: '內容不可空白',
-        icon: 'error',
-        showConfirmButton: false,
-        timer: 2000,
-        position: 'top',
-      });
-      setMessage('內容不可空白')
-      return
-    }
-    if (tweetText.length > 140) {
-      Swal.fire({
-        title: '內容超出上限',
-        icon: 'error',
-        showConfirmButton: false,
-        timer: 2000,
-        position: 'top',
-      });
-      setMessage('內容不可超過140字')
-      return
-    }
-
-    const { status } = await postTweets(tweetText)
-    if (status === 'success') {
-      Swal.fire({
-        title: '內容成功提交',
-        icon: 'success',
-        showConfirmButton: false,
-        timer: 3000,
-        position: 'top',
-      });
-
-      if (typeof onTweetSubmit === 'function') {
-        onTweetSubmit(tweetText)
-        return
-      }
+  const handleSubmit = () => {
+    tweetSubmit()
+    if (Array.from(tweetText).length > 0) {
       onClose(false)
     }
-    setTweetText('');
-    //navigate(`/${user.id}`);//要測試
-    // window.location.reload();//直接刷新頁面
   }
+
   if (!open) return
   return (
     <div className={style.background}>
@@ -97,4 +51,3 @@ const TweetModal = ({ open, onClose, onTweetSubmit }) => {
   );
 }
 export default TweetModal
-// { resize: 'none', width: '528px', height: '300px' }

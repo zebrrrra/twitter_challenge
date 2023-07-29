@@ -1,14 +1,11 @@
-//settingPage.jsx
-import { Component, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
-import ChatNavbars from '../../components/ChatNavbar/ChatNavbars';
-import { AuthInput } from '../../components';
 import style from './SettingPage.module.scss'
+import { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom';
+import { AuthInput, ChatNavbars } from '../../components';
 import Swal from 'sweetalert2';
 import { useAuth } from '../../context/AuthContext';
 import { getUsers } from '../../apis/user';
-import { useLocation } from 'react-router-dom';
+import useTweet from '../../hooks/TweetHook';
 
 const SettingPage = () => {
   const [account, setAccount] = useState('')
@@ -19,11 +16,10 @@ const SettingPage = () => {
   const [responseError, setResponseError] = useState(false)
   const [errorInfo, setErrorInfo] = useState('')
   const navigate = useNavigate();
-  const { pathname } = useLocation();
 
 
   const { putUserSetting, isAuthenticated, user } = useAuth()
-  // user)
+  const { handTweetSubmit } = useTweet()
   const currentUserId = user && user.id
 
 
@@ -81,8 +77,8 @@ const SettingPage = () => {
       setErrorInfo(message)
       return
     }
-    // errorInfo)//空的
   }
+
   useEffect(() => {
     const fetchCurrentUserData = async () => {
       const data = await getUsers(currentUserId)
@@ -108,7 +104,7 @@ const SettingPage = () => {
     <div className={style.homeContainer}>
       <div className={style.homeColumn}>
         <div className={style.leftColumn}>
-          <ChatNavbars />
+          <ChatNavbars onTweetSubmit={handTweetSubmit} />
         </div>
         <div className={style.middleColumn}>
           <div className={style.settingHeader}>帳戶設定</div>
@@ -140,7 +136,6 @@ const SettingPage = () => {
 }
 
 
-/*不確定Router*/
 
 
 

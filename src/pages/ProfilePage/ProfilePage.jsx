@@ -1,24 +1,17 @@
-import RecommendList from '../../components/RecommendList/RecommendList';
-import ChatNavbars from '../../components/ChatNavbar/ChatNavbars';
-import Header from '../../components/Headers/Headers';
-import Main from '../../components/Main/Main';
 import style from './ProfilePage.module.scss'
+import { ChatNavbars, Header, Main, RecommendList } from '../../components';
 import { useAuth } from '../../context/AuthContext'
-import { useNavigate } from 'react-router-dom';
-import { useEffect } from 'react';
-import { useParmas } from 'react-router-dom';
-
+import useTweet from '../../hooks/TweetHook';
 
 const ProfilePage = () => {
   const { user } = useAuth()
-  const navigate = useNavigate();
-  // const{}=useParmas()
+  const { handTweetSubmit } = useTweet()
 
   return (
     <div className={style.profileContainer}>
       <div className={style.homeColumn}>
         <div className={style.leftColumn}>
-          <ChatNavbars />
+          <ChatNavbars onTweetSubmit={handTweetSubmit} />
         </div>
         <div className={style.middleColumn}>
           <Header userId={user?.id} />

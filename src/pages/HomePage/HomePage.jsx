@@ -1,16 +1,12 @@
 import style from './HomePage.module.scss'
-//import AllTweets from '../../components/AllTweets/AllTweets';
-import { Navbars, Header, MainPost, AllTweets, RecommendList } from '../../components';
+import { Header, MainPost, AllTweets, RecommendList, ChatNavbars } from '../../components';
 import { useAuth } from '../../context/AuthContext'
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import ChatNavbars from '../../components/ChatNavbar/ChatNavbars';
+import useTweet from '../../hooks/TweetHook';
 
 const HomePage = () => {
-  const [newTweet, setNewTweet] = useState(null)
-  const handTweetSubmit = (newTweetValue) => {
-    setNewTweet(newTweetValue)
-  }
+  const { newTweet, handTweetSubmit } = useTweet()
   const { isAuthenticated, user } = useAuth();
 
   const navigate = useNavigate();
@@ -24,7 +20,6 @@ const HomePage = () => {
     <div className={style.homeContainer}>
       <div className={style.homeColumn}>
         <div className={style.leftColumn}>
-          {/* <Navbars onTweetSubmit={handTweetSubmit} /> */}
           <ChatNavbars onTweetSubmit={handTweetSubmit} />
         </div>
         <div className={style.middleColumn}>

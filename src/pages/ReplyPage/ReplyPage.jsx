@@ -1,20 +1,15 @@
-
-import RecommendList from '../../components/RecommendList/RecommendList';
-import ChatNavbars from '../../components/ChatNavbar/ChatNavbars';
-import Header from '../../components/Headers/Headers';
-import { ReplyMainInTest } from '../../components';
 import style from './ReplyPage.module.scss'
-import { useAuth } from '../../context/AuthContext'
-import { useNavigate } from 'react-router-dom';
-import { useEffect } from 'react';
+import { ReplyMainInTest, Header, ChatNavbars, RecommendList } from '../../components';
+import useTweet from '../../hooks/TweetHook';
 
 const ReplyPage = () => {
+  const { handTweetSubmit } = useTweet()
 
   return (
     <div className={style.replyContainer}>
       <div className={style.homeColumn}>
         <div className={style.leftColumn}>
-          <ChatNavbars />
+          <ChatNavbars onTweetSubmit={handTweetSubmit} />
         </div>
         <div className={style.middleColumn}>
           <Header />
