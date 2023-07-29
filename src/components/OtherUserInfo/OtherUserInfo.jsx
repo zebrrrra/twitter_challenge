@@ -1,8 +1,5 @@
-//OtherUserInfo.jsx
-// import style from "./UserInfo.module.scss"
 import style from "./OtherUserInfo.module.scss"
 import { Link } from "react-router-dom"
-import EditModal from "../EditModal/EditModal"
 import { useState, useEffect } from "react"
 import { getUsers } from "../../apis/user"
 import { ReactComponent as BellOpen } from "../../assets/icon/btn_notfi打開.svg"
@@ -10,19 +7,18 @@ import { ReactComponent as BellClose } from "../../assets/icon/btn_notfi關閉.s
 import email from "../../assets/icon/email.svg"
 import { useUpdateTag } from '../../context/UpdateTagContext';
 import useFollow from "../../hooks/FollowHook";
+import { useChat } from "../../context/ChatContext"
 
-const OtherUserInfo = ({ userId }) => {
-  const [openModal, setOpenModal] = useState(false);
+const OtherUserInfo = ({ userId, isSubscribed }) => {
   const [currentData, setCurrentData] = useState(null)
   const [isToggle, setIsToggle] = useState(false)
   const { updateTag, setUpdateTag } = useUpdateTag();
   const { id, account, avatar, cover, name, introduction, followersCount, followingsCount, isCurrentUserFollowed } = currentData || {}
   const { handleFollow, handleUnFollow } = useFollow(null, setUpdateTag);
-
+  const socket = useChat()
 
   const buttonClass = isCurrentUserFollowed ? style.buttonFollowing : style.buttonFollower;
   const buttonText = isCurrentUserFollowed ? "正在跟隨" : "跟隨";
-
   const handleFollowClick = () => {
     if (isCurrentUserFollowed) {
       handleUnFollow(id);
@@ -30,7 +26,29 @@ const OtherUserInfo = ({ userId }) => {
       handleFollow(id);
     }
   }
+  const handleBellOpen = () => {
+    socket.emit('client-unsubscribe', userId)
+    setIsToggle(!isToggle)
+  }
+  const handleBellClose = () => {
+    socket.emit('client-subscribe', userId)
+    setIsToggle(!isToggle)
+  }
 
+  useEffect(() => {
+    setIsToggle(isSubscribed)
+  }, [isSubscribed])
+
+  // 測試用
+  useEffect(() => {
+    socket.on('server-unsubscribe', (res) => console.log('from BellOpen', res));
+    socket.on('server-subscribe', (res) => console.log('from BellClose', res));
+
+    return () => {
+      socket.off('server-unsubscribe');
+      socket.off('server-subscribe');
+    };
+  }, [socket]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -38,7 +56,7 @@ const OtherUserInfo = ({ userId }) => {
       setCurrentData(userData);
     };
     fetchData();
-  }, [userId, openModal, updateTag]);
+  }, [userId, updateTag]);
 
 
   return (
@@ -53,7 +71,7 @@ const OtherUserInfo = ({ userId }) => {
         <div className={style.emailContainer}>
           <img src={email} alt="email" />
         </div>
-        {isToggle ? <BellOpen onClick={() => setIsToggle(!isToggle)} /> : <BellClose onClick={() => setIsToggle(!isToggle)} />}
+        {isToggle ? <BellOpen onClick={handleBellOpen} /> : <BellClose onClick={handleBellClose} />}
         <button className={buttonClass} onClick={handleFollowClick}>{buttonText}</button>
       </div>
       <div className={style.textContainer}>
@@ -65,7 +83,6 @@ const OtherUserInfo = ({ userId }) => {
           <Link to={`/${userId}/followers`} className={style.link}>{followersCount}個<span>跟隨者</span></Link>
         </div>
       </div>
-      {openModal && <EditModal open={openModal} onClose={(value) => setOpenModal(value)} currentId={userId} userData={currentData} />}
     </div >
 
   )

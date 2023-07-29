@@ -1,15 +1,12 @@
 import OtherUserInfo from '../OtherUserInfo/OtherUserInfo';
 import Tab from '../Tab/Tab';
 
-const OtherMain = ({userId}) => {
-  //const { id } = useParams();
-  //const {user} = useAuth();
+const OtherMain = ({ userId, isSubscribed }) => {
 
-   return (
+  return (
     <>
-    <OtherUserInfo userId={userId}/>
-    <Tab userId={userId}/>
-
+      <OtherUserInfo userId={userId} isSubscribed={isSubscribed} />
+      <Tab userId={userId} />
     </>
   )
 
