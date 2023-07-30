@@ -4,7 +4,6 @@ export const useChatUser = () => useContext(ChatUserContext);
 
 export function ChatUserProvider({ children }) {
   const [chatUser, setChatUser] = useState({});
-
   return (
     <ChatUserContext.Provider value={{ chatUser, setChatUser }}>
       {children}

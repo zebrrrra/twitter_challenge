@@ -12,6 +12,10 @@ export function ChatUnReadProvider({ children }) {
 
   useEffect(() => {
     if (socket) {
+      if (roomId) {
+        socket.emit('client-enter-room', roomId);
+        socket.on('server-enter-room', (res) => console.log(res));
+      }
       // Emit event
       socket.emit('client-new-message');
 
@@ -32,6 +36,7 @@ export function ChatUnReadProvider({ children }) {
       return () => {
         // Clean up
         socket.off('server-new-message');
+        socket.off('server-enter-room', (res) => console.log(res));
       };
     }
   }, [socket, roomId]);

@@ -1,17 +1,11 @@
 import "./style/main.scss"
 import { BrowserRouter as Router, Route, Routes, useParams, useMatch } from 'react-router-dom';
-import { HomePage, ProfilePage, LoginPage, AdminLoginPage, RegisterPage, FollowPage, SettingPage } from "./pages";
-import OtherProfilePage from './pages/OtherProfilePage/OtherProfilePage';
+import { LoginPage, AdminLoginPage, AdminUserPage, AdminHomePage, RegisterPage, HomePage, ProfilePage, OtherProfilePage, SettingPage, ReplyPage, FollowPage, ChatPage, PrivateChatPage } from "./pages";
 import { AuthProvider } from "./context/AuthContext";
 import { useAuth } from './context/AuthContext';
 import ProtectedRouter from './components/AdminProtectedRouter';
-import ReplyPage from "./pages/ReplyPage/ReplyPage";
-import AdminUserPage from './pages/AdminUserPage/AdminUserPage';
-import AdminHomePage from "./pages/AdminHomePage/AdminHomePage";
-import ChatPage from "./pages/ChatPage/ChatPage";
 import { UpdateTagProvider } from "./context/UpdateTagContext";
 import { ChatContextProvider } from './context/ChatContext';
-import PrivateChatPage from "./pages/PrivateChatPage/PrivateChatPage";
 import { ChatUserProvider } from "./context/ChatUserContext";
 import { ChatUnReadProvider } from "./context/ChatUnreadContext";
 
@@ -25,31 +19,29 @@ function App() {
         <AuthProvider>
           <UpdateTagProvider>
             <ChatContextProvider>
-              <ChatUnReadProvider>
               <Routes>
                 <Route path="login" element={<LoginPage />} />
-
-                <Route path="main" element={<HomePage />} />
-                <Route path="chat" element={<ChatUserProvider><ChatPage /></ChatUserProvider>} />
-                <Route path="chat/:roomId" element={<ChatUserProvider><PrivateChatPage /></ChatUserProvider>} />
-                <Route path="pchat" element={<ChatUserProvider><PrivateChatPage /></ChatUserProvider>} />
+                <Route path="register" element={<RegisterPage />} />
                 <Route path="admin" element={<AdminLoginPage />} />
                 <Route path="admin/list" element={<ProtectedRouter><AdminHomePage /></ProtectedRouter>} />
                 <Route path="admin/user" element={<ProtectedRouter><AdminUserPage /></ProtectedRouter>} />
-                <Route path="setting" element={<SettingPage />} />
-                <Route path="register" element={<RegisterPage />} />
-                <Route path="tweets/:tweetId" element={<ReplyPage />} />
-                <Route path=":id/follow/*" element={<HandleProfilePage />} />
-                <Route path=":id/*" element={<HandleProfilePage />} />
-                <Route path="profile/*" element={<ProfilePage />} />
-                <Route path="*" element={<HomePage />} />
+
+                <Route path="main" element={<ChatUnReadProvider><HomePage /></ChatUnReadProvider>} />
+                <Route path="chat" element={<ChatUnReadProvider><ChatUserProvider><ChatPage /></ChatUserProvider></ChatUnReadProvider>} />
+                <Route path="chat/:roomId" element={<ChatUnReadProvider><ChatUserProvider><PrivateChatPage /></ChatUserProvider>
+                </ChatUnReadProvider>
+                } />
+                <Route path="setting" element={<ChatUnReadProvider><SettingPage /></ChatUnReadProvider>} />
+                <Route path="tweets/:tweetId" element={<ChatUnReadProvider><ReplyPage /></ChatUnReadProvider>} />
+                <Route path=":id/follow/*" element={<ChatUnReadProvider><HandleProfilePage /></ChatUnReadProvider>} />
+                <Route path=":id/*" element={<ChatUnReadProvider><HandleProfilePage /></ChatUnReadProvider>} />
+                <Route path="profile/*" element={<ChatUnReadProvider><ProfilePage /></ChatUnReadProvider>} />
+                <Route path="*" element={<ChatUnReadProvider><HomePage /></ChatUnReadProvider>} />
               </Routes>
-              </ChatUnReadProvider>
             </ChatContextProvider>
           </UpdateTagProvider>
         </AuthProvider>
       </Router>
-
     </div>
   );
 

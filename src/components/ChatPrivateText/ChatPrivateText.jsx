@@ -1,15 +1,12 @@
 
-import { useState, useEffect } from "react";
 import style from './ChatPrivateText.module.scss';
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import { useNavigate } from "react-router-dom";
 import { useChatUser } from "../../context/ChatUserContext";
-import { useChat } from "../../context/ChatContext";
 import { useChatUnRead } from "../../context/ChatUnreadContext";
 
 const ChatPrivateText = ({ roomId }) => {
-  const socket = useChat()
   const { setChatUser } = useChatUser();
   const { chatUnRead } = useChatUnRead();
 
@@ -24,22 +21,6 @@ const ChatPrivateText = ({ roomId }) => {
     setChatUser(targetData.user)
     navigate(`/chat/${targetData.roomId}`)
   }
-
-  useEffect(() => {
-    if (socket) {
-      if (roomId) {
-        socket.emit('client-enter-room', roomId);
-      }
-      return () => {
-        socket?.off('server-enter-room');
-
-      }
-    }
-  }, [roomId]);
-
-
-
-
 
   return (
     <div className='history'>
