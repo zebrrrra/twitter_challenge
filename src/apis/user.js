@@ -1,5 +1,40 @@
 import axios from 'axios';
 const baseUrl = 'https://twitter-ac-team-d93c31406834.herokuapp.com/api';
+export const instance = axios.create({
+  baseURL: 'https://twitter-ac-team-d93c31406834.herokuapp.com/api',
+  timeout: 3000,
+  // signal: new AbortController().signal,
+});
+
+instance.interceptors.request.use(
+  function (config) {
+    const token = localStorage.getItem('token')
+    if (token) {
+      config.headers['Authorization'] = `Bearer ${token}`;
+    }
+    return config;
+  },
+  function (error) {
+    return Promise.reject(error);
+  }
+);
+
+instance.interceptors.response.use(
+  function (response) {
+    return response.data
+  },
+  function (error) {
+    if (error.response) {
+      return error.response.data
+    }
+    if (!window.navigator.onLine) {
+      alert("網路出了點問題，請重新連線後重整網頁");
+      return;
+    }
+    return Promise.reject(error);
+  }
+);
+
 
 export const login = async ({ account, password }) => {
   try {
@@ -36,28 +71,20 @@ export const adminLogin = async ({ account, password }) => {
   }
 }
 
-
 export const putUserSetting = async ({ id, account, name, email, password, checkPassword }) => {
   try {
-
-    const token = localStorage.getItem('token')
-    const response = await axios.put(`${baseUrl}/users/${id}`, { account, name, email, password, checkPassword },
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          'Content-Type': 'application/json'
-        },
+    const response = await instance.put(`/users/${id}`, { account, name, email, password, checkPassword })
+    if (response.status === 'success') {
+      return { success: true, message: response.message }
+    } else {
+      return {
+        success: false, message: response.message
       }
-    )
-    if (response.data.status === 'success') {
-      return response.data
     }
-  } catch (err) {
-    // return err.response
-    return err.response.data
+  } catch (error) {
+    console.log(error)
   }
 }
-
 
 export const putUserProfile = async ({ id, name, avatar, cover, introduction }) => {
   const token = localStorage.getItem('token')
@@ -81,6 +108,15 @@ export const putUserProfile = async ({ id, name, avatar, cover, introduction }) 
     return { success: false, message: err.response.data.message }
   }
 }
+
+export const getUserData = async ({ id, signal }) => {
+  try {
+    const response = await instance.get(`/users/${id}`, { signal });
+    return response
+  } catch (error) {
+    console.log(error)
+  }
+};
 
 export const getUsers = async (id) => {
   const token = localStorage.getItem('token');

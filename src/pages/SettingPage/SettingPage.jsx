@@ -4,8 +4,9 @@ import { useNavigate } from 'react-router-dom';
 import { AuthInput, ChatNavbars } from '../../components';
 import Swal from 'sweetalert2';
 import { useAuth } from '../../context/AuthContext';
-import { getUsers } from '../../apis/user';
 import useTweet from '../../hooks/TweetHook';
+import { putUserSetting } from '../../apis/user';
+import { getUserData } from '../../apis/user';
 
 const SettingPage = () => {
   const [account, setAccount] = useState('')
@@ -16,19 +17,12 @@ const SettingPage = () => {
   const [responseError, setResponseError] = useState(false)
   const [errorInfo, setErrorInfo] = useState('')
   const navigate = useNavigate();
-
-
-  const { putUserSetting, isAuthenticated, user } = useAuth()
+  const { user } = useAuth()
   const { handTweetSubmit } = useTweet()
-  const currentUserId = user && user.id
-
-
 
   const handleSubmit = async (e) => {
     const id = user.id
     e.preventDefault();
-
-
 
     if (!account?.trim() || !password?.trim() || !name?.trim() || !checkPassword?.trim() || !email?.trim()) {
       Swal.fire({
@@ -47,10 +41,9 @@ const SettingPage = () => {
       email,
       password,
       checkPassword
-
     });
-    if (success) {
 
+    if (success) {
       Swal.fire({
         title: '編輯成功',
         icon: 'success',
@@ -60,12 +53,10 @@ const SettingPage = () => {
       });
       setResponseError(false)
       navigate(`/profile`)
-
       return
     }
 
     if (!success) {
-
       Swal.fire({
         title: `${message}`,
         icon: 'error',
@@ -80,8 +71,9 @@ const SettingPage = () => {
   }
 
   useEffect(() => {
+    const abortController = new AbortController();
     const fetchCurrentUserData = async () => {
-      const data = await getUsers(currentUserId)
+      const data = await getUserData({ id: user?.id, signal: abortController.signal })
       if (data) {
         const { account, email, name } = data
         setAccount(account)
@@ -90,7 +82,10 @@ const SettingPage = () => {
       }
     }
     fetchCurrentUserData()
-  }, [currentUserId])
+    return () => {
+      abortController.abort()
+    }
+  }, [])
 
   const authInputCollection = [
     { label: '帳號', id: 'account', type: 'text', placeholder: '請輸入帳號', value: account, onChange: (accountValue) => setAccount(accountValue) },
@@ -128,7 +123,6 @@ const SettingPage = () => {
         </div>
         <div className={style.rightColumn}>
           <div className={style.navbarContainer}></div>
-
         </div>
       </div>
     </div>

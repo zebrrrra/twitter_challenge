@@ -137,24 +137,7 @@ export const AuthProvider = ({ children }) => {
                     }
                 }
 
-            }, putUserSetting: async (data) => {
-                const result = await putUserSetting({
-                    id: data.id,
-                    account: data.account,
-                    name: data.name,
-                    email: data.email,
-                    password: data.password,
-                    checkPassword: data.checkPassword,
-                    socket,
-
-                });
-                if (result.status === 'success') {
-                    return { success: true, message: result.message }
-                } else {
-                    return { success: false, message: result.message }
-                }
             }
-
         }}>
             {children}
         </AuthContext.Provider >
@@ -162,3 +145,22 @@ export const AuthProvider = ({ children }) => {
 };
 
 export default AuthContext;
+
+
+// putUserSetting: async (data) => {
+//     const result = await putUserSetting({
+//         id: data.id,
+//         account: data.account,
+//         name: data.name,
+//         email: data.email,
+//         password: data.password,
+//         checkPassword: data.checkPassword,
+//         socket,
+
+//     });
+//     if (result.status === 'success') {
+//         return { success: true, message: result.message }
+//     } else {
+//         return { success: false, message: result.message }
+//     }
+// }
