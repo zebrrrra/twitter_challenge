@@ -11,5 +11,6 @@ import ReplyPage from "./ReplyPage/ReplyPage";
 import FollowPage from './FollowPage/FollowPage';
 import ChatPage from "./ChatPage/ChatPage";
 import PrivateChatPage from "./PrivateChatPage/PrivateChatPage";
+import NoticePage from "./NoticePage/NoticePage";
 
-export { LoginPage, AdminLoginPage, AdminUserPage, AdminHomePage, RegisterPage, HomePage, ProfilePage, OtherProfilePage, SettingPage, ReplyPage, FollowPage, ChatPage, PrivateChatPage }
+export { LoginPage, AdminLoginPage, AdminUserPage, AdminHomePage, RegisterPage, HomePage, ProfilePage, OtherProfilePage, SettingPage, ReplyPage, FollowPage, ChatPage, PrivateChatPage, NoticePage }

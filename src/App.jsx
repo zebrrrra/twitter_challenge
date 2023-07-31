@@ -1,6 +1,6 @@
 import "./style/main.scss"
 import { BrowserRouter as Router, Route, Routes, useParams, useMatch } from 'react-router-dom';
-import { LoginPage, AdminLoginPage, AdminUserPage, AdminHomePage, RegisterPage, HomePage, ProfilePage, OtherProfilePage, SettingPage, ReplyPage, FollowPage, ChatPage, PrivateChatPage } from "./pages";
+import { LoginPage, AdminLoginPage, AdminUserPage, AdminHomePage, RegisterPage, HomePage, ProfilePage, OtherProfilePage, SettingPage, ReplyPage, FollowPage, ChatPage, PrivateChatPage, NoticePage } from "./pages";
 import { AuthProvider } from "./context/AuthContext";
 import { useAuth } from './context/AuthContext';
 import ProtectedRouter from './components/AdminProtectedRouter';
@@ -31,6 +31,7 @@ function App() {
                 <Route path="chat/:roomId" element={<ChatUnReadProvider><ChatUserProvider><PrivateChatPage /></ChatUserProvider>
                 </ChatUnReadProvider>
                 } />
+                <Route path="notice" element={<ChatUnReadProvider><NoticePage /></ChatUnReadProvider>} />
                 <Route path="setting" element={<ChatUnReadProvider><SettingPage /></ChatUnReadProvider>} />
                 <Route path="tweets/:tweetId" element={<ChatUnReadProvider><ReplyPage /></ChatUnReadProvider>} />
                 <Route path=":id/follow/*" element={<ChatUnReadProvider><HandleProfilePage /></ChatUnReadProvider>} />
