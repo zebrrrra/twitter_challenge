@@ -1,6 +1,6 @@
 import { useContext, createContext, useState, useEffect } from 'react';
-import { useAuth } from './AuthContext';
 import { useParams } from 'react-router-dom';
+import { socket } from '../apis/socket';
 
 export const ChatUnReadContext = createContext();
 export const useChatUnRead = () => useContext(ChatUnReadContext);
@@ -8,7 +8,6 @@ export function ChatUnReadProvider({ children }) {
   const [chatUnRead, setChatUnRead] = useState({ empty: true, messages: [] });
   const [chatMessages, setChatMessages] = useState({});
   const { roomId } = useParams()
-  const { socket } = useAuth();
 
   useEffect(() => {
     if (socket) {

@@ -1,11 +1,11 @@
-import {useContext, createContext} from'react';
-import { useAuth } from './AuthContext';
+import { useContext, createContext } from 'react';
+import { socket } from '../apis/socket';
 
-const ChatContext =createContext();
-export const useChat =()=>useContext(ChatContext);
+const ChatContext = createContext();
+export const useChat = () => useContext(ChatContext);
 
-export const ChatContextProvider=({children})=>{
-    const {socket} =useAuth();
+export const ChatContextProvider = ({ children }) => {
+
     return (
         <ChatContext.Provider value={socket}>
             {children}

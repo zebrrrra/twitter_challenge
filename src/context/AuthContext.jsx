@@ -6,7 +6,7 @@ import { useLocation } from 'react-router-dom';
 import { useContext, useEffect } from 'react';
 import { register, putUserSetting } from '../apis/user';
 //socket.io
-import { io } from 'socket.io-client';
+import { socket } from '../apis/socket';
 
 const defaultAuthContext = {
     isAuthenticated: false,
@@ -23,50 +23,38 @@ export const useAuth = () => useContext(AuthContext);
 export const AuthProvider = ({ children }) => {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [payload, setPayload] = useState(null);
-    const [socket, setSocket] = useState(null);
     const { pathname } = useLocation();
 
     useEffect(() => {
-        const newSocket = io("https://twitter-ac-team-d93c31406834.herokuapp.com");
         const handleConnectSocket = () => {
-            console.log('connected:check permission', socket)
-            setSocket(newSocket)
-            newSocket.emit('client-join', payload?.id)
-
+            socket.emit('client-join', payload?.id)
         }
 
         const checkTokenIsValid = async () => {
             const token = localStorage.getItem('token');
             if (!token) {
-                const account = payload ? payload.account : null;
                 setIsAuthenticated(false);
                 setPayload(null);
-                if (socket) {
-                    socket.emit('client-leave', account, () => {
-                        socket.disconnect();
-                        setSocket(null);
-                    });
-
-                }
+                socket.emit('client-leave', () => {
+                    socket.disconnect();
+                });
                 return;
 
             } else {
                 const tempPayload = jwt.decode(token);
                 setPayload(tempPayload);
                 setIsAuthenticated(true);
-                if (!socket) {
-                    newSocket.on('connect', handleConnectSocket)
-                }
+                socket.connect();
+                socket.on('connect', handleConnectSocket)
             }
         };
         checkTokenIsValid();
         return () => {
-            if (socket) {
-                console.log('bye')
-                socket.off('connect', handleConnectSocket)
-            }
+            console.log('bye')
+            socket.off('connect', handleConnectSocket)
         }
     }, [pathname, socket?.connected]);
+
 
 
 
@@ -82,7 +70,7 @@ export const AuthProvider = ({ children }) => {
                 introduction: payload.introduction,
                 email: payload.email,
                 cover: payload.cover
-            }, payload, setPayload, setIsAuthenticated, setSocket, socket
+            }, payload, setPayload, setIsAuthenticated
             , register: async (data) => {
                 const result = await register({
                     account: data.account,
@@ -104,8 +92,8 @@ export const AuthProvider = ({ children }) => {
                 if (socket) {
                     socket.emit('client-leave', () => {
                         socket.disconnect();
-                        setSocket(null);
                     });
+                    socket.off();
                     localStorage.removeItem('token');
                     localStorage.removeItem('avatar');
                     localStorage.removeItem('usersUpdate');
