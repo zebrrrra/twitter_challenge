@@ -60,6 +60,10 @@ const Header = ({userId, setCurrentSection}) => {
         headerContext =
         <div className={style.Header}>推文</div>
     }
+    else if (path.includes(`/notice`)){
+        headerContext=
+        <div className={style.Header}>通知</div>
+    }
     else if (path.includes(`/`)){
         headerContext = 
         <><div className={style.imgContainer}>
