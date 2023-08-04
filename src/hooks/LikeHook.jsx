@@ -41,7 +41,7 @@ const useLike = ({ dataItems, currentUserId, setUpdateTag }) => {
                 : item
           ));
           setUpdateTag(!updateTag);
-          if (socket.connected) {
+          if (socket?.connected) {
             socket.emit('client-push-notice', 'like', id);
           }
         }

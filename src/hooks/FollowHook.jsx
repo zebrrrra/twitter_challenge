@@ -44,7 +44,7 @@ const useFollow = (
         });
 
         setUpdateTag(prevState => !prevState);
-        if (socket.connected) {
+        if (socket?.connected) {
           socket.emit('client-push-notice', 'follow', id);
         }
       }

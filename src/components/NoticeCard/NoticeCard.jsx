@@ -4,13 +4,13 @@ import { YMDTimeFormat } from "../../apis/data"
 const NoticeCard = ({ notice }) => {
   const { comment, createdAt,
     noticeMessage, description
-    , userId, tweetId
+    , user,userId, tweetId
   } = notice || {}
 
   return (
     <div className={style.noticeContainer}>
       <div className={style.noticeCard} >
-        <img src={avatar} className={style.avatar} alt="avatar" />
+        <img src={user.avatar} className={style.avatar} alt="avatar" />
         <div className={style.contentContainer}>
           <div className={style.nameAndUserId}>
             <span className={style.name}>{noticeMessage}</span>
