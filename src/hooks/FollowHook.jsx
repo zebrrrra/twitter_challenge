@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { getUsers } from "../apis/user";
 import { postFollowShips, deleteFollowShips } from "../apis/followship";
+import { useChat } from "../context/ChatContext";
 
 const useFollow = (
   loginUserId,
@@ -10,8 +11,7 @@ const useFollow = (
   setUpdateTag
 ) => {
   const [updateTag, setLocalUpdateTag] = useState(false);
-  //let updateTagGlobal = false;
-  //const setUpdateTagGlobal = () => updateTagGlobal = !updateTagGlobal;
+  const {socket} =useChat();
 
   const handleFollow = async (id) => {
     try {
@@ -44,6 +44,9 @@ const useFollow = (
         });
 
         setUpdateTag(prevState => !prevState);
+        if (socket.connected) {
+          socket.emit('client-push-notice', 'follow', id);
+        }
       }
     } catch (error) {
     }
