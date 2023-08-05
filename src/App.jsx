@@ -35,7 +35,7 @@ function App() {
                 <Route path="setting" element={<ChatUnReadProvider><SettingPage /></ChatUnReadProvider>} />
                 <Route path="tweets/:tweetId" element={<ChatUnReadProvider><ReplyPage /></ChatUnReadProvider>} />
                 <Route path=":id/follow/*" element={<ChatUnReadProvider><HandleProfilePage /></ChatUnReadProvider>} />
-                <Route path=":id/*" element={<ChatUnReadProvider><HandleProfilePage /></ChatUnReadProvider>} />
+                <Route path=":id/*" element={<ChatUnReadProvider><ChatUserProvider><HandleProfilePage /></ChatUserProvider></ChatUnReadProvider>} />
                 <Route path="profile/*" element={<ChatUnReadProvider><ProfilePage /></ChatUnReadProvider>} />
                 <Route path="*" element={<ChatUnReadProvider><HomePage /></ChatUnReadProvider>} />
               </Routes>
@@ -68,4 +68,3 @@ const HandleProfilePage = () => {
 };
 
 export default App;
-

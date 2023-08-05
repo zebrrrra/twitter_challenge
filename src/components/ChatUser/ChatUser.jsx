@@ -34,7 +34,7 @@ const ChatUser = () => {
           avatar: user.avatar
         })))
       };
-      socket.emit('client-join', user.id);
+      socket.emit('client-join', user?.id);
       socket.on('server-update', handleUserUpdate);
 
       return () => {
@@ -63,7 +63,6 @@ const ChatUser = () => {
         // navigate到PrivateChatPage並將roomId和targetId作為URL參數
         navigate(`/chat/${roomId}`);
         socket.off('server-get-room');
-        socket.off('server-enter-room', (res) => console.log(res))
       });
     }
     const usersUpdate = JSON.parse(localStorage.getItem('usersUpdate'));
