@@ -10,7 +10,6 @@ const useInstantMessage = (roomId) => {
   const { user } = useAuth() || {}
 
 
-
   useEffect(() => {
     const handleServerJoin = (res) => {
       setMessage((prevState) =>
@@ -32,6 +31,23 @@ const useInstantMessage = (roomId) => {
       socket?.off('server-leave', handleServerLeave);
     };
   }, [socket]);
+
+  useEffect(() => {
+    const handleEnterMessage = (res) => {
+      console.log(res)
+      setMessage((prevState) =>
+        [...prevState, { isChat: false, message: res.message }]);
+    }
+    if (roomId === 4) {
+      console.log('public')
+      socket.emit('client-enter-room', 'public');
+    }
+    socket.on('server-update-room', handleEnterMessage)
+    return () => {
+      setMessage([])
+      socket.off('server-update-room', handleEnterMessage)
+    }
+  }, [socket, roomId])
 
   useEffect(() => {
     const handleServerMessage = (res) => {

@@ -4,13 +4,11 @@ import { ChatNavbars, ChatRoom, ChatUser } from '../../components';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useTweet from '../../hooks/TweetHook';
-
 const ChatPage = () => {
-
   const { isAuthenticated } = useAuth();
   const { handTweetSubmit } = useTweet()
-
   const navigate = useNavigate();
+
   useEffect(() => {
     if (!isAuthenticated) {
       navigate('/login');

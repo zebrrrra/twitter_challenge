@@ -16,7 +16,6 @@ const PrivateChatPage = () => {
   const { chatUser, setChatUser } = useChatUser()
   const { chatUnRead } = useChatUnRead();
   const { handTweetSubmit } = useTweet()
-
   useEffect(() => {
     if (!isAuthenticated) {
       navigate('/login');
