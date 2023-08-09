@@ -1,7 +1,7 @@
 import style from "./OtherUserInfo.module.scss"
 import { Link } from "react-router-dom"
 import { useState, useEffect } from "react"
-import { getUsers } from "../../apis/user"
+import { getUser } from "../../apis/user"
 import { ReactComponent as BellOpen } from "../../assets/icon/btn_notfi打開.svg"
 import { ReactComponent as BellClose } from "../../assets/icon/btn_notfi關閉.svg"
 import email from "../../assets/icon/email.svg"
@@ -10,10 +10,10 @@ import useFollow from "../../hooks/FollowHook";
 import { useChat } from "../../context/ChatContext"
 
 const OtherUserInfo = ({ userId, isSubscribed }) => {
-  const [currentData, setCurrentData] = useState(null)
+  const [userData, setUserData] = useState(null)
   const [isToggle, setIsToggle] = useState(false)
   const { updateTag, setUpdateTag } = useUpdateTag();
-  const { id, account, avatar, cover, name, introduction, followersCount, followingsCount, isCurrentUserFollowed } = currentData || {}
+  const { id, account, avatar, cover, name, introduction, followersCount, followingsCount, isCurrentUserFollowed } = userData || {}
   const { handleFollow, handleUnFollow } = useFollow(null, setUpdateTag);
   const socket = useChat()
 
@@ -51,13 +51,16 @@ const OtherUserInfo = ({ userId, isSubscribed }) => {
   }, [socket]);
 
   useEffect(() => {
-    const fetchData = async () => {
-      const userData = await getUsers(userId);
-      setCurrentData(userData);
+    const abortController = new AbortController();
+    const fetchUser = async () => {
+      const data = await getUser({ id: userId, signal: abortController.signal });
+      setUserData(data);
     };
-    fetchData();
+    fetchUser();
+    return () => {
+      abortController.abort()
+    }
   }, [userId, updateTag]);
-
 
   return (
     <div className={style.container}>

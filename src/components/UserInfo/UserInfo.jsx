@@ -5,36 +5,40 @@ import style from "./UserInfo.module.scss"
 import { Link } from "react-router-dom"
 import EditModal from "../EditModal/EditModal"
 import { useState, useEffect } from "react"
-import { getUsers } from "../../apis/user"
+import { getUser } from "../../apis/user"
 import { useAuth } from "../../context/AuthContext"
 import { useUpdateTag } from '../../context/UpdateTagContext';
 
 const UserInfo = ({ userId }) => {
   const [openModal, setOpenModal] = useState(false);
-  const [currentData, setCurrentData] = useState(null)
+  const [userData, setUserData] = useState(null)
   const { updateTag, setUpdateTag } = useUpdateTag();
 
-  const { account, avatar, cover, name, introduction, followersCount, followingsCount } = currentData || {};
+  const { account, avatar, cover, name, introduction, followersCount, followingsCount } = userData || {};
+  const abortController = new AbortController();
 
   // 點按鈕的
   const handleOpenClick = async () => {
     setOpenModal(true)
 
     // 發送api載入自己的資料
-    const userData = await getUsers(userId)
-    setCurrentData(userData)
+    const data = await getUser({ id: userId, signal: abortController.signal })
+    setUserData(data)
   }
 
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchUser = async () => {
       if (userId) {
-        const userData = await getUsers(userId);
-        setCurrentData(userData);
+        // FIXME mount時沒有data回來
+        const data = await getUser({ id: userId, signal: abortController.signal });
+        setUserData(data);
       }
     };
-    fetchData();
+    fetchUser();
+    return () => {
+      abortController.abort()
+    }
   }, [userId, openModal, setUpdateTag]);
-
 
 
   return (
@@ -57,7 +61,7 @@ const UserInfo = ({ userId }) => {
           <Link to={`/${userId}/followers`} className={style.link}>{followersCount}個<span>跟隨者</span></Link>
         </div>
       </div>
-      {openModal && <EditModal open={openModal} onClose={(value) => setOpenModal(value)} userId={userId} userData={currentData} />}
+      {openModal && <EditModal open={openModal} onClose={(value) => setOpenModal(value)} userId={userId} userData={userData} />}
     </div >
 
   )

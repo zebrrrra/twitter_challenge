@@ -3,7 +3,7 @@ import { Header, ChatNavbars, FollowTab, FollowRecommendList } from '../../compo
 import { useAuth } from '../../context/AuthContext';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import { getUsers } from '../../apis/user';
+import { getUser } from '../../apis/user';
 import { UpdateTagProvider } from '../../context/UpdateTagContext';
 import useTweet from '../../hooks/TweetHook';
 
@@ -23,15 +23,19 @@ const FollowPage = () => {
   //const [isCurrentFollowed, setIsCurrentFollowed] = useState(false);
 
   useEffect(() => {
+    const abortController = new AbortController();
     if (!isAuthenticated) {
       navigate('/login');
     }
 
     const fetchUser = async () => {
-      const userData = await getUsers(id);
+      const userData = await getUser({ id, signal: abortController.signal });
       setProfileUser(userData);
     };
     fetchUser();
+    return () => {
+      abortController.abort()
+    }
   }, [navigate, isAuthenticated, id]);
 
   //整個頁面的follow方法

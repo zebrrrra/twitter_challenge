@@ -6,14 +6,10 @@ import Swal from 'sweetalert2';
 import { useAuth } from '../../context/AuthContext';
 import useTweet from '../../hooks/TweetHook';
 import { putUserSetting } from '../../apis/user';
-import { getUserData } from '../../apis/user';
+import { getUser } from '../../apis/user';
 
 const SettingPage = () => {
-  const [account, setAccount] = useState('')
-  const [name, setName] = useState('')
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [checkPassword, setCheckPassword] = useState('')
+  const [userData, setUserData] = useState({ account: '', name: '', email: '', password: '', checkPassword: '' })
   const [responseError, setResponseError] = useState(false)
   const [errorInfo, setErrorInfo] = useState('')
   const navigate = useNavigate();
@@ -24,7 +20,7 @@ const SettingPage = () => {
     const id = user.id
     e.preventDefault();
 
-    if (!account?.trim() || !password?.trim() || !name?.trim() || !checkPassword?.trim() || !email?.trim()) {
+    if (!userData.account?.trim() || !userData.password?.trim() || !userData.name?.trim() || !userData.checkPassword?.trim() || !userData.email?.trim()) {
       Swal.fire({
         title: '內容不可空白',
         icon: 'error',
@@ -36,11 +32,11 @@ const SettingPage = () => {
     }
     const { success, message } = await putUserSetting({
       id,
-      account,
-      name,
-      email,
-      password,
-      checkPassword
+      account: userData.account,
+      name: userData.name,
+      email: userData.email,
+      password: userData.password,
+      checkPassword: userData.checkPassword
     });
 
     if (success) {
@@ -72,27 +68,25 @@ const SettingPage = () => {
 
   useEffect(() => {
     const abortController = new AbortController();
-    const fetchCurrentUserData = async () => {
-      const data = await getUserData({ id: user?.id, signal: abortController.signal })
+    const fetchUser = async () => {
+      const data = await getUser({ id: user?.id, signal: abortController.signal })
       if (data) {
         const { account, email, name } = data
-        setAccount(account)
-        setName(name)
-        setEmail(email)
+        setUserData(pre => ({ ...pre, account, email, name }))
       }
     }
-    fetchCurrentUserData()
+    fetchUser()
     return () => {
       abortController.abort()
     }
   }, [])
 
-  const authInputCollection = [
-    { label: '帳號', id: 'account', type: 'text', placeholder: '請輸入帳號', value: account, onChange: (accountValue) => setAccount(accountValue) },
-    { label: '名稱', id: 'name', type: 'text', placeholder: '請輸入使用者名稱', value: name, maxLength: 50, onChange: (nameValue) => setName(nameValue) },
-    { label: 'Email', id: 'email', type: 'email', placeholder: '請輸入Email', value: email, onChange: (emailValue) => setEmail(emailValue) },
-    { label: '密碼', id: '密碼', type: 'password', placeholder: '請輸入密碼', value: password, onChange: (passwordValue) => setPassword(passwordValue) },
-    { label: '密碼確認', id: '密碼確認', type: 'password', placeholder: '請再次輸入密碼', value: checkPassword, onChange: (checkPasswordValue) => setCheckPassword(checkPasswordValue) },
+  const inputCollection = [
+    { name: 'account', label: '帳號', id: 'account', type: 'text', placeholder: '請輸入帳號', value: userData.account, onChange: (value) => setUserData(prev => ({ ...prev, 'account': value })) },
+    { name: 'name', label: '名稱', id: 'name', type: 'text', placeholder: '請輸入使用者名稱', value: userData.name, maxLength: 50, onChange: (value) => setUserData(prev => ({ ...prev, 'name': value })) },
+    { name: 'email', label: 'Email', id: 'email', type: 'email', placeholder: '請輸入Email', value: userData.email, onChange: (value) => setUserData(prev => ({ ...prev, 'email': value })) },
+    { name: 'password', label: '密碼', id: '密碼', type: 'password', placeholder: '請輸入密碼', value: userData.password, onChange: (value) => setUserData(prev => ({ ...prev, 'password': value })) },
+    { name: 'checkPassword', label: '密碼確認', id: '密碼確認', type: 'password', placeholder: '請再次輸入密碼', value: userData.checkPassword, onChange: (value) => setUserData(prev => ({ ...prev, 'checkPassword': value })) },
   ];
 
   return (
@@ -104,7 +98,7 @@ const SettingPage = () => {
         <div className={style.middleColumn}>
           <div className={style.settingHeader}>帳戶設定</div>
           <form className={style.form} onSubmit={handleSubmit}>
-            {authInputCollection.map(({ label, id, type, placeholder, value, maxLength, onChange }) => (
+            {inputCollection.map(({ label, id, type, placeholder, value, maxLength, onChange, name }) => (
               <AuthInput
                 key={id}
                 label={label}
@@ -116,6 +110,7 @@ const SettingPage = () => {
                 onChange={onChange}
                 responseError={responseError}
                 errorInfo={errorInfo}
+                name={name}
               />
             ))}
             <button className={style.button} type="submit">儲存</button>

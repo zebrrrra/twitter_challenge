@@ -35,7 +35,6 @@ instance.interceptors.response.use(
   }
 );
 
-
 export const login = async ({ account, password }) => {
   try {
     const response = await axios.post(`${baseUrl}/users/login`, { account, password })
@@ -109,7 +108,7 @@ export const putUserProfile = async ({ id, name, avatar, cover, introduction }) 
   }
 }
 
-export const getUserData = async ({ id, signal }) => {
+export const getUser = async ({ id, signal }) => {
   try {
     const response = await instance.get(`/users/${id}`, { signal });
     return response
@@ -117,25 +116,6 @@ export const getUserData = async ({ id, signal }) => {
     console.log(error)
   }
 };
-
-export const getUsers = async (id) => {
-  const token = localStorage.getItem('token');
-  try {
-    const response = await axios.get(`${baseUrl}/users/${id}`, {
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
-    });
-    return response.data;
-  } catch (error) {
-    console.error('Error:cannot get user', error);
-    return error.response.data
-  }
-};
-
-
-
-
 
 //GET /api/users/:id/tweets 看見某使用者發過的推文
 export const getUserTweets = async (id) => {
