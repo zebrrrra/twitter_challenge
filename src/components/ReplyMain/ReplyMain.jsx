@@ -11,14 +11,17 @@ const ReplyMain = () => {
   const { likeTweets, handleLike, handleUnLike } = useLike({ dataItems: tweet ? [tweet] : [] });
 
   useEffect(() => {
+    const abortController = new AbortController();
     const fetchTweets = async () => {
-      const data = await getATweet(id);
-
+      const data = await getATweet({ id, signal: abortController.signal });
       if (data) {
         setTweet(data);
       }
     }
     fetchTweets();
+    return () => {
+      abortController.abort()
+    }
   }, [id]);
 
   useEffect(() => {

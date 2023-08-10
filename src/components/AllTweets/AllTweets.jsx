@@ -12,13 +12,17 @@ const AllTweets = ({ userId, newTweet }) => {
 
 
     useEffect(() => {
+        const abortController = new AbortController();
         const fetchTweets = async () => {
-            const data = await getAllTweets();
+            const data = await getAllTweets(abortController.signal);
             if (data) {
                 setAllTweets(data);
             }
         }
         fetchTweets();
+        return () => {
+            abortController.abort()
+        }
     }, [userId, newTweet, updateTag]);
 
 

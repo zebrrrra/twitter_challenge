@@ -26,7 +26,7 @@ const useLike = ({ dataItems, currentUserId, setUpdateTag }) => {
     const response = await postLike(id);
     if (id !== currentUserId) {
       if (response && response.status === 'success') {
-        const updatedTweet = await getATweet(id);
+        const updatedTweet = await getATweet({ id });
         if (updatedTweet) {
           setLikeTweets((currentItems) => currentItems.map((item) =>
 
@@ -42,15 +42,13 @@ const useLike = ({ dataItems, currentUserId, setUpdateTag }) => {
         }
       }
     }
-
-
   }
 
   const handleUnLike = async (id) => {
     const response = await postUnLike(id);
     if (id !== currentUserId) {
       if (response && response.status === 'success') {
-        const updatedTweet = await getATweet(id);
+        const updatedTweet = await getATweet({ id });
         if (updatedTweet) {
           setLikeTweets((currentItems) => currentItems.map((item) =>
             item.Tweet

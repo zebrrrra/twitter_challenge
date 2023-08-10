@@ -39,8 +39,9 @@ const ReplyMainInTest = () => {
 
   // 載入時取得一推文
   useEffect(() => {
+    const abortController = new AbortController();
     const fetchATweet = async () => {
-      const data = await getATweet(tweetId);
+      const data = await getATweet({ id: tweetId, signal: abortController.signal });
       if (data) {
         const {
           description,
@@ -63,6 +64,9 @@ const ReplyMainInTest = () => {
       }
     }
     fetchATweet();
+    return () => {
+      abortController.abort()
+    }
   }, [tweetId, updateTag, newReply])//當推文id改變時重新拉一次
 
 

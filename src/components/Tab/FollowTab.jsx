@@ -18,16 +18,17 @@ const FollowTab = ({ userId, loginUserId }) => {
 
   //LIST切換
   useEffect(() => {
+    const abortController = new AbortController();
     const fetchFollowersAndFollowings = async () => {
-      const followingData = await getUserFollowings(userId);
-      const followerData = await getUserFollowers(userId);
+      const followingData = await getUserFollowings({ id: userId, signal: abortController.signal });
+      const followerData = await getUserFollowers({ id: userId, signal: abortController.signal });
       if (followingData) {
         setFollowingUsers(followingData.map(user => ({
           ...user.Following,
           isCurrentUserFollowed: user.Following.isCurrentUserFollowed === 'true'
         })));
       }
-    
+
       if (followerData) {
         setFollowerUsers(followerData.map(user => ({
           ...user.Follower,
@@ -35,8 +36,11 @@ const FollowTab = ({ userId, loginUserId }) => {
         })));
       }
     }
-    
+
     fetchFollowersAndFollowings();
+    return () => {
+      abortController.abort()
+    }
   }, [userId, updateTag]);
 
   useEffect(() => {
@@ -58,7 +62,7 @@ const FollowTab = ({ userId, loginUserId }) => {
     setActiveTab(tabName);
     switch (tabName) {
       case "追隨者":
-        navigate(`/${userId}/followers` );
+        navigate(`/${userId}/followers`);
         break;
       case "正在追隨":
         navigate(`/${userId}/followings`);
@@ -71,11 +75,11 @@ const FollowTab = ({ userId, loginUserId }) => {
 
   const FollowingList = () => {
     const users = Array.isArray(followingUsers) ? followingUsers : Array.from(followingUsers);
-    
+
     if (users.length === 0) {
       return <div className={style.noFollow}>這邊還沒有人...</div>;
     }
-    
+
     return (
       users.map(user => (
         <FollowCard
@@ -88,14 +92,14 @@ const FollowTab = ({ userId, loginUserId }) => {
       ))
     );
   };
-  
+
   const FollowersList = () => {
     const users = Array.isArray(followerUsers) ? followerUsers : Array.from(followerUsers);
-    
+
     if (users.length === 0) {
       return <div className={style.noFollow}>這邊還沒有人...</div>;
     }
-    
+
     return (
       users.map(user => (
         <FollowCard
@@ -111,13 +115,13 @@ const FollowTab = ({ userId, loginUserId }) => {
   return (
     <div>
       <div className={style.tabContainer}>
-        <div 
+        <div
           className={`${style.tab} ${activeTab === "追隨者" ? style.active : ""}`}
           onClick={() => handleClick("追隨者")}
         >
           追隨者
         </div>
-        <div 
+        <div
           className={`${style.tab} ${activeTab === "正在追隨" ? style.active : ""}`}
           onClick={() => handleClick("正在追隨")}
         >

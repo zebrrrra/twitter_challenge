@@ -5,8 +5,7 @@ import { AuthInput, ChatNavbars } from '../../components';
 import Swal from 'sweetalert2';
 import { useAuth } from '../../context/AuthContext';
 import useTweet from '../../hooks/TweetHook';
-import { putUserSetting } from '../../apis/user';
-import { getUser } from '../../apis/user';
+import { putUserSetting, getUser } from '../../apis/user';
 
 const SettingPage = () => {
   const [userData, setUserData] = useState({ account: '', name: '', email: '', password: '', checkPassword: '' })

@@ -18,13 +18,17 @@ const LikeList = ({ userId }) => {
     });
 
     useEffect(() => {
+        const abortController = new AbortController();
         const fetchLikes = async () => {
-            const data = await getUserLike(userId);
+            const data = await getUserLike({ id: userId, signal: abortController.signal });
             if (data) {
                 setLikes(data);
             }
         }
         fetchLikes();
+        return () => {
+            abortController.abort()
+        }
     }, [userId, updateTag]);
 
 

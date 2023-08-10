@@ -1,39 +1,6 @@
 import axios from 'axios';
+import { instance } from './instance';
 const baseUrl = 'https://twitter-ac-team-d93c31406834.herokuapp.com/api';
-export const instance = axios.create({
-  baseURL: 'https://twitter-ac-team-d93c31406834.herokuapp.com/api',
-  timeout: 3000,
-  // signal: new AbortController().signal,
-});
-
-instance.interceptors.request.use(
-  function (config) {
-    const token = localStorage.getItem('token')
-    if (token) {
-      config.headers['Authorization'] = `Bearer ${token}`;
-    }
-    return config;
-  },
-  function (error) {
-    return Promise.reject(error);
-  }
-);
-
-instance.interceptors.response.use(
-  function (response) {
-    return response.data
-  },
-  function (error) {
-    if (error.response) {
-      return error.response.data
-    }
-    if (!window.navigator.onLine) {
-      alert("網路出了點問題，請重新連線後重整網頁");
-      return;
-    }
-    return Promise.reject(error);
-  }
-);
 
 export const login = async ({ account, password }) => {
   try {
@@ -44,7 +11,6 @@ export const login = async ({ account, password }) => {
     return err.response.data
   }
 }
-
 
 // 放公共
 export const register = async ({ account, name, password, email, checkPassword }) => {
@@ -58,13 +24,9 @@ export const register = async ({ account, name, password, email, checkPassword }
 }
 
 export const adminLogin = async ({ account, password }) => {
-
   try {
     const response = await axios.post(`${baseUrl}/admin/login`, { account, password })
-
     return response.data
-    // 若要加上身份篩選data.data.user.role取得字串搭配{data}
-
   } catch (err) {
     return err.response.data
   }
@@ -102,15 +64,19 @@ export const putUserProfile = async ({ id, name, avatar, cover, introduction }) 
         'Content-Type': 'multipart/form-data',
       },
     });
-    return { success: true, message: response.data.message }
+    if (response.data.status === 'success') {
+      return { success: true }
+    }
   } catch (err) {
-    return { success: false, message: err.response.data.message }
+    console.log(err)
+    return { success: false }
   }
 }
 
 export const getUser = async ({ id, signal }) => {
+  const config = signal ? { signal } : {};
   try {
-    const response = await instance.get(`/users/${id}`, { signal });
+    const response = await instance.get(`/users/${id}`, config);
     return response
   } catch (error) {
     console.log(error)
@@ -118,100 +84,61 @@ export const getUser = async ({ id, signal }) => {
 };
 
 //GET /api/users/:id/tweets 看見某使用者發過的推文
-export const getUserTweets = async (id) => {
-
-  const token = localStorage.getItem('token');
+export const getUserTweets = async ({ id, signal }) => {
   try {
-    const response = await axios.get(`${baseUrl}/users/${id}/tweets`, {
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
-    });
-    return response.data;
+    const response = await instance.get(`/users/${id}/tweets`, { signal });
+    return response;
   } catch (error) {
     console.error('Error:cannot get user tweet', error);
   }
 };
 
 //GET /api/users/:id/replied_tweets 看見某使用者發過回覆的推文
-export const getUserRepliedTweets = async (id) => {
-  const token = localStorage.getItem('token');
+export const getUserRepliedTweets = async ({ id, signal }) => {
   try {
-    const response = await axios.get(`${baseUrl}/users/${id}/replied_tweets`, {
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
-    });
-    return response.data;
+    const response = await instance.get(`/users/${id}/replied_tweets`, { signal });
+    return response;
   } catch (error) {
     console.error('Error:cannot get user replied tweet', error);
   }
 };
 
 //GET /api/users/:id/likes 看見某使用者點過的 Like
-export const getUserLike = async (id) => {
-
-  const token = localStorage.getItem('token');
+export const getUserLike = async ({ id, signal }) => {
   try {
-    const response = await axios.get(`${baseUrl}/users/${id}/likes`, {
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
-    });
-    return response.data;
+    const response = await instance.get(`/users/${id}/likes`, { signal });
+    return response
   } catch (error) {
     console.error('Error:cannot get user likes', error);
   }
 };
-//GET /api/users/:id/followings 看見某使用者所有跟隨中的人
 
-export const getUserFollowings = async (id) => {
-  const token = localStorage.getItem('token');
+export const getUserFollowings = async ({ id, signal }) => {
   try {
-    const response = await axios.get(`${baseUrl}/users/${id}/followings`, {
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
-    });
-    return response.data;
+    const response = await instance.get(`/users/${id}/followings`, { signal });
+    return response
   } catch (error) {
     console.error('Error: cannnot get user followings', error);
   }
 };
-//GET /api/users/:id/followers 看見某使用者的所有跟隨者
-export const getUserFollowers = async (id) => {
-  const token = localStorage.getItem('token');
-  try {
-    const response = await axios.get(`${baseUrl}/users/${id}/followers`, {
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
-    });
-    return response.data;
 
+//GET /api/users/:id/followers 看見某使用者的所有跟隨者
+export const getUserFollowers = async ({ id, signal }) => {
+  try {
+    const response = await instance.get(`/users/${id}/followers`, { signal });
+    return response
   } catch (error) {
     console.error('Error: cannnot get user followers', error)
   }
 };
 
-//PUT /api/users/:id 編輯自己setting頁的資料 ( name, introduction, account, eamil, password )
-//PUT /api/users/:id/profile 編輯自己Profile頁的資料 ( name, introduction, avatar, cover )
 //GET /api/users/topFollowers 回傳 10 位最多followers的user
-
-export const getTopFollowers = async () => {
-
-  const token = localStorage.getItem('token');
+export const getTopFollowers = async (signal) => {
   try {
-    const response = await axios.get(`${baseUrl}/users/topFollowers`, {
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
-    });
-    return response.data;
+    const response = await instance.get(`/users/topFollowers`, { signal });
+    return response
   } catch (error) {
     console.error('Error:cannot get top followers', error);
   }
 };
-
-
 

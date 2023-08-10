@@ -29,8 +29,7 @@ const UserInfo = ({ userId }) => {
   useEffect(() => {
     const fetchUser = async () => {
       if (userId) {
-        // FIXME mount時沒有data回來
-        const data = await getUser({ id: userId, signal: abortController.signal });
+        const data = await getUser({ id: userId });
         setUserData(data);
       }
     };
