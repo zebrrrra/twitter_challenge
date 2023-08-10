@@ -41,13 +41,14 @@ const ChatPrivateText = ({ roomId }) => {
               <img className={style.avatar} src={item.targetUser.avatar} alt={item.targetUser.name} />
               <div className={style.userInfo}>
                 <div className={style.userTime}>
-
+                <div className={style.nameGroup}>
                   <div className={style.name}>{item.targetUser.name}</div>
                   <div className={style.userName}>@{item.targetUser.account}</div>
+                  </div>
                   <div className={style.time}>{formatDate}</div>
                 </div>
                 <div className={style.message}>{item.message.slice(0, 50)}</div>
-                <div> {item.unreadMessageCounts}</div>
+                {/*<div> {item.unreadMessageCounts}</div>*/}
               </div>
             </div>
           );
