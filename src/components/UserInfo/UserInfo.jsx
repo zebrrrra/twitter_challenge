@@ -14,25 +14,26 @@ const UserInfo = ({ userId }) => {
   const [currentData, setCurrentData] = useState(null)
   const { updateTag, setUpdateTag } = useUpdateTag();
 
+
   const { account, avatar, cover, name, introduction, followersCount, followingsCount } = currentData || {};
 
   // 點按鈕的
-  const handleOpenClick = async () => {
+  const handleOpenClick = () => {
     setOpenModal(true)
-
-    // 發送api載入自己的資料
-    const userData = await getUsers(userId)
-    setCurrentData(userData)
   }
 
   useEffect(() => {
+    const controller = new AbortController();
     const fetchData = async () => {
       if (userId) {
-        const userData = await getUsers(userId);
+        const userData = await getUsers({ id: userId, signal: controller.signal });
         setCurrentData(userData);
       }
     };
     fetchData();
+    return () => {
+      controller.abort()
+    }
   }, [userId, openModal, setUpdateTag]);
 
 

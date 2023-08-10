@@ -80,8 +80,10 @@ const SettingPage = () => {
   }
 
   useEffect(() => {
+    const controller = new AbortController();
+
     const fetchCurrentUserData = async () => {
-      const data = await getUsers(currentUserId)
+      const data = await getUsers({ id: currentUserId, signal: controller.signal })
       if (data) {
         const { account, email, name } = data
         setAccount(account)
@@ -90,6 +92,9 @@ const SettingPage = () => {
       }
     }
     fetchCurrentUserData()
+    return () => {
+      controller.abort()
+    }
   }, [currentUserId])
 
   const authInputCollection = [

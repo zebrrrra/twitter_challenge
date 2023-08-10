@@ -18,6 +18,25 @@ const TweetModal = ({ open, onClose, onTweetSubmit }) => {
     if (Array.from(tweetText).length > 0) {
       onClose(false)
     }
+
+
+    const { status } = await postTweets(tweetText)
+    if (status === 'success') {
+      Swal.fire({
+        title: '內容成功提交',
+        icon: 'success',
+        showConfirmButton: false,
+        timer: 3000,
+        position: 'top',
+      });
+
+      if (typeof onTweetSubmit === 'function') {
+        onTweetSubmit(tweetText)
+      }
+      onClose(false)
+      setTweetText('');
+    }
+
   }
 
   if (!open) return
@@ -50,4 +69,6 @@ const TweetModal = ({ open, onClose, onTweetSubmit }) => {
     </div>
   );
 }
+
 export default TweetModal
+

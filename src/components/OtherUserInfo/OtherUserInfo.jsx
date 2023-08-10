@@ -66,12 +66,21 @@ const OtherUserInfo = ({ userId, isSubscribed }) => {
   }, [socket]);
 
   useEffect(() => {
+    const controller = new AbortController();
+
     const fetchData = async () => {
-      const userData = await getUsers(userId);
+      const userData = await getUsers({ id: userId, signal: controller.signal });
       setCurrentData(userData);
     };
     fetchData();
+
   }, [userId, updateTag]);
+
+    return () => {
+      controller.abort()
+    }
+  }, [userId, openModal, updateTag]);
+
 
 
   return (
