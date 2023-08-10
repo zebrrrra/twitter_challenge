@@ -6,11 +6,18 @@ import Navbars from "./Navbars/Navbars";
 import MainPost from "./MainPost/MainPost";
 import AllTweets from "./AllTweets/AllTweets";
 import RecommendList from "./RecommendList/RecommendList";
+import FollowRecommendList from "./FollowRecommendList/FollowRecommendList";
+import FollowTab from "./Tab/FollowTab";
+import Main from "./Main/Main";
 import OtherUserInfo from "./OtherUserInfo/OtherUserInfo";
+import OtherMain from "./OtherMain/OtherMain";
 import MainTweet from "./MainTweet/MainTweet.module.css"
 import ReplyMainInTest from "./ReplyMainInTest/ReplyMainInTest";
-import ChatNavbar from './ChatNavbar/ChatNavbars'
+import ChatNavbars from './ChatNavbar/ChatNavbars'
 import ChatRoom from "./ChatRoom/ChatRoom";
+import ChatUser from "./ChatUser/ChatUser";
+import ChatPrivateText from "./ChatPrivateText/ChatPrivateText";
+import NoticeCard from "./NoticeCard/NoticeCard";
 
-export { AuthInput, UserInfo, TweetModal, Header, Navbars, MainPost, AllTweets, RecommendList, OtherUserInfo, MainTweet, ReplyMainInTest, ChatNavbar, ChatRoom }
+export { AuthInput, UserInfo, TweetModal, Header, Navbars, MainPost, AllTweets, RecommendList, FollowRecommendList, FollowTab, Main, OtherUserInfo, OtherMain, MainTweet, ReplyMainInTest, ChatNavbars, ChatRoom, ChatUser, ChatPrivateText, NoticeCard }
 

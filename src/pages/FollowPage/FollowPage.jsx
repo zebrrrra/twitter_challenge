@@ -1,13 +1,11 @@
-import { Navbars } from '../../components';
-import FollowRecommendList from '../../components/FollowRecommendList/FollowRecommendList';
-import FollowTab from '../../components/Tab/FollowTab';
-import Headers from '../../components/Headers/Headers';
+import style from './FollowPage.module.scss';
+import { Header, ChatNavbars, FollowTab, FollowRecommendList } from '../../components';
 import { useAuth } from '../../context/AuthContext';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import style from './FollowPage.module.scss';
 import { getUsers } from '../../apis/user';
 import { UpdateTagProvider } from '../../context/UpdateTagContext';
+import useTweet from '../../hooks/TweetHook';
 
 const FollowPage = () => {
   //網址用戶的id
@@ -16,6 +14,8 @@ const FollowPage = () => {
   const { user, isAuthenticated } = useAuth();
   const navigate = useNavigate();
   const [profileUser, setProfileUser] = useState(null);
+  const { handTweetSubmit } = useTweet()
+
 
   //const [isCurrentFollowed, setIsCurrentFollowed] = useState(false);
 
@@ -41,10 +41,10 @@ const FollowPage = () => {
     <div className={style.followContainer}>
       <div className={style.homeColumn}>
         <div className={style.leftColumn}>
-          <Navbars userId={id} />
+          <ChatNavbars onTweetSubmit={handTweetSubmit} />
         </div>
         <div className={style.middleColumn}>
-          <Headers userId={profileUser && profileUser.id} />
+          <Header userId={profileUser && profileUser.id} />
           <FollowTab userId={id} loginUserId={user && user.id} />
         </div>
         <div className={style.rightColumn}>

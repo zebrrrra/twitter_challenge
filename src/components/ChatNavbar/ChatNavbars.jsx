@@ -15,6 +15,9 @@ import isInfoIcon from '../../assets/icons/isProfile.svg'
 import chatIcon from '../../assets/icons/message.svg';
 import isChatIcon from '../../assets/icons/isMessage.svg';
 import GroupIcon from '../../assets/icons/Group.svg';
+import isNoticeIcon from '../../assets/icons/isNotice.svg'
+import NoticeIcon from '../../assets/icons/Notice.svg'
+
 //chat
 import { useAuth } from '../../context/AuthContext';
 import { useChatUnRead } from '../../context/ChatUnreadContext';
@@ -54,7 +57,6 @@ const ChatNavbars = ({ onTweetSubmit }) => {
     }
   }
 
-
   return (
     <>
       <div className={style.navbarContainer}>
@@ -69,6 +71,15 @@ const ChatNavbars = ({ onTweetSubmit }) => {
               <span>首頁</span>
             </div>
           </Link>
+          <Link to="/notice">
+            <div
+              className={`${style.NavbarItem} ${location.pathname === '/notice' ? style.active : ''}`}
+              onClick={() => handleTabClick('notice')}>
+              <img className={style.NavbarPng}
+                src={isIconClicked === '/notice' ? isNoticeIcon : NoticeIcon} alt="notice" />
+              <span>通知</span>
+            </div>
+          </Link>
           <Link to="/chat">
             <div
               className={`${style.NavbarItem} ${location.pathname === '/chat' ? style.active : ''}`}
@@ -80,6 +91,7 @@ const ChatNavbars = ({ onTweetSubmit }) => {
               <span>公開聊天室</span>
             </div>
           </Link>
+          {/* FIXME 當no chatUser& no chatUnRead.messages時，roomId是undefined*/}
           <Link to={roomId ? `/chat/${roomId}` : `/chat/${chatUnRead?.messages[0]?.roomId}`}>
             <div
               className={`${style.NavbarItem} ${location.pathname === `/chat/${roomId}` ? style.active : ''}`}
@@ -116,7 +128,7 @@ const ChatNavbars = ({ onTweetSubmit }) => {
           </Link>
           <button className={style.NavbarButton} onClick={handlebuttonClick}>推文</button>
         </div>
-        {openModal && <TweetModal open={openModal} onClose={() => setOpenModal(false)} onTweetSubmit={onTweetSubmit} />}
+        {openModal && <TweetModal open={openModal} onClose={(res) => setOpenModal(res)} onTweetSubmit={onTweetSubmit} />}
         <div className={style.logout} onClick={handleLogout}><img className={style.NavbarPng} src={LogoutIcon} alt="logout" />登出</div>
       </div>
 

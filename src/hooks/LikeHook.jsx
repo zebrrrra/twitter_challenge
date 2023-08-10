@@ -2,10 +2,12 @@ import { useState, useEffect } from 'react';
 import { postLike, postUnLike } from '../apis/like';
 import { getATweet } from '../apis/tweet';
 import { useUpdateTag } from '../context/UpdateTagContext';
+import { useChat } from '../context/ChatContext';
 
 const useLike = ({ dataItems, currentUserId, setUpdateTag }) => {
   const [likeTweets, setLikeTweets] = useState(Array.isArray(dataItems) ? dataItems : [dataItems]);
   const { updateTag } = useUpdateTag();
+  const {socket} =useChat();
 
   useEffect(() => {
     setLikeTweets(Array.isArray(dataItems) ? dataItems : [dataItems]);
@@ -39,6 +41,9 @@ const useLike = ({ dataItems, currentUserId, setUpdateTag }) => {
                 : item
           ));
           setUpdateTag(!updateTag);
+          if (socket?.connected) {
+            socket.emit('client-push-notice', 'like', id);
+          }
         }
       }
     }

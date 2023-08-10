@@ -10,10 +10,7 @@ const ChatInput = ({ onSelfSend, roomId }) => {
   const handleSend = (e) => {
     e.preventDefault();
     const time = new Date()
-    if (roomId === 4) {
-      socket.emit('client-message', text, time)
-    }
-    socket.emit('client-message', text, time, roomId)
+    socket.emit('client-message', text, time)
     console.log('At ChatInput', roomId)
     onSelfSend(text, time)
     setText('')

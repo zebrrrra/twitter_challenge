@@ -1,10 +1,10 @@
 import * as jwt from 'jsonwebtoken';
-import { io } from 'socket.io-client';
 import { login } from '../apis/user'
 import { useAuth } from "../context/AuthContext";
+import { socket } from '../apis/socket';
 
 const useLogin = () => {
-  const { setPayload, setIsAuthenticated, setSocket } = useAuth();
+  const { setPayload, setIsAuthenticated } = useAuth();
 
   const handleLogin = async (data) => {
     const result = await login(
@@ -19,13 +19,12 @@ const useLogin = () => {
       setPayload(tempPayload);
       setIsAuthenticated(true);
       localStorage.setItem('token', token);
-      //socket.io連線傳遞account
-      const newSocket = io("https://twitter-ac-team-d93c31406834.herokuapp.com");
-      newSocket.on('connect', () => {
-        console.log('connect to: login success')
-        setSocket(newSocket);
-        newSocket.emit('client-join', tempPayload.id);
+      //socket.io手動連線
+      socket.connect()
+      socket.on('connect', () => {
+        console.log('connect to: login success', socket.connected)
       })
+      socket.emit('client-join', tempPayload.id);
 
       return {
         success: true, message: result.message, role: result.data.user.role

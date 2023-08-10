@@ -1,16 +1,14 @@
 import style from './ChatPage.module.scss';
 import { useAuth } from '../../context/AuthContext';
-import { ChatNavbar, ChatRoom } from '../../components';
+import { ChatNavbars, ChatRoom, ChatUser } from '../../components';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import ChatUser from '../../components/ChatUser/ChatUser';
-
-
+import useTweet from '../../hooks/TweetHook';
 const ChatPage = () => {
-
   const { isAuthenticated } = useAuth();
-
+  const { handTweetSubmit } = useTweet()
   const navigate = useNavigate();
+
   useEffect(() => {
     if (!isAuthenticated) {
       navigate('/login');
@@ -21,7 +19,7 @@ const ChatPage = () => {
     <div className={style.homeContainer}>
       <div className={style.homeColumn}>
         <div className={style.leftColumn}>
-          <ChatNavbar />
+          <ChatNavbars onTweetSubmit={handTweetSubmit} />
         </div>
         <div className={style.middleColumn}>
           <ChatUser />

@@ -1,24 +1,42 @@
-import RecommendList from '../../components/RecommendList/RecommendList';
-import Navbar from '../../components/Navbars/Navbars';
-import Header from '../../components/Headers/Headers';
-import Main from '../../components/Main/Main';
 import style from './OtherProfilePage.module.scss'
-import { useAuth } from '../../context/AuthContext'
+import { useEffect, useState } from 'react';
+import { RecommendList } from '../../components';
+import { ChatNavbars } from '../../components';
+import { Header } from '../../components';
+import { OtherMain } from '../../components';
 import { useParams } from 'react-router-dom';
-import OtherMain from '../../components/OtherMain/OtherMain';
+import { useChat } from '../../context/ChatContext';
+import useTweet from '../../hooks/TweetHook';
+
 const OtherProfilePage = () => {
-  const { user } = useAuth()
   const { id } = useParams();  // 從 URL 參數中取得 userId
-  const userId = id || user.id;  // 如果 URL 參數中有 userId，就使用它，否則使用當前用戶的 ID 
+  const socket = useChat()
+  const { handTweetSubmit } = useTweet()
+  const [isSubscribed, setIsSubscribed] = useState(false)
+
+  useEffect(() => {
+    const handleSubscribe = (res) => {
+      console.log(res)
+      if (res.length === 0) return
+      const existed = res.some(item => item['User.id'] === Number(id))
+      setIsSubscribed(existed)
+    }
+    socket.emit('client-get-subscribe')
+    socket.on('server-get-subscribe', handleSubscribe)
+    return () => {
+      socket.off('server-get-subscribe', handleSubscribe)
+    }
+  }, [id])
+
   return (
     <div className={style.profileContainer}>
       <div className={style.homeColumn}>
         <div className={style.leftColumn}>
-          <Navbar />
+          <ChatNavbars onTweetSubmit={handTweetSubmit} />
         </div>
         <div className={style.middleColumn}>
-          <Header userId={userId} />
-          <OtherMain userId={userId} />
+          <Header userId={id} />
+          <OtherMain userId={id} isSubscribed={isSubscribed} />
         </div>
         <div className={style.rightColumn}>
           <RecommendList />
