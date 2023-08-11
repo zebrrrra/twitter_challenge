@@ -32,19 +32,34 @@ const useInstantMessage = (roomId) => {
     };
   }, [socket]);
 
+  // 處理enter public
+  useEffect(() => {
+    if (roomId === 4) {
+      socket.emit('client-enter-room', 'public');
+      socket.on('server-enter-room', (res) => console.log(res));
+    }
+
+    return () => {
+      setMessage([])
+      socket.off('server-enter-room', (res) => console.log(res));
+    }
+  }, [roomId])
+
+  // 處理update-room
   useEffect(() => {
     const handleEnterMessage = (res) => {
       console.log(res)
-      setMessage((prevState) =>
-        [...prevState, { isChat: false, message: res.message }]);
-    }
-    if (roomId === 4) {
-      console.log('public')
-      socket.emit('client-enter-room', 'public');
+      setMessage((prevState) => {
+        const isDuplicate = prevState.some(({ message }) => message === res.message)
+        if (isDuplicate) {
+          return prevState
+        }
+        return [...prevState, { isChat: false, message: res.message }]
+      })
     }
     socket.on('server-update-room', handleEnterMessage)
+
     return () => {
-      setMessage([])
       socket.off('server-update-room', handleEnterMessage)
     }
   }, [socket, roomId])
