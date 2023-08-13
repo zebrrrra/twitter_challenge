@@ -22,10 +22,9 @@ const useNotice = () => {
     socket.emit('client-get-notice')
     socket.on('server-get-notice', handleServerNotice)
     return () => {
-      socket.emit('client-leave-room')
       socket.off('server-get-notice', handleServerNotice)
     }
-  }, [])
+  }, [socket])
   return { notice }
 }
 export default useNotice

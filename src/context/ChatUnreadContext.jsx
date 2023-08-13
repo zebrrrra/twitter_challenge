@@ -44,7 +44,6 @@ export function ChatUnReadProvider({ children }) {
       }
       return () => {
         // Clean up
-        socket.emit('client-leave-room')
         socket.off('server-enter-room', handleEnterRoom);
       };
     }
