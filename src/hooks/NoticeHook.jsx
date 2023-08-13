@@ -18,9 +18,9 @@ const useNotice = () => {
     setNotice(data)
   }
   useEffect(() => {
+    socket.on('server-get-notice', handleServerNotice)
     socket.emit('client-enter-room', 'notice')
     socket.emit('client-get-notice')
-    socket.on('server-get-notice', handleServerNotice)
     return () => {
       socket.off('server-get-notice', handleServerNotice)
     }
