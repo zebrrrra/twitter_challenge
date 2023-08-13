@@ -15,6 +15,7 @@ const NoticePage = () => {
         </div>
         <div className={style.middleColumn}>
           <Header />
+          {notice.length === 0 && <span>尚無任何通知</span>}
           {notice.map((n, index) => (<NoticeCard notice={n} key={index} />))}
         </div>
         <div className={style.rightColumn}>
