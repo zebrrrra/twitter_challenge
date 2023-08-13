@@ -12,12 +12,12 @@ export const postTweets = async (description) => { //新增推文內容
 };
 
 //GET /api/tweets 取得所有推文，包括推文作者
-export const getAllTweets = async (signal) => {
+export const getAllTweets = async () => {
   try {
-    const response = await instance.get(`/tweets`, { signal });
+    const response = await instance.get(`/tweets`);
     return response
   } catch (error) {
-    console.error('Error:cannot get all tweets', error);
+    throw error;
   }
 };
 
