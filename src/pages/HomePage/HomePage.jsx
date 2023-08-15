@@ -23,7 +23,7 @@ const HomePage = () => {
           <ChatNavbars onTweetSubmit={handTweetSubmit} />
         </div>
         <div className={style.middleColumn}>
-          <Header />
+          <Header userId={user?.id} />
           <MainPost user={user} onTweetSubmit={handTweetSubmit} />
           <AllTweets newTweet={newTweet} />
         </div>

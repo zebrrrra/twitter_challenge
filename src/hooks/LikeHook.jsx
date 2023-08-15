@@ -2,25 +2,16 @@ import { useState, useEffect } from 'react';
 import { postLike, postUnLike } from '../apis/like';
 import { getATweet } from '../apis/tweet';
 import { useUpdateTag } from '../context/UpdateTagContext';
+import { useGetATweetQuery } from './QueryHook';//TODO 預備使用query
 
 const useLike = ({ dataItems, currentUserId, setUpdateTag }) => {
   const [likeTweets, setLikeTweets] = useState(Array.isArray(dataItems) ? dataItems : [dataItems]);
   const { updateTag } = useUpdateTag();
 
+
   useEffect(() => {
     setLikeTweets(Array.isArray(dataItems) ? dataItems : [dataItems]);
   }, [dataItems, updateTag]);
-
-
-  const updateTweet = async (id) => {
-    const updatedTweet = await getATweet(id);
-    if (updatedTweet) {
-      setLikeTweets((currentItems) => currentItems.map((item) => item.Tweet.id === id
-        ? { ...item, Tweet: updatedTweet }
-        : item
-      ));
-    }
-  }
 
   const handleLike = async (id) => {
     const response = await postLike(id);
@@ -64,7 +55,7 @@ const useLike = ({ dataItems, currentUserId, setUpdateTag }) => {
       }
     }
   };
-  // 'likeTweetsat', likeTweets);
+
   return {
     likeTweets,
     handleLike,

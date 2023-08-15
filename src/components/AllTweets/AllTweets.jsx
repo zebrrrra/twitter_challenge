@@ -1,14 +1,14 @@
 import style from "./AllTweets.module.scss"
 import Skeleton from 'react-loading-skeleton'
 import TweetCard from '../TweetCard/TweetCard';
-import { getAllTweets } from '../../apis/tweet';
+// import { getAllTweets } from '../../apis/tweet';
 import useLike from '../../hooks/LikeHook';
 import { useUpdateTag } from '../../context/UpdateTagContext';
-import { useQuery } from "@tanstack/react-query"
+import { useGetAllTweetsQuery } from "../../hooks/QueryHook";
 
 const AllTweets = ({ newTweet }) => {
     const { updateTag, setUpdateTag } = useUpdateTag();
-    const { data, isLoading } = useQuery({ queryKey: ['allTweet', { newTweet, updateTag }], queryFn: getAllTweets, refetchOnWindowFocus: false })
+    const { data, isLoading } = useGetAllTweetsQuery(newTweet, updateTag)
     const { likeTweets: updateLikes, handleLike, handleUnLike } = useLike({ dataItems: data, setUpdateTag });
 
     if (isLoading) {

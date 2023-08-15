@@ -1,19 +1,22 @@
 import style from "./OtherUserInfo.module.scss"
 import { Link } from "react-router-dom"
 import { useState, useEffect } from "react"
-import { getUser } from "../../apis/user"
+// import { getUser } from "../../apis/user"
 import { ReactComponent as BellOpen } from "../../assets/icon/btn_notfi打開.svg"
 import { ReactComponent as BellClose } from "../../assets/icon/btn_notfi關閉.svg"
 import email from "../../assets/icon/email.svg"
 import { useUpdateTag } from '../../context/UpdateTagContext';
 import useFollow from "../../hooks/FollowHook";
 import { useChat } from "../../context/ChatContext"
-
+import { useGetUserQuery } from "../../hooks/QueryHook"
+import Skeleton from "react-loading-skeleton"
 const OtherUserInfo = ({ userId, isSubscribed }) => {
-  const [userData, setUserData] = useState(null)
+  // const [userData, setUserData] = useState(null)
   const [isToggle, setIsToggle] = useState(false)
   const { updateTag, setUpdateTag } = useUpdateTag();
-  const { id, account, avatar, cover, name, introduction, followersCount, followingsCount, isCurrentUserFollowed } = userData || {}
+  const { data, isLoading } = useGetUserQuery(userId, updateTag)
+
+  const { id, account, avatar, cover, name, introduction, followersCount, followingsCount, isCurrentUserFollowed } = data || {}
   const { handleFollow, handleUnFollow } = useFollow(null, setUpdateTag);
   const socket = useChat()
 
@@ -50,17 +53,20 @@ const OtherUserInfo = ({ userId, isSubscribed }) => {
     };
   }, [socket]);
 
-  useEffect(() => {
-    const abortController = new AbortController();
-    const fetchUser = async () => {
-      const data = await getUser({ id: userId, signal: abortController.signal });
-      setUserData(data);
-    };
-    fetchUser();
-    return () => {
-      abortController.abort()
-    }
-  }, [userId, updateTag]);
+  // useEffect(() => {
+  //   const abortController = new AbortController();
+  //   const fetchUser = async () => {
+  //     const data = await getUser({ id: userId, signal: abortController.signal });
+  //     setUserData(data);
+  //   };
+  //   fetchUser();
+  //   return () => {
+  //     abortController.abort()
+  //   }
+  // }, [userId, updateTag]);
+  if (isLoading) {
+    return <Skeleton className={style.skeleton} />
+  }
 
   return (
     <div className={style.container}>

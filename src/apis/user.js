@@ -35,15 +35,9 @@ export const adminLogin = async ({ account, password }) => {
 export const putUserSetting = async ({ id, account, name, email, password, checkPassword }) => {
   try {
     const response = await instance.put(`/users/${id}`, { account, name, email, password, checkPassword })
-    if (response.status === 'success') {
-      return { success: true, message: response.message }
-    } else {
-      return {
-        success: false, message: response.message
-      }
-    }
+    return response
   } catch (error) {
-    console.log(error)
+    throw error
   }
 }
 
@@ -62,14 +56,11 @@ export const putUserProfile = async ({ id, name, avatar, cover, introduction }) 
       headers: {
         Authorization: `Bearer ${token}`,
         'Content-Type': 'multipart/form-data',
-      },
-    });
-    if (response.data.status === 'success') {
-      return { success: true }
-    }
-  } catch (err) {
-    console.log(err)
-    return { success: false }
+      }
+    })
+    return response
+  } catch (error) {
+    throw error
   }
 }
 
@@ -79,7 +70,7 @@ export const getUser = async ({ id, signal }) => {
     const response = await instance.get(`/users/${id}`, config);
     return response
   } catch (error) {
-    console.log(error)
+    throw error
   }
 };
 
@@ -90,6 +81,7 @@ export const getUserTweets = async ({ id, signal }) => {
     return response;
   } catch (error) {
     console.error('Error:cannot get user tweet', error);
+    throw error;
   }
 };
 
@@ -100,6 +92,7 @@ export const getUserRepliedTweets = async ({ id, signal }) => {
     return response;
   } catch (error) {
     console.error('Error:cannot get user replied tweet', error);
+    throw error;
   }
 };
 
@@ -110,6 +103,7 @@ export const getUserLike = async ({ id, signal }) => {
     return response
   } catch (error) {
     console.error('Error:cannot get user likes', error);
+    throw error
   }
 };
 
@@ -119,6 +113,7 @@ export const getUserFollowings = async ({ id, signal }) => {
     return response
   } catch (error) {
     console.error('Error: cannnot get user followings', error);
+    throw error;
   }
 };
 
@@ -129,16 +124,17 @@ export const getUserFollowers = async ({ id, signal }) => {
     return response
   } catch (error) {
     console.error('Error: cannnot get user followers', error)
+    throw error
   }
 };
 
 //GET /api/users/topFollowers 回傳 10 位最多followers的user
-export const getTopFollowers = async (signal) => {
+export const getTopFollowers = async () => {
   try {
-    const response = await instance.get(`/users/topFollowers`, { signal });
+    const response = await instance.get(`/users/topFollowers`);
     return response
   } catch (error) {
-    console.error('Error:cannot get top followers', error);
+    throw error
   }
 };
 

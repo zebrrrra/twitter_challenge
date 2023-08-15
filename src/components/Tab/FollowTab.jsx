@@ -1,4 +1,3 @@
-// 在FollowTab.js中
 import { useState, useEffect } from 'react';
 import { useNavigate, useLocation, Routes, Route } from 'react-router-dom';
 import { getUserFollowings, getUserFollowers } from '../../apis/user';
@@ -6,6 +5,7 @@ import FollowCard from '../FollowCard/FollowCard';
 import useFollow from '../../hooks/FollowHook';
 import style from './Tab.module.scss';
 import { useUpdateTag } from '../../context/UpdateTagContext';
+// import { useGetUserFollowersQuery, useGetUserFollowingsQuery } from '../../hooks/QueryHook';
 
 const FollowTab = ({ userId, loginUserId }) => {
   const navigate = useNavigate();
@@ -15,6 +15,9 @@ const FollowTab = ({ userId, loginUserId }) => {
   const [followerUsers, setFollowerUsers] = useState([]);
   const { updateTag, setUpdateTag } = useUpdateTag();
   const { handleFollow, handleUnFollow } = useFollow(loginUserId, setFollowingUsers, setFollowerUsers, setUpdateTag);
+  //query預備用
+  // const followersResult = useGetUserFollowersQuery(userId, updateTag) 
+  // const followeringsResult = useGetUserFollowingsQuery(userId, updateTag)
 
   //LIST切換
   useEffect(() => {

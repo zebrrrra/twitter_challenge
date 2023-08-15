@@ -2,35 +2,20 @@ import style from './Headers.module.scss';
 import { useLocation } from 'react-router-dom';
 import LeftIcon from '../../assets/icons/back.svg';
 import { useNavigate } from 'react-router';
-import { useEffect, useState } from 'react';
-import { getUser } from '../../apis/user';
+import { useGetUserQuery } from '../../hooks/QueryHook';
+import Skeleton from 'react-loading-skeleton';
 
-const Header = ({ userId, setCurrentSection }) => {
-    const [tweetCount, setTweetCount] = useState(0);
-    const [name, setName] = useState('');
+const Header = ({ userId }) => {
     const navigate = useNavigate();
     const location = useLocation();
-
+    const { data, isLoading } = useGetUserQuery(userId)
     const handleClickSection = () => {
         navigate(-1);
     }
 
-    useEffect(() => {
-        const abortController = new AbortController();
-        const fetchUser = async () => {
-            if (userId) {
-                const user = await getUser({ id: userId, signal: abortController.signal });
-                if (user) {
-                    setTweetCount(user.tweetsCount);  // 更新 tweetCount
-                    setName(user.name);  // 更新 name
-                }
-            }
-        };
-        fetchUser();
-        return () => {
-            abortController.abort()
-        }
-    }, [userId]);
+    if (isLoading) {
+        return <Skeleton className={style.skeleton} />
+    }
 
     let headerContext = "";
     const path = location.pathname;
@@ -44,16 +29,16 @@ const Header = ({ userId, setCurrentSection }) => {
             <><div className={style.imgContainer}>
                 <img src={LeftIcon} alt="left" onClick={handleClickSection} /></div>
                 <div className={style.contentContainer}>
-                    <span className={style.name}>{name}</span>
-                    <div className={style.tweetCount}>{tweetCount} 推文</div></div>
+                    <span className={style.name}>{data.name}</span>
+                    <div className={style.tweetCount}>{data.tweetsCount} 推文</div></div>
             </>;
     } else if (path.includes('/otherProfile')) {
         headerContext =
             <><div className={style.imgContainer}>
                 <img src={LeftIcon} alt="left" onClick={handleClickSection} /></div>
                 <div className={style.contentContainer}>
-                    <span className={style.name}>{name}</span>
-                    <div className={style.tweetCount}>{tweetCount} 推文</div></div>
+                    <span className={style.name}>{data.name}</span>
+                    <div className={style.tweetCount}>{data.tweetsCount} 推文</div></div>
             </>;
     }
     else if (path.includes(`/tweets/:tweetId`)) {

@@ -75,3 +75,7 @@
   }
 
 }
+
+.skeleton {
+  composes: skeleton from "../UserInfo/UserInfo.module.scss"
+}

@@ -2,9 +2,7 @@ import style from './FollowPage.module.scss';
 import { Header, ChatNavbars, FollowTab, FollowRecommendList } from '../../components';
 import { useAuth } from '../../context/AuthContext';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useEffect, useState } from 'react';
-import { getUser } from '../../apis/user';
-import { UpdateTagProvider } from '../../context/UpdateTagContext';
+import { useEffect } from 'react';
 import useTweet from '../../hooks/TweetHook';
 
 const FollowPage = () => {
@@ -13,30 +11,13 @@ const FollowPage = () => {
   //登入用戶 
   const { user, isAuthenticated } = useAuth();
   const navigate = useNavigate();
-  const [profileUser, setProfileUser] = useState(null);
   const { handTweetSubmit } = useTweet()
 
-
-  //const [isCurrentFollowed, setIsCurrentFollowed] = useState(false);
-
-
-  //const [isCurrentFollowed, setIsCurrentFollowed] = useState(false);
-
   useEffect(() => {
-    const abortController = new AbortController();
     if (!isAuthenticated) {
       navigate('/login');
     }
-
-    const fetchUser = async () => {
-      const userData = await getUser({ id, signal: abortController.signal });
-      setProfileUser(userData);
-    };
-    fetchUser();
-    return () => {
-      abortController.abort()
-    }
-  }, [navigate, isAuthenticated, id]);
+  }, [navigate, isAuthenticated]);
 
   //整個頁面的follow方法
 
@@ -48,7 +29,7 @@ const FollowPage = () => {
           <ChatNavbars onTweetSubmit={handTweetSubmit} />
         </div>
         <div className={style.middleColumn}>
-          <Header userId={profileUser && profileUser.id} />
+          <Header userId={id} />
           <FollowTab userId={id} loginUserId={user && user.id} />
         </div>
         <div className={style.rightColumn}>

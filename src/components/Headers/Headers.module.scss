@@ -27,6 +27,7 @@
   justify-content: flex-start;
   text-align: left;
   margin-left: 16px;
+
   .name {
     @include fontStyle(18, 700);
   }
@@ -44,4 +45,8 @@
   padding-top: 24px;
   padding-bottom: 24px;
   padding-left: 16px;
+}
+
+.skeleton {
+  height: 74px;
 }

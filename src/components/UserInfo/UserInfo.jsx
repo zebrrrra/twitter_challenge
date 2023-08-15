@@ -1,43 +1,37 @@
-//UserInfo.jsx
-import avatar from "../../assets/icons/editAvatar.svg"
-import cover from "../../assets/icons/background.svg"
 import style from "./UserInfo.module.scss"
 import { Link } from "react-router-dom"
 import EditModal from "../EditModal/EditModal"
-import { useState, useEffect } from "react"
-import { getUser } from "../../apis/user"
-import { useAuth } from "../../context/AuthContext"
+import { useState } from "react"
 import { useUpdateTag } from '../../context/UpdateTagContext';
+import { useGetUserQuery } from "../../hooks/QueryHook"
+import Skeleton from "react-loading-skeleton"
 
 const UserInfo = ({ userId }) => {
   const [openModal, setOpenModal] = useState(false);
-  const [userData, setUserData] = useState(null)
   const { updateTag, setUpdateTag } = useUpdateTag();
-
-  const { account, avatar, cover, name, introduction, followersCount, followingsCount } = userData || {};
-  const abortController = new AbortController();
+  const { data, isLoading } = useGetUserQuery(userId, openModal)
+  const { account, avatar, cover, name, introduction, followersCount, followingsCount } = data || {};
 
   // 點按鈕的
   const handleOpenClick = async () => {
     setOpenModal(true)
-
-    // 發送api載入自己的資料
-    const data = await getUser({ id: userId, signal: abortController.signal })
-    setUserData(data)
   }
 
-  useEffect(() => {
-    const fetchUser = async () => {
-      if (userId) {
-        const data = await getUser({ id: userId });
-        setUserData(data);
-      }
-    };
-    fetchUser();
-    return () => {
-      abortController.abort()
-    }
-  }, [userId, openModal, setUpdateTag]);
+  if (isLoading) {
+    return <Skeleton className={style.skeleton} />
+  }
+  // useEffect(() => {
+  //   const fetchUser = async () => {
+  //     if (userId) {
+  //       const data = await getUser({ id: userId });
+  //       setUserData(data);
+  //     }
+  //   };
+  //   fetchUser();
+  //   return () => {
+  //     abortController.abort()
+  //   }
+  // }, [userId, openModal, setUpdateTag]);
 
 
   return (
@@ -60,11 +54,9 @@ const UserInfo = ({ userId }) => {
           <Link to={`/${userId}/followers`} className={style.link}>{followersCount}個<span>跟隨者</span></Link>
         </div>
       </div>
-      {openModal && <EditModal open={openModal} onClose={(value) => setOpenModal(value)} userId={userId} userData={userData} />}
+      {openModal && <EditModal open={openModal} onClose={(value) => setOpenModal(value)} userId={userId} userData={data} />}
     </div >
-
   )
-
 }
 
 export default UserInfo

@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import style from './TweetCard.module.scss';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useAuth } from '../../context/AuthContext';
 
 
@@ -56,49 +56,36 @@ const TweetCard = ({ User, tweet, onLike, onUnLike }) => {
         navigate(`/tweets/${tweetId}`);
     }
 
-    const {
-        User: { name, account, avatar } = {},
-        description,
-        repliesCount,
-        likesCount,
-        createdAt,
-        isCurrentUserLiked,
-    } = tweet;
-
-
     return (
         <>
             <div className={style.tweetCardContainer}>
                 <div className={style.tweetCard} onClick={() => handleReplyPageClick(tweet.id)}>
-                    <img src={avatar} className={style.avatar} onClick={(event) => handleAvatarClick(event, tweet.User.id)} alt="avatar" />
+                    <img src={tweet?.User?.avatar} className={style.avatar} onClick={(event) => handleAvatarClick(event, tweet.User.id)} alt="avatar" />
                     <div className={style.contentContainer}>
                         <div className={style.nameAndUserId}>
-                            <span className={style.name}>{name}</span>
-                            <span className={style.userIdTime}>@{account}・{getTime(createdAt)}</span>
+                            <span className={style.name}>{tweet?.User.name}</span>
+                            <span className={style.userIdTime}>@{tweet?.User.account}・{getTime(tweet?.createdAt)}</span>
                         </div>
                         <div className={style.tweet}>
-                            {description}
+                            {tweet?.description}
                         </div>
                         <div className={style.countContainer}>
                             <div className={style.count}>
-                                <Reply className={style.replyIcon} onClick={handleModalClick} />{repliesCount}</div>
+                                <Reply className={style.replyIcon} onClick={handleModalClick} />{tweet?.repliesCount}</div>
                             <div className={style.count}>
-                                {isCurrentUserLiked ?
+                                {tweet?.isCurrentUserLiked ?
                                     <IsLikeIcon className={style.isLikeIcon} onClick={handleButtonClick} />
                                     :
                                     <LikeIcon className={style.likeIcon} onClick={handleButtonClick} />
                                 }
-                                {likesCount}</div>
+                                {tweet?.likesCount}</div>
                         </div>
                     </div>
-
                 </div>
-
             </div>
             {openModal && <ReplyModal open={openModal} onClose={(value) => setOpenModal(value)} User={User} tweet={tweet} tweetId={tweet.id} currentUserAvatar={currentUserAvatar} />}
         </>
     );
-
 }
 
 export default TweetCard
