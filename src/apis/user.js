@@ -11,22 +11,12 @@ export const login = async ({ account, password }) => {
   }
 }
 
-// 放公共
 export const register = async ({ account, name, password, email, checkPassword }) => {
   try {
     const response = await axios.post(`${baseUrl}/users`, { account, name, password, email, checkPassword })
     return response.data
   } catch (error) {
     return error.response.data
-  }
-}
-
-export const adminLogin = async ({ account, password }) => {
-  try {
-    const response = await axios.post(`${baseUrl}/admin/login`, { account, password })
-    return response.data
-  } catch (err) {
-    return err.response.data
   }
 }
 

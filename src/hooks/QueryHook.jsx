@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query"
 import { getUser, getUserLike, getUserRepliedTweets, getUserFollowers, getUserFollowings, getUserTweets } from '../apis/user'
 import { getAllTweets, getATweetReply, getATweet } from '../apis/tweet'
-
+import { getAdminUsers, getAdminAllTweets } from "../apis/admin"
 // getTopFollowersQuery暫時寫在RecommendList.jsx
 
 // AllTweets.jsx
@@ -58,6 +58,18 @@ export const useGetUserFollowingsQuery = (id, ...state) => {
 // TweetList.jsx(有updateTag)
 export const useGetUserTweetsQuery = (id, ...state) => {
   const { data, isLoading } = useQuery({ queryKey: ['getUserTweets', { id, ...state }], queryFn: ({ queryKey, signal }) => getUserTweets({ id: queryKey[1].id, signal }), refetchOnWindowFocus: false })
+
+  return { data, isLoading }
+}
+// AdminUserList.jsx
+export const useGetAdminUserQuery = (id) => {
+  const { data, isLoading } = useQuery({ queryKey: ['getAdminUsers', id], queryFn: ({ signal }) => getAdminUsers({ signal }), refetchOnWindowFocus: false })
+
+  return { data, isLoading }
+}
+// AdminAllTweet.jsx
+export const useGetAdminAllTweetsQuery = (state) => {
+  const { data, isLoading } = useQuery({ queryKey: ['getAdminAllTweets', state], queryFn: ({ signal }) => getAdminAllTweets({ signal }), refetchOnWindowFocus: false })
 
   return { data, isLoading }
 }

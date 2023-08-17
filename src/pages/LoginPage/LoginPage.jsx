@@ -4,7 +4,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { AuthInput } from '../../components'
 import { useAuth } from '../../context/AuthContext';
 import { useState, useEffect } from 'react'
-import useLogin from '../../hooks/LoginHook';
+import { useLogin } from '../../hooks/LoginHook';
 import { socket } from '../../apis/socket';
 import { ClipLoader } from 'react-spinners';
 

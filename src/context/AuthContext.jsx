@@ -1,6 +1,5 @@
 //import { async } from 'q';
 import { createContext, useState } from 'react';
-import { adminLogin } from '../apis/user';
 import * as jwt from 'jsonwebtoken';
 import { useLocation } from 'react-router-dom';
 import { useContext, useEffect } from 'react';
@@ -81,31 +80,6 @@ export const AuthProvider = ({ children }) => {
                     setIsAuthenticated(false);
                 }
             },
-
-            adminLogin: async (data) => {
-                const result = await adminLogin(
-                    {
-                        account: data.account,
-                        password: data.password,
-                    })
-                if (result.status === 'success') {
-                    const { token } = result.data;
-                    const tempPayload = jwt.decode(token);
-                    setPayload(tempPayload);
-                    setIsAuthenticated(true);
-                    localStorage.setItem('token', token);
-                    return {
-                        success: true, message: result.message, role: result.data.user.role
-                    }
-                } else {
-                    setPayload(null);
-                    setIsAuthenticated(false);
-                    return {
-                        success: false, message: result.message
-                    }
-                }
-
-            }
         }}>
             {children}
         </AuthContext.Provider >
