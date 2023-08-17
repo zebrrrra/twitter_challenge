@@ -1,14 +1,15 @@
 import style from './MainPost.module.scss';
 import { useNavigate } from 'react-router-dom';
 import useTweet from '../../hooks/TweetHook';
+import ClipLoader from "react-spinners/ClipLoader";
 
 const MainPost = ({ user, onTweetSubmit }) => {
   const navigate = useNavigate();
   const userAvatar = localStorage.getItem('avatar') ? localStorage.getItem('avatar') : user?.avatar
-  const { tweetSubmit, message, tweetText, setTweetText } = useTweet(onTweetSubmit)
+  const { mutation, message, tweetText, setTweetText } = useTweet(onTweetSubmit)
 
   const handleSubmit = () => {
-    tweetSubmit()
+    mutation.mutate()
   }
 
   const handleAvatarClick = (userId) => {
@@ -18,20 +19,28 @@ const MainPost = ({ user, onTweetSubmit }) => {
   if (!user) {
     return null;//可以改成加載loading
   }
+  const override = {
+    position: 'absolute',
+    top: '115px'
+  };
+
   return (
-    <div className={style.mainPostContainer} >
-      <img className={style.avatar} src={userAvatar} onClick={() => handleAvatarClick(user.id)} alt="avatar" />
-      <div className={style.tweetArea}>
-        <textarea className={style.tweetText}
-          type="text"
-          placeholder="有什麼新鮮事？"
-          value={tweetText}
-          onChange={(e) => setTweetText(e.target.value)}
-        />
-        <small className={style.small}>{message}</small>
+    <>
+      <ClipLoader color='#cccccc' loading={mutation.isLoading} cssOverride={override} />
+      <div className={`${style.mainPostContainer} ${mutation.isLoading && `${style.isLoading}`}`} >
+        <img className={style.avatar} src={userAvatar} onClick={() => handleAvatarClick(user.id)} alt="avatar" />
+        <div className={style.tweetArea}>
+          <textarea className={style.tweetText}
+            type="text"
+            placeholder="有什麼新鮮事？"
+            value={tweetText}
+            onChange={(e) => setTweetText(e.target.value)}
+          />
+          <small className={style.small}>{message}</small>
+        </div>
+        <button className={style.tweetButton} onClick={handleSubmit} disabled={mutation.isLoading}>推文</button>
       </div>
-      <button className={style.tweetButton} onClick={handleSubmit}>推文</button>
-    </div>
+    </>
   )
 }
 

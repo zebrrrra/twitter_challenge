@@ -1,6 +1,6 @@
 import { useContext, createContext, useState, useEffect } from 'react';
-import { useAuth } from './AuthContext';
 import { useParams } from 'react-router-dom';
+import { socket } from '../apis/socket';
 
 export const ChatUnReadContext = createContext();
 export const useChatUnRead = () => useContext(ChatUnReadContext);
@@ -9,7 +9,6 @@ export function ChatUnReadProvider({ children }) {
   const [chatMessages, setChatMessages] = useState({});
   // BUG 公開聊天室和私人聊天室互相切換頁面，roomId都是undefined
   const { roomId } = useParams()
-  const { socket } = useAuth();
 
   useEffect(() => {
     if (socket) {

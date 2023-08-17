@@ -6,8 +6,7 @@ export const postTweets = async (description) => { //新增推文內容
     const response = await instance.post(`/tweets`, { description });
     return response
   } catch (error) {
-    console.error('Error:cannot post tweet', error);
-    return null;
+    throw error
   }
 };
 
@@ -22,13 +21,12 @@ export const getAllTweets = async ({ signal }) => {
 };
 
 //POST /api/tweets/:tweetId/replies 使用者在推文中新增一條回覆
-export const postATweetReply = async ({ tweetId, comment }) => {
+export const postATweetReply = async ({ id, comment }) => {
   try {
-    const response = await instance.post(`/tweets/${tweetId}/replies`, { comment });
-    return { success: true, message: response.message }
+    const response = await instance.post(`/tweets/${id}/replies`, { comment });
+    return response
   } catch (error) {
-    console.error('Error:cannot get a tweet', error);
-    return { success: false, message: error.message }
+    throw error
   }
 };
 
@@ -38,7 +36,6 @@ export const getATweetReply = async ({ id, signal }) => {
     const response = await instance.get(`/tweets/${id}/replies`, { signal });
     return response
   } catch (error) {
-    console.error('Error:cannot get a tweet', error);
     throw error
   }
 };
@@ -50,7 +47,6 @@ export const getATweet = async ({ id, signal }) => {
     const response = await instance.get(`/tweets/${id}`, config);
     return response
   } catch (error) {
-    console.error('Error:cannot get a tweet', error);
     throw error
   }
 };

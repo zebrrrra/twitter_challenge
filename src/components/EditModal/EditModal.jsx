@@ -9,6 +9,7 @@ import { putUserProfile } from "../../apis/user"
 import Swal from "sweetalert2"
 import { useUpdateTag } from '../../context/UpdateTagContext';
 import { useMutation } from "@tanstack/react-query"
+import { ClipLoader } from 'react-spinners';
 
 const EditModal = ({ open, onClose, userId, userData }) => {
   const { avatar, cover, name, introduction } = userData
@@ -58,7 +59,7 @@ const EditModal = ({ open, onClose, userId, userData }) => {
           timer: 2000,
           position: 'top',
         });
-        return
+        throw new Error('內容不可空白')
       }
       if (editName.length > 50 || editIntroduction.length > 160) {
         Swal.fire({
@@ -68,7 +69,7 @@ const EditModal = ({ open, onClose, userId, userData }) => {
           timer: 2000,
           position: 'top',
         });
-        return
+        throw new Error('字數超出上限')
       }
       return putUserProfile({ id: userId, name: editName, avatar: editAvatar, cover: editCover, introduction: editIntroduction })
     },
@@ -101,62 +102,67 @@ const EditModal = ({ open, onClose, userId, userData }) => {
     }
   })
 
+  const override = {
+    position: 'absolute',
+    bottom: '50%',
+    left: '50%',
+    translate: '-25%',
+  };
+
   if (!open) return;
   return (
-    <>
-      {mutation.isLoading ? <span>轉圈中</span> : (
-        <div className={style.grayBackground}>
-          <div className={style.container}>
-            <header className={style.header}>
-              <div className={style.leftContainer}>
-                <button onClick={() => onClose(false)}>
-                  <Close className={style.closeButton} />
-                  <Back className={style.backButton} />
-                </button>
-                <h5 className="title">編輯個人資料</h5>
-              </div>
-              <button className={style.saveButton} onClick={mutation.mutate}> 儲存 </button>
-            </header>
-
-            <label htmlFor="coverUpload" className={style.bgContainer}>
-              {preViewCover ? (
-                <img src={preViewCover} alt="Preview" />
-              ) : (
-                <img src={editCover} alt="cover" />
-              )}
-              <Upload className={style.upload} />
-              <Fork className={style.fork} />
-            </label>
-            <input type="file"
-              id="coverUpload"
-              style={{ display: 'none' }}
-              accept="image/*"
-              onChange={handleCoverUpload}
-            />
-
-            <label htmlFor="Avatarupload" className={style.avatarContainer}>
-              {preViewAvatar ? (
-                <img src={preViewAvatar} alt="Preview" className={style.avatar} />
-              ) : (
-                <img src={editAvatar} alt="avatar" className={style.avatar} />
-              )}
-              <Upload className={style.upload} />
-            </label>
-            <input type="file"
-              id="Avatarupload"
-              style={{ display: 'none' }}
-              accept="image/*"
-              onChange={handleAvatarUpload}
-            />
-            <div className={style.inputContainer}>
-              <AuthInput value={editName} label="名稱" id="username" type="text" placeholder="請輸入使用者名稱" maxLength={50} onChange={(nameValue) => setEditName(nameValue)} />
-
-              <AuthInput value={editIntroduction} label="自我介紹" id="introduction" type="text" placeholder="請輸入自我介紹" maxLength={160} height={147} onChange={(introductionValue) => setEditIntroduction(introductionValue)} />
-            </div>
+    <div className={style.grayBackground}>
+      <div className={`${style.container} ${mutation.isLoading && `${style.isLoading}`}`}>
+        <header className={style.header}>
+          <div className={style.leftContainer}>
+            <button onClick={() => onClose(false)} disabled={mutation.isLoading}>
+              <Close className={style.closeButton} />
+              <Back className={style.backButton} />
+            </button>
+            <h5 className="title">編輯個人資料</h5>
           </div>
+          <button className={style.saveButton} onClick={mutation.mutate} disabled={mutation.isLoading}> 儲存 </button>
+        </header>
+
+        <label htmlFor="coverUpload" className={style.bgContainer}>
+          {preViewCover ? (
+            <img src={preViewCover} alt="Preview" />
+          ) : (
+            <img src={editCover} alt="cover" />
+          )}
+          <Upload className={style.upload} />
+          <Fork className={style.fork} />
+        </label>
+        <input type="file"
+          id="coverUpload"
+          style={{ display: 'none' }}
+          accept="image/*"
+          onChange={handleCoverUpload}
+          disabled={mutation.isLoading}
+        />
+
+        <label htmlFor="Avatarupload" className={style.avatarContainer}>
+          {preViewAvatar ? (
+            <img src={preViewAvatar} alt="Preview" className={style.avatar} />
+          ) : (
+            <img src={editAvatar} alt="avatar" className={style.avatar} />
+          )}
+          <Upload className={style.upload} />
+        </label>
+        <input type="file"
+          id="Avatarupload"
+          style={{ display: 'none' }}
+          accept="image/*"
+          onChange={handleAvatarUpload}
+          disabled={mutation.isLoading}
+        />
+        <div className={style.inputContainer}>
+          <ClipLoader size={60} color='#cccccc' loading={mutation.isLoading} cssOverride={override} />
+          <AuthInput value={editName} label="名稱" id="username" type="text" placeholder="請輸入使用者名稱" maxLength={50} onChange={(nameValue) => setEditName(nameValue)} disabled={mutation.isLoading} />
+          <AuthInput value={editIntroduction} label="自我介紹" id="introduction" type="text" placeholder="請輸入自我介紹" maxLength={160} height={147} onChange={(introductionValue) => setEditIntroduction(introductionValue)} disabled={mutation.isLoading} />
         </div>
-      )}
-    </>
+      </div>
+    </div>
   )
 }
 export default EditModal

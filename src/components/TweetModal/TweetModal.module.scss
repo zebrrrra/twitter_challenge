@@ -26,6 +26,10 @@
   border-radius: 14px;
 }
 
+.isLoading {
+  filter: contrast(.6),
+}
+
 .buttonContainer {
   width: 100%;
   height: 56px;

@@ -4,12 +4,8 @@ import style from "./ReplyModal.module.scss"
 import { ReactComponent as Line } from "../../assets/icons/line.svg"
 import { useAuth } from "../../context/AuthContext"
 import { useState } from "react"
-import Swal from "sweetalert2"
-import { postATweetReply } from "../../apis/tweet"
-import { useLocation } from 'react-router-dom';
-import { useUpdateTag } from '../../context/UpdateTagContext';
-import { useChat } from '../../context/ChatContext';
-
+import useReply from '../../hooks/ReplyHook';
+import { ClipLoader } from 'react-spinners';
 dayjs.extend(relativeTime);
 dayjs.locale('zh-tw');
 function getTime(createdAt) {
@@ -26,73 +22,28 @@ function getTime(createdAt) {
 const ReplyModal = ({
   onClose, open, tweetId, tweet, onReplySubmit }) => {
   const [comment, setComment] = useState('')
-  const [message, setMessage] = useState('')
   const { user } = useAuth()
-  const location = useLocation()
-  const { setUpdateTag } = useUpdateTag();
-  const socket = useChat()
-  if (!open) return
-  const isReplyPage = location.pathname === `/tweets/${tweetId}`
-
-
   const userAvatar = localStorage.getItem('avatar') ? localStorage.getItem('avatar') : user.avatar
-
   const { description, createdAt, User } = tweet || {}
   const { account, avatar, name } = User || {}
-
+  const { mutation, message } = useReply({ id: tweetId, comment, tweetOwnerId: User.id, onReplySubmit, onClose })
   const isError = !comment.trim() || comment.length > 140
-  const handleReplyClick = async () => {
-    if (!comment.trim()) {
-      Swal.fire({
-        title: '內容不可空白',
-        icon: 'error',
-        showConfirmButton: false,
-        timer: 2000,
-        position: 'top',
-      });
-      setMessage('內容不可空白')
-      return
-    }
-    if (comment.length > 140) {
-      Swal.fire({
-        title: '內容超出上限',
-        icon: 'error',
-        showConfirmButton: false,
-        timer: 2000,
-        position: 'top',
-      });
-      setMessage('內容不可超過140字')
-      return
-    }
+  const override = {
+    position: 'absolute',
+    top: '45%',
+    left: '45%',
+  };
 
-    const { success } = await postATweetReply({ tweetId, comment })
-    if (success) {
-      setUpdateTag(prev => !prev);
-      Swal.fire({
-        title: '內容成功提交',
-        icon: 'success',
-        showConfirmButton: false,
-        timer: 3000,
-        position: 'top',
-      });
-
-      if (isReplyPage) {
-        onReplySubmit(comment)
-      }
-      socket.emit('client-push-notice', 'reply', User.id)
-      onClose(false)
-      return
-    }
-  }
-
+  if (!open) return
   return (
     <div className={style.background}>
-      <div className={style.container}>
+      <div className={`${style.container} ${mutation.isLoading && `${style.isLoading}`}`}>
         <div className={style.buttonContainer}>
           <button className={style.saveButton} onClick={() => onClose(false)}> X </button>
         </div>
 
         <div className={style.ContentContainer}>
+          <ClipLoader size={60} color='#cccccc' loading={mutation.isLoading} cssOverride={override} />
           <div className={style.leftContainer}>
             <div className={`${style.avatarContainer} ${style.top}`}>
               <img src={avatar} alt="推文者avatar" />
@@ -117,7 +68,7 @@ const ReplyModal = ({
                 placeholder="推你的回覆"></textarea>
               <div className={style.ReplyButtonContainer}>
                 {isError && <small>{message}</small>}
-                <button onClick={handleReplyClick}>回覆</button>
+                <button onClick={mutation.mutate} disabled={mutation.isLoading}>回覆</button>
               </div>
             </div>
           </div>

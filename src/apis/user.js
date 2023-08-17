@@ -7,7 +7,6 @@ export const login = async ({ account, password }) => {
     const response = await axios.post(`${baseUrl}/users/login`, { account, password })
     return response.data
   } catch (err) {
-    console.error('[Login Failed]:', err)
     return err.response.data
   }
 }
@@ -16,10 +15,9 @@ export const login = async ({ account, password }) => {
 export const register = async ({ account, name, password, email, checkPassword }) => {
   try {
     const response = await axios.post(`${baseUrl}/users`, { account, name, password, email, checkPassword })
-    // data)
     return response.data
-  } catch (err) {
-    return err.response.data
+  } catch (error) {
+    return error.response.data
   }
 }
 

@@ -1,9 +1,7 @@
-import { useQuery, useMutation } from "@tanstack/react-query"
-import { getUser, getUserLike, getUserRepliedTweets, getUserFollowers, getUserFollowings, getUserTweets, putUserSetting } from '../apis/user'
+import { useQuery } from "@tanstack/react-query"
+import { getUser, getUserLike, getUserRepliedTweets, getUserFollowers, getUserFollowings, getUserTweets } from '../apis/user'
 import { getAllTweets, getATweetReply, getATweet } from '../apis/tweet'
-import Swal from 'sweetalert2';
-import { useState } from "react";
-import { useNavigate } from 'react-router-dom';
+
 // getTopFollowersQuery暫時寫在RecommendList.jsx
 
 // AllTweets.jsx
@@ -62,65 +60,6 @@ export const useGetUserTweetsQuery = (id, ...state) => {
   const { data, isLoading } = useQuery({ queryKey: ['getUserTweets', { id, ...state }], queryFn: ({ queryKey, signal }) => getUserTweets({ id: queryKey[1].id, signal }), refetchOnWindowFocus: false })
 
   return { data, isLoading }
-}
-// SettingPage.jsx
-export const usePutSettingQuery = ({ id, user }) => {
-  const [responseError, setResponseError] = useState(false)
-  const [errorInfo, setErrorInfo] = useState('')
-  const navigate = useNavigate();
-
-  const mutation = useMutation({
-    mutationFn: (e) => {
-      e.preventDefault()
-      if (!user.account?.trim() || !user.password?.trim() || !user.name?.trim() || !user.checkPassword?.trim() || !user.email?.trim()) {
-        Swal.fire({
-          title: '內容不可空白',
-          icon: 'error',
-          showConfirmButton: false,
-          timer: 2000,
-          position: 'top',
-        });
-        return
-      }
-      return putUserSetting({
-        id: id,
-        account: user.account,
-        name: user.name,
-        email: user.email,
-        password: user.password,
-        checkPassword: user.checkPassword
-      })
-    },
-    onSuccess: async (data) => {
-      if (data.status === 'success') {
-        Swal.fire({
-          title: data.message,
-          icon: 'success',
-          showConfirmButton: false,
-          timer: 2000,
-          position: 'top',
-        });
-        setResponseError(false)
-        navigate(`/profile`)
-        return
-      } else {
-        Swal.fire({
-          title: data.message,
-          icon: 'error',
-          showConfirmButton: false,
-          timer: 2000,
-          position: 'top',
-        });
-        setResponseError(true)
-        setErrorInfo(data.message)
-        return
-      }
-    }
-  })
-
-  return {
-    mutation, responseError, errorInfo
-  }
 }
 
 

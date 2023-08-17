@@ -24,8 +24,12 @@
   background-color: $background-color;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
   border-radius: 14px;
-  word-wrap:break-word;
-  
+  word-wrap: break-word;
+
+}
+
+.isLoading {
+  composes: isLoading from "../TweetModal/TweetModal.module.scss";
 }
 
 .buttonContainer {
@@ -46,7 +50,7 @@
   width: 100%;
   display: flex;
   padding: 24px 16px 0;
-  
+
 
   .leftContainer {
     flex-basis: 82px;
@@ -108,7 +112,7 @@
         line-height: 26px;
         color: $main-text-color;
         text-align: left;
-        word-wrap:break-word;
+        word-wrap: break-word;
       }
 
       .hint {

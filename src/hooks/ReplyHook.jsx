@@ -1,21 +1,21 @@
+import Swal from "sweetalert2"
 import { useState } from "react"
-import Swal from 'sweetalert2';
-import { postTweets } from "../apis/tweet";
+import { postATweetReply } from "../apis/tweet";
+import { useMutation } from '@tanstack/react-query';
 import { useChat } from "../context/ChatContext";
-import { useMutation } from "@tanstack/react-query"
+import { useUpdateTag } from "../context/UpdateTagContext";
+import { useLocation } from "react-router-dom";
 
-const useTweet = (onTweetSubmit, onClose) => {
-  const [newTweet, setNewTweet] = useState(null)
-  const [tweetText, setTweetText] = useState('');
+export const useReply = ({ id, comment, tweetOwnerId, onReplySubmit, onClose }) => {
   const [message, setMessage] = useState('')
   const socket = useChat()
-  const handTweetSubmit = (newTweetValue) => {
-    setNewTweet(newTweetValue)
-  }
+  const { setUpdateTag } = useUpdateTag();
+  const location = useLocation()
+  const isReplyPage = location.pathname === `/tweets/${id}`
 
   const mutation = useMutation({
     mutationFn: async () => {
-      if (!tweetText.trim()) {
+      if (!comment.trim()) {
         Swal.fire({
           title: '內容不可空白',
           icon: 'error',
@@ -26,7 +26,7 @@ const useTweet = (onTweetSubmit, onClose) => {
         setMessage('內容不可空白')
         throw new Error('內容不可空白')
       }
-      if (tweetText.length > 140) {
+      if (comment.length > 140) {
         Swal.fire({
           title: '內容超出上限',
           icon: 'error',
@@ -37,26 +37,27 @@ const useTweet = (onTweetSubmit, onClose) => {
         setMessage('內容不可超過140字')
         throw new Error('內容不可超過140字')
       }
-      return await postTweets(tweetText)
+      return await postATweetReply({ id, comment })
     },
     onSuccess: (data) => {
-      socket.emit('client-push-notice', 'tweet')
       if (data.status === 'success') {
+        setUpdateTag(prev => !prev);
         Swal.fire({
           title: '內容成功提交',
           icon: 'success',
           showConfirmButton: false,
           timer: 3000,
           position: 'top',
-        })
-        onTweetSubmit(tweetText)
-        setTweetText('');
-        setMessage('')
-        onClose && onClose(false)
+        });
+        if (isReplyPage) {
+          onReplySubmit(comment)
+        }
+        socket.emit('client-push-notice', 'reply', tweetOwnerId)
+        onClose(false)
         return
       }
     }
   })
-  return { newTweet, handTweetSubmit, mutation, message, tweetText, setTweetText, }
+  return { mutation, message }
 }
-export default useTweet
+export default useReply

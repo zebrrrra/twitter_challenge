@@ -3,7 +3,6 @@ import useLike from '../../hooks/LikeHook';
 import { useUpdateTag } from '../../context/UpdateTagContext';
 import { useGetUserTweetsQuery } from '../../hooks/QueryHook';
 import Skeleton from 'react-loading-skeleton';
-
 const TweetList = ({ userId }) => {
     // const [tweets, setTweets] = useState([]);
     const { updateTag, setUpdateTag } = useUpdateTag();

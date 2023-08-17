@@ -7,7 +7,7 @@ export const postLike = async (tweetId) => {
     return response
   } catch (error) {
     console.error('Error:cannot post like', error);
-    return null;
+    throw error
   }
 };
 
@@ -18,6 +18,6 @@ export const postUnLike = async (tweetId) => {
     return response
   } catch (error) {
     console.error('Error:cannot post unlike', error);
-    return null;
+    throw error
   }
 };
