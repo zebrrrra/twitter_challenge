@@ -1,82 +1,48 @@
-import { useState, useEffect } from 'react';
 import { postLike, postUnLike } from '../apis/like';
-import { getATweet } from '../apis/tweet';
-import { useUpdateTag } from '../context/UpdateTagContext';
-import { useGetATweetQuery } from './QueryHook';//TODO 預備使用query
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useChat } from '../context/ChatContext';
 
-const useLike = ({ dataItems, currentUserId, setUpdateTag }) => {
-  const [likeTweets, setLikeTweets] = useState(Array.isArray(dataItems) ? dataItems : [dataItems]);
-  const { updateTag } = useUpdateTag();
-
-  useEffect(() => {
-    setLikeTweets(Array.isArray(dataItems) ? dataItems : [dataItems]);
-  }, [dataItems, updateTag]);
-
-  const handleLike = async (id) => {
-    const response = await postLike(id);
-    if (id !== currentUserId) {
-      if (response && response.status === 'success') {
-        const updatedTweet = await getATweet({ id });
-        if (updatedTweet) {
-          setLikeTweets((currentItems) => currentItems.map((item) =>
-
-            item.Tweet
-              ? item.Tweet.id === id
-                ? { ...item, Tweet: updatedTweet, isCurrentUserLiked: true }
-                : item
-              : item.id === id
-                ? { ...item, ...updatedTweet, isCurrentUserLiked: true }
-                : item
-          ));
-          setUpdateTag(!updateTag);
-        }
+export const useLike = ({ tweetId, userId }) => {
+  const queryClient = useQueryClient()
+  const socket = useChat()
+  const likeMutation = useMutation({
+    mutationFn: async () => {
+      return await postLike(tweetId);
+    },
+    onSuccess: (data) => {
+      if (data.status === 'success') {
+        queryClient.invalidateQueries(['getAllTweets']);
+        queryClient.invalidateQueries(['getUserTweets', { id: userId }]);
+        queryClient.invalidateQueries(['getUserLike', { id: userId }]);
+        socket.emit('client-push-notice', 'like', userId)
       }
+    },
+    onError: (error) => {
+      console.log(error)
     }
-  }
-
-  const handleUnLike = async (id) => {
-    const response = await postUnLike(id);
-    if (id !== currentUserId) {
-      if (response && response.status === 'success') {
-        const updatedTweet = await getATweet({ id });
-        if (updatedTweet) {
-          setLikeTweets((currentItems) => currentItems.map((item) =>
-            item.Tweet
-              ? item.Tweet.id === id
-                ? { ...item, Tweet: updatedTweet, isCurrentUserLiked: false }
-                : item
-              : item.id === id
-                ? { ...item, Tweet: updatedTweet, isCurrentUserLiked: false }
-                : item
-          ));
-          setUpdateTag(!updateTag);
-        }
-      }
-    }
-  };
+  })
 
   return {
-    likeTweets,
-    handleLike,
-    handleUnLike,
+    likeMutation
   };
 }
 
-export default useLike;
-
-export const useUnlike = ({ id }) => {
-  const mutation = useMutation({
+export const useUnlike = ({ tweetId, userId }) => {
+  const queryClient = useQueryClient()
+  const unlikeMutation = useMutation({
     mutationFn: async () => {
-      // 一些前處理...
-      return await postUnLike(id)//發請求
+      return await postUnLike(tweetId)
     },
-    // 處理回來的資料....
     onSuccess: (data) => {
       if (data.status === 'success') {
-        console.log(data)
+        queryClient.invalidateQueries(['getAllTweets']);
+        queryClient.invalidateQueries(['getUserTweets', { id: userId }]);
+        queryClient.invalidateQueries(['getUserLike', { id: userId }]);
       }
+    },
+    onError: (error) => {
+      console.log(error)
     }
   })
-  return { mutation }//使用：onSubmit={mutation.mutate}, mutation.isLoading回傳true or false來顯示UI
+  return { unlikeMutation }
 }

@@ -5,8 +5,8 @@ import { getAdminUsers, getAdminAllTweets } from "../apis/admin"
 // getTopFollowersQuery暫時寫在RecommendList.jsx
 
 // AllTweets.jsx
-export const useGetAllTweetsQuery = (...state) => {
-  const { data, isLoading } = useQuery({ queryKey: ['getAllTweet', { ...state }], queryFn: ({ signal }) => getAllTweets({ signal }), refetchOnWindowFocus: false })
+export const useGetAllTweetsQuery = () => {
+  const { data, isLoading } = useQuery({ queryKey: ['getAllTweets'], queryFn: ({ signal }) => getAllTweets({ signal }), refetchOnWindowFocus: false })
 
   return { data, isLoading }
 }
@@ -20,7 +20,7 @@ export const useGetUserQuery = (id, ...state) => {
 
 // likeList.jsx,
 export const useGetLikeQuery = (id, ...state) => {
-  const { data, isLoading } = useQuery({ queryKey: ['getLike', { id, ...state }], queryFn: ({ queryKey, signal }) => getUserLike({ id: queryKey[1].id, signal }), refetchOnWindowFocus: false })
+  const { data, isLoading } = useQuery({ queryKey: ['getUserLike', { id, ...state }], queryFn: ({ queryKey, signal }) => getUserLike({ id: queryKey[1].id, signal }), refetchOnWindowFocus: false })
 
   return { data, isLoading }
 }

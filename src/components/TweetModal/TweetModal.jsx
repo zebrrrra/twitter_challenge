@@ -5,9 +5,9 @@ import { ReactComponent as Back } from "../../assets/icons/back.svg";
 import useTweet from "../../hooks/TweetHook";
 import ClipLoader from "react-spinners/ClipLoader";
 
-const TweetModal = ({ open, onClose, onTweetSubmit }) => {
+const TweetModal = ({ open, onClose }) => {
   const { user } = useAuth();
-  const { mutation, message, tweetText, setTweetText } = useTweet(onTweetSubmit, onClose)
+  const { mutation, message, tweetText, setTweetText } = useTweet(onClose)
 
   const userAvatar = localStorage.getItem('avatar') ? localStorage.getItem('avatar') : user.avatar
 

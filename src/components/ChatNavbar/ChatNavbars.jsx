@@ -19,7 +19,7 @@ import GroupIcon from '../../assets/icons/Group.svg';
 import { useAuth } from '../../context/AuthContext';
 import { useChatUnRead } from '../../context/ChatUnreadContext';
 
-const ChatNavbars = ({ onTweetSubmit }) => {
+const ChatNavbars = () => {
   const [openModal, setOpenModal] = useState(false);
   const [activeTab, setActiveTab] = useState('');
   const [isIconClicked, setIconClicked] = useState(false);
@@ -116,7 +116,7 @@ const ChatNavbars = ({ onTweetSubmit }) => {
           </Link>
           <button className={style.NavbarButton} onClick={handlebuttonClick}>推文</button>
         </div>
-        {openModal && <TweetModal open={openModal} onClose={(res) => setOpenModal(res)} onTweetSubmit={onTweetSubmit} />}
+        {openModal && <TweetModal open={openModal} onClose={(res) => setOpenModal(res)} />}
         <div className={style.logout} onClick={handleLogout}><img className={style.NavbarPng} src={LogoutIcon} alt="logout" />登出</div>
       </div>
 

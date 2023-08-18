@@ -3,10 +3,10 @@ import { useNavigate } from 'react-router-dom';
 import useTweet from '../../hooks/TweetHook';
 import ClipLoader from "react-spinners/ClipLoader";
 
-const MainPost = ({ user, onTweetSubmit }) => {
+const MainPost = ({ user }) => {
   const navigate = useNavigate();
   const userAvatar = localStorage.getItem('avatar') ? localStorage.getItem('avatar') : user?.avatar
-  const { mutation, message, tweetText, setTweetText } = useTweet(onTweetSubmit)
+  const { mutation, message, tweetText, setTweetText } = useTweet()
 
   const handleSubmit = () => {
     mutation.mutate()

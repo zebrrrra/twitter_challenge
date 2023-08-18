@@ -1,28 +1,22 @@
 import style from "./AllTweets.module.scss"
 import Skeleton from 'react-loading-skeleton'
 import TweetCard from '../TweetCard/TweetCard';
-// import { getAllTweets } from '../../apis/tweet';
-import useLike from '../../hooks/LikeHook';
-import { useUpdateTag } from '../../context/UpdateTagContext';
 import { useGetAllTweetsQuery } from "../../hooks/QueryHook";
 
-const AllTweets = ({ newTweet }) => {
-    const { updateTag, setUpdateTag } = useUpdateTag();
-    const { data, isLoading } = useGetAllTweetsQuery(newTweet, updateTag)
-    const { likeTweets: updateLikes, handleLike, handleUnLike } = useLike({ dataItems: data, setUpdateTag });
+const AllTweets = () => {
+    const { data, isLoading } = useGetAllTweetsQuery()
 
     if (isLoading) {
         return <Skeleton count={10} className={style.skeleton} />
     }
-
-    return updateLikes ? updateLikes.map(alltweet => {
+    return !isLoading ? data.map(alltweet => {
         if (!alltweet?.User) {
             return null;
         }
         return <TweetCard key={alltweet.id}
             tweet={alltweet}
-            onLike={() => handleLike(alltweet.id)}
-            onUnLike={() => handleUnLike(alltweet.id)}
+            tweetId={alltweet.id}
+            userId={alltweet.UserId}
             type="alltweet" />
     }) : null;
 }

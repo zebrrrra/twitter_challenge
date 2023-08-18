@@ -7,7 +7,7 @@ import relativeTime from 'dayjs/plugin/relativeTime';
 import ReplyModal from "../ReplyModal/ReplyModal"
 import { useNavigate } from 'react-router-dom';
 import { useState } from "react";
-import { useAuth } from '../../context/AuthContext';
+import { useLike, useUnlike } from '../../hooks/LikeHook';
 
 dayjs.extend(relativeTime);
 dayjs.locale('zh-tw');
@@ -24,12 +24,11 @@ function getTime(createdAt) {
 
 
 
-const LikeCard = ({ User, like, onLike, onUnLike }) => {
+const LikeCard = ({ User, like, tweetId, userId }) => {
     const [openModal, setOpenModal] = useState(false)
     const [currentUserAvatar, setCurrentUserAvatar] = useState(null)
-
-    const { user } = useAuth()
-    const currentUserId = user && user.id
+    const { likeMutation } = useLike({ tweetId, userId })
+    const { unlikeMutation } = useUnlike({ tweetId, userId })
 
     const navigate = useNavigate();
 
@@ -38,14 +37,15 @@ const LikeCard = ({ User, like, onLike, onUnLike }) => {
         navigate(`/${tweetOwnerId}`);
     };
 
-    const handleButtonClick = (e) => {
+    const handleUnlike = (e) => {
         e.stopPropagation()
-        if (like.isCurrentUserLiked) {
-            onUnLike(like.id);
-        } else {
-            onLike(like.id);
-        }
-    };
+        unlikeMutation.mutate()
+    }
+    const handleLike = (e) => {
+        e.stopPropagation()
+        likeMutation.mutate()
+    }
+
     const handleModalClick = (e) => {
         e.stopPropagation();
         setOpenModal(true)
@@ -88,9 +88,9 @@ const LikeCard = ({ User, like, onLike, onUnLike }) => {
                                 <Reply className={style.replyIcon} onClick={handleModalClick} />{repliesCount}</div>
                             <div className={style.count}>
                                 {isCurrentUserLiked ?
-                                    <IsLikeIcon className={style.isLikeIcon} onClick={handleButtonClick} />
+                                    <IsLikeIcon className={style.isLikeIcon} onClick={handleUnlike} />
                                     :
-                                    <LikeIcon className={style.likeIcon} onClick={handleButtonClick} />
+                                    <LikeIcon className={style.likeIcon} onClick={handleLike} />
                                 }
                                 {likesCount}</div>
                         </div>

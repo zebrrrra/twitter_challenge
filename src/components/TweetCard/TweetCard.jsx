@@ -7,8 +7,7 @@ import style from './TweetCard.module.scss';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import { useState } from "react";
-import { useAuth } from '../../context/AuthContext';
-
+import { useLike, useUnlike } from '../../hooks/LikeHook';
 
 dayjs.extend(relativeTime);
 dayjs.locale('zh-tw');
@@ -24,12 +23,11 @@ function getTime(createdAt) {
 }
 
 
-const TweetCard = ({ User, tweet, onLike, onUnLike }) => {
+const TweetCard = ({ User, tweet, tweetId, userId }) => {
     const [openModal, setOpenModal] = useState(false)
     const [currentUserAvatar, setCurrentUserAvatar] = useState(null)
-    const { user } = useAuth()
-    const currentUserId = user && user.id
-
+    const { likeMutation } = useLike({ tweetId, userId })
+    const { unlikeMutation } = useUnlike({ tweetId, userId })
     const navigate = useNavigate();
 
     const handleAvatarClick = (event, tweetOwnerId) => {
@@ -37,14 +35,16 @@ const TweetCard = ({ User, tweet, onLike, onUnLike }) => {
         navigate(`/${tweetOwnerId}`);
     };
 
-    const handleButtonClick = (e) => {
+    const handleUnlike = (e) => {
         e.stopPropagation()
-        if (tweet.isCurrentUserLiked) {
-            onUnLike(tweet.id);
-        } else {
-            onLike(tweet.id);
-        }
-    };
+        unlikeMutation.mutate()
+    }
+
+    const handleLike = (e) => {
+        e.stopPropagation()
+        likeMutation.mutate()
+    }
+
 
     const handleModalClick = (e) => {
         e.stopPropagation();
@@ -52,14 +52,13 @@ const TweetCard = ({ User, tweet, onLike, onUnLike }) => {
     }
 
     const handleReplyPageClick = (tweetId) => {
-
         navigate(`/tweets/${tweetId}`);
     }
-
     return (
         <>
+            <span>{userId}</span>
             <div className={style.tweetCardContainer}>
-                <div className={style.tweetCard} onClick={() => handleReplyPageClick(tweet.id)}>
+                <div className={style.tweetCard} onClick={(e) => handleReplyPageClick(tweet.id, e)}>
                     <img src={tweet?.User?.avatar} className={style.avatar} onClick={(event) => handleAvatarClick(event, tweet.User.id)} alt="avatar" />
                     <div className={style.contentContainer}>
                         <div className={style.nameAndUserId}>
@@ -74,9 +73,9 @@ const TweetCard = ({ User, tweet, onLike, onUnLike }) => {
                                 <Reply className={style.replyIcon} onClick={handleModalClick} />{tweet?.repliesCount}</div>
                             <div className={style.count}>
                                 {tweet?.isCurrentUserLiked ?
-                                    <IsLikeIcon className={style.isLikeIcon} onClick={handleButtonClick} />
+                                    <IsLikeIcon className={style.isLikeIcon} onClick={handleUnlike} />
                                     :
-                                    <LikeIcon className={style.likeIcon} onClick={handleButtonClick} />
+                                    <LikeIcon className={style.likeIcon} onClick={handleLike} />
                                 }
                                 {tweet?.likesCount}</div>
                         </div>
