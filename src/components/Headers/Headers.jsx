@@ -8,12 +8,12 @@ import Skeleton from 'react-loading-skeleton';
 const Header = ({ userId }) => {
     const navigate = useNavigate();
     const location = useLocation();
-    const { data, isLoading } = useGetUserQuery(userId)
+    const { data, isLoading, isFetching } = useGetUserQuery(userId)
     const handleClickSection = () => {
         navigate(-1);
     }
 
-    if (isLoading) {
+    if (isLoading && isFetching) {
         return <Skeleton className={style.skeleton} />
     }
 

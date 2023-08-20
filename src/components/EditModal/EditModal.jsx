@@ -7,8 +7,7 @@ import { ReactComponent as Close } from "../../assets/icons/orangeClose.svg"
 import { ReactComponent as Back } from "../../assets/icons/back.svg"
 import { putUserProfile } from "../../apis/user"
 import Swal from "sweetalert2"
-import { useUpdateTag } from '../../context/UpdateTagContext';
-import { useMutation } from "@tanstack/react-query"
+import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { ClipLoader } from 'react-spinners';
 
 const EditModal = ({ open, onClose, userId, userData }) => {
@@ -21,8 +20,7 @@ const EditModal = ({ open, onClose, userId, userData }) => {
   // 給預覽用
   const [preViewAvatar, setPreViewAvatar] = useState('');
   const [preViewCover, setPreViewCover] = useState('');
-
-  const { setUpdateTag } = useUpdateTag();
+  const queryClient = useQueryClient()
 
   // 預覽
   const handleAvatarUpload = (e) => {
@@ -75,7 +73,8 @@ const EditModal = ({ open, onClose, userId, userData }) => {
     },
     onSuccess: (data) => {
       if (data.data.status === 'success') {
-        setUpdateTag(prev => !prev);
+        queryClient.invalidateQueries({ queryKey: ['getUser', { id: userId }] })
+        queryClient.invalidateQueries({ queryKey: ['getUserTweets', { id: userId }] })
         Swal.fire({
           title: '編輯成功',
           icon: 'success',

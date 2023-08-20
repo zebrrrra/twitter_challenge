@@ -14,7 +14,9 @@ const OtherUserInfo = ({ userId, isSubscribed }) => {
   // const [userData, setUserData] = useState(null)
   const [isToggle, setIsToggle] = useState(false)
   const { updateTag, setUpdateTag } = useUpdateTag();
-  const { data, isLoading } = useGetUserQuery(userId, updateTag)
+  const { data, isLoading } = useGetUserQuery(userId)
+  // const { data, isLoading } = useGetUserQuery(userId, updateTag)
+
 
   const { id, account, avatar, cover, name, introduction, followersCount, followingsCount, isCurrentUserFollowed } = data || {}
   const { handleFollow, handleUnFollow } = useFollow(null, setUpdateTag);

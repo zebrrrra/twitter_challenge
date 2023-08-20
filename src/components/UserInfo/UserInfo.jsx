@@ -2,14 +2,12 @@ import style from "./UserInfo.module.scss"
 import { Link } from "react-router-dom"
 import EditModal from "../EditModal/EditModal"
 import { useState } from "react"
-import { useUpdateTag } from '../../context/UpdateTagContext';
 import { useGetUserQuery } from "../../hooks/QueryHook"
 import Skeleton from "react-loading-skeleton"
 
 const UserInfo = ({ userId }) => {
   const [openModal, setOpenModal] = useState(false);
-  const { updateTag, setUpdateTag } = useUpdateTag();
-  const { data, isLoading } = useGetUserQuery(userId, openModal)
+  const { data, isLoading } = useGetUserQuery(userId)
   const { account, avatar, cover, name, introduction, followersCount, followingsCount } = data || {};
 
   // 點按鈕的
@@ -20,19 +18,6 @@ const UserInfo = ({ userId }) => {
   if (isLoading) {
     return <Skeleton className={style.skeleton} />
   }
-  // useEffect(() => {
-  //   const fetchUser = async () => {
-  //     if (userId) {
-  //       const data = await getUser({ id: userId });
-  //       setUserData(data);
-  //     }
-  //   };
-  //   fetchUser();
-  //   return () => {
-  //     abortController.abort()
-  //   }
-  // }, [userId, openModal, setUpdateTag]);
-
 
   return (
     <div className={style.container}>

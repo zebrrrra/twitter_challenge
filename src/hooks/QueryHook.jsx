@@ -12,10 +12,10 @@ export const useGetAllTweetsQuery = () => {
 }
 
 // UserInfo.jsx, OtherUserInfo.jsx, Headers.jsx
-export const useGetUserQuery = (id, ...state) => {
-  const { data, isLoading } = useQuery({ queryKey: ['getUser', { id, ...state }], queryFn: ({ queryKey, signal }) => getUser({ id: queryKey[1].id, signal }), refetchOnWindowFocus: false })
+export const useGetUserQuery = (id) => {
+  const { data, isLoading, isFetching } = useQuery({ queryKey: ['getUser', { id }], queryFn: ({ queryKey, signal }) => getUser({ id: queryKey[1].id, signal }), enabled: !!id, refetchOnWindowFocus: false })
 
-  return { data, isLoading }
+  return { data, isLoading, isFetching }
 }
 
 // likeList.jsx,
