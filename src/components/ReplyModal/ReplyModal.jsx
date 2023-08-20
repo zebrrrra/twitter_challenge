@@ -20,13 +20,13 @@ function getTime(createdAt) {
 }
 
 const ReplyModal = ({
-  onClose, open, tweetId, tweet, onReplySubmit }) => {
+  onClose, open, tweetId, tweet }) => {
   const [comment, setComment] = useState('')
   const { user } = useAuth()
   const userAvatar = localStorage.getItem('avatar') ? localStorage.getItem('avatar') : user.avatar
   const { description, createdAt, User } = tweet || {}
   const { account, avatar, name } = User || {}
-  const { mutation, message } = useReply({ id: tweetId, comment, tweetOwnerId: User.id, onReplySubmit, onClose })
+  const { mutation, message } = useReply({ id: tweetId, comment, tweetOwnerId: User.id, onClose })
   const isError = !comment.trim() || comment.length > 140
   const override = {
     position: 'absolute',
@@ -41,7 +41,6 @@ const ReplyModal = ({
         <div className={style.buttonContainer}>
           <button className={style.saveButton} onClick={() => onClose(false)}> X </button>
         </div>
-
         <div className={style.ContentContainer}>
           <ClipLoader size={60} color='#cccccc' loading={mutation.isLoading} cssOverride={override} />
           <div className={style.leftContainer}>

@@ -12,8 +12,9 @@ export const useLike = ({ tweetId, userId }) => {
     onSuccess: (data) => {
       if (data.status === 'success') {
         queryClient.invalidateQueries(['getAllTweets']);
-        queryClient.invalidateQueries(['getUserTweets', { id: userId }]);
-        queryClient.invalidateQueries(['getUserLike', { id: userId }]);
+        queryClient.invalidateQueries(['getUserTweets', { id: userId }]);//登入者id
+        queryClient.invalidateQueries(['getUserLike', { id: userId }]);//登入者id
+        queryClient.invalidateQueries(['getATweet', { id: tweetId }]);//推文id
         socket.emit('client-push-notice', 'like', userId)
       }
     },
@@ -38,6 +39,7 @@ export const useUnlike = ({ tweetId, userId }) => {
         queryClient.invalidateQueries(['getAllTweets']);
         queryClient.invalidateQueries(['getUserTweets', { id: userId }]);
         queryClient.invalidateQueries(['getUserLike', { id: userId }]);
+        queryClient.invalidateQueries(['getATweet', { id: tweetId }]);//推文id
       }
     },
     onError: (error) => {

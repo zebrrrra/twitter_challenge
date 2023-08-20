@@ -1,17 +1,13 @@
 import Swal from "sweetalert2"
 import { useState } from "react"
 import { postATweetReply } from "../apis/tweet";
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useChat } from "../context/ChatContext";
-import { useUpdateTag } from "../context/UpdateTagContext";
-import { useLocation } from "react-router-dom";
 
-export const useReply = ({ id, comment, tweetOwnerId, onReplySubmit, onClose }) => {
+export const useReply = ({ id, comment, tweetOwnerId, onClose }) => {
   const [message, setMessage] = useState('')
   const socket = useChat()
-  const { setUpdateTag } = useUpdateTag();
-  const location = useLocation()
-  const isReplyPage = location.pathname === `/tweets/${id}`
+  const queryClient = useQueryClient()
 
   const mutation = useMutation({
     mutationFn: async () => {
@@ -41,7 +37,6 @@ export const useReply = ({ id, comment, tweetOwnerId, onReplySubmit, onClose }) 
     },
     onSuccess: (data) => {
       if (data.status === 'success') {
-        setUpdateTag(prev => !prev);
         Swal.fire({
           title: '內容成功提交',
           icon: 'success',
@@ -49,9 +44,10 @@ export const useReply = ({ id, comment, tweetOwnerId, onReplySubmit, onClose }) 
           timer: 3000,
           position: 'top',
         });
-        if (isReplyPage) {
-          onReplySubmit(comment)
-        }
+        queryClient.invalidateQueries(['getATweetReply', { id }]);//推文id
+        queryClient.invalidateQueries(['getATweet', { id }]);//推文id
+        queryClient.invalidateQueries(['getAllTweets']);
+
         socket.emit('client-push-notice', 'reply', tweetOwnerId)
         onClose(false)
         return

@@ -4,6 +4,10 @@ import { ReactComponent as LikeIcon } from '../../assets/icon/like_1.svg';
 import { ReactComponent as IsLikeIcon } from '../../assets/icon/like.svg';
 import { ReactComponent as Reply } from "../../assets/icons/outlinedreply.svg"
 import ReplyModal from "../ReplyModal/ReplyModal"
+import { useLike } from "../../hooks/LikeHook";
+import { useUnlike } from "../../hooks/LikeHook";
+import Skeleton from 'react-loading-skeleton';
+
 
 import dayjs from "dayjs"
 import relativeTime from 'dayjs/plugin/relativeTime';
@@ -15,25 +19,20 @@ function getTime(time) {
   return createdTime.format('A hh:mm・YYYY年MM月DD日 ');
 }
 
-const MainTweet = ({ tweet, tweetId, onReplySubmit, onUnLike, onLike }) => {
+const MainTweet = ({ tweet, tweetId, isLoading }) => {
   const [openModal, setOpenModal] = useState(false)
   const { likesCount, repliesCount, description, createdAt, User, isCurrentUserLiked } = tweet || {}
 
   const { account, avatar, name } = User || {}
-
+  const { likeMutation } = useLike({ tweetId, userId: User?.id })
+  const { unlikeMutation } = useUnlike({ tweetId, userId: User?.id })
 
   const handleClick = () => {
     setOpenModal(true)
   }
-
-  const handleLikeClick = () => {
-    if (isCurrentUserLiked) {
-      onUnLike(tweetId);
-    } else {
-      onLike(tweetId);
-    }
+  if (isLoading) {
+    return <Skeleton className={style.skeleton} />
   }
-
 
   return (
     <>
@@ -61,14 +60,14 @@ const MainTweet = ({ tweet, tweetId, onReplySubmit, onUnLike, onLike }) => {
           </div>
           <div className={style.icon}>
             {isCurrentUserLiked ?
-              <IsLikeIcon className={style.isLikeIcon} onClick={handleLikeClick} />
+              <IsLikeIcon className={style.isLikeIcon} onClick={unlikeMutation.mutate} />
               :
-              <LikeIcon className={style.likeIcon} onClick={handleLikeClick} />
+              <LikeIcon className={style.likeIcon} onClick={likeMutation.mutate} />
             }
           </div>
         </div>
       </div>
-      {openModal && <ReplyModal open={openModal} onClose={(value) => setOpenModal(value)} tweet={tweet} tweetId={tweetId} onReplySubmit={onReplySubmit} />}
+      {openModal && <ReplyModal open={openModal} onClose={(value) => setOpenModal(value)} tweet={tweet} tweetId={tweetId} />}
     </>
 
   )

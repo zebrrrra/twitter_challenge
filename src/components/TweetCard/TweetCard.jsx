@@ -54,9 +54,9 @@ const TweetCard = ({ User, tweet, tweetId, userId }) => {
     const handleReplyPageClick = (tweetId) => {
         navigate(`/tweets/${tweetId}`);
     }
+
     return (
         <>
-            <span>{userId}</span>
             <div className={style.tweetCardContainer}>
                 <div className={style.tweetCard} onClick={(e) => handleReplyPageClick(tweet.id, e)}>
                     <img src={tweet?.User?.avatar} className={style.avatar} onClick={(event) => handleAvatarClick(event, tweet.User.id)} alt="avatar" />

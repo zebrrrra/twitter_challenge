@@ -19,27 +19,27 @@ export const useGetUserQuery = (id, ...state) => {
 }
 
 // likeList.jsx,
-export const useGetLikeQuery = (id, ...state) => {
-  const { data, isLoading } = useQuery({ queryKey: ['getUserLike', { id, ...state }], queryFn: ({ queryKey, signal }) => getUserLike({ id: queryKey[1].id, signal }), refetchOnWindowFocus: false })
+export const useGetLikeQuery = (id) => {
+  const { data, isLoading } = useQuery({ queryKey: ['getUserLike', { id }], queryFn: ({ queryKey, signal }) => getUserLike({ id: queryKey[1].id, signal }), refetchOnWindowFocus: false })
 
   return { data, isLoading }
 }
 
-// MainReply.jsx,
-export const useGetATweetReplyQuery = (id, ...state) => {
-  const { data, isLoading } = useQuery({ queryKey: ['getATweetReply', { id, ...state }], queryFn: ({ queryKey, signal }) => getATweetReply({ id: queryKey[1].id, signal }), refetchOnWindowFocus: false })
+// MainReply.jsx
+export const useGetATweetReplyQuery = (id) => {
+  const { data, isLoading } = useQuery({ queryKey: ['getATweetReply', { id }], queryFn: ({ queryKey, signal }) => getATweetReply({ id: queryKey[1].id, signal }), refetchOnWindowFocus: false })
 
   return { data, isLoading }
 }
 // ReplyList.jsx,
-export const useGetUserRepliedTweetsQuery = (id, ...state) => {
-  const { data, isLoading } = useQuery({ queryKey: ['getUserRepliedTweets', { id, ...state }], queryFn: ({ queryKey, signal }) => getUserRepliedTweets({ id: queryKey[1].id, signal }), refetchOnWindowFocus: false })
+export const useGetUserRepliedTweetsQuery = (id) => {
+  const { data, isLoading } = useQuery({ queryKey: ['getUserRepliedTweets', { id }], queryFn: ({ queryKey, signal }) => getUserRepliedTweets({ id: queryKey[1].id, signal }), refetchOnWindowFocus: false })
 
   return { data, isLoading }
 }
-// ReplyMain.jsx(local state待移除), ReplyMainInTest.jsx, LikeHook.jsx(未使用上)
-export const useGetATweetQuery = (id, ...state) => {
-  const { data, isLoading } = useQuery({ queryKey: ['getATweet', { id, ...state }], queryFn: ({ queryKey, signal }) => getATweet({ id: queryKey[1].id, signal }), refetchOnWindowFocus: false })
+// ReplyMain.jsx(local state待移除), ReplyMainInTest.jsx
+export const useGetATweetQuery = (id) => {
+  const { data, isLoading } = useQuery({ queryKey: ['getATweet', { id }], queryFn: ({ queryKey, signal }) => getATweet({ id: queryKey[1].id, signal }), refetchOnWindowFocus: false })
 
   return { data, isLoading }
 }
@@ -55,9 +55,9 @@ export const useGetUserFollowingsQuery = (id, ...state) => {
 
   return { data, isLoading }
 }
-// TweetList.jsx(有updateTag)
-export const useGetUserTweetsQuery = (id, ...state) => {
-  const { data, isLoading } = useQuery({ queryKey: ['getUserTweets', { id, ...state }], queryFn: ({ queryKey, signal }) => getUserTweets({ id: queryKey[1].id, signal }), refetchOnWindowFocus: false })
+// TweetList.jsx
+export const useGetUserTweetsQuery = (id) => {
+  const { data, isLoading } = useQuery({ queryKey: ['getUserTweets', { id }], queryFn: ({ queryKey, signal }) => getUserTweets({ id: queryKey[1].id, signal }), refetchOnWindowFocus: false })
 
   return { data, isLoading }
 }

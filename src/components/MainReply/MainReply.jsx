@@ -1,29 +1,19 @@
 import MainReplyCard from '../MainReplyCard/MainReplyCard';
-// import { getATweetReply } from '../../apis/tweet'
 import { useGetATweetReplyQuery } from '../../hooks/QueryHook';
 import Skeleton from 'react-loading-skeleton';
 
-const MainReply = ({ tweetId, newReply }) => {
-  // const [replies, setReplies] = useState([]);
-  const { data, isLoading } = useGetATweetReplyQuery(tweetId, newReply);
-  if (isLoading) {
-    return <Skeleton />
-  }
-  // useEffect(() => {
-  //   const abortController = new AbortController();
-  //   const fetchReplies = async () => {
-  //     const data = await getATweetReply({ id: tweetId, signal: abortController.signal });
-  //     if (data) {
-  //       setReplies(data);
-  //     }
-  //   }
-  //   fetchReplies();
-  //   return () => {
-  //     abortController.abort()
-  //   }
-  // }, [tweetId, newReply]);
+const MainReply = ({ tweetId }) => {
+  const { data, isLoading } = useGetATweetReplyQuery(tweetId);
 
-  return data && data.map(reply => <MainReplyCard key={reply.id} reply={reply} type="reply" />);
+  if (data?.length === 0) {
+    return <span>尚無任何回覆</span>
+  }
+  return (
+    <>
+      {isLoading && <Skeleton count={5} style={{ marginTop: '10px', height: '116px', width: '650px' }} />}
+      {data && data.map(reply => <MainReplyCard key={reply.id} reply={reply} type="reply" isLoading={isLoading} />)}
+    </>
+  )
 }
 
 export default MainReply;

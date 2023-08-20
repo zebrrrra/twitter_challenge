@@ -21,7 +21,7 @@ const MainReplyCard = ({ reply }) => {
     const navigate = useNavigate();
     const handleAvatarClick = (userId) => {
         navigate(`/${userId}`);
-      };
+    };
 
     const {
         User: { name, account, avatar } = {},
@@ -31,27 +31,28 @@ const MainReplyCard = ({ reply }) => {
         createdAt,
     } = reply;
 
-    
-    return (
-        <div className={style.tweetCardContainer}>
-            <div className={style.tweetCard}>
-            <img src={avatar} className={style.avatar} onClick={() => handleAvatarClick(reply.User.id)} alt="avatar"/>
-                <div className={style.contentContainer}>
-                    <div className={style.nameAndUserId}>
-                        <span className={style.name}>{name}</span>
-                        <span className={style.userIdTime}>@{account}・{getTime(createdAt)}</span>
-                    </div>
-                    <div className={style.replyContainer}>
-                        <div className={style.reply}>回覆</div>
-                        <div className={style.replyId}>@{User?.account}</div> </div>
-                    <div className={style.tweet}>
-                        {comment}
-                    </div>
 
+    return (
+        <>
+            <div className={style.tweetCardContainer}>
+                <div className={style.tweetCard}>
+                    <img src={avatar} className={style.avatar} onClick={() => handleAvatarClick(reply.User.id)} alt="avatar" />
+                    <div className={style.contentContainer}>
+                        <div className={style.nameAndUserId}>
+                            <span className={style.name}>{name}</span>
+                            <span className={style.userIdTime}>@{account}・{getTime(createdAt)}</span>
+                        </div>
+                        <div className={style.replyContainer}>
+                            <div className={style.reply}>回覆</div>
+                            <div className={style.replyId}>@{User?.account}</div> </div>
+                        <div className={style.tweet}>
+                            {comment}
+                        </div>
+
+                    </div>
                 </div>
             </div>
-        </div>
-
+        </>
     )
 
 
