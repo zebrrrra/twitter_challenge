@@ -3,13 +3,13 @@ import Swal from 'sweetalert2';
 import { postTweets } from "../apis/tweet";
 import { useChat } from "../context/ChatContext";
 import { useMutation, useQueryClient } from "@tanstack/react-query"
-
+import { useAuth } from "../context/AuthContext";
 const useTweet = (onClose) => {
   const queryClient = useQueryClient()
   const [tweetText, setTweetText] = useState('');
   const [message, setMessage] = useState('')
   const socket = useChat()
-
+  const { user } = useAuth()
   const mutation = useMutation({
     mutationFn: async () => {
       if (!tweetText.trim()) {
@@ -38,6 +38,7 @@ const useTweet = (onClose) => {
     },
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ['getAllTweets'] })
+      queryClient.invalidateQueries({ queryKey: ['getUserTweets', { id: user.id }] })
       socket.emit('client-push-notice', 'tweet')
       if (data.status === 'success') {
         Swal.fire({

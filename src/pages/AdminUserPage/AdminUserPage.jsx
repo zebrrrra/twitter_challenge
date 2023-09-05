@@ -9,7 +9,6 @@ const AdminUserPage = () => {
 
   return (
     <div className={style.homeContainer}>
-
       <div className={style.leftColumn}>
         <AdminNavbars />
       </div>
@@ -20,7 +19,6 @@ const AdminUserPage = () => {
         <AdminUserList userId={user && user.id} />
       </div>
     </div>
-
   )
 }
 

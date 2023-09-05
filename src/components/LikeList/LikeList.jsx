@@ -4,6 +4,7 @@ import Skeleton from 'react-loading-skeleton';
 
 const LikeList = ({ userId }) => {
     const { data, isLoading } = useGetLikeQuery(userId)
+
     if (isLoading) {
         return <Skeleton />
     }
@@ -11,7 +12,6 @@ const LikeList = ({ userId }) => {
     if (data.length === 0) {
         return <h4>這邊還沒有喜歡的回覆。要追加什麼嗎?</h4>;
     }
-    console.log(data)
     return !isLoading ? data?.map((like) =>
         <LikeCard
             like={like}

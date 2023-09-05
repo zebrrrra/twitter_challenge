@@ -21,7 +21,6 @@ export const useGetUserQuery = (id) => {
 // likeList.jsx,
 export const useGetLikeQuery = (id) => {
   const { data, isLoading } = useQuery({ queryKey: ['getUserLike', { id }], queryFn: ({ queryKey, signal }) => getUserLike({ id: queryKey[1].id, signal }), refetchOnWindowFocus: false })
-
   return { data, isLoading }
 }
 
@@ -68,10 +67,8 @@ export const useGetAdminUserQuery = (id) => {
   return { data, isLoading }
 }
 // AdminAllTweet.jsx
-export const useGetAdminAllTweetsQuery = (state) => {
-  const { data, isLoading } = useQuery({ queryKey: ['getAdminAllTweets', state], queryFn: ({ signal }) => getAdminAllTweets({ signal }), refetchOnWindowFocus: false })
+export const useGetAdminAllTweetsQuery = () => {
+  const { data, isLoading } = useQuery({ queryKey: ['getAdminAllTweets'], queryFn: ({ signal }) => getAdminAllTweets({ signal }), refetchOnWindowFocus: false })
 
   return { data, isLoading }
 }
-
-

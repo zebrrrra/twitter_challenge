@@ -4,22 +4,10 @@ import { useGetAdminUserQuery } from "../../hooks/QueryHook";
 import Skeleton from "react-loading-skeleton";
 
 const AdminUserList = ({ userId }) => {
-    // const [adminAllUser, setAdminAllUsers] = useState([]);
     const { data, isLoading } = useGetAdminUserQuery(userId)
-    // useEffect(() => {
-    //     const fetchAdminUser = async () => {
-    //         const data = await getAdminUsers();
-    //         if (data) {
-    //             setAdminAllUsers(data);
-    //         }
-    //     }
-    //     fetchAdminUser();
-    // }, [userId]);
-    if (isLoading) {
-        return <Skeleton />
-    }
     return (
         <div className={style.adminUserContainer}>
+            {isLoading && <Skeleton count={8} containerClassName={style.skeletonContainer} className={style.skeleton} />}
             {
                 data?.map(adminAllUser => {
                     if (!adminAllUser.id) {

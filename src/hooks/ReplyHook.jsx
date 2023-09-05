@@ -47,6 +47,8 @@ export const useReply = ({ id, comment, tweetOwnerId, onClose }) => {
         queryClient.invalidateQueries(['getATweetReply', { id }]);//推文id
         queryClient.invalidateQueries(['getATweet', { id }]);//推文id
         queryClient.invalidateQueries(['getAllTweets']);
+        queryClient.invalidateQueries(['getUserTweets', { id: tweetOwnerId }]);//BUG 在otherUserInfo不會更新
+
 
         socket.emit('client-push-notice', 'reply', tweetOwnerId)
         onClose(false)

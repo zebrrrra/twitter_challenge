@@ -3,20 +3,21 @@ import AdminTweetCard from '../AdminTweetCard/AdminTweetCard';
 import Swal from 'sweetalert2';
 import Skeleton from 'react-loading-skeleton';
 import { ClipLoader } from "react-spinners";
-import { useState } from 'react';
 import { deleteAdminUserTweets } from '../../apis/admin';
 import { useGetAdminAllTweetsQuery } from '../../hooks/QueryHook';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 const AdminAllTweets = () => {
-    const [deletedToggle, setDeletedToggle] = useState(false)
-    const { data, isLoading } = useGetAdminAllTweetsQuery(deletedToggle)
+    const { data, isLoading } = useGetAdminAllTweetsQuery()
+    const queryClient = useQueryClient()
+
     const mutation = useMutation({
         mutationFn: async (id) => {
             return await deleteAdminUserTweets(id);
         },
         onSuccess: (data) => {
             if (data.status === 'success') {
+                queryClient.invalidateQueries({ queryKey: ['getAdminAllTweets'] })
                 Swal.fire({
                     title: data.message,
                     icon: 'success',
@@ -24,7 +25,6 @@ const AdminAllTweets = () => {
                     timer: 2000,
                     position: 'top',
                 });
-                setDeletedToggle(!deletedToggle)
             }
         }
     })

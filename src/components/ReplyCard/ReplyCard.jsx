@@ -17,42 +17,43 @@ function getTime(createdAt) {
     }
 }
 
-const ReplyCard = ({reply}) => {
+const ReplyCard = ({ reply }) => {
     const navigate = useNavigate();
     const handleAvatarClick = (userId) => {
         navigate(`/${userId}`);
-      };
-
+    };
+    console.log(reply)
     const {
-        User: { name, account,avatar } = {},
-        Tweet: { User } = {},
+        User: { name, account, avatar } = {},
+        Tweet,
+        // Tweet: { User } = {},
         comment,
         createdAt,
     } = reply;
 
-    return(
+    return (
         <div className={style.tweetCardContainer}>
-                    <div className={style.tweetCard}>
-                    <img src={avatar} className={style.avatar} onClick={() => handleAvatarClick(reply.User.id)} alt="avatar"/>
-                        <div className={style.contentContainer}>
-                            <div className={style.nameAndUserId}>
-                                <span className={style.name}>{name}</span>
-                                <span className={style.userIdTime}>@{account}・{getTime(createdAt)}</span>
-                            </div>
-                            <div className={style.replyContainer}>
-                                <div className={style.reply}>回覆</div>
-                                <div className={style.replyId}>@{User?.account}</div> </div>
-                            <div className={style.tweet}>
-                                {comment}
-                            </div>
-
-                        </div>
+            <div className={style.tweetCard}>
+                <img src={avatar} className={style.avatar} onClick={() => handleAvatarClick(reply.User.id)} alt="avatar" />
+                <div className={style.contentContainer}>
+                    <div className={style.nameAndUserId}>
+                        <span className={style.name}>{name}</span>
+                        <span className={style.userIdTime}>@{account}・{getTime(createdAt)}</span>
                     </div>
+                    <div className={style.replyContainer}>
+                        <div className={style.reply}>回覆</div>
+                        <div className={style.replyId}>@{Tweet?.User.account}</div> </div>
+                    <div className={style.tweet}>
+                        {comment}
                     </div>
 
-            )
+                </div>
+            </div>
+        </div>
 
-    
+    )
+
+
 
 }
 export default ReplyCard;

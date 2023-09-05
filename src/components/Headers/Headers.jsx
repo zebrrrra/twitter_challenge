@@ -29,8 +29,8 @@ const Header = ({ userId }) => {
             <><div className={style.imgContainer}>
                 <img src={LeftIcon} alt="left" onClick={handleClickSection} /></div>
                 <div className={style.contentContainer}>
-                    <span className={style.name}>{data.name}</span>
-                    <div className={style.tweetCount}>{data.tweetsCount} 推文</div></div>
+                    <span className={style.name}>{data?.name}</span>
+                    <div className={style.tweetCount}>{data?.tweetsCount} 推文</div></div>
             </>;
     } else if (path.includes('/otherProfile')) {
         headerContext =
