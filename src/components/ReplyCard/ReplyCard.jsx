@@ -22,11 +22,9 @@ const ReplyCard = ({ reply }) => {
     const handleAvatarClick = (userId) => {
         navigate(`/${userId}`);
     };
-    console.log(reply)
     const {
         User: { name, account, avatar } = {},
         Tweet,
-        // Tweet: { User } = {},
         comment,
         createdAt,
     } = reply;
