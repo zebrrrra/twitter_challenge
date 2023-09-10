@@ -6,12 +6,9 @@
   height: 74px;
   display: flex;
   flex-direction: row;
-  justify-content: start;
+  justify-content: flex-start;
   align-items: center;
-  border-left: 1px solid $border-color;
-  border-right: 1px solid $border-color;
   border-bottom: 1px solid $border-color;
-
 }
 
 .imgContainer {
@@ -49,4 +46,14 @@
 
 .skeleton {
   height: 74px;
+}
+
+// 手機
+@media screen and (max-width: 426px) {
+  .HeaderContainer {
+    position: fixed;
+    background: $background-color;
+    width: 100%;
+    left: 0;
+  }
 }

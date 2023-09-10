@@ -9,11 +9,11 @@ import Skeleton from 'react-loading-skeleton';
 import { ClipLoader } from 'react-spinners';
 
 const SettingPage = () => {
-  const { user } = useAuth()
+  const { user, logout } = useAuth()
   const { handTweetSubmit } = useTweet()
   const { data, isLoading } = useGetUserQuery(user?.id)
   const [userData, setUserData] = useState({ account: data?.account, name: data?.name, email: data?.email, password: '', checkPassword: '' })
-  const { mutation, responseError, errorInfo } = useSetting({ id: user.id, user: userData })
+  const { mutation, responseError, errorInfo } = useSetting({ id: user?.id, user: userData })
 
   if (isLoading) {
     return <Skeleton />
@@ -59,6 +59,7 @@ const SettingPage = () => {
               />
             ))}
             <button className={style.button} type="submit" disabled={mutation.isLoading}>儲存</button>
+            <a className={style.logout} onClick={logout}>登出</a>
           </form >
         </div>
         <div className={style.rightColumn}>

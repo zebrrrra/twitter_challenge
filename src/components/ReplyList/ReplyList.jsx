@@ -5,7 +5,7 @@ import Skeleton from 'react-loading-skeleton';
 const ReplyList = ({ userId }) => {
   const { data, isLoading } = useGetUserRepliedTweetsQuery(userId);
   if (isLoading) {
-    return <Skeleton />
+    return <Skeleton count={5} style={{ height: "120px", marginBottom: "8px" }} />
   }
 
   if (data.length === 0) {

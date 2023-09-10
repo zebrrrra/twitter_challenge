@@ -4,10 +4,7 @@
     display: flex;
     flex-direction: column;
     padding: 16px;
-    gap: 16px;
-    box-sizing: border-box;
     border: 1px solid $border-color;
-
 }
 
 .tweetCard {
@@ -15,14 +12,9 @@
     flex-direction: row;
     align-items: start;
     gap: 16px;
-    box-sizing: border-box;
-    
-    
-
 }
 
 .avatar {
-    // margin-left: 24px;
     width: 50px;
     height: 50px;
     border-radius: 50%;
@@ -47,7 +39,7 @@
 }
 
 .name {
-    @include fontStyle(16,700);
+    @include fontStyle(16, 700);
     font-style: normal;
     color: $main-text-color;
     line-height: 26px;
@@ -56,7 +48,7 @@
 
 
 .userIdTime {
-    @include fontStyle(14,400);
+    @include fontStyle(14, 400);
     font-weight: 400;
     font-size: 14px;
     line-height: 22px;
@@ -65,15 +57,15 @@
 
 
 .tweet {
-    @include fontStyle(16,400);
+    @include fontStyle(16, 400);
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     text-align: left;
     padding: auto;
-    width: 528px;
+    width: 100%;
     line-height: 26px;
-    color:  $main-text-color;
+    color: $main-text-color;
     overflow-wrap: break-word;
     word-wrap: break-word;
     word-break: break-all;
@@ -114,27 +106,48 @@
         margin-right: 8px;
         width: 16px;
         height: 16px;
-
     }
 
 
 }
-.replyIcon{
+
+.replyIcon {
     margin-right: 8px;
     width: 16px;
     height: 16px;
-
 }
 
-.isLikeIcon{
+.isLikeIcon {
     margin-right: 8px;
-        width: 16px;
-        height: 16px;
-        fill:#FC5A5A;
+    width: 16px;
+    height: 16px;
+    fill: #FC5A5A;
 }
 
-.likeIcon{
+.likeIcon {
     margin-right: 8px;
-        width: 16px;
-        height: 16px;
+    width: 16px;
+    height: 16px;
+}
+
+// 手機
+@media screen and (max-width: 426px) {
+    .NavbarLogo {
+        display: none;
+    }
+
+    .navbarContainer {
+        flex-direction: row;
+        height: 100%;
+    }
+
+    .NavbarGroup {
+        flex-direction: row;
+    }
+
+    .tweetCardContainer {
+        border-left: none;
+        border-right: none;
+
+    }
 }

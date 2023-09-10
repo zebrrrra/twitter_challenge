@@ -1,9 +1,10 @@
 import style from './FollowPage.module.scss';
-import { Header, ChatNavbars, FollowTab, FollowRecommendList } from '../../components';
+import { Header, ChatNavbars, FollowTab, FollowRecommendList, UserInfo, OtherUserInfo } from '../../components';
 import { useAuth } from '../../context/AuthContext';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import useTweet from '../../hooks/TweetHook';
+import { useChat } from '../../context/ChatContext';
 
 const FollowPage = () => {
   //網址用戶的id
@@ -12,6 +13,22 @@ const FollowPage = () => {
   const { user, isAuthenticated } = useAuth();
   const navigate = useNavigate();
   const { handTweetSubmit } = useTweet()
+  const socket = useChat()
+  const [isSubscribed, setIsSubscribed] = useState(false)
+
+  useEffect(() => {
+    const handleSubscribe = (res) => {
+      console.log(res)
+      if (res.length === 0) return
+      const existed = res.some(item => item['User.id'] === Number(id))
+      setIsSubscribed(existed)
+    }
+    socket.emit('client-get-subscribe')
+    socket.on('server-get-subscribe', handleSubscribe)
+    return () => {
+      socket.off('server-get-subscribe', handleSubscribe)
+    }
+  }, [id, socket])
 
   useEffect(() => {
     if (!isAuthenticated) {
@@ -21,7 +38,6 @@ const FollowPage = () => {
 
   //整個頁面的follow方法
 
-
   return (
     <div className={style.followContainer}>
       <div className={style.homeColumn}>
@@ -30,6 +46,9 @@ const FollowPage = () => {
         </div>
         <div className={style.middleColumn}>
           <Header userId={id} />
+          <div className={style.userInfo}>
+            {user.id === Number(id) ? <UserInfo userId={user.id} /> : <OtherUserInfo userId={id} isSubscribed={isSubscribed} />}
+          </div>
           <FollowTab userId={id} loginUserId={user && user.id} />
         </div>
         <div className={style.rightColumn}>

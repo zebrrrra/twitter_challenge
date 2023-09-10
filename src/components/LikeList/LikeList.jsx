@@ -6,7 +6,7 @@ const LikeList = ({ userId }) => {
     const { data, isLoading } = useGetLikeQuery(userId)
 
     if (isLoading) {
-        return <Skeleton />
+        return <Skeleton count={5} style={{ height: "120px", marginBottom: "8px" }} />
     }
 
     if (data.length === 0) {

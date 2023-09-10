@@ -1,37 +1,22 @@
 @import '../../style/base.scss';
 
 .homeContainer {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  width: 100%;
-  min-height: 100vh;
-  padding: 0;
-
+  composes: homeContainer from '../HomePage/HomePage.module.scss';
 }
 
 
 .homeColumn {
-  display: flex;
-  flex-direction: row;
-  height: 100%;
-  //border-radius: 16px;
+  composes: homeColumn from '../HomePage/HomePage.module.scss';
 }
 
 .leftColumn {
-  position: relative;
-  background-color: #fff;
-  height: 100vh;
-  /* 使用 viewport 高度 */
-  margin-right: 24px;
-  flex: 0 0 200px;
-  z-index: 1;
+  composes: leftColumn from '../HomePage/HomePage.module.scss';
 }
 
 .middleColumn {
   flex: 3;
   position: relative;
-  background-color: #fff;
+  background-color: $background-color;
   padding-right: 25px;
 }
 
@@ -40,19 +25,18 @@
   flex-direction: column;
   position: relative;
   height: 100vh;
-  //justify-content: space-between;
-  background: #FFFFFF;
+  background: $background-color;
 
 }
 
-// 新增
 .form {
-  width: 45vw;
+  width: 100%;
   display: grid;
+  text-align: right;
 }
 
 .button {
-  margin: 16px;
+  margin-bottom: 16px;
   @include box(64, 40);
   @include fontStyle(16, 400);
   align-self: flex-end;
@@ -76,18 +60,15 @@
   border-bottom: 1px solid $border-color;
 }
 
-@media screen and (max-width: 376px) {
-  .homeContainer {
-    display: unset;
-  }
+.logout {
+  visibility: hidden;
+  text-decoration: underline;
+  color: $primary-color;
+}
 
-  .leftColumn {
-    display: none;
+// 手機
+@media screen and (max-width: 426px) {
+  .logout {
+    visibility: visible;
   }
-
-  .form {
-    width: unset;
-  }
-
-  // 待新增navbar
 }

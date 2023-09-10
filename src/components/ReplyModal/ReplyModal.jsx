@@ -2,6 +2,8 @@ import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import style from "./ReplyModal.module.scss"
 import { ReactComponent as Line } from "../../assets/icons/line.svg"
+import { ReactComponent as Close } from "../../assets/icons/orangeClose.svg";
+import { ReactComponent as Back } from "../../assets/icons/back.svg";
 import { useAuth } from "../../context/AuthContext"
 import { useState } from "react"
 import useReply from '../../hooks/ReplyHook';
@@ -39,7 +41,10 @@ const ReplyModal = ({
     <div className={style.background}>
       <div className={`${style.container} ${mutation.isLoading && `${style.isLoading}`}`}>
         <div className={style.buttonContainer}>
-          <button className={style.saveButton} onClick={() => onClose(false)}> X </button>
+          <button className={style.saveButton} onClick={() => onClose(false)}>
+            <Close className={style.closeButton} />
+            <Back className={style.backButton} />
+          </button>
         </div>
         <div className={style.ContentContainer}>
           <ClipLoader size={60} color='#cccccc' loading={mutation.isLoading} cssOverride={override} />

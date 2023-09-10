@@ -10,7 +10,7 @@
 
 // 還有一條灰線沒有實現
 .tweetContainer {
-  width: 640px;
+  width: 100%;
   border-bottom: #E6ECF0 1px solid;
 
   .titleContainer {
@@ -134,4 +134,11 @@
 .skeleton {
   width: 650px;
   height: 275px;
+}
+
+//手機 
+@media screen and (max-width: 426px) {
+  .tweetContainer {
+    margin-top: 58px;
+  }
 }

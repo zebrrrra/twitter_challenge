@@ -5,7 +5,7 @@ const TweetList = ({ userId }) => {
     const { data, isLoading } = useGetUserTweetsQuery(userId)
 
     if (isLoading) {
-        return <Skeleton />
+        return <Skeleton count={5} style={{ height: "120px", marginBottom: "8px" }} />
     }
     if (data.length === 0) {
         return <h4>這邊還沒有推文。要追加什麼嗎?</h4>;

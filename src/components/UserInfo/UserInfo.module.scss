@@ -103,3 +103,34 @@
 .skeleton {
   height: 370px;
 }
+
+// 平板
+@media screen and (max-width: 992px) {
+  .avatarContainer {
+    @include box(120, 120);
+  }
+}
+
+// 手機
+@media screen and (max-width: 426px) {
+  .container {
+    margin-top: 74px;
+  }
+
+  .bgContainer {
+    height: 124px;
+  }
+
+  .avatarContainer {
+    @include box(80, 80);
+    top: 25%;
+  }
+
+  .buttonContainer {
+    .button {
+      width: 112px;
+      height: 32px;
+      margin-bottom: 0;
+    }
+  }
+}

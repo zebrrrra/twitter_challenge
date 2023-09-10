@@ -8,7 +8,6 @@ const useSetting = ({ id, user }) => {
   const [responseError, setResponseError] = useState(false)
   const [errorInfo, setErrorInfo] = useState('')
   const navigate = useNavigate();
-
   const mutation = useMutation({
     mutationFn: (e) => {
       e.preventDefault()

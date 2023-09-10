@@ -26,7 +26,7 @@ const OtherProfilePage = () => {
     return () => {
       socket.off('server-get-subscribe', handleSubscribe)
     }
-  }, [id])
+  }, [id, socket])
 
   return (
     <div className={style.profileContainer}>

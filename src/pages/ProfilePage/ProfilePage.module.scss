@@ -1,68 +1,21 @@
 @import '../../style/base.scss';
 
-.profielContainer {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  width: 100%;
-  min-height: 100vh;
-  padding: 0;
-
-}
-
-@import '../../style/base.scss';
-
-.homeContainer {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  width: 100%;
-  min-height: 100vh;
-  padding: 0;
-
+.profileContainer {
+  composes: homeContainer from '../HomePage/HomePage.module.scss';
 }
 
 .homeColumn {
-  display: flex;
-  flex-direction: row;
-  height: 100%;
-  //border-radius: 16px;
-}
-
-
-.leftColumn,
-.rightColumn {
-  background-color: #fff;
-  position: sticky;
-  /* 改為 sticky */
-  top: 0;
-  /* 固定在頂部 */
-  height: 100vh;
-  /* 使用 viewport 高度 */
+  composes: homeColumn from '../HomePage/HomePage.module.scss';
 }
 
 .leftColumn {
-  margin-right: 24px;
-  flex: 0 0 200px;
-  z-index: 1;
+  composes: leftColumn from '../HomePage/HomePage.module.scss';
 }
 
 .rightColumn {
-  margin-right: 24px;
-  flex: 0 0 200px;
+  composes: rightColumn from '../HomePage/HomePage.module.scss';
 }
 
 .middleColumn {
-  flex: 3;
-  position: relative;
-  background-color: #fff;
-  padding-right: 25px;
-  overflow-y: auto;
-    //隱藏滾動條 (不一定每個瀏覽器有效)
-    scrollbar-width: none;
-    -ms-overflow-style: none; //ms
-    &::-webkit-scrollbar { //scss寫法
-      display: none;
-  }
-    
+  composes: middleColumn from '../HomePage/HomePage.module.scss';
 }
