@@ -1,47 +1,34 @@
 @import '../../style/base.scss';
 
 .homeContainer {
-  display: flex;
-  flex-direction: row;
-  width: 100%;
-  min-height: 100vh;
-  padding: 0;
-
+  composes: homeContainer from '../HomePage/HomePage.module.scss';
 }
 
 .homeColumn {
-  display: flex;
-  flex-direction: row;
-  height: 100%;
-  width: 100%;
+  composes: homeColumn from '../HomePage/HomePage.module.scss';
   justify-content: center;
 }
 
-.leftColumn,
+.leftColumn {
+  composes: leftColumn from '../HomePage/HomePage.module.scss';
+}
+
 .rightColumn {
-  background-color: #fff;
+  width: 100%;
+  height: 100vh;
+  min-width: calc(70% - 200px);
+  /* 使用 viewport 高度 */
   position: sticky;
   /* 改為 sticky */
   top: 0;
   /* 固定在頂部 */
-  height: 100vh;
-  /* 使用 viewport 高度 */
-}
-
-.leftColumn {
-  margin-right: 24px;
-  flex: 0 0 200px;
-  z-index: 1;
-}
-
-.rightColumn {
-  min-width: calc(70% - 200px);
+  background-color: $background-color;
 }
 
 .middleColumn {
   min-width: 30%;
   position: relative;
-  background-color: #fff;
+  background-color: $background-color;
 
   overflow-y: auto;
 
@@ -54,4 +41,17 @@
     display: none;
   }
 
+}
+
+// 手機
+@media screen and (max-width: 426px) {
+  .rightColumn {
+    display: none;
+  }
+
+  .middleColumn {
+    margin: unset;
+    border-right: none;
+    border-left: none;
+  }
 }

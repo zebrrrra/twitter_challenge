@@ -8,9 +8,6 @@
   composes: homeColumn from '../HomePage/HomePage.module.scss';
 }
 
-.leftColumn,
-.rightColumn {}
-
 .leftColumn {
   composes: leftColumn from '../HomePage/HomePage.module.scss';
 }

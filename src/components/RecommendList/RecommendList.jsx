@@ -15,13 +15,10 @@ const RecommendList = ({ userId, loginUserId }) => {
   // TODO setUsers移除/修改useFollow
   const { handleFollow, handleUnFollow } = useFollow(loginUserId, setUsers, setUpdateTag);
   const { data, isLoading, status, fetchStatus } = useQuery({ queryKey: ['getTopFollowers', { userId, updateTag }], queryFn: getTopFollowers, refetchOnWindowFocus: false })
-
+  console.log(data)
   if (isLoading) {
     return <Skeleton count={6} className={style.skeleton} />
   }
-  // console.log('結果', status)
-  // console.log('fetchStatus', fetchStatus)
-
   // useEffect(() => {
   //   const abortController = new AbortController();
   //   const fetchTopFollowers = async () => {
@@ -39,14 +36,14 @@ const RecommendList = ({ userId, loginUserId }) => {
     <div className={style.recommendListContainer}>
       <div className={style.HeaderContainer}>
         <h4 className={style.RecommendHeader}>推薦跟隨</h4></div>
-      {data ? data.map(user => (
+      {data && data.map(user => (
         <RecommendItem
           key={user.id}
           user={user}
           loginUserId={loginUserId}
           onFollow={handleFollow}
           onUnfollow={handleUnFollow} />
-      )) : null}
+      ))}
     </div>
   )
 };
