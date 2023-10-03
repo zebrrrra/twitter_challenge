@@ -5,6 +5,7 @@ const ChatContext = createContext();
 export const useChat = () => useContext(ChatContext);
 
 export const ChatContextProvider = ({ children }) => {
+
     return (
         <ChatContext.Provider value={socket}>
             {children}

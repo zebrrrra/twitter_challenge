@@ -38,12 +38,31 @@
 
 }
 
+.nameGroup{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  flex: 1;
+  max-width: 70%;  // 根據需求設定合適的最大寬度
+}
+
 .userTime {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  align-items: center;
+  width: 100%;
 }
 
+.time{
+  white-space: nowrap;
+  flex-shrink: 0;
+  flex:0;
+  margin-right: 10px;
+  margin-left: 55px;
+
+}
 
 .name {
 
@@ -55,7 +74,13 @@
 
 
 }
-
+.message{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: start;
+  margin-right: 20px;
+}
 .userName {
   width: auto; // 讓用戶名的寬度可以自適應
   @include fontStyle(14, 500);

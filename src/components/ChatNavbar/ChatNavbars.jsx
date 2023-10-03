@@ -18,6 +18,9 @@ import publicIcon from '../../assets/icons/publicChat.svg'
 import isPublicIcon from '../../assets/icons/isPublicChat.svg'
 
 import GroupIcon from '../../assets/icons/Group.svg';
+import isNoticeIcon from '../../assets/icons/isNotice.svg'
+import NoticeIcon from '../../assets/icons/Notice.svg'
+
 //chat
 import { useAuth } from '../../context/AuthContext';
 import { useChatUnRead } from '../../context/ChatUnreadContext';
@@ -69,6 +72,15 @@ const ChatNavbars = () => {
               <img className={style.NavbarPng}
                 src={isIconClicked === '/main' ? isHomeIcon : HomeIcon} alt="Home" />
               <span className={style.NavbarName}>首頁</span>
+            </div>
+          </Link>
+          <Link to="/notice">
+            <div
+              className={`${style.NavbarItem} ${location.pathname === '/notice' ? style.active : ''}`}
+              onClick={() => handleTabClick('notice')}>
+              <img className={style.NavbarPng}
+                src={isIconClicked === '/notice' ? isNoticeIcon : NoticeIcon} alt="notice" />
+              <span>通知</span>
             </div>
           </Link>
           <Link to="/chat">

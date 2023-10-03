@@ -59,6 +59,7 @@ export const getUser = async ({ id, signal }) => {
     return response
   } catch (error) {
     throw error
+
   }
 };
 

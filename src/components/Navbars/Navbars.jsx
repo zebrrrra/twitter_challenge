@@ -82,10 +82,10 @@ const Navbars = ({ onTweetSubmit }) => {
           </Link>
           <button className={style.NavbarButton} onClick={handlebuttonClick}>推文</button>
         </div>
-        {openModal && <TweetModal open={openModal} onClose={() => setOpenModal(false)} onTweetSubmit={onTweetSubmit} />}
+        {openModal && <TweetModal open={openModal} onClose={(res) => { setOpenModal(res) }} onTweetSubmit={onTweetSubmit} />}
         <div className={style.logout} onClick={handleLogout}><img className={style.NavbarPng} src={LogoutIcon} alt="logout" />登出</div>
       </div>
-      
+
     </>
 
   )

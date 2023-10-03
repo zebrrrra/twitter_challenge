@@ -3,9 +3,12 @@ import { createContext, useState } from 'react';
 import * as jwt from 'jsonwebtoken';
 import { useLocation } from 'react-router-dom';
 import { useContext, useEffect } from 'react';
+
 //socket
 import { socket } from '../apis/socket';
 import { useNavigate } from 'react-router-dom';
+
+
 
 const defaultAuthContext = {
     isAuthenticated: false,
@@ -47,9 +50,11 @@ export const AuthProvider = ({ children }) => {
         };
         checkTokenIsValid();
         return () => {
+
             socket.off('connect', handleConnectSocket)
         }
     }, [pathname, socket?.connected]);
+
 
 
 
@@ -66,6 +71,7 @@ export const AuthProvider = ({ children }) => {
                 email: payload.email,
                 cover: payload.cover
             }, payload, setPayload, setIsAuthenticated
+
             , logout: () => {
                 //socket登出
                 if (socket) {
@@ -73,7 +79,9 @@ export const AuthProvider = ({ children }) => {
                         socket.disconnect();
                     });
                     socket.off();
+
                     localStorage.clear()
+
                     setPayload(null);
                     setIsAuthenticated(false);
                     navigate('/login');

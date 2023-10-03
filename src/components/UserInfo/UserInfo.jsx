@@ -7,17 +7,21 @@ import Skeleton from "react-loading-skeleton"
 
 const UserInfo = ({ userId }) => {
   const [openModal, setOpenModal] = useState(false);
+
   const { data, isLoading } = useGetUserQuery(userId)
   const { account, avatar, cover, name, introduction, followersCount, followingsCount } = data || {};
 
+
   // 點按鈕的
-  const handleOpenClick = async () => {
+  const handleOpenClick = () => {
     setOpenModal(true)
   }
+
 
   if (isLoading) {
     return <Skeleton className={style.skeleton} />
   }
+
 
   return (
     <div className={style.container}>

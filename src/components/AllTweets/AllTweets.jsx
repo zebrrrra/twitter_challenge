@@ -11,6 +11,7 @@ const AllTweets = () => {
     }
     return !isLoading ? data.map(alltweet => {
         if (!alltweet?.User) {
+
             return null;
         }
         return <TweetCard key={alltweet.id}

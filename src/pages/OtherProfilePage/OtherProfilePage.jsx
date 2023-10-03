@@ -9,7 +9,9 @@ import { useChat } from '../../context/ChatContext';
 import useTweet from '../../hooks/TweetHook';
 
 const OtherProfilePage = () => {
+
   const { id } = useParams();
+
   const socket = useChat()
   const { handTweetSubmit } = useTweet()
   const [isSubscribed, setIsSubscribed] = useState(false)
@@ -26,7 +28,9 @@ const OtherProfilePage = () => {
     return () => {
       socket.off('server-get-subscribe', handleSubscribe)
     }
+
   }, [id, socket])
+
 
   return (
     <div className={style.profileContainer}>

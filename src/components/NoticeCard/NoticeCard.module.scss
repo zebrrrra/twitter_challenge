@@ -1,0 +1,61 @@
+@import '../../style/base.scss';
+
+.noticeContainer {
+  display: flex;
+  padding: 16px;
+  border: 1px solid $border-color;
+  flex-wrap: wrap;
+}
+
+.noticeCard {
+  display: flex;
+  flex-direction: column;
+  grid-gap: 16px;
+}
+
+.avatar {
+  @include box(50, 50);
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.contentContainer {
+  display: flex;
+  flex-direction: column;
+  grid-gap: 10px;
+}
+
+.nameAndUserId {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  align-items: center;
+}
+
+.name {
+  font-size: 16px;
+  font-weight: 700;
+  font-style: normal;
+  color: #171725;
+  line-height: 26px;
+  margin-right: 8px;
+}
+
+.userIdTime {
+  @include fontStyle(14, 400);
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 22px;
+  color: $secondary-color;
+}
+
+.description {
+  @include fontStyle(16, 400);
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  line-height: 26px;
+  color: $main-text-color;
+  word-wrap: break-word;
+  word-break: break-all;
+}
