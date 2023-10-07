@@ -1,5 +1,5 @@
 import style from './FollowPage.module.scss';
-import { Header, ChatNavbars, FollowTab, FollowRecommendList, UserInfo, OtherUserInfo } from '../../components';
+import { Header, ChatNavbars, FollowTab, RecommendList } from '../../components';
 import { useAuth } from '../../context/AuthContext';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
@@ -46,13 +46,11 @@ const FollowPage = () => {
         </div>
         <div className={style.middleColumn}>
           <Header userId={id} />
-          <div className={style.userInfo}>
-            {user.id === Number(id) ? <UserInfo userId={user.id} /> : <OtherUserInfo userId={id} isSubscribed={isSubscribed} />}
-          </div>
           <FollowTab userId={id} loginUserId={user && user.id} />
         </div>
         <div className={style.rightColumn}>
-          <FollowRecommendList userId={id} loginUserId={user && user.id} />
+          {/* <FollowRecommendList userId={id} loginUserId={user && user.id} /> */}
+          <RecommendList />
         </div>
       </div>
     </div>

@@ -1,34 +1,34 @@
 import style from "./OtherUserInfo.module.scss"
 import { Link } from "react-router-dom"
 import { useState, useEffect } from "react"
-// import { getUser } from "../../apis/user"
 import { ReactComponent as BellOpen } from "../../assets/icon/btn_notfi打開.svg"
 import { ReactComponent as BellClose } from "../../assets/icon/btn_notfi關閉.svg"
 import email from "../../assets/icon/email.svg"
-import { useUpdateTag } from '../../context/UpdateTagContext';
-import useFollow from "../../hooks/FollowHook";
+import { useFollow, useUnFollow } from "../../hooks/FollowHook"
 import { useChat } from "../../context/ChatContext"
 import { useGetUserQuery } from "../../hooks/QueryHook"
 import Skeleton from "react-loading-skeleton"
-const OtherUserInfo = ({ userId, isSubscribed }) => {
-  // const [userData, setUserData] = useState(null)
-  const [isToggle, setIsToggle] = useState(false)
-  const { updateTag, setUpdateTag } = useUpdateTag();
-  const { data, isLoading } = useGetUserQuery(userId)
-  // const { data, isLoading } = useGetUserQuery(userId, updateTag)
+import { useAuth } from "../../context/AuthContext"
 
+const OtherUserInfo = ({ userId, isSubscribed }) => {
+  const { user } = useAuth()
+  const [isToggle, setIsToggle] = useState(false)
+  const { data, isLoading } = useGetUserQuery(userId)
+  const { followMutation } = useFollow({ userId, loginUserId: user.id })
+  const { unFollowMutation } = useUnFollow({ userId, loginUserId: user.id })
 
   const { id, account, avatar, cover, name, introduction, followersCount, followingsCount, isCurrentUserFollowed } = data || {}
-  const { handleFollow, handleUnFollow } = useFollow(null, setUpdateTag);
   const socket = useChat()
 
   const buttonClass = isCurrentUserFollowed ? style.buttonFollowing : style.buttonFollower;
   const buttonText = isCurrentUserFollowed ? "正在跟隨" : "跟隨";
   const handleFollowClick = () => {
     if (isCurrentUserFollowed) {
-      handleUnFollow(id);
+      unFollowMutation.mutate()
+      // handleUnFollow(id);
     } else {
-      handleFollow(id);
+      followMutation.mutate()
+      // handleFollow(id);
     }
   }
   const handleBellOpen = () => {

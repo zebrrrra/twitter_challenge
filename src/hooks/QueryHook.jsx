@@ -43,14 +43,14 @@ export const useGetATweetQuery = (id) => {
   return { data, isLoading }
 }
 // FollowTab.jsx
-export const useGetUserFollowersQuery = (id, ...state) => {
-  const { data, isLoading } = useQuery({ queryKey: ['getUserFollowers', { id, ...state }], queryFn: ({ queryKey, signal }) => getUserFollowers({ id: queryKey[1].id, signal }), refetchOnWindowFocus: false })
+export const useGetUserFollowersQuery = (id) => {
+  const { data, isLoading } = useQuery({ queryKey: ['getUserFollowers', { id }], queryFn: ({ queryKey }) => getUserFollowers({ id: queryKey[1].id }), refetchOnWindowFocus: false })
 
   return { data, isLoading }
 }
 // FollowTab.jsx(沒用上)
-export const useGetUserFollowingsQuery = (id, ...state) => {
-  const { data, isLoading } = useQuery({ queryKey: ['getUserFollowings', { id, ...state }], queryFn: ({ queryKey, signal }) => getUserFollowings({ id: queryKey[1].id, signal }), refetchOnWindowFocus: false })
+export const useGetUserFollowingsQuery = (id) => {
+  const { data, isLoading } = useQuery({ queryKey: ['getUserFollowings', { id }], queryFn: ({ queryKey }) => getUserFollowings({ id: queryKey[1].id }), refetchOnWindowFocus: false })
 
   return { data, isLoading }
 }
