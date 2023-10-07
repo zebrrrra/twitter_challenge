@@ -46,7 +46,7 @@ const FollowPage = () => {
         </div>
         <div className={style.middleColumn}>
           <Header userId={id} />
-          <FollowTab userId={id} loginUserId={user && user.id} />
+          <FollowTab userId={Number(id)} loginUserId={user && user.id} />
         </div>
         <div className={style.rightColumn}>
           {/* <FollowRecommendList userId={id} loginUserId={user && user.id} /> */}

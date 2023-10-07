@@ -8,14 +8,12 @@ import { useFollow, useUnFollow } from "../../hooks/FollowHook"
 import { useChat } from "../../context/ChatContext"
 import { useGetUserQuery } from "../../hooks/QueryHook"
 import Skeleton from "react-loading-skeleton"
-import { useAuth } from "../../context/AuthContext"
 
 const OtherUserInfo = ({ userId, isSubscribed }) => {
-  const { user } = useAuth()
   const [isToggle, setIsToggle] = useState(false)
   const { data, isLoading } = useGetUserQuery(userId)
-  const { followMutation } = useFollow({ userId, loginUserId: user.id })
-  const { unFollowMutation } = useUnFollow({ userId, loginUserId: user.id })
+  const { followMutation } = useFollow({ userId })
+  const { unFollowMutation } = useUnFollow({ userId })
 
   const { id, account, avatar, cover, name, introduction, followersCount, followingsCount, isCurrentUserFollowed } = data || {}
   const socket = useChat()
@@ -25,10 +23,8 @@ const OtherUserInfo = ({ userId, isSubscribed }) => {
   const handleFollowClick = () => {
     if (isCurrentUserFollowed) {
       unFollowMutation.mutate()
-      // handleUnFollow(id);
     } else {
       followMutation.mutate()
-      // handleFollow(id);
     }
   }
   const handleBellOpen = () => {
@@ -55,17 +51,6 @@ const OtherUserInfo = ({ userId, isSubscribed }) => {
     };
   }, [socket]);
 
-  // useEffect(() => {
-  //   const abortController = new AbortController();
-  //   const fetchUser = async () => {
-  //     const data = await getUser({ id: userId, signal: abortController.signal });
-  //     setUserData(data);
-  //   };
-  //   fetchUser();
-  //   return () => {
-  //     abortController.abort()
-  //   }
-  // }, [userId, updateTag]);
   if (isLoading) {
     return <Skeleton className={style.skeleton} />
   }

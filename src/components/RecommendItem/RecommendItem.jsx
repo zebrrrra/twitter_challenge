@@ -2,19 +2,17 @@ import style from './RecommendItem.module.scss';
 import { useNavigate } from 'react-router-dom';
 import { useFollow, useUnFollow } from '../../hooks/FollowHook';
 
-const RecommendItem = ({ user, loginUserId }) => {
+const RecommendItem = ({ user }) => {
   const buttonClass = user.isCurrentUserFollowed ? style.buttonFollowing : style.buttonFollower;
   const buttonText = user.isCurrentUserFollowed ? "正在跟隨" : "跟隨";
-  const { followMutation } = useFollow({ userId: user.id, loginUserId })
-  const { unFollowMutation } = useUnFollow({ userId: user.id, loginUserId })
+  const { followMutation } = useFollow({ userId: user.id })
+  const { unFollowMutation } = useUnFollow({ userId: user.id })
 
   const handleButtonClick = () => {
     if (user.isCurrentUserFollowed) {
       unFollowMutation.mutate()
-      // onUnfollow(user.id);
     } else {
       followMutation.mutate()
-      // onFollow(user.id);
     }
   }
 

@@ -13,7 +13,6 @@ const FollowTab = ({ userId, loginUserId }) => {
   // const [followingUsers, setFollowingUsers] = useState([]);
   // const [followerUsers, setFollowerUsers] = useState([]);
   const { updateTag, setUpdateTag } = useUpdateTag();
-  // const { handleFollow, handleUnFollow } = useFollow(loginUserId, setFollowingUsers, setFollowerUsers, setUpdateTag);
 
   //LIST切換
   // useEffect(() => {
@@ -100,6 +99,7 @@ const FollowTab = ({ userId, loginUserId }) => {
 export default FollowTab;
 
 const FollowingList = ({ userId, loginUserId }) => {
+  // userId是當前頁面id
   const { data: followeringsResult, isLoading } = useGetUserFollowingsQuery(userId)
 
   // const users = Array.isArray(followeringsResult) ? followeringsResult : Array.from(followeringsResult);
@@ -116,8 +116,9 @@ const FollowingList = ({ userId, loginUserId }) => {
         key={user.followingId}
         user={user.Following}
         cardId={user.followingId}
+        userId={userId}
         loginUserId={loginUserId}
-        isFollowed={user.Following.isCurrentUserFollowed}
+        isFollowed={JSON.parse(user.Following.isCurrentUserFollowed)}
       />
     ))
   );
@@ -141,8 +142,9 @@ const FollowersList = ({ userId, loginUserId }) => {
         key={user.followerId}
         user={user.Follower}
         cardId={user.followerId}
+        userId={userId}
         loginUserId={loginUserId}
-        isFollowed={user.Follower.isCurrentUserFollowed}
+        isFollowed={JSON.parse(user.Follower.isCurrentUserFollowed)}
       />
     ))
   );

@@ -36,7 +36,7 @@ const OtherProfilePage = () => {
         </div>
         <div className={style.middleColumn}>
           <Header userId={id} />
-          <OtherMain userId={id} isSubscribed={isSubscribed} />
+          <OtherMain userId={Number(id)} isSubscribed={isSubscribed} />
         </div>
         <div className={style.rightColumn}>
           <RecommendList />

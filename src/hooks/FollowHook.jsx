@@ -3,22 +3,22 @@ import { getUsers } from "../apis/user";
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { postFollowShips, deleteFollowShips } from "../apis/followship";
 
-// userId被點擊卡片的使用者
-export const useFollow = ({ userId, loginUserId }) => {
+// userId來自useParams，cardId是卡片的user
+export const useFollow = ({ userId, cardId }) => {
   const queryClient = useQueryClient()
   const followMutation = useMutation({
     mutationFn: async () => {
-      return await postFollowShips(userId)
+      return await postFollowShips(cardId || userId)
     },
     onSuccess: (data) => {
       if (data.status === 'success') {
+        console.log(userId)
         queryClient.invalidateQueries(['getTopFollowers']);
-        //  更新被點擊者的追隨者清單（getUserFollowers）
+        //  更新當前頁面的追隨清單（getUserFollowers）
         queryClient.invalidateQueries(['getUserFollowers', { id: userId }]);
-        //  更新登入使用者的正在追隨清單（getUserFollowings）
-        queryClient.invalidateQueries(['getUserFollowings', { id: loginUserId }]);
+        //  更新當前頁面的正在追隨清單（getUserFollowings）
+        queryClient.invalidateQueries(['getUserFollowings', { id: userId }]);
         // 更新getUser
-        queryClient.invalidateQueries(['getUser', { id: loginUserId }]);
         queryClient.invalidateQueries(['getUser', { id: userId }]);
       }
     },
@@ -32,21 +32,21 @@ export const useFollow = ({ userId, loginUserId }) => {
   };
 }
 
-export const useUnFollow = ({ userId, loginUserId }) => {
+export const useUnFollow = ({ userId, cardId }) => {
   const queryClient = useQueryClient()
   const unFollowMutation = useMutation({
     mutationFn: async () => {
-      return await deleteFollowShips(userId)
+      return await deleteFollowShips(cardId || userId)
     },
     onSuccess: (data) => {
       if (data.status === 'success') {
+        console.log(userId)
         queryClient.invalidateQueries(['getTopFollowers']);
         //  更新被點擊者的追隨者清單（getUserFollowers）
         queryClient.invalidateQueries(['getUserFollowers', { id: userId }]);
         //  更新登入使用者的正在追隨清單（getUserFollowings）
-        queryClient.invalidateQueries(['getUserFollowings', { id: loginUserId }]);
+        queryClient.invalidateQueries(['getUserFollowings', { id: userId }]);
         // 更新getUser
-        queryClient.invalidateQueries(['getUser', { id: loginUserId }]);
         queryClient.invalidateQueries(['getUser', { id: userId }]);
       }
     },
