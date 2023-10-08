@@ -3,9 +3,10 @@ import RecommendItem from '../RecommendItem/RecommendItem';
 import { getTopFollowers } from '../../apis/user';
 import { useQuery } from "@tanstack/react-query"
 import Skeleton from 'react-loading-skeleton';
-
+import { useAuth } from '../../context/AuthContext';
 const RecommendList = () => {
-  const { data, isLoading } = useQuery({ queryKey: ['getTopFollowers'], queryFn: getTopFollowers, refetchOnWindowFocus: false })
+  const { user } = useAuth()
+  const { data, isLoading } = useQuery({ queryKey: ['getTopFollowers'], queryFn: getTopFollowers, enabled: !!user, refetchOnWindowFocus: false })
 
   if (isLoading) {
     return <Skeleton count={6} className={style.skeleton} />

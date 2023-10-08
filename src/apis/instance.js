@@ -1,7 +1,6 @@
 import axios from 'axios';
 export const instance = axios.create({
-  baseURL: 'https://twitter-ac-team-d93c31406834.herokuapp.com/api',
-  timeout: 8000,
+  baseURL: 'https://twitter-ac-team-d93c31406834.herokuapp.com/api'
 });
 
 instance.interceptors.request.use(

@@ -5,8 +5,8 @@ import { getAdminUsers, getAdminAllTweets } from "../apis/admin"
 // getTopFollowersQuery暫時寫在RecommendList.jsx
 
 // AllTweets.jsx
-export const useGetAllTweetsQuery = () => {
-  const { data, isLoading } = useQuery({ queryKey: ['getAllTweets'], queryFn: ({ signal }) => getAllTweets({ signal }), refetchOnWindowFocus: false })
+export const useGetAllTweetsQuery = (user) => {
+  const { data, isLoading } = useQuery({ queryKey: ['getAllTweets'], queryFn: ({ signal }) => getAllTweets({ signal }), enabled: !!user, refetchOnWindowFocus: false })
 
   return { data, isLoading }
 }

@@ -2,9 +2,10 @@ import style from "./AllTweets.module.scss"
 import Skeleton from 'react-loading-skeleton'
 import TweetCard from '../TweetCard/TweetCard';
 import { useGetAllTweetsQuery } from "../../hooks/QueryHook";
-
+import { useAuth } from "../../context/AuthContext";
 const AllTweets = () => {
-    const { data, isLoading } = useGetAllTweetsQuery()
+    const { user } = useAuth()
+    const { data, isLoading } = useGetAllTweetsQuery(user)
 
     if (isLoading) {
         return <Skeleton count={10} className={style.skeleton} />
