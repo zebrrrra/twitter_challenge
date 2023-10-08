@@ -14,7 +14,7 @@ const RecommendList = () => {
     <div className={style.recommendListContainer}>
       <div className={style.HeaderContainer}>
         <h4 className={style.RecommendHeader}>推薦跟隨</h4></div>
-      {data && data.map(item => (
+      {Array.isArray(data) && data.map(item => (
         <RecommendItem
           key={item.id}
           user={item}
