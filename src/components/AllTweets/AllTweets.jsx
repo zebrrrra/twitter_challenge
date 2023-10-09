@@ -6,7 +6,9 @@ import { useAuth } from "../../context/AuthContext";
 const AllTweets = () => {
     const { user } = useAuth()
     const { data, isLoading } = useGetAllTweetsQuery(user)
-
+    if(!user){
+        return null;
+    }
     if (isLoading) {
         return <Skeleton count={10} className={style.skeleton} />
     }
