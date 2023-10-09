@@ -38,6 +38,7 @@ const useTweet = (onClose) => {
     },
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ['getAllTweets'] })
+      queryClient.invalidateQueries({ queryKey: ['getUser', { id: user.id }] })
       queryClient.invalidateQueries({ queryKey: ['getUserTweets', { id: user.id }] })
       socket.emit('client-push-notice', 'tweet')
       if (data.status === 'success') {
