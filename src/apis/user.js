@@ -96,9 +96,9 @@ export const getUserLike = async ({ id, signal }) => {
   }
 };
 
-export const getUserFollowings = async ({ id, signal }) => {
+export const getUserFollowings = async ({ id }) => {
   try {
-    const response = await instance.get(`/users/${id}/followings`, { signal });
+    const response = await instance.get(`/users/${id}/followings`);
     return response
   } catch (error) {
     console.error('Error: cannnot get user followings', error);
@@ -107,9 +107,9 @@ export const getUserFollowings = async ({ id, signal }) => {
 };
 
 //GET /api/users/:id/followers 看見某使用者的所有跟隨者
-export const getUserFollowers = async ({ id, signal }) => {
+export const getUserFollowers = async ({ id }) => {
   try {
-    const response = await instance.get(`/users/${id}/followers`, { signal });
+    const response = await instance.get(`/users/${id}/followers`);
     return response
   } catch (error) {
     console.error('Error: cannnot get user followers', error)

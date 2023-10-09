@@ -5,8 +5,8 @@ import { getAdminUsers, getAdminAllTweets } from "../apis/admin"
 // getTopFollowersQuery暫時寫在RecommendList.jsx
 
 // AllTweets.jsx
-export const useGetAllTweetsQuery = () => {
-  const { data, isLoading } = useQuery({ queryKey: ['getAllTweets'], queryFn: ({ signal }) => getAllTweets({ signal }), refetchOnWindowFocus: false })
+export const useGetAllTweetsQuery = (user) => {
+  const { data, isLoading } = useQuery({ queryKey: ['getAllTweets'], queryFn: ({ signal }) => getAllTweets({ signal }), enabled: !!user, refetchOnWindowFocus: false })
 
   return { data, isLoading }
 }
@@ -43,14 +43,14 @@ export const useGetATweetQuery = (id) => {
   return { data, isLoading }
 }
 // FollowTab.jsx
-export const useGetUserFollowersQuery = (id, ...state) => {
-  const { data, isLoading } = useQuery({ queryKey: ['getUserFollowers', { id, ...state }], queryFn: ({ queryKey, signal }) => getUserFollowers({ id: queryKey[1].id, signal }), refetchOnWindowFocus: false })
+export const useGetUserFollowersQuery = (id) => {
+  const { data, isLoading } = useQuery({ queryKey: ['getUserFollowers', { id }], queryFn: ({ queryKey }) => getUserFollowers({ id: queryKey[1].id }), refetchOnWindowFocus: false })
 
   return { data, isLoading }
 }
 // FollowTab.jsx(沒用上)
-export const useGetUserFollowingsQuery = (id, ...state) => {
-  const { data, isLoading } = useQuery({ queryKey: ['getUserFollowings', { id, ...state }], queryFn: ({ queryKey, signal }) => getUserFollowings({ id: queryKey[1].id, signal }), refetchOnWindowFocus: false })
+export const useGetUserFollowingsQuery = (id) => {
+  const { data, isLoading } = useQuery({ queryKey: ['getUserFollowings', { id }], queryFn: ({ queryKey }) => getUserFollowings({ id: queryKey[1].id }), refetchOnWindowFocus: false })
 
   return { data, isLoading }
 }

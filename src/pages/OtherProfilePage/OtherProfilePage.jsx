@@ -39,8 +39,8 @@ const OtherProfilePage = () => {
           <ChatNavbars onTweetSubmit={handTweetSubmit} />
         </div>
         <div className={style.middleColumn}>
-          <Header userId={id} />
-          <OtherMain userId={id} isSubscribed={isSubscribed} />
+          <Header userId={Number(id)} />
+          <OtherMain userId={Number(id)} isSubscribed={isSubscribed} />
         </div>
         <div className={style.rightColumn}>
           <RecommendList />

@@ -1,35 +1,38 @@
 import style from './RecommendItem.module.scss';
 import { useNavigate } from 'react-router-dom';
+import { useFollow, useUnFollow } from '../../hooks/FollowHook';
 
-const RecommendItem = ({user, onFollow, onUnfollow})=>{
-const buttonClass = user.isCurrentUserFollowed ?style.buttonFollowing:style.buttonFollower;
-const buttonText = user.isCurrentUserFollowed? "正在跟隨":"跟隨";
+const RecommendItem = ({ user }) => {
+  const buttonClass = user.isCurrentUserFollowed ? style.buttonFollowing : style.buttonFollower;
+  const buttonText = user.isCurrentUserFollowed ? "正在跟隨" : "跟隨";
+  const { followMutation } = useFollow({ userId: user.id })
+  const { unFollowMutation } = useUnFollow({ userId: user.id })
 
-const handleButtonClick = () => {
+  const handleButtonClick = () => {
     if (user.isCurrentUserFollowed) {
-      onUnfollow(user.id);
+      unFollowMutation.mutate()
     } else {
-      onFollow(user.id);
+      followMutation.mutate()
     }
   }
 
   const navigate = useNavigate();
   const handleAvatarClick = (userId) => {
-      navigate(`/${userId}`);
-    };
-return(
-  <div className={style.RecommendListContainer}>
-    <div className={style.recommendCard}>
-      
-        <img src={user.avatar} className={style.avatar} onClick={() => handleAvatarClick(user.id)} alt="avatar"/>
+    navigate(`/${userId}`);
+  };
+  return (
+    <div className={style.RecommendListContainer}>
+      <div className={style.recommendCard}>
+
+        <img src={user.avatar} className={style.avatar} onClick={() => handleAvatarClick(user.id)} alt="avatar" />
         <div className={style.userInfo}>
-        <div className={style.name}>{user.name} </div>
-        <div className={style.userName}>@{user.account}</div>
+          <div className={style.name}>{user.name} </div>
+          <div className={style.userName}>@{user.account}</div>
         </div>
         <button className={buttonClass} onClick={handleButtonClick}>{buttonText}</button>
-        </div>
-        </div>
-)
+      </div>
+    </div>
+  )
 
 }
 export default RecommendItem;

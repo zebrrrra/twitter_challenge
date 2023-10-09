@@ -13,10 +13,8 @@ export const useLike = ({ tweetId, userId }) => {
     onSuccess: (data) => {
       if (data.status === 'success') {
         queryClient.invalidateQueries(['getAllTweets']);
-        //BUG 在otherUserInfo不作用
         queryClient.invalidateQueries(['getUserTweets', { id: userId }]);//當前查看對象id
-        //BUG 在otherUserInfo不作用
-        queryClient.invalidateQueries(['getUserLike', { id: userId }]);//當前查看對象登入者id
+        queryClient.invalidateQueries(['getUserLike', { id: userId }]);
         queryClient.invalidateQueries(['getATweet', { id: tweetId }]);//推文id
         socket.emit('client-push-notice', 'like', userId)
 
@@ -42,9 +40,7 @@ export const useUnlike = ({ tweetId, userId }) => {
       console.log(userId)
       if (data.status === 'success') {
         queryClient.invalidateQueries(['getAllTweets']);
-        //BUG 在otherUserInfo不作用
         queryClient.invalidateQueries(['getUserTweets', { id: userId }]);
-        //BUG 在otherUserInfo不作用
         queryClient.invalidateQueries(['getUserLike', { id: userId }]);
         queryClient.invalidateQueries(['getATweet', { id: tweetId }]);//推文id
       }

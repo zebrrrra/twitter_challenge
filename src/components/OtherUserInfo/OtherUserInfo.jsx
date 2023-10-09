@@ -1,38 +1,30 @@
 import style from "./OtherUserInfo.module.scss"
 import { Link } from "react-router-dom"
 import { useState, useEffect } from "react"
-// import { getUser } from "../../apis/user"
 import { ReactComponent as BellOpen } from "../../assets/icon/btn_notfi打開.svg"
 import { ReactComponent as BellClose } from "../../assets/icon/btn_notfi關閉.svg"
-import { ReactComponent as Email } from "../../assets/icon/email.svg"
-import { useUpdateTag } from '../../context/UpdateTagContext';
-import useFollow from "../../hooks/FollowHook";
+import email from "../../assets/icon/email.svg"
+import { useFollow, useUnFollow } from "../../hooks/FollowHook"
 import { useChat } from "../../context/ChatContext"
-
 import { useGetUserQuery } from "../../hooks/QueryHook"
 import Skeleton from "react-loading-skeleton"
 
 const OtherUserInfo = ({ userId, isSubscribed }) => {
-  // const [userData, setUserData] = useState(null)
   const [isToggle, setIsToggle] = useState(false)
-  const { updateTag, setUpdateTag } = useUpdateTag();
   const { data, isLoading } = useGetUserQuery(userId)
-  // const { data, isLoading } = useGetUserQuery(userId, updateTag)
-
+  const { followMutation } = useFollow({ userId })
+  const { unFollowMutation } = useUnFollow({ userId })
 
   const { id, account, avatar, cover, name, introduction, followersCount, followingsCount, isCurrentUserFollowed } = data || {}
-  const { handleFollow, handleUnFollow } = useFollow(null, setUpdateTag);
   const socket = useChat()
-  const navigate = useNavigate()
-  const { setChatUser } = useChatUser()
-
+ 
   const buttonClass = isCurrentUserFollowed ? style.buttonFollowing : style.buttonFollower;
   const buttonText = isCurrentUserFollowed ? "正在跟隨" : "跟隨";
   const handleFollowClick = () => {
     if (isCurrentUserFollowed) {
-      handleUnFollow(id);
+      unFollowMutation.mutate()
     } else {
-      handleFollow(id);
+      followMutation.mutate()
     }
   }
   const handleBellOpen = () => {
@@ -43,17 +35,7 @@ const OtherUserInfo = ({ userId, isSubscribed }) => {
     socket.emit('client-subscribe', userId)
     setIsToggle(!isToggle)
   }
-  const handlePrivateClick = () => {
-    if (socket) {
-      const data = { account, avatar, id, name }
-      socket.emit('client-get-room', userId);
-      socket.on('server-get-room', roomId => {
-        setChatUser(data)
-        navigate(`/chat/${roomId}`);
-        socket.off('server-get-room');
-      });
-    }
-  }
+
 
   useEffect(() => {
     setIsToggle(isSubscribed)
@@ -70,17 +52,6 @@ const OtherUserInfo = ({ userId, isSubscribed }) => {
     };
   }, [socket]);
 
-  // useEffect(() => {
-  //   const abortController = new AbortController();
-  //   const fetchUser = async () => {
-  //     const data = await getUser({ id: userId, signal: abortController.signal });
-  //     setUserData(data);
-  //   };
-  //   fetchUser();
-  //   return () => {
-  //     abortController.abort()
-  //   }
-  // }, [userId, updateTag]);
   if (isLoading) {
     return <Skeleton className={style.skeleton} />
   }
@@ -94,8 +65,8 @@ const OtherUserInfo = ({ userId, isSubscribed }) => {
         <img src={avatar} alt="avatar" />
       </div>
       <div className={style.buttonContainer}>
-        <div className={style.emailContainer} onClick={handlePrivateClick}>
-          <Email />
+        <div className={style.emailContainer}>
+          <img src={email} alt="email" />
         </div>
         {isToggle ? <BellOpen onClick={handleBellOpen} /> : <BellClose onClick={handleBellClose} />}
         <button className={buttonClass} onClick={handleFollowClick}>{buttonText}</button>
