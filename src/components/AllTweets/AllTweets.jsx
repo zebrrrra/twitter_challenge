@@ -10,6 +10,7 @@ const AllTweets = () => {
     if (isLoading) {
         return <Skeleton count={10} className={style.skeleton} />
     }
+    if(data&&Array.isArray(data)){
     return !isLoading ? data.map(alltweet => {
         if (!alltweet?.User) {
 
@@ -21,6 +22,6 @@ const AllTweets = () => {
             userId={alltweet.UserId}
             type="alltweet" />
     }) : null;
-}
+}}
 
 export default AllTweets;
