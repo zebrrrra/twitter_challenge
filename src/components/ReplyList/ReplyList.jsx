@@ -1,26 +1,18 @@
-import { useEffect, useState } from 'react';
 import ReplyCard from '../ReplyCard/ReplyCard';
-import { getUserRepliedTweets } from '../../apis/user';
-
-//假設有Authcontext(還沒寫)
+import { useGetUserRepliedTweetsQuery } from '../../hooks/QueryHook';
+import Skeleton from 'react-loading-skeleton';
 
 const ReplyList = ({ userId }) => {
-  const [replies, setReplies] = useState([]);
-  useEffect(() => {
-    const fetchReplies = async () => {
-      const data = await getUserRepliedTweets(userId);
-      if (data) {
-        setReplies(data);
-      }
-    }
-    fetchReplies();
-  }, [userId]);
+  const { data, isLoading } = useGetUserRepliedTweetsQuery(userId);
+  if (isLoading) {
+    return <Skeleton count={5} style={{ height: "120px", marginBottom: "8px" }} />
+  }
 
-  if (replies.length === 0) {
+  if (data.length === 0) {
     return <h4>這邊還沒有回覆。要追加什麼嗎?</h4>;
   }
 
-  return replies.map(reply => <ReplyCard key={reply.id} reply={reply} type="reply" />);
+  return data && data.map(reply => <ReplyCard key={reply.id} reply={reply} type="reply" />);
 }
 
 export default ReplyList;

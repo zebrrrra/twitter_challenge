@@ -1,25 +1,29 @@
 import OpenTweet from '../OpenTweet/OpenTweet'
-import ReplyList from '../ReplyList/ReplyList'
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import useLike from '../../hooks/LikeHook';
-import { getATweet } from '../../apis/tweet';
+import { useGetATweetQuery } from '../../hooks/QueryHook';
+import Skeleton from 'react-loading-skeleton';
 
 const ReplyMain = () => {
   const { id } = useParams();
-  const [tweet, setTweet] = useState([]);
-  const { likeTweets, handleLike, handleUnLike } = useLike({ dataItems: tweet ? [tweet] : [] });
+  const [tweet, setTweet] = useState([]);//TODO state待移除
+  const { data, isLoading } = useGetATweetQuery(id);
+  const { likeTweets, handleLike, handleUnLike } = useLike({ dataItems: data ? [data] : [] });
 
-  useEffect(() => {
-    const fetchTweets = async () => {
-      const data = await getATweet(id);
-
-      if (data) {
-        setTweet(data);
-      }
-    }
-    fetchTweets();
-  }, [id]);
+  // useEffect(() => {
+  //   const abortController = new AbortController();
+  //   const fetchTweets = async () => {
+  //     const data = await getATweet({ id, signal: abortController.signal });
+  //     if (data) {
+  //       setTweet(data);
+  //     }
+  //   }
+  //   fetchTweets();
+  //   return () => {
+  //     abortController.abort()
+  //   }
+  // }, [id]);
 
   useEffect(() => {
     if (likeTweets.length > 0) {
@@ -27,14 +31,16 @@ const ReplyMain = () => {
     }
   }, [likeTweets]);
 
+  if (isLoading) {
+    return <Skeleton />
+  }
 
   return (
     <>
-      {tweet && <OpenTweet
-        tweet={tweet}
+      {data && <OpenTweet
+        tweet={data}
         onLike={() => handleLike(id)}
         onUnLike={() => handleUnLike(id)} />}
-
     </>
   )
 

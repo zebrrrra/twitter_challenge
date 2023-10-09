@@ -1,41 +1,26 @@
-//UserInfo.jsx
-import avatar from "../../assets/icons/editAvatar.svg"
-import cover from "../../assets/icons/background.svg"
 import style from "./UserInfo.module.scss"
 import { Link } from "react-router-dom"
 import EditModal from "../EditModal/EditModal"
-import { useState, useEffect } from "react"
-import { getUsers } from "../../apis/user"
-import { useAuth } from "../../context/AuthContext"
-import { useUpdateTag } from '../../context/UpdateTagContext';
+import { useState } from "react"
+import { useGetUserQuery } from "../../hooks/QueryHook"
+import Skeleton from "react-loading-skeleton"
 
 const UserInfo = ({ userId }) => {
   const [openModal, setOpenModal] = useState(false);
-  const [currentData, setCurrentData] = useState(null)
-  const { updateTag, setUpdateTag } = useUpdateTag();
 
+  const { data, isLoading } = useGetUserQuery(userId)
+  const { account, avatar, cover, name, introduction, followersCount, followingsCount } = data || {};
 
-  const { account, avatar, cover, name, introduction, followersCount, followingsCount } = currentData || {};
 
   // 點按鈕的
   const handleOpenClick = () => {
     setOpenModal(true)
   }
 
-  useEffect(() => {
-    const controller = new AbortController();
-    const fetchData = async () => {
-      if (userId) {
-        const userData = await getUsers({ id: userId, signal: controller.signal });
-        setCurrentData(userData);
-      }
-    };
-    fetchData();
-    return () => {
-      controller.abort()
-    }
-  }, [userId, openModal, setUpdateTag]);
 
+  if (isLoading) {
+    return <Skeleton className={style.skeleton} />
+  }
 
 
   return (
@@ -58,11 +43,9 @@ const UserInfo = ({ userId }) => {
           <Link to={`/${userId}/followers`} className={style.link}>{followersCount}個<span>跟隨者</span></Link>
         </div>
       </div>
-      {openModal && <EditModal open={openModal} onClose={(value) => setOpenModal(value)} userId={userId} userData={currentData} />}
+      {openModal && <EditModal open={openModal} onClose={(value) => setOpenModal(value)} userId={userId} userData={data} />}
     </div >
-
   )
-
 }
 
 export default UserInfo

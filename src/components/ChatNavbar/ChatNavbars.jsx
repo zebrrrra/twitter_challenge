@@ -14,6 +14,9 @@ import isSettingIcon from '../../assets/icons/isSetting.svg'
 import isInfoIcon from '../../assets/icons/isProfile.svg'
 import chatIcon from '../../assets/icons/message.svg';
 import isChatIcon from '../../assets/icons/isMessage.svg';
+import publicIcon from '../../assets/icons/publicChat.svg'
+import isPublicIcon from '../../assets/icons/isPublicChat.svg'
+
 import GroupIcon from '../../assets/icons/Group.svg';
 import isNoticeIcon from '../../assets/icons/isNotice.svg'
 import NoticeIcon from '../../assets/icons/Notice.svg'
@@ -21,8 +24,8 @@ import NoticeIcon from '../../assets/icons/Notice.svg'
 //chat
 import { useAuth } from '../../context/AuthContext';
 import { useChatUnRead } from '../../context/ChatUnreadContext';
-
-const ChatNavbars = ({ onTweetSubmit }) => {
+import { ReactComponent as Tweet } from "../../assets/icons/write.svg"
+const ChatNavbars = () => {
   const [openModal, setOpenModal] = useState(false);
   const [activeTab, setActiveTab] = useState('');
   const [isIconClicked, setIconClicked] = useState(false);
@@ -68,7 +71,7 @@ const ChatNavbars = ({ onTweetSubmit }) => {
               onClick={() => handleTabClick('main')}>
               <img className={style.NavbarPng}
                 src={isIconClicked === '/main' ? isHomeIcon : HomeIcon} alt="Home" />
-              <span>首頁</span>
+              <span className={style.NavbarName}>首頁</span>
             </div>
           </Link>
           <Link to="/notice">
@@ -86,9 +89,9 @@ const ChatNavbars = ({ onTweetSubmit }) => {
               onClick={() => { handleTabClick('chat') }}
             >
               <img className={style.NavbarPng}
-                src={isIconClicked === '/chat' ? isChatIcon : chatIcon}
+                src={isIconClicked === '/chat' ? isPublicIcon : publicIcon}
                 alt="Icon" />
-              <span>公開聊天室</span>
+              <span className={style.NavbarName}>公開聊天室</span>
             </div>
           </Link>
           {/* FIXME 當no chatUser& no chatUnRead.messages時，roomId是undefined*/}
@@ -100,7 +103,7 @@ const ChatNavbars = ({ onTweetSubmit }) => {
               <img className={style.NavbarPng}
                 src={chatUnRead.allUnreadCounts > 0 ? GroupIcon : (isIconClicked === `/chat/${roomId}` ? isChatIcon : chatIcon)}
                 alt="Icon" />
-              <span>私人聊天室</span>
+              <span className={style.NavbarName}>私人訊息</span>
               <div>{chatUnRead.allUnreadCounts > 0 && `(${chatUnRead.allUnreadCounts})`}</div>
             </div>
           </Link>
@@ -112,7 +115,7 @@ const ChatNavbars = ({ onTweetSubmit }) => {
             >
               <img className={style.NavbarPng}
                 src={isIconClicked === '/profile' ? isInfoIcon : InfoIcon} alt="Icon" />
-              <span>個人資料</span>
+              <span className={style.NavbarName}>個人資料</span>
             </div>
           </Link>
           <Link to="/setting">
@@ -123,13 +126,16 @@ const ChatNavbars = ({ onTweetSubmit }) => {
               <img className={style.NavbarPng}
                 src={isIconClicked === '/setting' ? isSettingIcon : SettingIcon}
                 alt="Setting" />
-              <span>設定</span>
+              <span className={style.NavbarName}>設定</span>
             </div>
           </Link>
-          <button className={style.NavbarButton} onClick={handlebuttonClick}>推文</button>
+          <button className={style.NavbarButton} onClick={handlebuttonClick}>
+            <span>推文</span>
+            <Tweet className={style.NavbarTweetIcon} />
+          </button>
         </div>
-        {openModal && <TweetModal open={openModal} onClose={(res) => setOpenModal(res)} onTweetSubmit={onTweetSubmit} />}
-        <div className={style.logout} onClick={handleLogout}><img className={style.NavbarPng} src={LogoutIcon} alt="logout" />登出</div>
+        {openModal && <TweetModal open={openModal} onClose={(res) => setOpenModal(res)} />}
+        <div className={style.logout} onClick={handleLogout}><img className={style.NavbarPng} src={LogoutIcon} alt="logout" /><span className={style.NavbarName}>登出</span></div>
       </div>
 
     </>

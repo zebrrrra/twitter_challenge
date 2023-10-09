@@ -5,12 +5,12 @@
   position: relative;
   padding: 16px 16px 0;
   border: #E6ECF0 1px solid;
-  word-wrap:break-word;
+  word-wrap: break-word;
 }
 
 // 還有一條灰線沒有實現
 .tweetContainer {
-  width: 640px;
+  width: 100%;
   border-bottom: #E6ECF0 1px solid;
 
   .titleContainer {
@@ -50,7 +50,7 @@
   overflow-wrap: break-word;
   word-wrap: break-word;
   word-break: break-all;
-  margin:5px;
+  margin: 5px;
 }
 
 .time {
@@ -118,15 +118,27 @@
 
 }
 
-.isLikeIcon{
+.isLikeIcon {
   margin-right: 8px;
-      width: 30px;
-      height: 30px;
-      fill:#FC5A5A;
+  width: 30px;
+  height: 30px;
+  fill: #FC5A5A;
 }
 
-.likeIcon{
+.likeIcon {
   margin-right: 8px;
-      width: 30px;
-      height: 30px;
+  width: 30px;
+  height: 30px;
+}
+
+.skeleton {
+  width: 650px;
+  height: 275px;
+}
+
+//手機 
+@media screen and (max-width: 426px) {
+  .tweetContainer {
+    margin-top: 58px;
+  }
 }

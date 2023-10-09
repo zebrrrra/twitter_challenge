@@ -1,11 +1,10 @@
 import style from './FollowPage.module.scss';
-import { Header, ChatNavbars, FollowTab, FollowRecommendList } from '../../components';
+import { Header, ChatNavbars, FollowTab, FollowRecommendList, UserInfo, OtherUserInfo } from '../../components';
 import { useAuth } from '../../context/AuthContext';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import { getUsers } from '../../apis/user';
-import { UpdateTagProvider } from '../../context/UpdateTagContext';
 import useTweet from '../../hooks/TweetHook';
+import { useChat } from '../../context/ChatContext';
 
 const FollowPage = () => {
   //網址用戶的id
@@ -13,29 +12,31 @@ const FollowPage = () => {
   //登入用戶 
   const { user, isAuthenticated } = useAuth();
   const navigate = useNavigate();
-  const [profileUser, setProfileUser] = useState(null);
   const { handTweetSubmit } = useTweet()
+  const socket = useChat()
+  const [isSubscribed, setIsSubscribed] = useState(false)
 
-
-  //const [isCurrentFollowed, setIsCurrentFollowed] = useState(false);
-
-
-  //const [isCurrentFollowed, setIsCurrentFollowed] = useState(false);
+  useEffect(() => {
+    const handleSubscribe = (res) => {
+      console.log(res)
+      if (res.length === 0) return
+      const existed = res.some(item => item['User.id'] === Number(id))
+      setIsSubscribed(existed)
+    }
+    socket.emit('client-get-subscribe')
+    socket.on('server-get-subscribe', handleSubscribe)
+    return () => {
+      socket.off('server-get-subscribe', handleSubscribe)
+    }
+  }, [id, socket])
 
   useEffect(() => {
     if (!isAuthenticated) {
       navigate('/login');
     }
-
-    const fetchUser = async () => {
-      const userData = await getUsers(id);
-      setProfileUser(userData);
-    };
-    fetchUser();
-  }, [navigate, isAuthenticated, id]);
+  }, [navigate, isAuthenticated]);
 
   //整個頁面的follow方法
-
 
   return (
     <div className={style.followContainer}>
@@ -44,7 +45,10 @@ const FollowPage = () => {
           <ChatNavbars onTweetSubmit={handTweetSubmit} />
         </div>
         <div className={style.middleColumn}>
-          <Header userId={profileUser && profileUser.id} />
+          <Header userId={id} />
+          <div className={style.userInfo}>
+            {user.id === Number(id) ? <UserInfo userId={user.id} /> : <OtherUserInfo userId={id} isSubscribed={isSubscribed} />}
+          </div>
           <FollowTab userId={id} loginUserId={user && user.id} />
         </div>
         <div className={style.rightColumn}>

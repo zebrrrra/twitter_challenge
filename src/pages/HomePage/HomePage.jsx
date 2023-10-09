@@ -3,10 +3,8 @@ import { Header, MainPost, AllTweets, RecommendList, ChatNavbars } from '../../c
 import { useAuth } from '../../context/AuthContext'
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import useTweet from '../../hooks/TweetHook';
 
 const HomePage = () => {
-  const { newTweet, handTweetSubmit } = useTweet()
   const { isAuthenticated, user } = useAuth();
 
   const navigate = useNavigate();
@@ -20,12 +18,12 @@ const HomePage = () => {
     <div className={style.homeContainer}>
       <div className={style.homeColumn}>
         <div className={style.leftColumn}>
-          <ChatNavbars onTweetSubmit={handTweetSubmit} />
+          <ChatNavbars />
         </div>
         <div className={style.middleColumn}>
-          <Header />
-          <MainPost user={user} onTweetSubmit={handTweetSubmit} />
-          <AllTweets newTweet={newTweet} />
+          <Header userId={user?.id} />
+          <MainPost user={user} />
+          <AllTweets />
         </div>
         <div className={style.rightColumn}>
           <RecommendList />

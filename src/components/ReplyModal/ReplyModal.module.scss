@@ -1,16 +1,7 @@
 @import"../../style/base.scss";
 
 .background {
-  width: 100%;
-  height: 100%;
-  background-color: rgba(51, 54, 56, 0.4);
-  position: fixed;
-  top: 0;
-  left: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  overflow: auto;
+  composes: background from "../TweetModal/TweetModal.module.scss";
   z-index: 5;
 }
 
@@ -24,8 +15,11 @@
   background-color: $background-color;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
   border-radius: 14px;
-  word-wrap:break-word;
-  
+  word-wrap: break-word;
+}
+
+.isLoading {
+  composes: isLoading from "../TweetModal/TweetModal.module.scss";
 }
 
 .buttonContainer {
@@ -33,20 +27,16 @@
   height: 56px;
   text-align: left;
   padding: 20px;
-
-  button {
-    color: $brand-color;
-  }
 }
 
 
 
 
 .ContentContainer {
-  width: 100%;
-  display: flex;
+  composes: ContentContainer from "../TweetModal/TweetModal.module.scss";
+  height: calc(100% - 56px);
   padding: 24px 16px 0;
-  
+
 
   .leftContainer {
     flex-basis: 82px;
@@ -108,7 +98,7 @@
         line-height: 26px;
         color: $main-text-color;
         text-align: left;
-        word-wrap:break-word;
+        word-wrap: break-word;
       }
 
       .hint {
@@ -125,7 +115,7 @@
 
     .rightBottomContainer {
       width: 100%;
-      height: 259px;
+      height: 100%;
       display: flex;
       flex-direction: column;
 
@@ -139,7 +129,6 @@
   width: 100%;
   text-align: right;
 
-  // display: flex;
   >button {
     margin: 16px;
     @include box(64, 40);
@@ -159,12 +148,13 @@
 
 }
 
+.closeButton {
+  composes: closeButton from "../TweetModal/TweetModal.module.scss";
+}
 
-
-
-
-
-
+.backButton {
+  composes: backButton from "../TweetModal/TweetModal.module.scss";
+}
 
 .tweetText {
   border: none;
@@ -184,5 +174,27 @@
     border: none;
     padding: 0;
 
+  }
+}
+
+// 手機
+@media screen and (max-width: 426px) {
+  .container {
+    width: 100%;
+    height: 100vh;
+    top: 0px;
+    border-radius: 0;
+  }
+
+  .ReplyButtonContainer {
+    >button {
+      position: fixed;
+      top: 0;
+      right: 0;
+    }
+  }
+
+  .rightBottomContainer {
+    margin-bottom: 16px;
   }
 }

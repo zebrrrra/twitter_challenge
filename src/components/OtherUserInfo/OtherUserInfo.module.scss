@@ -2,8 +2,6 @@
 
 .buttonFollowing,
 .buttonFollower {
-  //flex-direction: column;
-  //justify-content: center;
   align-items: center;
   text-align: center;
   height: 40px;
@@ -14,7 +12,6 @@
   border-radius: 50px;
   font-family: 'Noto Sans TC', sans-serif;
   font-style: normal;
-  //right: 16px;
   top: calc(50% - 40px/2); //figma:直接除二
   margin-right: 16px;
 
@@ -31,7 +28,6 @@
 }
 
 .buttonFollower {
-  //align-items: flex-start;
   width: 64px;
   /* grayscale/dark-0 */
   background: #FFFFFF;
@@ -42,11 +38,10 @@
 }
 
 .buttonContainer {
-  margin: 14px 0;
+  margin-top: 14px;
 
   .bellOpen {
     @include box(40, 40);
-    // @include fontStyle(16, 400);
     margin: 16px;
     color: $brand-color;
     background: $background-color;
@@ -74,4 +69,26 @@
     cursor: pointer;
   }
 
+}
+
+.skeleton {
+  composes: skeleton from "../UserInfo/UserInfo.module.scss"
+}
+
+@media screen and (max-width: 426px) {
+  .buttonContainer {
+    .emailContainer {
+      @include box(32, 32);
+    }
+  }
+
+  .buttonContainer {
+    svg {
+      @include box(32, 32);
+    }
+  }
+
+  .buttonFollowing {
+    height: 32px;
+  }
 }

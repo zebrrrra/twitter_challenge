@@ -3,82 +3,49 @@ import { ReactComponent as Logo } from '../../assets/icons/logo.svg'
 import { Link, useNavigate } from 'react-router-dom'
 import { AuthInput } from '../../components'
 import { useAuth } from '../../context/AuthContext';
-import { useState } from 'react'
-import Swal from 'sweetalert2'
-import { useEffect } from 'react';
-import useLogin from '../../hooks/LoginHook';
+import { useState, useEffect } from 'react'
+import { useLogin } from '../../hooks/LoginHook';
+import { socket } from '../../apis/socket';
+import { ClipLoader } from 'react-spinners';
 
 const LoginPage = () => {
-  const [account, setAccount] = useState('')
-  const [password, setPassword] = useState('')
-  const [responseError, setResponseError] = useState(true)
-  const [errorInfo, setErrorInfo] = useState('')
   const { isAuthenticated, user } = useAuth();
-  const { handleLogin } = useLogin()
   const navigate = useNavigate()
+  const [userData, setUserData] = useState({ account: '', password: '' })
+  const { mutation, responseError, errorInfo } = useLogin(userData)
 
   const authInputCollection = [
-    { label: '帳號', id: '帳號', type: 'text', placeholder: '請輸入帳號', value: account, onChange: (accountValue) => setAccount(accountValue) },
-    { label: '密碼', id: '密碼', type: 'password', placeholder: '請輸入密碼', value: password, onChange: (passwordValue) => setPassword(passwordValue) }]
+    { label: '帳號', id: '帳號', type: 'text', placeholder: '請輸入帳號', value: userData.account, onChange: (value) => setUserData(prev => ({ ...prev, 'account': value })), disabled: mutation.isLoading },
+    { label: '密碼', id: '密碼', type: 'password', placeholder: '請輸入密碼', value: userData.password, onChange: (value) => setUserData(prev => ({ ...prev, 'password': value })), disabled: mutation.isLoading }]
 
+  const override = {
+    position: 'absolute',
+    bottom: '50%'
+  };
 
-
-  const handleLoginSubmit = async (e) => {
-    e.preventDefault();
-    if (!account.trim() || !password.trim()) {
-      Swal.fire({
-        title: '請先登入帳號',
-        icon: 'error',
-        showConfirmButton: false,
-        timer: 2000,
-        position: 'top',
-      });
-      return
+  useEffect(() => {
+    if (mutation.data?.status === 'success') {
+      socket.connect()
+      socket.on('connect', () => {
+        console.log('connect to: login success', socket.connected)
+        socket.emit('client-join', user.id);
+      })
     }
-
-    const response = await handleLogin({ account, password });
-
-    if (response.success) {
-      if (response.role === 'user') {
-        Swal.fire({
-          title: '登入成功',
-          icon: 'success',
-          showConfirmButton: false,
-          timer: 2000,
-          position: 'top',
-        });
-        setResponseError(false)
-        navigate('/main')
-        return
-      }
-    } else {
-      Swal.fire({
-        title: '登入失敗',
-        icon: 'error',
-        showConfirmButton: false,
-        timer: 2000,
-        position: 'top',
-      });
-      setResponseError(true)
-      setErrorInfo(response.message)
-      return
-    }
-  }
+  }, [mutation.data?.status]);
 
   useEffect(() => {
     if (isAuthenticated) {
-      navigate('/main');
-
+      navigate('/main')
     }
   }, [navigate, isAuthenticated, user]);
-
 
   return (
     <div className={style.container}>
       <Logo className={style.logo} />
       <h3 className={style.title}>登入Alphitter</h3>
-      <form className={style.form} onSubmit={handleLoginSubmit}>
-        {authInputCollection.map(({ label, id, type, placeholder, value, maxLength, onChange }) => (
+      <ClipLoader size={60} color='#cccccc' loading={mutation.isLoading} cssOverride={override} />
+      <form className={style.form} onSubmit={mutation.mutate}>
+        {authInputCollection.map(({ label, id, type, placeholder, value, maxLength, onChange, disabled }) => (
           <AuthInput
             key={id}
             label={label}
@@ -90,9 +57,10 @@ const LoginPage = () => {
             onChange={onChange}
             responseError={responseError}
             errorInfo={errorInfo}
+            disabled={disabled}
           />
         ))}
-        <button className={style.button} type="submit" >登入</button>
+        <button className={style.button} type="submit" disabled={mutation.isLoading} >登入</button>
       </form >
       <div className={style.linkGroup}>
         <Link to='/register' className={style.link}>註冊</Link>

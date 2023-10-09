@@ -1,8 +1,7 @@
 import { useEffect, useState } from 'react';
 import style from './AuthInput.module.scss'
-import { useAuth } from '../../context/AuthContext';
 
-const AuthInput = ({ label, id, type, placeholder, value, maxLength, onChange, height = 54, responseError, errorInfo }) => {
+const AuthInput = ({ label, id, type, placeholder, value, maxLength, onChange, height = 54, responseError, errorInfo, name, disabled }) => {
   // responseError為後端回傳狀態，errorInfo後端錯誤資訊
   //這兩個變數為監控onChange 
   const [error, setError] = useState(false)
@@ -47,7 +46,7 @@ const AuthInput = ({ label, id, type, placeholder, value, maxLength, onChange, h
     <>
       <div className={inputStyle} style={containerStyle}>
         <label className={style.label} htmlFor={id}>{label}</label>
-        <input type={type} className={style.input} id={id} placeholder={placeholder} value={value} onChange={(e) => onChange(e.target.value)} />
+        <input type={type} name={name} className={style.input} id={id} placeholder={placeholder} value={value} onChange={(e) => onChange(e.target.value)} disabled={disabled} />
       </div>
       <small className={style.small}>
         {DisplayError && (

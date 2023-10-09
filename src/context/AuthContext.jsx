@@ -1,21 +1,20 @@
 //import { async } from 'q';
 import { createContext, useState } from 'react';
-import { adminLogin } from '../apis/user';
 import * as jwt from 'jsonwebtoken';
 import { useLocation } from 'react-router-dom';
 import { useContext, useEffect } from 'react';
-import { register, putUserSetting } from '../apis/user';
-//socket.io
+
+//socket
 import { socket } from '../apis/socket';
+import { useNavigate } from 'react-router-dom';
+
+
 
 const defaultAuthContext = {
     isAuthenticated: false,
     user: null,
     register: null,
-    login: null,
     logout: null,
-    responseError: false,
-    errorInfo: ''
 };
 
 const AuthContext = createContext(defaultAuthContext);
@@ -24,6 +23,7 @@ export const AuthProvider = ({ children }) => {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [payload, setPayload] = useState(null);
     const { pathname } = useLocation();
+    const navigate = useNavigate();
 
     useEffect(() => {
         const handleConnectSocket = () => {
@@ -50,7 +50,7 @@ export const AuthProvider = ({ children }) => {
         };
         checkTokenIsValid();
         return () => {
-            console.log('bye')
+
             socket.off('connect', handleConnectSocket)
         }
     }, [pathname, socket?.connected]);
@@ -71,78 +71,22 @@ export const AuthProvider = ({ children }) => {
                 email: payload.email,
                 cover: payload.cover
             }, payload, setPayload, setIsAuthenticated
-            , register: async (data) => {
-                const result = await register({
-                    account: data.account,
-                    name: data.name,
-                    password: data.password,
-                    email: data.email,
-                    checkPassword: data.checkPassword
 
-                });
-                if (result.status === 'success') {
-                    return { success: true, message: result.message }
-                } else {
-                    return { success: false, message: result.message }
-                }
-            }
             , logout: () => {
-
                 //socket登出
                 if (socket) {
                     socket.emit('client-leave', () => {
                         socket.disconnect();
                     });
                     socket.off();
-                    localStorage.removeItem('token');
-                    localStorage.removeItem('avatar');
-                    localStorage.removeItem('usersUpdate');
+
+                    localStorage.clear()
+
                     setPayload(null);
                     setIsAuthenticated(false);
+                    navigate('/login');
                 }
             },
-
-            adminLogin: async (data) => {
-                const result = await adminLogin(
-                    {
-                        account: data.account,
-                        password: data.password,
-                    })
-                if (result.status === 'success') {
-                    const { token } = result.data;
-                    const tempPayload = jwt.decode(token);
-                    setPayload(tempPayload);
-                    setIsAuthenticated(true);
-                    localStorage.setItem('token', token);
-                    return {
-                        success: true, message: result.message, role: result.data.user.role
-                    }
-                } else {
-                    setPayload(null);
-                    setIsAuthenticated(false);
-                    return {
-                        success: false, message: result.message
-                    }
-                }
-
-            }, putUserSetting: async (data) => {
-                const result = await putUserSetting({
-                    id: data.id,
-                    account: data.account,
-                    name: data.name,
-                    email: data.email,
-                    password: data.password,
-                    checkPassword: data.checkPassword,
-                    socket,
-
-                });
-                if (result.status === 'success') {
-                    return { success: true, message: result.message }
-                } else {
-                    return { success: false, message: result.message }
-                }
-            }
-
         }}>
             {children}
         </AuthContext.Provider >

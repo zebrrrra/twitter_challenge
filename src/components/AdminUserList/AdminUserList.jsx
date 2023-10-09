@@ -1,24 +1,15 @@
-import { useEffect, useState } from "react";
-import { getAdminUsers } from "../../apis/admin";
 import AdminUserCard from '../AdminUserCard/AdminUserCard';
 import style from './AdminUserList.module.scss';
+import { useGetAdminUserQuery } from "../../hooks/QueryHook";
+import Skeleton from "react-loading-skeleton";
 
 const AdminUserList = ({ userId }) => {
-    const [adminAllUser, setAdminAllUsers] = useState([]);
-
-    useEffect(() => {
-        const fetchAdminUser = async () => {
-            const data = await getAdminUsers();
-            if (data) {
-                setAdminAllUsers(data);
-            }
-        }
-        fetchAdminUser();
-    }, [userId]);
+    const { data, isLoading } = useGetAdminUserQuery(userId)
     return (
         <div className={style.adminUserContainer}>
+            {isLoading && <Skeleton count={8} containerClassName={style.skeletonContainer} className={style.skeleton} />}
             {
-                adminAllUser.map(adminAllUser => {
+                data?.map(adminAllUser => {
                     if (!adminAllUser.id) {
                         return null;
                     }
@@ -29,11 +20,7 @@ const AdminUserList = ({ userId }) => {
                     />
                 })
             }
-
         </div>
-
-
-
     )
 }
 

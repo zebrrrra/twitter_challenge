@@ -1,18 +1,17 @@
+import Swal from "sweetalert2"
 import { useState } from "react"
-import Swal from 'sweetalert2';
-import { postTweets } from "../apis/tweet";
+import { postATweetReply } from "../apis/tweet";
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useChat } from "../context/ChatContext";
-import { useMutation, useQueryClient } from "@tanstack/react-query"
-import { useAuth } from "../context/AuthContext";
-const useTweet = (onClose) => {
-  const queryClient = useQueryClient()
-  const [tweetText, setTweetText] = useState('');
+
+export const useReply = ({ id, comment, tweetOwnerId, onClose }) => {
   const [message, setMessage] = useState('')
   const socket = useChat()
-  const { user } = useAuth()
+  const queryClient = useQueryClient()
+
   const mutation = useMutation({
     mutationFn: async () => {
-      if (!tweetText.trim()) {
+      if (!comment.trim()) {
         Swal.fire({
           title: '內容不可空白',
           icon: 'error',
@@ -23,7 +22,7 @@ const useTweet = (onClose) => {
         setMessage('內容不可空白')
         throw new Error('內容不可空白')
       }
-      if (tweetText.length > 140) {
+      if (comment.length > 140) {
         Swal.fire({
           title: '內容超出上限',
           icon: 'error',
@@ -34,12 +33,9 @@ const useTweet = (onClose) => {
         setMessage('內容不可超過140字')
         throw new Error('內容不可超過140字')
       }
-      return await postTweets(tweetText)
+      return await postATweetReply({ id, comment })
     },
     onSuccess: (data) => {
-      queryClient.invalidateQueries({ queryKey: ['getAllTweets'] })
-      queryClient.invalidateQueries({ queryKey: ['getUserTweets', { id: user.id }] })
-      socket.emit('client-push-notice', 'tweet')
       if (data.status === 'success') {
         Swal.fire({
           title: '內容成功提交',
@@ -47,14 +43,19 @@ const useTweet = (onClose) => {
           showConfirmButton: false,
           timer: 3000,
           position: 'top',
-        })
-        setTweetText('');
-        setMessage('')
-        onClose && onClose(false)
+        });
+        queryClient.invalidateQueries(['getATweetReply', { id }]);//推文id
+        queryClient.invalidateQueries(['getATweet', { id }]);//推文id
+        queryClient.invalidateQueries(['getAllTweets']);
+        queryClient.invalidateQueries(['getUserTweets', { id: tweetOwnerId }]);//BUG 在otherUserInfo不會更新
+
+
+        socket.emit('client-push-notice', 'reply', tweetOwnerId)
+        onClose(false)
         return
       }
     }
   })
-  return { mutation, message, tweetText, setTweetText, }
+  return { mutation, message }
 }
-export default useTweet
+export default useReply

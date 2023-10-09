@@ -1,37 +1,22 @@
-//import TweetContext from '../Tab/Tab';
-import { useEffect, useState } from 'react';
 import TweetCard from '../TweetCard/TweetCard';
-import { getUserTweets } from '../../apis/user';
-import useLike from '../../hooks/LikeHook';
-import { useUpdateTag } from '../../context/UpdateTagContext';
-
+import { useGetUserTweetsQuery } from '../../hooks/QueryHook';
+import Skeleton from 'react-loading-skeleton';
 const TweetList = ({ userId }) => {
-    const [tweets, setTweets] = useState([]);
-    const { updateTag, setUpdateTag } = useUpdateTag();
-    const { likeTweets: updateLikes, handleLike, handleUnLike } = useLike({ dataItems: tweets, setUpdateTag });
+    const { data, isLoading } = useGetUserTweetsQuery(userId)
 
-
-    useEffect(() => {
-        const fetchTweets = async () => {
-            const data = await getUserTweets(userId);
-            if (data) {
-                setTweets(data);
-            }
-        }
-        fetchTweets();
-    }, [userId, updateTag]);
-
-
-    if (tweets.length === 0) {
+    if (isLoading) {
+        return <Skeleton count={5} style={{ height: "120px", marginBottom: "8px" }} />
+    }
+    if (data.length === 0) {
         return <h4>這邊還沒有推文。要追加什麼嗎?</h4>;
     }
 
-    return updateLikes ? updateLikes.map((tweet, index) =>
+    return !isLoading ? data.map((tweet) =>
         <TweetCard
-            key={tweet.id}
+            key={tweet?.id}
             tweet={tweet}
-            onLike={() => handleLike(tweet.id)}
-            onUnLike={() => handleUnLike(tweet.id)}
+            tweetId={tweet.id}
+            userId={tweet.UserId}
             type="tweet" />) : null;
 }
 

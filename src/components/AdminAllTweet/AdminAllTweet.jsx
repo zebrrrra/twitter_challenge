@@ -1,16 +1,39 @@
-import { useEffect, useState } from 'react';
-import { getAdminAllTweets } from '../../apis/admin';
-import { deleteAdminUserTweets } from '../../apis/admin';
+import style from "./AdminAllTweet.module.scss"
 import AdminTweetCard from '../AdminTweetCard/AdminTweetCard';
 import Swal from 'sweetalert2';
+import Skeleton from 'react-loading-skeleton';
+import { ClipLoader } from "react-spinners";
+import { deleteAdminUserTweets } from '../../apis/admin';
+import { useGetAdminAllTweetsQuery } from '../../hooks/QueryHook';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
+const AdminAllTweets = () => {
+    const { data, isLoading } = useGetAdminAllTweetsQuery()
+    const queryClient = useQueryClient()
 
+    const mutation = useMutation({
+        mutationFn: async (id) => {
+            return await deleteAdminUserTweets(id);
+        },
+        onSuccess: (data) => {
+            if (data.status === 'success') {
+                queryClient.invalidateQueries({ queryKey: ['getAdminAllTweets'] })
+                Swal.fire({
+                    title: data.message,
+                    icon: 'success',
+                    showConfirmButton: false,
+                    timer: 2000,
+                    position: 'top',
+                });
+            }
+        }
+    })
 
-
-const AdminAllTweets = ({ userId }) => {
-    const [allUserTweets, setAllUserTweets] = useState([]);
-
+    if (isLoading) {
+        return <Skeleton count={6} className={style.skeleton} />
+    }
     const handleOnDelete = async (id) => {
+        if (mutation.isLoading) return
         Swal.fire({
             title: '你確定要刪除嗎?',
             text: '刪除後不可回復',
@@ -19,45 +42,30 @@ const AdminAllTweets = ({ userId }) => {
 
         }).then(async (result) => {
             if (result.isConfirmed) {
-                try {
-                    const response = await deleteAdminUserTweets(id);
-                    if (response && response.status === 'success') {
-                        setAllUserTweets(allUserTweets => allUserTweets.filter((tweet) => tweet.id !== id));
-                    } else {
-                        return null;
-                    }
-                } catch (error) {
-                    console.error("error while deleting tweet: ", error);
-                    return null;
-                }
+                mutation.mutate(id);
             }
         })
     };
 
+    const override = {
+        position: 'fixed',
+        top: '50%',
+        left: '50%',
+    };
 
-    useEffect(() => {
-        const fetchTweets = async () => {
-            const data = await getAdminAllTweets();
-            if (data) {
-                setAllUserTweets(data);
+    return <>
+        <ClipLoader size={60} color='#cccccc' loading={mutation.isLoading} cssOverride={override} />
+        {data?.map(allUsertweet => {
+            if (!allUsertweet.User) {
+                return null;
             }
-        }
-        fetchTweets();
-    }, [userId]);
-
-
-
-    return allUserTweets.map(allUsertweet => {
-        if (!allUsertweet.User) {
-            return null;
-        }
-        return <AdminTweetCard
-            key={allUsertweet.id}
-            tweet={allUsertweet}
-            handleOnDelete={handleOnDelete}
-            type="alltweet" />
-    })
-}
-    ;
+            return <AdminTweetCard
+                key={allUsertweet.id}
+                tweet={allUsertweet}
+                handleOnDelete={handleOnDelete}
+                type="alltweet" />
+        })}
+    </>
+};
 
 export default AdminAllTweets;

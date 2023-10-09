@@ -1,44 +1,23 @@
-//import TweetContext from '../Tab/Tab';
-import { useEffect, useState } from 'react';
 import LikeCard from '../LikeCard/LikeCard';
-import { getUserLike } from '../../apis/user';
-import useLike from '../../hooks/LikeHook';
-import { useAuth } from '../../context/AuthContext';
-import { useUpdateTag } from '../../context/UpdateTagContext';
+import { useGetLikeQuery } from '../../hooks/QueryHook';
+import Skeleton from 'react-loading-skeleton';
 
 const LikeList = ({ userId }) => {
-    const { user } = useAuth();
-    const currentUserId = user?.id;
-    const { updateTag, setUpdateTag } = useUpdateTag();
-    const [likes, setLikes] = useState([]);
-    const { likeTweets: updateLikes, handleLike, handleUnLike } = useLike({
-        dataItems: likes,
-        currentUserId: currentUserId,
-        setUpdateTag
-    });
+    const { data, isLoading } = useGetLikeQuery(userId)
 
-    useEffect(() => {
-        const fetchLikes = async () => {
-            const data = await getUserLike(userId);
-            if (data) {
-                setLikes(data);
-            }
-        }
-        fetchLikes();
-    }, [userId, updateTag]);
-
-
-    if (likes.length === 0) {
-        return <h4>這邊還沒有喜歡的回覆。要追加什麼嗎?</h4>;
+    if (isLoading) {
+        return <Skeleton count={5} style={{ height: "120px", marginBottom: "8px" }} />
     }
 
-    return updateLikes ? updateLikes.map((like, index) =>
+    if (data.length === 0) {
+        return <h4>這邊還沒有喜歡的回覆。要追加什麼嗎?</h4>;
+    }
+    return !isLoading ? data?.map((like) =>
         <LikeCard
             like={like}
             key={like.id}
-            onLike={() => handleLike(like.Tweet.id)}
-            onUnLike={() => handleUnLike(like.Tweet.id)}
-
+            tweetId={like.TweetId}
+            userId={like.UserId}
             type="like" />) : null;
 }
 

@@ -11,7 +11,7 @@ import FollowTab from "./Tab/FollowTab";
 import Main from "./Main/Main";
 import OtherUserInfo from "./OtherUserInfo/OtherUserInfo";
 import OtherMain from "./OtherMain/OtherMain";
-import MainTweet from "./MainTweet/MainTweet.module.css"
+import MainTweet from "./MainTweet/MainTweet";
 import ReplyMainInTest from "./ReplyMainInTest/ReplyMainInTest";
 import ChatNavbars from './ChatNavbar/ChatNavbars'
 import ChatRoom from "./ChatRoom/ChatRoom";

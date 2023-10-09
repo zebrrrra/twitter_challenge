@@ -1,4 +1,4 @@
-import style from './ChatPage.module.scss';
+import style from './PrivateChatPage.module.scss';
 import { useAuth } from '../../context/AuthContext';
 import { ChatNavbars, ChatRoom, ChatPrivateText } from '../../components';
 import { useEffect, useState } from 'react';

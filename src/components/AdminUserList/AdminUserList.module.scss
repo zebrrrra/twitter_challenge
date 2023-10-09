@@ -1,8 +1,22 @@
 @import"../../style/base.scss";
 
-.adminUserContainer{
-    display:flex;
-    flex-wrap:wrap;
-    justify-content: flex-start;
-  
-  }
+.adminUserContainer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+
+}
+
+.skeletonContainer {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+  align-content: space-between;
+}
+
+.skeleton {
+  width: 200px;
+  height: 315px;
+  margin-left: 10px;
+  margin-bottom: 16px;
+}

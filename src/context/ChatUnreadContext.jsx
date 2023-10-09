@@ -7,6 +7,7 @@ export const useChatUnRead = () => useContext(ChatUnReadContext);
 export function ChatUnReadProvider({ children }) {
   const [chatUnRead, setChatUnRead] = useState({ empty: true, messages: [] });
   const [chatMessages, setChatMessages] = useState({});
+  // BUG 公開聊天室和私人聊天室互相切換頁面，roomId都是undefined
   const { roomId } = useParams()
 
   useEffect(() => {
@@ -47,6 +48,7 @@ export function ChatUnReadProvider({ children }) {
         socket.off('server-enter-room', handleEnterRoom);
       };
     }
+    // TODO 陣列裡放location.pathname就可以換頁時重抓server-new-message
   }, [socket, roomId]);
 
 

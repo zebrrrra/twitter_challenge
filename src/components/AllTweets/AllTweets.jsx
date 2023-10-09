@@ -1,41 +1,23 @@
-import { useEffect, useState } from 'react';
+import style from "./AllTweets.module.scss"
+import Skeleton from 'react-loading-skeleton'
 import TweetCard from '../TweetCard/TweetCard';
-import { getAllTweets } from '../../apis/tweet';
-import useLike from '../../hooks/LikeHook';
-import { useUpdateTag } from '../../context/UpdateTagContext';
+import { useGetAllTweetsQuery } from "../../hooks/QueryHook";
 
+const AllTweets = () => {
+    const { data, isLoading } = useGetAllTweetsQuery()
 
-const AllTweets = ({ userId, newTweet }) => {
-    const [allTweets, setAllTweets] = useState([]);
-    const { updateTag, setUpdateTag } = useUpdateTag();
-    const { likeTweets: updateLikes, handleLike, handleUnLike } = useLike({ dataItems: allTweets, setUpdateTag });
+    if (isLoading) {
+        return <Skeleton count={10} className={style.skeleton} />
+    }
+    return !isLoading ? data.map(alltweet => {
+        if (!alltweet?.User) {
 
-
-    useEffect(() => {
-        const controller = new AbortController();
-
-        const fetchTweets = async () => {
-            const data = await getAllTweets(controller.signal);
-            if (data) {
-                setAllTweets(data);
-            }
-        }
-        fetchTweets();
-        return () => {
-            controller.abort()
-        }
-
-    }, [userId, newTweet, updateTag]);
-
-
-    return updateLikes ? updateLikes.map(alltweet => {
-        if (!alltweet.User) {
             return null;
         }
         return <TweetCard key={alltweet.id}
             tweet={alltweet}
-            onLike={() => handleLike(alltweet.id)}
-            onUnLike={() => handleUnLike(alltweet.id)}
+            tweetId={alltweet.id}
+            userId={alltweet.UserId}
             type="alltweet" />
     }) : null;
 }
