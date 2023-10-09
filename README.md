@@ -29,7 +29,7 @@
 
 ## 網站位置
 
-* Website - https://zebrrrra.github.io/AC_twitter_frontend
+* Website - https://j6127.github.io/AC_twitter_frontend_challenge/
 * 後端Repo - https://github.com/klu0926/twitter-api-2023
 
 ## 作業環境
