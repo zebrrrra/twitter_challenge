@@ -17,6 +17,7 @@ import ChatNavbars from './ChatNavbar/ChatNavbars'
 import ChatRoom from "./ChatRoom/ChatRoom";
 import ChatUser from "./ChatUser/ChatUser";
 import ChatPrivateText from "./ChatPrivateText/ChatPrivateText";
+import NoticeCard from "./NoticeCard/NoticeCard";
 
-export { AuthInput, UserInfo, TweetModal, Header, Navbars, MainPost, AllTweets, RecommendList, FollowRecommendList, FollowTab, Main, OtherUserInfo, OtherMain, MainTweet, ReplyMainInTest, ChatNavbars, ChatRoom, ChatUser, ChatPrivateText }
+export { AuthInput, UserInfo, TweetModal, Header, Navbars, MainPost, AllTweets, RecommendList, FollowRecommendList, FollowTab, Main, OtherUserInfo, OtherMain, MainTweet, ReplyMainInTest, ChatNavbars, ChatRoom, ChatUser, ChatPrivateText, NoticeCard }
 

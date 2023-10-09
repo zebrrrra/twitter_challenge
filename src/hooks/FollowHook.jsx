@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { getUsers } from "../apis/user";
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { postFollowShips, deleteFollowShips } from "../apis/followship";
-
+import { useChat } from "../context/ChatContext";
 // userId來自useParams，cardId是卡片的user
 export const useFollow = ({ userId, cardId }) => {
   const queryClient = useQueryClient()
@@ -31,7 +31,6 @@ export const useFollow = ({ userId, cardId }) => {
     followMutation
   };
 }
-
 export const useUnFollow = ({ userId, cardId }) => {
   const queryClient = useQueryClient()
   const unFollowMutation = useMutation({
@@ -48,6 +47,7 @@ export const useUnFollow = ({ userId, cardId }) => {
         queryClient.invalidateQueries(['getUserFollowings', { id: userId }]);
         // 更新getUser
         queryClient.invalidateQueries(['getUser', { id: userId }]);
+
       }
     },
     onError: (error) => {

@@ -16,7 +16,6 @@ const PrivateChatPage = () => {
   const { chatUser, setChatUser } = useChatUser()
   const { chatUnRead } = useChatUnRead();
   const { handTweetSubmit } = useTweet()
-
   useEffect(() => {
     if (!isAuthenticated) {
       navigate('/login');
@@ -36,8 +35,8 @@ const PrivateChatPage = () => {
       // no chatUser& no chatUnRead.messages
       if (chatUnRead.messages.length === 0 && Object.keys(chatUser).length === 0) {
         setHeaderContext({
-          title: 'Say something',
-          subtitle: 'I‘m giving up on you'
+          title: '尚未聊天過',
+          subtitle: '尚未聊天過'
         })
         return
       }

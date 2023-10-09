@@ -5,7 +5,9 @@ import { ReactComponent as BellOpen } from "../../assets/icon/btn_notfi打開.sv
 import { ReactComponent as BellClose } from "../../assets/icon/btn_notfi關閉.svg"
 import email from "../../assets/icon/email.svg"
 import { useFollow, useUnFollow } from "../../hooks/FollowHook"
+
 import { useChat } from "../../context/ChatContext"
+
 import { useGetUserQuery } from "../../hooks/QueryHook"
 import Skeleton from "react-loading-skeleton"
 
@@ -17,6 +19,8 @@ const OtherUserInfo = ({ userId, isSubscribed }) => {
 
   const { id, account, avatar, cover, name, introduction, followersCount, followingsCount, isCurrentUserFollowed } = data || {}
   const socket = useChat()
+  const navigate = useNavigate()
+  const { setChatUser } = useChatUser()
 
   const buttonClass = isCurrentUserFollowed ? style.buttonFollowing : style.buttonFollower;
   const buttonText = isCurrentUserFollowed ? "正在跟隨" : "跟隨";
@@ -34,6 +38,17 @@ const OtherUserInfo = ({ userId, isSubscribed }) => {
   const handleBellClose = () => {
     socket.emit('client-subscribe', userId)
     setIsToggle(!isToggle)
+  }
+  const handlePrivateClick = () => {
+    if (socket) {
+      const data = { account, avatar, id, name }
+      socket.emit('client-get-room', userId);
+      socket.on('server-get-room', roomId => {
+        setChatUser(data)
+        navigate(`/chat/${roomId}`);
+        socket.off('server-get-room');
+      });
+    }
   }
 
   useEffect(() => {
@@ -64,8 +79,8 @@ const OtherUserInfo = ({ userId, isSubscribed }) => {
         <img src={avatar} alt="avatar" />
       </div>
       <div className={style.buttonContainer}>
-        <div className={style.emailContainer}>
-          <img src={email} alt="email" />
+        <div className={style.emailContainer} onClick={handlePrivateClick}>
+          <Email />
         </div>
         {isToggle ? <BellOpen onClick={handleBellOpen} /> : <BellClose onClick={handleBellClose} />}
         <button className={buttonClass} onClick={handleFollowClick}>{buttonText}</button>

@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router';
 import { useGetUserQuery } from '../../hooks/QueryHook';
 import Skeleton from 'react-loading-skeleton';
 
+
 const Header = ({ userId }) => {
     const navigate = useNavigate();
     const location = useLocation();
@@ -16,6 +17,7 @@ const Header = ({ userId }) => {
     if (isLoading && isFetching) {
         return <Skeleton className={style.skeleton} />
     }
+
 
     let headerContext = "";
     const path = location.pathname;
@@ -31,6 +33,7 @@ const Header = ({ userId }) => {
                 <div className={style.contentContainer}>
                     <span className={style.name}>{data?.name}</span>
                     <div className={style.tweetCount}>{data?.tweetsCount} 推文</div></div>
+
             </>;
     } else if (path.includes('/otherProfile')) {
         headerContext =
@@ -52,6 +55,7 @@ const Header = ({ userId }) => {
                 <div className={style.contentContainer}>
                     <div className={style.Header}> 推文</div></div>
             </>;
+
     }
     else {
         headerContext = '';

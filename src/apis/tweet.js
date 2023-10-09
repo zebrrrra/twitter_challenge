@@ -17,6 +17,7 @@ export const getAllTweets = async ({ signal }) => {
     return response
   } catch (error) {
     throw error;
+
   }
 };
 
