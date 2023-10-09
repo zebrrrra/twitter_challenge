@@ -5,7 +5,6 @@ import { ReactComponent as BellOpen } from "../../assets/icon/btn_notfi打開.sv
 import { ReactComponent as BellClose } from "../../assets/icon/btn_notfi關閉.svg"
 import email from "../../assets/icon/email.svg"
 import { useFollow, useUnFollow } from "../../hooks/FollowHook"
-import { useNavigate } from "react-router-dom"
 import { useChat } from "../../context/ChatContext"
 import { useGetUserQuery } from "../../hooks/QueryHook"
 import Skeleton from "react-loading-skeleton"
@@ -18,9 +17,7 @@ const OtherUserInfo = ({ userId, isSubscribed }) => {
 
   const { id, account, avatar, cover, name, introduction, followersCount, followingsCount, isCurrentUserFollowed } = data || {}
   const socket = useChat()
-  const navigate = useNavigate()
-  //const { setChatUser } = useChatUser()
-
+ 
   const buttonClass = isCurrentUserFollowed ? style.buttonFollowing : style.buttonFollower;
   const buttonText = isCurrentUserFollowed ? "正在跟隨" : "跟隨";
   const handleFollowClick = () => {
