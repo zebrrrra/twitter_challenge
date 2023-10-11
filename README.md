@@ -2,8 +2,9 @@
 此為ALPHA CAMP 小組協作畢業專案，本組採前後分離，由2位前端、2位後端開發。
 
 ## 預覽
-![image](https://github.com/zebrrrra/AC_twitter_frontend/assets/123958778/c1aede27-7451-42e3-95c5-771b7732e90f)
-![image](https://github.com/zebrrrra/AC_twitter_frontend/assets/123958778/0d3b4334-1786-4d2e-8325-2057915ed8dd)
+![image](https://github.com/zebrrrra/twitter_challenge/blob/main/public/screenShot/homePage.png?raw=true)
+![image](https://github.com/zebrrrra/twitter_challenge/blob/main/public/screenShot/tweetPage.png?raw=true)
+![image](https://github.com/zebrrrra/twitter_challenge/blob/main/public/screenShot/publicChat.png?raw=true)
 
 ## 專案功能
 
@@ -26,14 +27,22 @@
 2. 管理者可以看所有網站推文，並刪除推文。
 3. 管理者可以查看所有已註冊用戶的資訊，包含頭像、背景圖片、暱稱、帳號、推文數、愛心數量等。
 
+### 新增socket功能
+1. 使用者可知目前在線者，以進行公開聊天或私訊
 
 ## 網站位置
 
-* Website - https://j6127.github.io/AC_twitter_frontend_challenge/
+* Website -  https://zebrrrra.github.io/twitter_challenge/
 * 後端Repo - https://github.com/klu0926/twitter-api-2023
+
+## demo
+
+* 帳號:user2
+* 密碼:12345678
 
 ## 作業環境
 
+* node: 14.16.0
 * React: 18.2.0
 * React-scripts: 4.0.3
 * jsonwebtoken: 8.5.1
