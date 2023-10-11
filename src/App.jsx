@@ -4,7 +4,6 @@ import { LoginPage, AdminLoginPage, AdminUserPage, AdminHomePage, RegisterPage, 
 import { AuthProvider } from "./context/AuthContext";
 import { useAuth } from './context/AuthContext';
 import ProtectedRouter from './components/AdminProtectedRouter';
-import { UpdateTagProvider } from "./context/UpdateTagContext";
 import { ChatContextProvider } from './context/ChatContext';
 import { ChatUserProvider } from "./context/ChatUserContext";
 import { ChatUnReadProvider } from "./context/ChatUnreadContext";
@@ -17,30 +16,28 @@ function App() {
     <div className="App" >
       <Router basename={basename}>
         <AuthProvider>
-          <UpdateTagProvider>
-            <ChatContextProvider>
-              <Routes>
-                <Route path="login" element={<LoginPage />} />
-                <Route path="register" element={<RegisterPage />} />
-                <Route path="admin" element={<AdminLoginPage />} />
-                <Route path="admin/list" element={<ProtectedRouter><AdminHomePage /></ProtectedRouter>} />
-                <Route path="admin/user" element={<ProtectedRouter><AdminUserPage /></ProtectedRouter>} />
+          <ChatContextProvider>
+            <Routes>
+              <Route path="login" element={<LoginPage />} />
+              <Route path="register" element={<RegisterPage />} />
+              <Route path="admin" element={<AdminLoginPage />} />
+              <Route path="admin/list" element={<ProtectedRouter><AdminHomePage /></ProtectedRouter>} />
+              <Route path="admin/user" element={<ProtectedRouter><AdminUserPage /></ProtectedRouter>} />
 
-                <Route path="main" element={<ChatUnReadProvider><HomePage /></ChatUnReadProvider>} />
-                <Route path="chat" element={<ChatUnReadProvider><ChatUserProvider><ChatPage /></ChatUserProvider></ChatUnReadProvider>} />
-                <Route path="chat/:roomId" element={<ChatUnReadProvider><ChatUserProvider><PrivateChatPage /></ChatUserProvider>
-                </ChatUnReadProvider>
-                } />
-                <Route path="notice" element={<ChatUnReadProvider><NoticePage /></ChatUnReadProvider>} />
-                <Route path="setting" element={<ChatUnReadProvider><SettingPage /></ChatUnReadProvider>} />
-                <Route path="tweets/:tweetId" element={<ChatUnReadProvider><ReplyPage /></ChatUnReadProvider>} />
-                <Route path=":id/follow/*" element={<ChatUnReadProvider><HandleProfilePage /></ChatUnReadProvider>} />
-                <Route path=":id/*" element={<ChatUnReadProvider><ChatUserProvider><HandleProfilePage /></ChatUserProvider></ChatUnReadProvider>} />
-                <Route path="profile/*" element={<ChatUnReadProvider><ProfilePage /></ChatUnReadProvider>} />
-                <Route path="*" element={<ChatUnReadProvider><HomePage /></ChatUnReadProvider>} />
-              </Routes>
-            </ChatContextProvider>
-          </UpdateTagProvider>
+              <Route path="main" element={<ChatUnReadProvider><HomePage /></ChatUnReadProvider>} />
+              <Route path="chat" element={<ChatUnReadProvider><ChatUserProvider><ChatPage /></ChatUserProvider></ChatUnReadProvider>} />
+              <Route path="chat/:roomId" element={<ChatUnReadProvider><ChatUserProvider><PrivateChatPage /></ChatUserProvider>
+              </ChatUnReadProvider>
+              } />
+              <Route path="notice" element={<ChatUnReadProvider><NoticePage /></ChatUnReadProvider>} />
+              <Route path="setting" element={<ChatUnReadProvider><SettingPage /></ChatUnReadProvider>} />
+              <Route path="tweets/:tweetId" element={<ChatUnReadProvider><ReplyPage /></ChatUnReadProvider>} />
+              <Route path=":id/follow/*" element={<ChatUnReadProvider><HandleProfilePage /></ChatUnReadProvider>} />
+              <Route path=":id/*" element={<ChatUnReadProvider><ChatUserProvider><HandleProfilePage /></ChatUserProvider></ChatUnReadProvider>} />
+              <Route path="profile/*" element={<ChatUnReadProvider><ProfilePage /></ChatUnReadProvider>} />
+              <Route path="*" element={<ChatUnReadProvider><HomePage /></ChatUnReadProvider>} />
+            </Routes>
+          </ChatContextProvider>
         </AuthProvider>
       </Router>
     </div>
