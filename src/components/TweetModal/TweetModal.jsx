@@ -5,23 +5,17 @@ import { ReactComponent as Back } from "../../assets/icons/back.svg";
 import useTweet from "../../hooks/TweetHook";
 import ClipLoader from "react-spinners/ClipLoader";
 
+const override = {
+  position: 'absolute',
+  bottom: '50%',
+  left: '50%',
+};
+
 const TweetModal = ({ open, onClose }) => {
   const { user } = useAuth();
   const { mutation, message, tweetText, setTweetText } = useTweet(onClose)
 
   const userAvatar = localStorage.getItem('avatar') ? localStorage.getItem('avatar') : user.avatar
-
-  const handleClick = () => {
-    onClose(false)
-  }
-  const handleSubmit = async () => {
-    mutation.mutate()
-  }
-  const override = {
-    position: 'absolute',
-    bottom: '50%',
-    left: '50%',
-  };
 
   if (!open) return
   return (
@@ -29,7 +23,7 @@ const TweetModal = ({ open, onClose }) => {
       <div className={style.background}>
         <div className={`${style.container} ${mutation.isLoading && `${style.isLoading}`}`}>
           <div className={style.buttonContainer}>
-            <button onClick={handleClick}>
+            <button onClick={() => onClose(false)}>
               <Close className={style.closeButton} />
               <Back className={style.backButton} />
             </button>
@@ -48,7 +42,7 @@ const TweetModal = ({ open, onClose }) => {
               </textarea>
               <small className={style.small}>{message}</small>
             </div>
-            <button className={style.button} onClick={handleSubmit} disabled={mutation.isLoading}>推文</button>
+            <button className={style.button} onClick={() => mutation.mutate()} disabled={mutation.isLoading}>推文</button>
           </div>
         </div>
       </div>

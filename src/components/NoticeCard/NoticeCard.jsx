@@ -1,10 +1,10 @@
 import style from "./NoticeCard.module.scss"
 import avatar from "../../assets/icons/avatar.svg"
-import { YMDTimeFormat } from "../../apis/data"
+import { YMDTimeFormat } from "../../apis/time"
 const NoticeCard = ({ notice }) => {
   const { comment, createdAt,
     noticeMessage, description
-    , user,userId, tweetId
+    , user, userId, tweetId
   } = notice || {}
 
   return (

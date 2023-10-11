@@ -1,4 +1,4 @@
-import style from '../Navbars/Navbars.module.scss';
+import style from './ChatNavbars.module.scss'
 import { Link, useNavigate, useLocation, useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 //import Modal
@@ -27,13 +27,11 @@ import { useChatUnRead } from '../../context/ChatUnreadContext';
 import { ReactComponent as Tweet } from "../../assets/icons/write.svg"
 const ChatNavbars = () => {
   const [openModal, setOpenModal] = useState(false);
-  const [activeTab, setActiveTab] = useState('');
+  // const [activeTab, setActiveTab] = useState('');
   const [isIconClicked, setIconClicked] = useState(false);
-  const [hasNewMessage, setHasNewMessage] = useState(false);
+  // const [hasNewMessage, setHasNewMessage] = useState(false);
   const location = useLocation();
   const { logout } = useAuth()
-  const [publicReadCount, setPublicReadCount] = useState(
-    Number(localStorage.getItem("publicReadCount")) || 0);
   const { chatUnRead } = useChatUnRead();
   const { roomId } = useParams()
 
@@ -41,23 +39,13 @@ const ChatNavbars = () => {
     setIconClicked(location.pathname);
   }, [location]);
 
-
-  const handlebuttonClick = () => {
-    setOpenModal(true)
-  }
-
-
-  const handleLogout = () => {
-    logout()
-  }
-
   const handleTabClick = (tabName) => {
-    setActiveTab(tabName);
+    // setActiveTab(tabName);
     setIconClicked(true);
-    if (tabName === '') {
-      setHasNewMessage(false);
+    // if (tabName === '') {
+    //   setHasNewMessage(false);
 
-    }
+    // }
   }
 
   return (
@@ -80,7 +68,7 @@ const ChatNavbars = () => {
               onClick={() => handleTabClick('notice')}>
               <img className={style.NavbarPng}
                 src={isIconClicked === '/notice' ? isNoticeIcon : NoticeIcon} alt="notice" />
-              <span>通知</span>
+              <span className={style.NavbarName}>通知</span>
             </div>
           </Link>
           <Link to="/chat">
@@ -94,7 +82,7 @@ const ChatNavbars = () => {
               <span className={style.NavbarName}>公開聊天室</span>
             </div>
           </Link>
-          {/* FIXME 當no chatUser& no chatUnRead.messages時，roomId是undefined*/}
+          {/* 當no chatUser& no chatUnRead.messages時，roomId是undefined*/}
           <Link to={roomId ? `/chat/${roomId}` : `/chat/${chatUnRead?.messages[0]?.roomId}`}>
             <div
               className={`${style.NavbarItem} ${location.pathname === `/chat/${roomId}` ? style.active : ''}`}
@@ -129,13 +117,13 @@ const ChatNavbars = () => {
               <span className={style.NavbarName}>設定</span>
             </div>
           </Link>
-          <button className={style.NavbarButton} onClick={handlebuttonClick}>
+          <button className={style.NavbarButton} onClick={() => setOpenModal(true)}>
             <span>推文</span>
             <Tweet className={style.NavbarTweetIcon} />
           </button>
         </div>
         {openModal && <TweetModal open={openModal} onClose={(res) => setOpenModal(res)} />}
-        <div className={style.logout} onClick={handleLogout}><img className={style.NavbarPng} src={LogoutIcon} alt="logout" /><span className={style.NavbarName}>登出</span></div>
+        <div className={style.logout} onClick={logout}><img className={style.NavbarPng} src={LogoutIcon} alt="logout" /><span className={style.NavbarName}>登出</span></div>
       </div>
 
     </>

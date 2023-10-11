@@ -10,6 +10,13 @@ import Swal from "sweetalert2"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { ClipLoader } from 'react-spinners';
 
+const override = {
+  position: 'absolute',
+  bottom: '50%',
+  left: '50%',
+  translate: '-25%',
+};
+
 const EditModal = ({ open, onClose, userId, userData }) => {
   const { avatar, cover, name, introduction } = userData
   const [editName, setEditName] = useState(name);
@@ -101,12 +108,7 @@ const EditModal = ({ open, onClose, userId, userData }) => {
     }
   })
 
-  const override = {
-    position: 'absolute',
-    bottom: '50%',
-    left: '50%',
-    translate: '-25%',
-  };
+
 
   if (!open) return;
   return (

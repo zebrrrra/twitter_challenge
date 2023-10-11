@@ -1,24 +1,31 @@
 import style from './SettingPage.module.scss'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom';
 import { AuthInput, ChatNavbars } from '../../components';
 import { useAuth } from '../../context/AuthContext';
-import useTweet from '../../hooks/TweetHook';
 import { useGetUserQuery } from '../../hooks/QueryHook';
 import useSetting from '../../hooks/SettingHook';
 import Skeleton from 'react-loading-skeleton';
 import { ClipLoader } from 'react-spinners';
 
+const override = {
+  position: 'absolute',
+  translate: '-50%',
+  bottom: '50%',
+};
+
 const SettingPage = () => {
-  const { user, logout } = useAuth()
-  const { handTweetSubmit } = useTweet()
+  const { user, logout, isAuthenticated } = useAuth()
   const { data, isLoading } = useGetUserQuery(user?.id)
   const [userData, setUserData] = useState({ account: data?.account, name: data?.name, email: data?.email, password: '', checkPassword: '' })
   const { mutation, responseError, errorInfo } = useSetting({ id: user?.id, user: userData })
+  const navigate = useNavigate();
 
-  if (isLoading) {
-    return <Skeleton />
-  }
-
+  useEffect(() => {
+    if (!isAuthenticated) {
+      navigate('/login');
+    }
+  }, [navigate, isAuthenticated])
 
   const inputCollection = [
     { name: 'account', label: '帳號', id: 'account', type: 'text', placeholder: '請輸入帳號', value: userData.account, onChange: (value) => setUserData(prev => ({ ...prev, 'account': value })), disabled: mutation.isLoading },
@@ -26,19 +33,17 @@ const SettingPage = () => {
     { name: 'email', label: 'Email', id: 'email', type: 'email', placeholder: '請輸入Email', value: userData.email, onChange: (value) => setUserData(prev => ({ ...prev, 'email': value })), disabled: mutation.isLoading },
     { name: 'password', label: '密碼', id: '密碼', type: 'password', placeholder: '請輸入密碼', value: userData.password, onChange: (value) => setUserData(prev => ({ ...prev, 'password': value })), disabled: mutation.isLoading },
     { name: 'checkPassword', label: '密碼確認', id: '密碼確認', type: 'password', placeholder: '請再次輸入密碼', value: userData.checkPassword, onChange: (value) => setUserData(prev => ({ ...prev, 'checkPassword': value })), disabled: mutation.isLoading },
-
   ];
-  const override = {
-    position: 'absolute',
-    translate: '-50%',
-    bottom: '50%',
-  };
+
+  if (isLoading) {
+    return <Skeleton />
+  }
 
   return (
     <div className={style.homeContainer}>
       <div className={style.homeColumn}>
         <div className={style.leftColumn}>
-          <ChatNavbars onTweetSubmit={handTweetSubmit} />
+          <ChatNavbars />
         </div>
         <div className={style.middleColumn}>
           <div className={style.settingHeader}>帳戶設定</div>
@@ -61,7 +66,7 @@ const SettingPage = () => {
               />
             ))}
             <button className={style.button} type="submit" disabled={mutation.isLoading}>儲存</button>
-            <a className={style.logout} onClick={logout}>登出</a>
+            <a href='/login' className={style.logout} onClick={logout}>登出</a>
           </form >
         </div>
         <div className={style.rightColumn}>

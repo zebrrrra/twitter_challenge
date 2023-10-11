@@ -8,6 +8,11 @@ import { useLogin } from '../../hooks/LoginHook';
 import { socket } from '../../apis/socket';
 import { ClipLoader } from 'react-spinners';
 
+const override = {
+  position: 'absolute',
+  bottom: '50%'
+};
+
 const LoginPage = () => {
   const { isAuthenticated, user } = useAuth();
   const navigate = useNavigate()
@@ -17,11 +22,6 @@ const LoginPage = () => {
   const authInputCollection = [
     { label: '帳號', id: '帳號', type: 'text', placeholder: '請輸入帳號', value: userData.account, onChange: (value) => setUserData(prev => ({ ...prev, 'account': value })), disabled: mutation.isLoading },
     { label: '密碼', id: '密碼', type: 'password', placeholder: '請輸入密碼', value: userData.password, onChange: (value) => setUserData(prev => ({ ...prev, 'password': value })), disabled: mutation.isLoading }]
-
-  const override = {
-    position: 'absolute',
-    bottom: '50%'
-  };
 
   useEffect(() => {
     if (mutation.data?.status === 'success') {

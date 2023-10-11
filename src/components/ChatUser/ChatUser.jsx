@@ -16,12 +16,16 @@ const ChatUser = () => {
 
 
   useEffect(() => {
+    // 檢查是否已有存在上線名單
     const savedUpdate = localStorage.getItem('usersUpdate');
-    if (savedUpdate) {
+    console.log('savedUpdate', JSON.parse(savedUpdate))//列表空時為null
+    if (JSON.parse(savedUpdate)?.length !== 0) {
       setUsersUpdate(JSON.parse(savedUpdate));
     }
 
     if (socket) {
+      // listen others online and offline, not self
+      // BUG 自己join有時可以監聽到update,有時卻不行
       const handleUserUpdate = (res) => {
         if (res) {
           setLoading(false)
@@ -45,11 +49,13 @@ const ChatUser = () => {
   }, [socket]);
 
   useEffect(() => {
+    console.log('userUpdate', usersUpdate)
     if (usersUpdate) {
+      // BUG userupdata初始是null？
       localStorage.setItem('usersUpdate', JSON.stringify(usersUpdate));
     }
-    console.log('userUpdate:', usersUpdate);
-  }, [usersUpdate]);
+    // 若上線列表更新，更新localStorage的usersUpdate
+  }, [usersUpdate?.length]);
 
 
 
@@ -76,9 +82,9 @@ const ChatUser = () => {
 
     <>
 
-      <div className={style.onLineUser}>上線使用者({usersUpdate.length})</div>
-      {loading && (<Skeleton count={5} className={style.skeleton} />)}
-      {usersUpdate.map((user) => (
+      <div className={style.onLineUser}>上線使用者({usersUpdate?.length})</div>
+      {/* {loading && (<Skeleton count={5} className={style.skeleton} />)} */}
+      {usersUpdate?.length !== 0 && usersUpdate?.map((user) => (
         <div className={style.chatUserCard} onClick={() => handleAvatarClick(user.id)} key={user.id}>
           <div className={style.userInfo}>
             <p><img className={style.avatar} src={user.avatar} alt="Avatar" /></p>

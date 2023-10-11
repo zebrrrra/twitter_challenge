@@ -5,7 +5,7 @@ import avatar from "../../assets/icons/avatar.svg"
 import ChatBody from "../ChatBody/ChatBody"
 import { useChat } from '../../context/ChatContext';
 import { useAuth } from "../../context/AuthContext"
-import { chatTimeFormat } from "../../apis/data"
+import { chatTimeFormat } from "../../apis/time"
 import useInstantMessage from "../../hooks/InstantMessageHook"
 
 
@@ -17,7 +17,7 @@ const ChatRoom = ({ headerContext, roomId }) => {
   const { message, setMessage } = useInstantMessage(roomId)
 
   const handleServerRecord = useCallback((res) => {
-    console.log('server-record', res)
+    // console.log('server-record', res)
     if (res === '尚未聊天過，開始發送訊息吧!') {
       setHistoryMessage({ text: res, time: null, avatar: null, isOwner: null })
     }
@@ -39,7 +39,7 @@ const ChatRoom = ({ headerContext, roomId }) => {
   useEffect(() => {
     if (socket?.connected) {
       socket.emit('client-record', roomId)
-      console.log('emit record', roomId)
+      // console.log('emit record', roomId)
     }
     return () => {
       setHistoryMessage([]);

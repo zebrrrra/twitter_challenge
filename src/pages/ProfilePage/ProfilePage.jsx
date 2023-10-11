@@ -1,9 +1,18 @@
 import style from './ProfilePage.module.scss'
 import { ChatNavbars, Header, Main, RecommendList } from '../../components';
 import { useAuth } from '../../context/AuthContext'
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const ProfilePage = () => {
-  const { user } = useAuth()
+  const { user, isAuthenticated } = useAuth()
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!isAuthenticated) {
+      navigate('/login');
+    }
+  }, [navigate, isAuthenticated])
 
   return (
     <div className={style.profileContainer}>

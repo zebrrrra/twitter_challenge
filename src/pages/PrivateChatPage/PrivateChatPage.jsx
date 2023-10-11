@@ -5,7 +5,6 @@ import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useChatUser } from '../../context/ChatUserContext';
 import { useChatUnRead } from '../../context/ChatUnreadContext';
-import useTweet from '../../hooks/TweetHook';
 
 const PrivateChatPage = () => {
   const [headerContext, setHeaderContext] = useState({})
@@ -15,7 +14,6 @@ const PrivateChatPage = () => {
   const navigate = useNavigate();
   const { chatUser, setChatUser } = useChatUser()
   const { chatUnRead } = useChatUnRead();
-  const { handTweetSubmit } = useTweet()
   useEffect(() => {
     if (!isAuthenticated) {
       navigate('/login');
@@ -64,7 +62,7 @@ const PrivateChatPage = () => {
     <div className={style.homeContainer}>
       <div className={style.homeColumn}>
         <div className={style.leftColumn}>
-          <ChatNavbars onTweetSubmit={handTweetSubmit} />
+          <ChatNavbars />
         </div>
         <div className={style.middleColumn}>
           <ChatPrivateText roomId={roomId} />

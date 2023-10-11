@@ -1,7 +1,7 @@
 {
   "name": "ac_twitter_frontend",
   "version": "0.1.0",
-  "homepage": "https://j6127.github.io/AC_twitter_frontend_challenge/",
+  "homepage": "https://zebrrrra.github.io/twitter_challenge/",
   "private": true,
   "dependencies": {
     "@tanstack/react-query": "^4.32.6",

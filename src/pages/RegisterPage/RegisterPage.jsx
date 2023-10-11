@@ -6,6 +6,10 @@ import { AuthInput } from '../../components'
 import { useRegister } from '../../hooks/RegisterHook'
 import { ClipLoader } from 'react-spinners'
 
+const override = {
+  position: 'absolute',
+};
+
 const RegisterPage = () => {
   const [userData, setUserData] = useState({ account: '', name: '', email: '', password: '', checkPassword: '' })
   const { mutation, responseError, errorInfo } = useRegister(userData)
@@ -17,9 +21,7 @@ const RegisterPage = () => {
     { name: 'password', label: '密碼', id: '密碼', type: 'password', placeholder: '請輸入密碼', value: userData.password, onChange: (value) => setUserData(prev => ({ ...prev, 'password': value })), disabled: mutation.isLoading },
     { name: 'checkPassword', label: '密碼確認', id: '密碼確認', type: 'password', placeholder: '請再次輸入密碼', value: userData.checkPassword, onChange: (value) => setUserData(prev => ({ ...prev, 'checkPassword': value })), disabled: mutation.isLoading },
   ];
-  const override = {
-    position: 'absolute',
-  };
+
 
   return (
     <div className={style.container}>

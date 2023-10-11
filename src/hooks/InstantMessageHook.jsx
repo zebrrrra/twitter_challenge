@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { chatTimeFormat } from "../apis/data";
+import { chatTimeFormat } from "../apis/time";
 import { useChat } from "../context/ChatContext";
 import { useAuth } from "../context/AuthContext";
 

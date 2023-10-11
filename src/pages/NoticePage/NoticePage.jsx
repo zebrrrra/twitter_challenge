@@ -1,17 +1,25 @@
 import { ChatNavbars, RecommendList, Header, NoticeCard } from "../../components";
 import style from "./NoticePage.module.scss"
-import useTweet from "../../hooks/TweetHook";
 import useNotice from "../../hooks/NoticeHook";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../context/AuthContext";
+import { useEffect } from "react";
 
 const NoticePage = () => {
-  const { handTweetSubmit } = useTweet()
   const { notice } = useNotice()
+  const { isAuthenticated } = useAuth()
+  const navigate = useNavigate();
 
+  useEffect(() => {
+    if (!isAuthenticated) {
+      navigate('/login');
+    }
+  }, [navigate, isAuthenticated])
   return (
     <div className={style.homeContainer}>
       <div className={style.homeColumn}>
         <div className={style.leftColumn}>
-          <ChatNavbars onTweetSubmit={handTweetSubmit} />
+          <ChatNavbars />
         </div>
         <div className={style.middleColumn}>
           <Header />

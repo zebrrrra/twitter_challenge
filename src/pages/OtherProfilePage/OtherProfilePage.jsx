@@ -4,17 +4,22 @@ import { RecommendList } from '../../components';
 import { ChatNavbars } from '../../components';
 import { Header } from '../../components';
 import { OtherMain } from '../../components';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { useChat } from '../../context/ChatContext';
-import useTweet from '../../hooks/TweetHook';
+import { useAuth } from '../../context/AuthContext';
 
 const OtherProfilePage = () => {
-
   const { id } = useParams();
-
+  const navigate = useNavigate();
+  const { isAuthenticated } = useAuth()
   const socket = useChat()
-  const { handTweetSubmit } = useTweet()
   const [isSubscribed, setIsSubscribed] = useState(false)
+
+  useEffect(() => {
+    if (!isAuthenticated) {
+      navigate('/login');
+    }
+  }, [navigate, isAuthenticated])
 
   useEffect(() => {
     const handleSubscribe = (res) => {
@@ -36,7 +41,7 @@ const OtherProfilePage = () => {
     <div className={style.profileContainer}>
       <div className={style.homeColumn}>
         <div className={style.leftColumn}>
-          <ChatNavbars onTweetSubmit={handTweetSubmit} />
+          <ChatNavbars />
         </div>
         <div className={style.middleColumn}>
           <Header userId={Number(id)} />
