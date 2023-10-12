@@ -1,19 +1,19 @@
 {
   "files": {
     "main.css": "/twitter_challenge/static/css/main.892443c7.chunk.css",
-    "main.js": "/twitter_challenge/static/js/main.39337e44.chunk.js",
-    "main.js.map": "/twitter_challenge/static/js/main.39337e44.chunk.js.map",
+    "main.js": "/twitter_challenge/static/js/main.b8ea3968.chunk.js",
+    "main.js.map": "/twitter_challenge/static/js/main.b8ea3968.chunk.js.map",
     "runtime-main.js": "/twitter_challenge/static/js/runtime-main.7efe2e59.js",
     "runtime-main.js.map": "/twitter_challenge/static/js/runtime-main.7efe2e59.js.map",
     "static/css/2.34108fd0.chunk.css": "/twitter_challenge/static/css/2.34108fd0.chunk.css",
-    "static/js/2.f6032700.chunk.js": "/twitter_challenge/static/js/2.f6032700.chunk.js",
-    "static/js/2.f6032700.chunk.js.map": "/twitter_challenge/static/js/2.f6032700.chunk.js.map",
+    "static/js/2.9e66372f.chunk.js": "/twitter_challenge/static/js/2.9e66372f.chunk.js",
+    "static/js/2.9e66372f.chunk.js.map": "/twitter_challenge/static/js/2.9e66372f.chunk.js.map",
     "static/js/3.71176b04.chunk.js": "/twitter_challenge/static/js/3.71176b04.chunk.js",
     "static/js/3.71176b04.chunk.js.map": "/twitter_challenge/static/js/3.71176b04.chunk.js.map",
     "index.html": "/twitter_challenge/index.html",
     "static/css/2.34108fd0.chunk.css.map": "/twitter_challenge/static/css/2.34108fd0.chunk.css.map",
     "static/css/main.892443c7.chunk.css.map": "/twitter_challenge/static/css/main.892443c7.chunk.css.map",
-    "static/js/2.f6032700.chunk.js.LICENSE.txt": "/twitter_challenge/static/js/2.f6032700.chunk.js.LICENSE.txt",
+    "static/js/2.9e66372f.chunk.js.LICENSE.txt": "/twitter_challenge/static/js/2.9e66372f.chunk.js.LICENSE.txt",
     "static/media/Group.d53da586.svg": "/twitter_challenge/static/media/Group.d53da586.svg",
     "static/media/Notice.b18700fe.svg": "/twitter_challenge/static/media/Notice.b18700fe.svg",
     "static/media/Vector.07ff379b.svg": "/twitter_challenge/static/media/Vector.07ff379b.svg",
@@ -50,8 +50,8 @@
   "entrypoints": [
     "static/js/runtime-main.7efe2e59.js",
     "static/css/2.34108fd0.chunk.css",
-    "static/js/2.f6032700.chunk.js",
+    "static/js/2.9e66372f.chunk.js",
     "static/css/main.892443c7.chunk.css",
-    "static/js/main.39337e44.chunk.js"
+    "static/js/main.b8ea3968.chunk.js"
   ]
 }
