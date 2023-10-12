@@ -27,11 +27,9 @@ import { useChatUnRead } from '../../context/ChatUnreadContext';
 import { ReactComponent as Tweet } from "../../assets/icons/write.svg"
 const ChatNavbars = () => {
   const [openModal, setOpenModal] = useState(false);
-  // const [activeTab, setActiveTab] = useState('');
   const [isIconClicked, setIconClicked] = useState(false);
-  // const [hasNewMessage, setHasNewMessage] = useState(false);
   const location = useLocation();
-  const { logout } = useAuth()
+  const { logout, room } = useAuth()
   const { chatUnRead } = useChatUnRead();
   const { roomId } = useParams()
 
@@ -39,15 +37,9 @@ const ChatNavbars = () => {
     setIconClicked(location.pathname);
   }, [location]);
 
-  const handleTabClick = (tabName) => {
-    // setActiveTab(tabName);
+  const handleTabClick = () => {
     setIconClicked(true);
-    // if (tabName === '') {
-    //   setHasNewMessage(false);
-
-    // }
   }
-
   return (
     <>
       <div className={style.navbarContainer}>
@@ -74,7 +66,7 @@ const ChatNavbars = () => {
           <Link to="/chat">
             <div
               className={`${style.NavbarItem} ${location.pathname === '/chat' ? style.active : ''}`}
-              onClick={() => { handleTabClick('chat') }}
+              onClick={() => handleTabClick('chat')}
             >
               <img className={style.NavbarPng}
                 src={isIconClicked === '/chat' ? isPublicIcon : publicIcon}
@@ -82,11 +74,11 @@ const ChatNavbars = () => {
               <span className={style.NavbarName}>公開聊天室</span>
             </div>
           </Link>
-          {/* 當no chatUser& no chatUnRead.messages時，roomId是undefined*/}
-          <Link to={roomId ? `/chat/${roomId}` : `/chat/${chatUnRead?.messages[0]?.roomId}`}>
+          {/* 如果room為0可能表示此登入者為新帳號 */}
+          <Link to={`/chat/${room}`}>
             <div
               className={`${style.NavbarItem} ${location.pathname === `/chat/${roomId}` ? style.active : ''}`}
-              onClick={() => { handleTabClick(`/chat/${roomId}`) }}
+              onClick={() => handleTabClick(`/chat/${roomId}`)}
             >
               <img className={style.NavbarPng}
                 src={chatUnRead.allUnreadCounts > 0 ? GroupIcon : (isIconClicked === `/chat/${roomId}` ? isChatIcon : chatIcon)}

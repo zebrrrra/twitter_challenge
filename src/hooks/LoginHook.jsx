@@ -5,14 +5,12 @@ import { useAuth } from "../context/AuthContext";
 import { useMutation } from '@tanstack/react-query';
 import Swal from 'sweetalert2'
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom'
 
 export const useLogin = (user) => {
   const [responseError, setResponseError] = useState(true)
   const [errorInfo, setErrorInfo] = useState('')
 
   const { setPayload, setIsAuthenticated } = useAuth();
-  const navigate = useNavigate()
 
 
   const mutation = useMutation({
@@ -45,7 +43,6 @@ export const useLogin = (user) => {
           timer: 2000,
           position: 'top',
         });
-        navigate('/main')
       } else {
         setPayload(null);
         setIsAuthenticated(false);

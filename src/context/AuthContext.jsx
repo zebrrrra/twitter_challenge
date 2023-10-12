@@ -22,6 +22,7 @@ export const useAuth = () => useContext(AuthContext);
 export const AuthProvider = ({ children }) => {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [payload, setPayload] = useState(null);
+    const [room, setRoom] = useState(0)
     const { pathname } = useLocation();
     const navigate = useNavigate();
 
@@ -45,6 +46,7 @@ export const AuthProvider = ({ children }) => {
                 setPayload(tempPayload);
                 setIsAuthenticated(true);
                 socket.connect();
+                // 重整頁面時，重新連線socket
                 socket.on('connect', handleConnectSocket)
             }
         };
@@ -70,7 +72,7 @@ export const AuthProvider = ({ children }) => {
                 introduction: payload.introduction,
                 email: payload.email,
                 cover: payload.cover
-            }, payload, setPayload, setIsAuthenticated
+            }, payload, setPayload, setIsAuthenticated, room, setRoom
 
             , logout: () => {
                 //socket登出

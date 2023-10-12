@@ -14,7 +14,7 @@ const override = {
 };
 
 const LoginPage = () => {
-  const { isAuthenticated, user } = useAuth();
+  const { isAuthenticated, user, setRoom } = useAuth();
   const navigate = useNavigate()
   const [userData, setUserData] = useState({ account: '', password: '' })
   const { mutation, responseError, errorInfo } = useLogin(userData)
@@ -24,12 +24,26 @@ const LoginPage = () => {
     { label: '密碼', id: '密碼', type: 'password', placeholder: '請輸入密碼', value: userData.password, onChange: (value) => setUserData(prev => ({ ...prev, 'password': value })), disabled: mutation.isLoading }]
 
   useEffect(() => {
+    const handleRooms = (res) => {
+
+      console.log('res:', res);
+      const privateRoom = res.filter(({ id }) => id === user.id)[0].rooms
+      if (privateRoom.length === 0) {
+        setRoom(0)//從未有任何私訊房間
+      } else {
+        setRoom(Number(privateRoom[privateRoom.length - 1]))//已有私訊房間，取最新交談
+      }
+      navigate('/main')
+    };
+
     if (mutation.data?.status === 'success') {
       socket.connect()
       socket.on('connect', () => {
         console.log('connect to: login success', socket.connected)
         socket.emit('client-join', user.id);
       })
+      socket.on('server-update', handleRooms);
+
     }
   }, [mutation.data?.status]);
 

@@ -36,7 +36,7 @@ const useInstantMessage = (roomId) => {
   useEffect(() => {
     if (roomId === 4) {
       socket.emit('client-enter-room', 'public');
-      socket.on('server-enter-room', (res) => console.log(res));
+      socket.on('server-enter-room', (res) => console.log(res));//待刪
     }
 
     return () => {
@@ -48,7 +48,8 @@ const useInstantMessage = (roomId) => {
   // 處理update-room
   useEffect(() => {
     const handleEnterMessage = (res) => {
-      console.log(res)
+      // console.log(res)
+      // 取得“某某進入房間”
       setMessage((prevState) => {
         const isDuplicate = prevState.some(({ message }) => message === res.message)
         if (isDuplicate) {

@@ -51,7 +51,7 @@ const ChatUser = () => {
   useEffect(() => {
     console.log('userUpdate', usersUpdate)
     if (usersUpdate) {
-      // BUG userupdata初始是null？
+      // userupdata初始是null
       localStorage.setItem('usersUpdate', JSON.stringify(usersUpdate));
     }
     // 若上線列表更新，更新localStorage的usersUpdate
