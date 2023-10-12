@@ -6,6 +6,17 @@
 ![image](https://github.com/zebrrrra/twitter_challenge/blob/main/public/screenShot/tweetPage.png?raw=true)
 ![image](https://github.com/zebrrrra/twitter_challenge/blob/main/public/screenShot/publicChat.png?raw=true)
 
+## 網站位置
+
+* Website -  https://zebrrrra.github.io/twitter_challenge/
+* 後端Repo - https://github.com/klu0926/twitter-api-2023
+
+## demo
+
+* 帳號:user2
+* 密碼:12345678
+
+
 ## 專案功能
 
 ### 前台
@@ -30,15 +41,6 @@
 ### 新增socket功能
 1. 使用者可知目前在線者，以進行公開聊天或私訊
 
-## 網站位置
-
-* Website -  https://zebrrrra.github.io/twitter_challenge/
-* 後端Repo - https://github.com/klu0926/twitter-api-2023
-
-## demo
-
-* 帳號:user2
-* 密碼:12345678
 
 ## 作業環境
 
